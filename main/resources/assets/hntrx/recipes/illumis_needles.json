@@ -1,0 +1,32 @@
+{
+     "type": "minecraft:crafting_shaped",
+     
+     "pattern":
+     [
+     "  G",
+     " I ",
+     "I  "
+     ],
+     
+     "key":
+     {
+       "I":
+       {
+        "item": "minecraft:iron_ingot"
+       },
+       
+        "G":
+       {
+        "item": "minecraft:gold_ingot"
+       }
+       
+     },
+     
+     "result":
+     {
+       "item": "hntrx:illumis_needle",
+       "count": 16
+       
+     }
+     
+}

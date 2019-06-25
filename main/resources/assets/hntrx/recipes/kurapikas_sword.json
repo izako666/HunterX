@@ -1,0 +1,35 @@
+{
+     "type": "minecraft:crafting_shaped",
+     
+     "pattern":
+     [
+     "IDI",
+     "IDI",
+     " S "
+     ],
+     
+     "key":
+     {
+       "I":
+       {
+        "item": "minecraft:iron_ingot"
+       },
+       
+        "S":
+       {
+        "item": "minecraft:stick"
+       },
+       
+        "D":
+       {
+        "item": "minecraft:diamond"
+       }
+       
+     },
+     
+     "result":
+     {
+       "item": "hntrx:kurapikas_sword"
+     }
+     
+}

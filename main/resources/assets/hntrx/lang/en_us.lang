@@ -1,0 +1,82 @@
+//tabs
+itemGroup.HunterX=HunterX
+
+//Mobs
+entity.Thug.name=Thug
+entity.Examiner.name=Examiner
+entity.BossExam.name=Hanzo
+
+//Items
+item.logo.name= HunterX Logo
+item.yoyo.name= Killua's Yoyo
+item.kurapikas_sword.name= Kurapikas  Sword
+item.kurapikas_sword_unsheathed.name= Kurapikas Sword(unsheathed)
+item.hisokas_card.name= Hisoka's Card
+item.hanzos_sword.name= Hanzo's Blade
+item.illumis_needle.name= Illumi's Needle
+item.hunter_card.name= Hunter License
+item.gons_fishing_rod.name= Gon's Fishing Rod
+//Armor
+
+//Gon
+item.gon_chestplate.name=Gon's Jacket
+item.gon_leggings.name=Gon's Shorts
+item.gon_boots.name=Gon's Boots 
+
+
+//Killua
+item.killua_chestplate.name=Killua's Shirt
+item.killua_leggings.name=Killua's Shorts
+item.killua_boots.name=Killua's Boots
+
+//Hanzo
+item.hanzo_chestplate.name= Hanzo's Chestplate
+item.hanzo_leggings.name= Hanzo's Pants
+item.hanzo_boots.name= Hanzo's Boots
+
+//Leorio
+item.leorio_chestplate.name=Leorio's Jacket
+item.leorio_leggings.name=Leorio's Pants
+item.leorio_boots.name=Leorio's Shoes 
+
+
+//Kurapika
+item.kurapika_chestplate.name=Kurapika's Shirt
+item.kurapika_leggings.name=Kurapika's Pants
+item.kurapika_boots.name=Kurapika's Shoes 
+
+
+//Illumi
+item.illumi_chestplate.name=Illumi's Top
+item.illumi_leggings.name=Illumi's Pants
+item.illumi_boots.name=Illumi's Shoes
+
+
+//Hisoka
+item.hisoka_chestplate.name=Hisoka's Top
+item.hisoka_leggings.name=Hisoka's Pants
+item.hisoka_boots.name=Hisoka's Shoes
+
+
+//Netero
+item.netero_chestplate.name=Netero's Shirt
+item.netero_leggings.name=Netero's Shorts
+item.netero_boots.name=Netero's Shoes
+
+
+//Ging
+item.ging_chestplate.name=Ging's Top
+item.ging_leggings.name=Ging's Pants
+item.ging_boots.name=Ging's Shoes
+
+
+//Silva
+item.silva_chestplate.name=Silva's Top
+item.silva_leggings.name=Silva's Pants
+item.silva_boots.name=Silva's Shoes 
+
+
+//Wing
+item.kite_chestplate.name=Kite's Shirt
+item.kite_leggings.name=Kite's Pants
+item.kite_boots.name=Kite's Shoes 

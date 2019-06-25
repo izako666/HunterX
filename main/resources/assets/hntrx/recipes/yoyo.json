@@ -1,0 +1,30 @@
+{
+     "type": "minecraft:crafting_shaped",
+     
+     "pattern":
+     [
+     "DDD",
+     "DBD",
+     "DDD"
+     ],
+     
+     "key":
+     {
+       "B":
+       {
+        "item": "minecraft:iron_block"
+       },
+       
+        "D":
+       {
+        "item": "minecraft:diamond"
+       }
+       
+     },
+     
+     "result":
+     {
+       "item": "hntrx:yoyo"
+     }
+     
+}
