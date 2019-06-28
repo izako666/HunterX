@@ -1,4 +1,4 @@
-package com.izako.HunterX.events.stats;
+package com.izako.HunterX.stats.events;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;

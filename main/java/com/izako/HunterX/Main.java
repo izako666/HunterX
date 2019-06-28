@@ -12,6 +12,7 @@ import com.izako.HunterX.network.HanzoArmorBasePacketHandler;
 import com.izako.HunterX.network.packets.CardPacket;
 import com.izako.HunterX.network.packets.HanzoArmorBasePacket;
 import com.izako.HunterX.proxy.CommonProxy;
+import com.izako.HunterX.stats.capabilties.EntityStatsCapability;
 import com.izako.HunterX.util.Reference;
 import com.izako.HunterX.util.handlers.RegistryHandler;
 import com.izako.HunterX.world.ModWorldGen;

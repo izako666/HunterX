@@ -1,4 +1,4 @@
-package com.izako.HunterX.events.stats;
+package com.izako.HunterX.stats.events;
 
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
