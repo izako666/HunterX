@@ -3,6 +3,7 @@ package com.izako.HunterX.events;
 import com.izako.HunterX.entity.BossExam;
 import com.izako.HunterX.init.ModItems;
 
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;

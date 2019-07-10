@@ -7,12 +7,9 @@ import com.izako.HunterX.init.ModRecipes;
 import com.izako.HunterX.items.entities.EntityCard;
 import com.izako.HunterX.items.entities.YoyoProjectile;
 import com.izako.HunterX.network.ModidPacketHandler;
-import com.izako.HunterX.network.CardPacketHandler;
 import com.izako.HunterX.network.HanzoArmorBasePacketHandler;
-import com.izako.HunterX.network.packets.CardPacket;
 import com.izako.HunterX.network.packets.HanzoArmorBasePacket;
 import com.izako.HunterX.proxy.CommonProxy;
-import com.izako.HunterX.stats.capabilties.EntityStatsCapability;
 import com.izako.HunterX.util.Reference;
 import com.izako.HunterX.util.handlers.RegistryHandler;
 import com.izako.HunterX.world.ModWorldGen;
@@ -51,6 +48,7 @@ public class Main {
 	@EventHandler
 	public static void init (FMLInitializationEvent event)
 	{
+		proxy.init(event);
 		Main.proxy.render();
 	ModRecipes.init();
 	

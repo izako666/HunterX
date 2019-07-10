@@ -6,6 +6,8 @@ import java.util.concurrent.DelayQueue;
 
 import com.ibm.icu.text.MessagePattern.Part;
 import com.izako.HunterX.init.EntityInit;
+import com.izako.HunterX.stats.capabilities.EntityStatsProvider;
+import com.izako.HunterX.stats.capabilities.IEntityStats;
 
 import akka.io.Tcp.Command;
 import net.minecraft.command.ICommandSender;
@@ -45,125 +47,124 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class Examiner extends EntityZombie {
 	int cooldown = 0;
-	
+
 	public Examiner(World worldIn) {
 		super(worldIn);
-		
+
 	}
 
 	@Override
 	protected void initEntityAI() {
-		 this.tasks.addTask(0, new EntityAISwimming(this));
-	        this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
-	        this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0D));
-	        this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-	        this.tasks.addTask(8, new EntityAILookIdle(this));
-	        this.applyEntityAI();
-		
+		this.tasks.addTask(0, new EntityAISwimming(this));
+		this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
+		this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0D));
+		this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+		this.tasks.addTask(8, new EntityAILookIdle(this));
+		this.applyEntityAI();
+
 	}
-	
+
 	@Override
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
-		 this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.0D);
-	        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(5.0D);
-	        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(10.0D);
-	        this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(100.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(5.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(10.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(100.0D);
 	}
-	
+
 	@Override
 	protected boolean shouldBurnInDay() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		
+
 		return false;
 	}
-	
+
 	@Override
 	public void onEntityUpdate() {
-		if(cooldown <= 0) {
-			
-		}else {
+		if (cooldown <= 0) {
+
+		} else {
 			cooldown--;
 		}
 		super.onEntityUpdate();
 	}
-	
-	//Interaction wit the examiner
-	
+
+	// Interaction wit the examiner
+
 	@Override
 	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
-		
+		IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 		EntityLivingBase boss = new BossExam(this.world);
-		//cooldown for rightclick
-		if(cooldown <= 0) {
-		
-		if (world.isRemote) {
-		player.sendMessage(new TextComponentString("You have found me I see"));
-		player.sendMessage(new TextComponentString("you have arrived at the finale of the hunter exam"));
-		player.sendMessage(new TextComponentString("all you're hardship trough weather and monsters has brought you here"));
-		player.sendMessage(new TextComponentString("you're final opponent is going to be Hanzo"));
-		player.sendMessage(new TextComponentString("now... let the battle begin!!!"));
+		// cooldown for rightclick
+		if (!stats.isHunter()) {
+
+			if (world.isRemote) {
+				player.sendMessage(new TextComponentString("You have found me I see"));
+				player.sendMessage(new TextComponentString("you have arrived at the finale of the hunter exam"));
+				player.sendMessage(new TextComponentString(
+						"all you're hardship trough weather and monsters has brought you here"));
+				player.sendMessage(new TextComponentString("you're final opponent is going to be Hanzo"));
+				player.sendMessage(new TextComponentString("now... let the battle begin!!!"));
+			}
+
+			if (!world.isRemote) {
+				boss.setLocationAndAngles(this.posX + 1, this.posY, this.posZ + 1, this.rotationYaw, 0.0F);
+				this.world.spawnEntity(boss);
+			}
+
+		} else if (stats.isHunter()) {
+			if (world.isRemote) {
+				player.sendMessage(new TextComponentString("You are already a hunter"));
+			}
 		}
-		
-		if(!world.isRemote) {
-			boss.setLocationAndAngles(this.posX+1, this.posY, this.posZ+1, this.rotationYaw, 0.0F);
-			this.world.spawnEntity(boss);
-		}
-		cooldown = 24000;
-	}
-		
-		
+
 		return true;
 	}
-	
+
 	@Override
 	protected boolean canDespawn() {
 		return false;
 	}
-	
+
 	@Override
 	protected boolean isValidLightLevel() {
-		
+
 		return true;
 	}
-	
+
 	@Override
 	public boolean getCanSpawnHere() {
-		
+
 		return this.world.getDifficulty() != EnumDifficulty.PEACEFUL;
 	}
-	
-	
+
 	@Override
 	public void setChild(boolean childZombie) {
-		
-	}
-	
-	
-	
-    
-    @Override
-    protected SoundEvent getAmbientSound() {
-    	
-    	return super.getAmbientSound();
-    }
-    
-    @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
-    	
-    	return super.getHurtSound(source);
-    }
-    
-    @Override
-    protected SoundEvent getDeathSound() {
-    	
-    	return super.getDeathSound();
-    }
 
+	}
+
+	@Override
+	protected SoundEvent getAmbientSound() {
+
+		return super.getAmbientSound();
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+
+		return super.getHurtSound(source);
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+
+		return super.getDeathSound();
+	}
 
 }
