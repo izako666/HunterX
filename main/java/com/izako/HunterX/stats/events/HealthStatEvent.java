@@ -12,45 +12,40 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemFood;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class HealthStatEvent {
 
-	private double healthStatCap = 0;
-	private double healthStatPerm = 20.0D;
 	private AttributeModifier healthModifier;
 	UUID attribute_uuid = UUID.randomUUID();
 
 	@SubscribeEvent
-	public void onHurt(LivingHurtEvent event) {
-		Entity playerIn = event.getEntity();
-		
-		IAttributeInstance attribute = ((EntityLivingBase) playerIn)
-				.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
-		IEntityStats stats = playerIn.getCapability(EntityStatsProvider.ENTITY_STATS, null);
+	public void onEaten(LivingEntityUseItemEvent.Finish e) {
+		if (e.getItem().getItem() instanceof ItemFood && e.getEntityLiving() instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) e.getEntityLiving();
 
-		if (playerIn instanceof EntityPlayer) {
-			if (healthStatCap < 20.0D) {
-				stats.setHealthStat(healthStatCap + 1);
-				healthStatCap = stats.getHealthStat();
-				healthModifier = new AttributeModifier(attribute_uuid, "healthStatIncrease", healthStatCap, 0)
+			IAttributeInstance attribute = ((EntityLivingBase) player)
+					.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
+			IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
+			Double healthStat = stats.getHealthStat();
+			if (healthStat < 10) {
+				stats.setHealthStat(healthStat + 0.1);
+				healthStat = stats.getHealthStat();
+				healthModifier = new AttributeModifier(attribute_uuid, "healthStatIncrease", healthStat, 0)
 						.setSaved(true);
 				attribute.removeModifier(healthModifier);
 				attribute.applyModifier(healthModifier);
+			} else if (healthStat >= 10) {
 
-				playerIn.sendMessage(new TextComponentString(Double.toString(healthStatCap)));
-			} else if (healthStatCap >= 20.0D) {
-
-				healthModifier = new AttributeModifier(attribute_uuid, "healthStatIncrease", healthStatPerm, 0)
-						.setSaved(true);
+				healthModifier = new AttributeModifier(attribute_uuid, "healthStatIncrease", 10, 0);
 				attribute.removeModifier(healthModifier);
 				attribute.applyModifier(healthModifier);
-				playerIn.sendMessage(new TextComponentString(Double.toString(healthStatCap)));
-
 			}
 		}
 

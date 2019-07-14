@@ -4,6 +4,9 @@ import com.izako.HunterX.init.EntityInit;
 import com.izako.HunterX.init.ModItems;
 import com.izako.HunterX.items.entities.EntityCard;
 import com.izako.HunterX.items.entities.YoyoProjectile;
+import com.izako.HunterX.stats.capabilities.EntityStatsBase;
+import com.izako.HunterX.stats.capabilities.EntityStatsCapability;
+import com.izako.HunterX.stats.capabilities.IEntityStats;
 import com.izako.HunterX.util.handlers.EventsHandler;
 import com.izako.HunterX.util.handlers.RegistryHandler;
 
@@ -24,7 +27,9 @@ public class CommonProxy {
 	}
 	@EventHandler
 	public  void init (FMLInitializationEvent event)
-	{}
+	{
+        CapabilityManager.INSTANCE.register(IEntityStats.class, new EntityStatsCapability(),  EntityStatsBase::new);
+	}
 	public void RenderEntity(){
 		EntityInit.registerEntities();
 	}

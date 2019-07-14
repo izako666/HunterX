@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class AttackStatEvent {
 
 	private AttributeModifier attackModifier;
-	private double attackStat = 0;
+	
 
 	@SubscribeEvent
 	public void onHurt(LivingHurtEvent event) {
@@ -24,21 +24,19 @@ public class AttackStatEvent {
 			IAttributeInstance attribute = ((EntityLivingBase) player)
 					.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
 			IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
+			double attackStat = stats.getAttackStat();
 			if (attackStat < 10) {
-				stats.setAttackStat(attackStat + 1);
+				stats.setAttackStat(attackStat + 0.05);
 				attackStat = stats.getAttackStat();
 				attackModifier = new AttributeModifier(player.getUniqueID(), "attackStatIncrease", attackStat, 0)
 						.setSaved(true);
 				attribute.removeModifier(attackModifier);
 				attribute.applyModifier(attackModifier);
-				player.sendMessage(new TextComponentString(Double.toString(attackStat)));
-				player.sendMessage(new TextComponentString(Double.toString(event.getAmount())));
 			} else if (attackStat >= 10) {
-				AttributeModifier attackModifierMax = new AttributeModifier(player.getUniqueID(), "attackStatIncreaseMax", 10, 0)
+				attackModifier = new AttributeModifier(player.getUniqueID(), "attackStatIncrease", 10, 0)
 						.setSaved(true);
 				attribute.removeModifier(attackModifier);
-				attribute.removeModifier(attackModifierMax);
-				attribute.applyModifier(attackModifierMax);
+				attribute.applyModifier(attackModifier);
 
 			}
 

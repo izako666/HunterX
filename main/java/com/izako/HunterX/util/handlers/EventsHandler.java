@@ -6,7 +6,9 @@ import com.izako.HunterX.events.HunterCardDropEvent;
 import com.izako.HunterX.events.ThugDropEvent;
 import com.izako.HunterX.stats.events.AttackStatEvent;
 import com.izako.HunterX.stats.events.CapabilityAttachEvent;
+import com.izako.HunterX.stats.events.DefenseStatEvent;
 import com.izako.HunterX.stats.events.HealthStatEvent;
+import com.izako.HunterX.stats.events.OnDeathStatResetEvent;
 import com.izako.HunterX.stats.events.SpeedStatEvent;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -23,6 +25,8 @@ public class EventsHandler {
 		SpeedStatEvent speedStatEvent = new SpeedStatEvent();
 		CapabilityAttachEvent capabilityEvent = new CapabilityAttachEvent();
 		AttackStatEvent attackStatEvent = new AttackStatEvent();
+		OnDeathStatResetEvent onDeathStatResetEvent = new OnDeathStatResetEvent();
+		DefenseStatEvent defenseStatEvent = new DefenseStatEvent();
 		
 		
 		MinecraftForge.EVENT_BUS.register(hanzoArmorBaseEvent);
@@ -33,6 +37,10 @@ public class EventsHandler {
 		MinecraftForge.EVENT_BUS.register(speedStatEvent);
 		MinecraftForge.EVENT_BUS.register(capabilityEvent);
 		MinecraftForge.EVENT_BUS.register(attackStatEvent);
+		MinecraftForge.EVENT_BUS.register(onDeathStatResetEvent);
+		MinecraftForge.EVENT_BUS.register(defenseStatEvent);
+
+
 
 		
 

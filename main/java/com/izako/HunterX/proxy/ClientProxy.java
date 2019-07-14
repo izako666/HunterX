@@ -29,7 +29,6 @@ public class ClientProxy extends CommonProxy{
     @Override
 	public  void init (FMLInitializationEvent event)
 	{
-        CapabilityManager.INSTANCE.register(IEntityStats.class, new EntityStatsCapability(),  EntityStatsBase::new);
     	super.init(event);
     	
 	}
