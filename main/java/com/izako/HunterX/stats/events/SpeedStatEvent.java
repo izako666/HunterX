@@ -2,6 +2,8 @@ package com.izako.HunterX.stats.events;
 
 import java.util.UUID;
 
+import com.izako.HunterX.network.ModidPacketHandler;
+import com.izako.HunterX.network.packets.EntityStatsServerSync;
 import com.izako.HunterX.stats.capabilities.EntityStatsProvider;
 import com.izako.HunterX.stats.capabilities.IEntityStats;
 
@@ -32,6 +34,7 @@ public class SpeedStatEvent {
 			if (stats.getSpeedStat() < 0.2D) {
 				stats.setSpeedStat(stats.getSpeedStat() + 0.002);
 
+				ModidPacketHandler.INSTANCE.sendToServer(new EntityStatsServerSync(stats.getSpeedStat(), 3));
 				stats.getSpeedStat();
 				speedModifier = new AttributeModifier(attribute_uuid, "SpeedStatIncrease", stats.getSpeedStat(), 0)
 						.setSaved(true);

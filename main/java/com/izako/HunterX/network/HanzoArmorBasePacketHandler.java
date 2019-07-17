@@ -30,7 +30,7 @@ public class HanzoArmorBasePacketHandler implements IMessageHandler<HanzoArmorBa
 		    }); 
 		    	
 		 
-		    // No response packet
+		    
 		    
 		  } else if(isSpawned == 1) {
 			  serverPlayer.getServerWorld().addScheduledTask(() -> { 

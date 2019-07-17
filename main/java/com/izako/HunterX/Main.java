@@ -7,7 +7,11 @@ import com.izako.HunterX.init.ModRecipes;
 import com.izako.HunterX.items.entities.EntityCard;
 import com.izako.HunterX.items.entities.YoyoProjectile;
 import com.izako.HunterX.network.ModidPacketHandler;
+import com.izako.HunterX.network.EntityStatsClientSyncHandler;
+import com.izako.HunterX.network.EntityStatsServerSyncHandler;
 import com.izako.HunterX.network.HanzoArmorBasePacketHandler;
+import com.izako.HunterX.network.packets.EntityStatsClientSync;
+import com.izako.HunterX.network.packets.EntityStatsServerSync;
 import com.izako.HunterX.network.packets.HanzoArmorBasePacket;
 import com.izako.HunterX.proxy.CommonProxy;
 import com.izako.HunterX.util.Reference;
@@ -43,6 +47,8 @@ public class Main {
 		Main.proxy.preinitRegistries();
 	GameRegistry.registerWorldGenerator(new ModWorldGen(), 3 );
 		ModidPacketHandler.INSTANCE.registerMessage(HanzoArmorBasePacketHandler.class, HanzoArmorBasePacket.class, 0, Side.SERVER);
+		ModidPacketHandler.INSTANCE.registerMessage(EntityStatsServerSyncHandler.class, EntityStatsServerSync.class, 1, Side.SERVER);
+		ModidPacketHandler.INSTANCE.registerMessage(EntityStatsClientSyncHandler.class, EntityStatsClientSync.class, 2, Side.CLIENT);
 	}
 	
 	@EventHandler
