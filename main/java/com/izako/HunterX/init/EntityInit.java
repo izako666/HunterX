@@ -3,6 +3,7 @@ package com.izako.HunterX.init;
 import com.izako.HunterX.Main;
 import com.izako.HunterX.entity.BossExam;
 import com.izako.HunterX.entity.Empty;
+import com.izako.HunterX.entity.EntityStats;
 import com.izako.HunterX.entity.Examiner;
 import com.izako.HunterX.entity.Thug;
 import com.izako.HunterX.util.Reference;
@@ -12,6 +13,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.passive.EntityPig;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
@@ -24,6 +26,7 @@ public class EntityInit {
 		registerEntity("Thug", Thug.class, Reference.THUG, 50, 65280, 17664);
 		registerEntity("Examiner", Examiner.class, Reference.EXAMINER, 50, 0, 999999);
 		registerEntity("BossExam", BossExam.class, Reference.BOSSEXAM, 50, 001011, 101101);
+		registerEntity("EntityStats", EntityStats.class, Reference.ENTITYSTATS, 50, 110100, 010010);
 		addSpawns();
 	}
 	
@@ -34,9 +37,13 @@ public class EntityInit {
 	
 	
 	 private static void addSpawns() {
+		 copySpawns(EntityStats.class,EnumCreatureType.MONSTER, EntityCreeper.class, EnumCreatureType.MONSTER, 100, 1);
+		 
 		 copySpawns(Empty.class,EnumCreatureType.MONSTER, EntityCreeper.class, EnumCreatureType.MONSTER, 100, 1);
+		 
 		 copySpawns(Thug.class, EnumCreatureType.MONSTER, EntityCreeper.class, EnumCreatureType.MONSTER, 10, 1);
-		  copySpawns(Examiner.class, EnumCreatureType.MONSTER, EntityCreeper.class, EnumCreatureType.MONSTER, 1, 1);
+		 
+		 copySpawns(Examiner.class, EnumCreatureType.MONSTER, EntityCreeper.class, EnumCreatureType.MONSTER, 1, 1);
 		  
 		  
 		 }

@@ -12,4 +12,5 @@ public class Reference {
 	public static final int THUG = 120;
 	public static final int EXAMINER = 121;
 	public static final int BOSSEXAM = 122;
+	public static final int ENTITYSTATS = 123;
 }
