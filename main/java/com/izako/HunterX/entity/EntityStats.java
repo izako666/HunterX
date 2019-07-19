@@ -124,19 +124,19 @@ public class EntityStats extends EntityVillager implements IEntityAdditionalSpaw
 
 		// Speed stat text
 
-		if (stats.getSpeedStat() < 0.05) {
+		if (stats.getSpeedStat() < 0.03) {
 			if (world.isRemote) {
 				player.sendMessage(new TextComponentString("you're not very fast are you...?"));
 			}
 		}
 
-		if (stats.getSpeedStat() < 0.1 && stats.getSpeedStat() > 0.05) {
+		if (stats.getSpeedStat() < 0.06 && stats.getSpeedStat() > 0.03) {
 			if (world.isRemote) {
 				player.sendMessage(new TextComponentString("Huh, you're quite nimble on your feet."));
 			}
 		}
 
-		if (stats.getSpeedStat() <= 0.2 && stats.getSpeedStat() > 0.1 || stats.getSpeedStat() > 0.2) {
+		if (stats.getSpeedStat() <= 0.1 && stats.getSpeedStat() > 0.06 || stats.getSpeedStat() > 0.1) {
 			if (world.isRemote) {
 				player.sendMessage(new TextComponentString("I have never seen someone as fast as you are."));
 			}
