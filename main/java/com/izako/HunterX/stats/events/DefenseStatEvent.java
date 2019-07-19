@@ -33,7 +33,7 @@ public class DefenseStatEvent {
 			IEntityStats stats = playerIn.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 			double defenseStatCap = stats.getDefenseStat();
 			if (defenseStatCap < 10.0D) {
-				stats.setDefenseStat(defenseStatCap + 0.03);
+				stats.setDefenseStat(defenseStatCap + 0.01);
 				defenseStatCap = stats.getDefenseStat();
 				if(playerIn instanceof EntityPlayerMP) {
 					ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(stats.getDefenseStat(), 2), (EntityPlayerMP) playerIn);

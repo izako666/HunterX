@@ -29,7 +29,7 @@ public class AttackStatEvent {
 			IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 			double attackStat = stats.getAttackStat();
 			if (attackStat < 10) {
-				stats.setAttackStat(attackStat + 0.01);
+				stats.setAttackStat(attackStat + 0.0025);
 				attackStat = stats.getAttackStat();
 				if(player instanceof EntityPlayerMP) {
 				ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(stats.getAttackStat(), 4), (EntityPlayerMP) player);}
