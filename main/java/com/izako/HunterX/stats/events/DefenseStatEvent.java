@@ -42,7 +42,6 @@ public class DefenseStatEvent {
 						.setSaved(true);
 				attribute.removeModifier(defenseModifier);
 				attribute.applyModifier(defenseModifier);
-				playerIn.sendMessage(new TextComponentString("Defense Stat is:" + Double.toString(stats.getDefenseStat())));
 
 			} else if (defenseStatCap >= 10.0D) {
 				defenseModifier = new AttributeModifier(attribute_uuid, "defenseStatIncrease", 10, 0)
