@@ -37,7 +37,7 @@ public class HealthStatEvent {
 			IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 			Double healthStat = stats.getHealthStat();
 			if (healthStat < 10) {
-				stats.setHealthStat(healthStat + 0.02);
+				stats.setHealthStat(healthStat + 0.04);
 				healthStat = stats.getHealthStat();
 				ModidPacketHandler.INSTANCE.sendToServer(new EntityStatsServerSync(stats.getHealthStat(), 1));
 				healthModifier = new AttributeModifier(attribute_uuid, "healthStatIncrease", healthStat, 0)

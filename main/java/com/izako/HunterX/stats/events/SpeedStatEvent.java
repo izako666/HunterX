@@ -35,7 +35,7 @@ public class SpeedStatEvent {
 		if (player.isSprinting()) {
 			if (stats.getSpeedStat() < 0.1D) {
 				
-				stats.setSpeedStat(stats.getSpeedStat() + 0.000002);
+				stats.setSpeedStat(stats.getSpeedStat() + 0.000004);
 
 				stats.getSpeedStat();
 				speedModifier = new AttributeModifier(attribute_uuid, "SpeedStatIncrease", stats.getSpeedStat(), 0)
