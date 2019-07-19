@@ -2,6 +2,8 @@ package com.izako.HunterX.stats.events;
 
 import java.util.UUID;
 
+import com.izako.HunterX.network.ModidPacketHandler;
+import com.izako.HunterX.network.packets.EntityStatsServerSync;
 import com.izako.HunterX.stats.capabilities.EntityStatsProvider;
 import com.izako.HunterX.stats.capabilities.IEntityStats;
 
@@ -37,6 +39,7 @@ public class HealthStatEvent {
 			if (healthStat < 10) {
 				stats.setHealthStat(healthStat + 0.1);
 				healthStat = stats.getHealthStat();
+				ModidPacketHandler.INSTANCE.sendToServer(new EntityStatsServerSync(stats.getHealthStat(), 1));
 				healthModifier = new AttributeModifier(attribute_uuid, "healthStatIncrease", healthStat, 0)
 						.setSaved(true);
 				attribute.removeModifier(healthModifier);

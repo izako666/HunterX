@@ -22,7 +22,6 @@ public class EntityStatsServerSyncHandler implements IMessageHandler<EntityStats
 	    int statType = message.statType;
 
 	    serverPlayer.getServerWorld().addScheduledTask(() -> {
-	    	serverPlayer.sendMessage(new TextComponentString("Server packet sent" + Double.toString(amount)));
 		      IEntityStats stats = serverPlayer.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 		      if(statType == 1) {
 		    	  stats.setHealthStat(amount);
@@ -30,6 +29,7 @@ public class EntityStatsServerSyncHandler implements IMessageHandler<EntityStats
 		    	  stats.setDefenseStat(amount);
 		      } else if(statType == 3) {
 		    	  stats.setSpeedStat(amount);
+		    	  System.out.println(Double.toString(stats.getSpeedStat()));
 		      } else if(statType == 4) {
 		    	  stats.setAttackStat(amount);
 		      }

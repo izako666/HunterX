@@ -1,5 +1,7 @@
 package com.izako.HunterX.stats.events;
 
+import com.izako.HunterX.network.ModidPacketHandler;
+import com.izako.HunterX.network.packets.EntityStatsClientSync;
 import com.izako.HunterX.stats.capabilities.EntityStatsProvider;
 import com.izako.HunterX.stats.capabilities.IEntityStats;
 
@@ -8,6 +10,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -26,8 +29,10 @@ public class AttackStatEvent {
 			IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 			double attackStat = stats.getAttackStat();
 			if (attackStat < 10) {
-				stats.setAttackStat(attackStat + 0.05);
+				stats.setAttackStat(attackStat + 0.01);
 				attackStat = stats.getAttackStat();
+				if(player instanceof EntityPlayerMP) {
+				ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(stats.getAttackStat(), 4), (EntityPlayerMP) player);}
 				attackModifier = new AttributeModifier(player.getUniqueID(), "attackStatIncrease", attackStat, 0)
 						.setSaved(true);
 				attribute.removeModifier(attackModifier);

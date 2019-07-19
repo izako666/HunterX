@@ -30,9 +30,8 @@ public class OnDeathStatResetEvent {
 		stats.setDefenseStat(oldStats.getDefenseStat());
 		stats.setAttackStat(oldStats.getAttackStat());
 		stats.setIsHunter(oldStats.isHunter());
-		ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(stats.getSpeedStat(), 3), p);
 		
-		p.sendMessage(new TextComponentString(Double.toString(stats.getSpeedStat())));
 
 	}
+	
 }

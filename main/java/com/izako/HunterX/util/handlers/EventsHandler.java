@@ -9,6 +9,9 @@ import com.izako.HunterX.stats.events.CapabilityAttachEvent;
 import com.izako.HunterX.stats.events.DefenseStatEvent;
 import com.izako.HunterX.stats.events.HealthStatEvent;
 import com.izako.HunterX.stats.events.OnDeathStatResetEvent;
+import com.izako.HunterX.stats.events.PlayerChangeDimensionEvent;
+import com.izako.HunterX.stats.events.PlayerLoggedInEvent;
+import com.izako.HunterX.stats.events.PlayerRespawnEvent;
 import com.izako.HunterX.stats.events.SpeedStatEvent;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -27,6 +30,9 @@ public class EventsHandler {
 		AttackStatEvent attackStatEvent = new AttackStatEvent();
 		OnDeathStatResetEvent onDeathStatResetEvent = new OnDeathStatResetEvent();
 		DefenseStatEvent defenseStatEvent = new DefenseStatEvent();
+		PlayerRespawnEvent pre = new PlayerRespawnEvent();
+		PlayerLoggedInEvent ple = new PlayerLoggedInEvent();
+		PlayerChangeDimensionEvent pcd = new PlayerChangeDimensionEvent();
 		
 		
 		MinecraftForge.EVENT_BUS.register(hanzoArmorBaseEvent);
@@ -39,6 +45,11 @@ public class EventsHandler {
 		MinecraftForge.EVENT_BUS.register(attackStatEvent);
 		MinecraftForge.EVENT_BUS.register(onDeathStatResetEvent);
 		MinecraftForge.EVENT_BUS.register(defenseStatEvent);
+		MinecraftForge.EVENT_BUS.register(pre);
+		MinecraftForge.EVENT_BUS.register(ple);
+		MinecraftForge.EVENT_BUS.register(pcd);
+
+
 
 
 

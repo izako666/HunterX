@@ -32,15 +32,14 @@ public class SpeedStatEvent {
 
 		if (player.isSprinting()) {
 			if (stats.getSpeedStat() < 0.2D) {
-				stats.setSpeedStat(stats.getSpeedStat() + 0.002);
+				stats.setSpeedStat(stats.getSpeedStat() + 0.00003);
 
-				ModidPacketHandler.INSTANCE.sendToServer(new EntityStatsServerSync(stats.getSpeedStat(), 3));
 				stats.getSpeedStat();
 				speedModifier = new AttributeModifier(attribute_uuid, "SpeedStatIncrease", stats.getSpeedStat(), 0)
 						.setSaved(true);
 				attribute.removeModifier(speedModifier);
 				attribute.applyModifier(speedModifier);
-				player.sendMessage(new TextComponentString("speedcap" + Double.toString(stats.getSpeedStat())));
+				ModidPacketHandler.INSTANCE.sendToServer(new EntityStatsServerSync(stats.getSpeedStat(), 3));
 			} else if (stats.getSpeedStat() >= 0.2D) {
 				// maximum speed modifier is .20
 				speedModifier = new AttributeModifier(attribute_uuid, "SpeedStatIncrease", 0.2, 0).setSaved(true);

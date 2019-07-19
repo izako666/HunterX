@@ -22,7 +22,6 @@ public class EntityStatsClientSyncHandler implements IMessageHandler<EntityStats
 		Double amount = message.amount;
 		int statType = message.statType;
 		Minecraft.getMinecraft().addScheduledTask(() -> {
-			player.sendMessage(new TextComponentString("client packet sent" + Double.toString(amount)));
 			IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 			if (statType == 1) {
 				stats.setHealthStat(amount);

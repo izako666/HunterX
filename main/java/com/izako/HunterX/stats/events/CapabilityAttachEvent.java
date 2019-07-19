@@ -18,8 +18,8 @@ public class CapabilityAttachEvent {
 
 			if (!event.getCapabilities().containsKey(key)) {
 				event.addCapability(key, new EntityStatsProvider());
+				System.out.println("attached");
 			}
-			System.out.println("attached");
 
 		}
 
