@@ -25,14 +25,17 @@ public class SpeedStatEvent {
 	@SubscribeEvent
 	public void onSprintEvent(TickEvent.PlayerTickEvent event) {
 
+		
+		
 		EntityPlayer player = event.player;
+		
 		IAttributeInstance attribute = ((EntityLivingBase) player)
 				.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
 		IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
-
 		if (player.isSprinting()) {
-			if (stats.getSpeedStat() < 0.2D) {
-				stats.setSpeedStat(stats.getSpeedStat() + 0.00003);
+			if (stats.getSpeedStat() < 0.1D) {
+				
+				stats.setSpeedStat(stats.getSpeedStat() + 0.000004);
 
 				stats.getSpeedStat();
 				speedModifier = new AttributeModifier(attribute_uuid, "SpeedStatIncrease", stats.getSpeedStat(), 0)
