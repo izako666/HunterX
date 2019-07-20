@@ -43,15 +43,17 @@ public class ItemCard extends ItemBase {
 
 	        worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
+	        if(!worldIn.isRemote) {
+	        	EntityCard entitycard = new EntityCard(worldIn, playerIn, 1, 1, 1);
 	        
-	        	EntityCard entitycard = new EntityCard(worldIn,playerIn, 1, 1, 1);
-	           
 	            entitycard.setPosition(playerIn.posX + aim.x, playerIn.posY + playerIn.eyeHeight, playerIn.posZ + aim.z);
 	    		entitycard.motionX = aim.x * 4;
 	    		entitycard.motionY = aim.y * 4;
 	    		entitycard.motionZ = aim.z * 4;
-	    		
+		       
+
 	            worldIn.spawnEntity(entitycard);
+	        }
 	            
 	        
 

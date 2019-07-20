@@ -10,9 +10,12 @@ import com.izako.HunterX.stats.capabilities.IEntityStats;
 import com.izako.HunterX.util.handlers.RegistryHandler;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -40,10 +43,34 @@ public class ClientProxy extends CommonProxy{
 	@Override
 	public void render(){
 		
-		RenderingRegistry.registerEntityRenderingHandler(EntityCard.class, new RenderSnowball<EntityCard>(Minecraft.getMinecraft().getRenderManager(),ModItems.HISOKAS_CARD, Minecraft.getMinecraft().getRenderItem()));
-		RenderingRegistry.registerEntityRenderingHandler(YoyoProjectile.class, new RenderSnowball<YoyoProjectile>(Minecraft.getMinecraft().getRenderManager(),ModItems.YOYO, Minecraft.getMinecraft().getRenderItem()));
-		RenderingRegistry.registerEntityRenderingHandler(EntityNeedle.class, new RenderSnowball<EntityNeedle>(Minecraft.getMinecraft().getRenderManager(),ModItems.ILLUMIS_NEEDLE, Minecraft.getMinecraft().getRenderItem()));
+		RenderingRegistry.registerEntityRenderingHandler(EntityCard.class, new IRenderFactory() {
 
+			@Override
+			public Render<EntityCard> createRenderFor(RenderManager manager) {
+				// TODO Auto-generated method stub
+				return new RenderSnowball<EntityCard>(manager, ModItems.HISOKAS_CARD, Minecraft.getMinecraft().getRenderItem());
+			}
+			
+		});
+
+		RenderingRegistry.registerEntityRenderingHandler(EntityNeedle.class, new IRenderFactory() {
+
+			@Override
+			public Render<EntityNeedle> createRenderFor(RenderManager manager) {
+				// TODO Auto-generated method stub
+				return new RenderSnowball<EntityNeedle>(manager, ModItems.ILLUMIS_NEEDLE, Minecraft.getMinecraft().getRenderItem());
+			}
+			
+		});
+		RenderingRegistry.registerEntityRenderingHandler(YoyoProjectile.class, new IRenderFactory() {
+
+			@Override
+			public Render<YoyoProjectile> createRenderFor(RenderManager manager) {
+				// TODO Auto-generated method stub
+				return new RenderSnowball<YoyoProjectile>(manager, ModItems.YOYO, Minecraft.getMinecraft().getRenderItem());
+			}
+			
+		});
 	}
 
 }

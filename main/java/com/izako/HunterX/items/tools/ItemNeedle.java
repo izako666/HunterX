@@ -44,7 +44,7 @@ public class ItemNeedle extends ItemBase{
 
 	        worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
-	        
+	        if(!worldIn.isRemote) {
 	        	EntityNeedle entityneedle = new EntityNeedle(worldIn,playerIn, 1, 1, 1);
 	           
 	            entityneedle.setPosition(playerIn.posX + aim.x, playerIn.posY + playerIn.eyeHeight, playerIn.posZ + aim.z);
@@ -53,7 +53,7 @@ public class ItemNeedle extends ItemBase{
 	    		entityneedle.motionZ = aim.z * 4;
 	    		
 	            worldIn.spawnEntity(entityneedle);
-	            
+	        }
 	        
 
 	        playerIn.addStat(StatList.getObjectUseStats(this));

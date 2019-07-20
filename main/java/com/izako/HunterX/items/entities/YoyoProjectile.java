@@ -36,7 +36,14 @@ public class YoyoProjectile extends EntityThrowable{
 	 
 	 
 	
-	 
+	 public YoyoProjectile(World worldIn) {
+			super(worldIn);
+		}
+
+		public YoyoProjectile(World worldIn, EntityLivingBase throwerIn) {
+			super(worldIn, throwerIn);
+		}
+
 	 
 	
 	 public YoyoProjectile(World worldIn,EntityPlayer playerIn, double x, double y, double z) {

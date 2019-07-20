@@ -45,6 +45,7 @@ public class Main {
 	public static void PreInit (FMLPreInitializationEvent event){
 		Main.proxy.RenderEntity();
 		Main.proxy.preinitRegistries();
+		Main.proxy.render();
 	GameRegistry.registerWorldGenerator(new ModWorldGen(), 3 );
 		ModidPacketHandler.INSTANCE.registerMessage(HanzoArmorBasePacketHandler.class, HanzoArmorBasePacket.class, 0, Side.SERVER);
 		ModidPacketHandler.INSTANCE.registerMessage(EntityStatsServerSyncHandler.class, EntityStatsServerSync.class, 1, Side.SERVER);
@@ -55,7 +56,6 @@ public class Main {
 	public static void init (FMLInitializationEvent event)
 	{
 		proxy.init(event);
-		Main.proxy.render();
 	ModRecipes.init();
 	
 	}

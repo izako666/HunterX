@@ -6,6 +6,9 @@ import com.izako.HunterX.entity.Empty;
 import com.izako.HunterX.entity.EntityStats;
 import com.izako.HunterX.entity.Examiner;
 import com.izako.HunterX.entity.Thug;
+import com.izako.HunterX.items.entities.EntityCard;
+import com.izako.HunterX.items.entities.EntityNeedle;
+import com.izako.HunterX.items.entities.YoyoProjectile;
 import com.izako.HunterX.util.Reference;
 
 import net.minecraft.entity.Entity;
@@ -27,6 +30,10 @@ public class EntityInit {
 		registerEntity("Examiner", Examiner.class, Reference.EXAMINER, 50, 0, 999999);
 		registerEntity("BossExam", BossExam.class, Reference.BOSSEXAM, 50, 001011, 101101);
 		registerEntity("EntityStats", EntityStats.class, Reference.ENTITYSTATS, 50, 110100, 010010);
+		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID + ":" + "EntityCard"), EntityCard.class, "EntityCard", 124, Main.instance, 64, 10, true);
+		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID + ":" + "EntityNeedle"), EntityNeedle.class, "EntityCard", 125, Main.instance, 64, 10, true);
+		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID + ":" + "EntityCard"), YoyoProjectile.class, "YoyoProjectile", 126, Main.instance, 64, 10, true);
+
 		addSpawns();
 	}
 	
