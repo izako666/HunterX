@@ -16,6 +16,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntitySnowball;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
@@ -141,17 +142,7 @@ public class YoyoProjectile extends EntityThrowable{
 
             
         }
-		if (result.typeOfHit == RayTraceResult.Type.BLOCK) {
-			
-			
-			
-		}
 		
-
-       
-	        
-	        }
-		 
 		 if(ticksExisted > 1) {
 			  this.motionX = (this.owner.posX - this.posX)*0.05;
 			  this.motionY = (this.owner.posY + this.owner.eyeHeight - this.posY)*0.1;
@@ -162,17 +153,14 @@ public class YoyoProjectile extends EntityThrowable{
 			 owner.getCooldownTracker().setCooldown(ModItems.YOYO, count);
 			 }
 			 cooldowncount ++;
-			 
-			 
-			
-		 
-			 
+			  
 		 }
+		
+	        }
 		 
- if(result.entityHit == owner && ticksExisted > 1) {
-			 
-			 this.setDead();
-		 }
+		
+		 
+
 		 
 		 
 		 

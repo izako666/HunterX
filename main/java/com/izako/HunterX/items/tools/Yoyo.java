@@ -39,26 +39,22 @@ public class Yoyo extends ItemBase{
 		ItemStack item = playerIn.getHeldItem(handIn);
 		Vec3d aim = playerIn.getLookVec();
 		
-        
-		YoyoProjectile yoyo_front = new  YoyoProjectile(worldIn,playerIn,1,1,1);
-		playerIn.getCooldownTracker().setCooldown(this, 60);
-		
-		
-		worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-		
-		yoyo_front.setPosition(playerIn.posX + aim.x, playerIn.posY + playerIn.eyeHeight, playerIn.posZ + aim.z);
-		yoyo_front.motionX = aim.x * 2;
-		yoyo_front.motionY = aim.y * 2;
-		yoyo_front.motionZ = aim.z * 2;
-		worldIn.spawnEntity(yoyo_front);
-		
-		
+		if(!worldIn.isRemote) {
 			
-		
-		
-		
-		
-		item.damageItem(10, playerIn);
+			YoyoProjectile yoyo_front = new  YoyoProjectile(worldIn,playerIn,1,1,1);
+			playerIn.getCooldownTracker().setCooldown(this, 60);
+			
+			
+			worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+			
+			yoyo_front.setPosition(playerIn.posX + aim.x, playerIn.posY + playerIn.eyeHeight, playerIn.posZ + aim.z);
+			yoyo_front.motionX = aim.x * 2;
+			yoyo_front.motionY = aim.y * 2;
+			yoyo_front.motionZ = aim.z * 2;
+			worldIn.spawnEntity(yoyo_front);
+			
+		}
+
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, item);
 		
 		

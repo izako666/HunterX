@@ -45,17 +45,32 @@ public class EntityNeedle extends EntitySnowball {
 
 	@Override
 	protected void onImpact(RayTraceResult result) {
-		if (result.entityHit != null) {
-			int i = 8;
+		if (!this.world.isRemote && ticksExisted > 1) {
+
+			if (!this.world.isRemote) {
+				this.world.setEntityState(this, (byte) 3);
+				
+				if (result.entityHit != null && ticksExisted > 1) {
+					int damageAmount = 8;
+					result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.thrower), (float) damageAmount);
+
+				}
+				
+				
+
+			}
+
+			
+
+		}
+		
+		if (this.world.isRemote && ticksExisted > 1) {
+			this.motionX = 0;
+			this.motionY = 0;
+			this.motionZ = 0;
+		}
 
 		
-
-		result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float) i);
-		}
-		if (!this.world.isRemote) {
-			this.world.setEntityState(this, (byte) 3);
-		
-		}
 		
 	}
 }
