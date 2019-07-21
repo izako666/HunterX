@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityCard extends EntitySnowball {
+public class EntityCard extends EntityThrowable {
 	int maxticks = 150;
 	private EntityPlayer owner;
 
@@ -42,6 +42,16 @@ public class EntityCard extends EntitySnowball {
 	public void handleStatusUpdate(byte id) {
 
 	}
+	
+	@Override
+	public void onEntityUpdate() {
+		super.onEntityUpdate();
+		
+		if(this.ticksExisted >= 120) {
+			this.setDead();
+		}
+	}
+
 
 	@Override
 	protected void onImpact(RayTraceResult result) {
@@ -53,6 +63,7 @@ public class EntityCard extends EntitySnowball {
 				if (result.entityHit != null && ticksExisted > 1) {
 					int damageAmount = 6;
 					result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.thrower), (float) damageAmount);
+					this.setDead();
 
 				}
 				
@@ -64,7 +75,7 @@ public class EntityCard extends EntitySnowball {
 		
 	}
 		
-		if (this.world.isRemote && ticksExisted > 1) {
+		if (ticksExisted > 1) {
 			this.motionX = 0;
 			this.motionY = 0;
 			this.motionZ = 0;
