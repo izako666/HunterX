@@ -46,7 +46,7 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
-public class EntityStats extends EntityVillager implements IEntityAdditionalSpawnData {
+public class EntityStats extends EntityVillager {
 	java.util.List<EntityStats> list;
 
 	public EntityStats(World worldIn) {
@@ -197,6 +197,8 @@ public class EntityStats extends EntityVillager implements IEntityAdditionalSpaw
 				player.sendMessage(new TextComponentString("I can see you're of immense health."));
 			}
 		}
+		
+		player.sendMessage(new TextComponentString(""+ stats.getSpeedStat()));
 
 		return true;
 	}
@@ -225,16 +227,6 @@ public class EntityStats extends EntityVillager implements IEntityAdditionalSpaw
 		return false;
 	}
 
-	@Override
-	public void writeSpawnData(ByteBuf buffer) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void readSpawnData(ByteBuf additionalData) {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 }
