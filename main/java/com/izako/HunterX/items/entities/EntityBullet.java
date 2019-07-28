@@ -11,20 +11,21 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public class EntityBullet extends EntityThrowable {
+	private EntityPlayer owner;
 
 	public EntityBullet(World worldIn) {
 		super(worldIn);
-		this.setSize(5, 5);
+		
 	}
 
 	public EntityBullet(World worldIn, EntityLivingBase throwerIn) {
 		super(worldIn, throwerIn);
-		this.setSize(5, 5);
+		
 	}
 
 	public EntityBullet(World worldIn, EntityPlayer playerIn, double x, double y, double z) {
 		super(worldIn, x, y, z);
-		this.setSize(5, 5);
+		owner = playerIn;
 		
 
 	}
@@ -41,12 +42,12 @@ public class EntityBullet extends EntityThrowable {
 	@Override
 	protected void onImpact(RayTraceResult result) {
 		
-		if (!this.world.isRemote && ticksExisted > 1) {
+		if (!this.world.isRemote) {
 
 			if (!this.world.isRemote) {
 				this.world.setEntityState(this, (byte) 3);
 				
-				if (result.entityHit != null && ticksExisted > 1) {
+				if (result.entityHit != null && result.entityHit != owner) {
 					int damageAmount = 12;
 					result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.thrower), (float) damageAmount);
 					this.setDead();

@@ -34,10 +34,7 @@ public class Pistol extends ItemBase {
         Vec3d aim = playerIn.getLookVec();
         
         
-        if (!playerIn.capabilities.isCreativeMode)
-        {
-            itemstack.shrink(1);
-        }
+       
 
         worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
@@ -45,9 +42,9 @@ public class Pistol extends ItemBase {
         	EntityBullet bullet = new EntityBullet(worldIn, playerIn, 1, 1, 1);
         
             bullet.setPosition(playerIn.posX + aim.x, playerIn.posY + playerIn.eyeHeight, playerIn.posZ + aim.z);
-            bullet.motionX = aim.x * 8;
-            bullet.motionY = aim.y * 8;
-            bullet.motionZ = aim.z * 8;
+            bullet.motionX = aim.x * 4;
+            bullet.motionY = aim.y * 4;
+            bullet.motionZ = aim.z * 4;
 	       
 
             worldIn.spawnEntity(bullet);

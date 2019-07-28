@@ -116,7 +116,7 @@ public class YoyoProjectile extends EntityThrowable{
 		
 		
 		
-		 if(!this.world.isRemote && ticksExisted > 1)
+		 if(!this.world.isRemote)
 	        {
 	                
 	        
@@ -145,7 +145,7 @@ public class YoyoProjectile extends EntityThrowable{
             
         }
 		
-		 if(ticksExisted > 1) {
+		 if(result.entityHit != owner) {
 			  this.motionX = (this.owner.posX - this.posX)*0.05;
 			  this.motionY = (this.owner.posY + this.owner.eyeHeight - this.posY)*0.1;
 			  this.motionZ = (this.owner.posZ - this.posZ)*0.05;
