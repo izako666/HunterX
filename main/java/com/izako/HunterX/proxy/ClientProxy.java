@@ -1,6 +1,7 @@
 package com.izako.HunterX.proxy;
 
 import com.izako.HunterX.init.ModItems;
+import com.izako.HunterX.items.entities.EntityBullet;
 import com.izako.HunterX.items.entities.EntityCard;
 import com.izako.HunterX.items.entities.EntityNeedle;
 import com.izako.HunterX.items.entities.YoyoProjectile;
@@ -71,6 +72,8 @@ public class ClientProxy extends CommonProxy{
 			}
 			
 		});
+		
+		
 	}
 
 }

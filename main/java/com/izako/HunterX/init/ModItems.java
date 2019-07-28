@@ -83,6 +83,7 @@ public class ModItems {
 	public static final Item LOGO = new ItemBase("logo").setUnlocalizedName("logo");
 	public static final Item HUNTER_CARD = new ItemBase("hunter_card").setUnlocalizedName("hunter_card")
 			.setCreativeTab(HunterX);
+	public static final Item BULLET = new ItemBase("bullet");
 
 //Rightclick Items
 	public static final Item YOYO = new Yoyo("yoyo").setUnlocalizedName("yoyo").setCreativeTab(HunterX);

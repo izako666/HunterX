@@ -6,6 +6,7 @@ import com.izako.HunterX.entity.Empty;
 import com.izako.HunterX.entity.EntityStats;
 import com.izako.HunterX.entity.Examiner;
 import com.izako.HunterX.entity.Thug;
+import com.izako.HunterX.items.entities.EntityBullet;
 import com.izako.HunterX.items.entities.EntityCard;
 import com.izako.HunterX.items.entities.EntityNeedle;
 import com.izako.HunterX.items.entities.YoyoProjectile;
@@ -33,6 +34,7 @@ public class EntityInit {
 		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID + ":" + "EntityCard"), EntityCard.class, "EntityCard", 124, Main.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID + ":" + "EntityNeedle"), EntityNeedle.class, "EntityCard", 125, Main.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID + ":" + "EntityCard"), YoyoProjectile.class, "YoyoProjectile", 126, Main.instance, 64, 10, true);
+		
 
 		addSpawns();
 	}

@@ -2,6 +2,7 @@ package com.izako.HunterX.entity;
 
 import com.izako.HunterX.entity.AI.RangedGunAI;
 import com.izako.HunterX.init.ModItems;
+import com.izako.HunterX.items.entities.EntityBullet;
 import com.izako.HunterX.items.entities.EntityCard;
 import com.mojang.authlib.GameProfile;
 
@@ -155,14 +156,14 @@ public class Thug extends EntityZombie implements IRangedAttackMob {
 	@Override
 	public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
 		
-		 EntityCard card = new EntityCard(this.world, this);
+		 EntityBullet bullet = new EntityBullet(this.world, this);
 	        double d0 = target.posX - this.posX;
-	        double d1 = target.getEntityBoundingBox().minY + (double)(target.height / 3.0F) - card.posY;
+	        double d1 = target.getEntityBoundingBox().minY + (double)(target.height / 3.0F) - bullet.posY;
 	        double d2 = target.posZ - this.posZ;
 	        double d3 = (double)MathHelper.sqrt(d0 * d0 + d2 * d2);
-	        card.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.6F, (float)(14 - this.world.getDifficulty().getDifficultyId() * 4));
+	        bullet.shoot(d0*6, d1*6, d2*6, 1.6F, 0);
 	        this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-	        this.world.spawnEntity(card);
+	        this.world.spawnEntity(bullet);
 		
 	}
 	
