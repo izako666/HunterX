@@ -19,6 +19,11 @@ public class Empty extends EntityZombie {
 	}
 	
 	@Override
+	protected void initEntityAI() {
+		
+	}
+	
+	@Override
 	protected void applyEntityAI() {
 		
 	}
