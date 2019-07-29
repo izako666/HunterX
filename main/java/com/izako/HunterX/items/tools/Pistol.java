@@ -40,6 +40,7 @@ public class Pistol extends ItemBase {
 
         if(!worldIn.isRemote) {
         	EntityBullet bullet = new EntityBullet(worldIn, playerIn, 1, 1, 1);
+        	playerIn.getCooldownTracker().setCooldown(this, 20);
         
             bullet.setPosition(playerIn.posX + aim.x, playerIn.posY + playerIn.eyeHeight, playerIn.posZ + aim.z);
             bullet.motionX = aim.x * 4;

@@ -34,7 +34,7 @@ public class EntityInit {
 		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID + ":" + "EntityCard"), EntityCard.class, "EntityCard", 124, Main.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID + ":" + "EntityNeedle"), EntityNeedle.class, "EntityCard", 125, Main.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID + ":" + "EntityCard"), YoyoProjectile.class, "YoyoProjectile", 126, Main.instance, 64, 10, true);
-		
+		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID + ":" + "EntityBullet"), EntityBullet.class, "EntityBullet", 127, Main.instance, 64, 10, true);
 
 		addSpawns();
 	}

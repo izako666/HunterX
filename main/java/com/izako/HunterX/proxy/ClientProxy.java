@@ -44,34 +44,7 @@ public class ClientProxy extends CommonProxy{
 	@Override
 	public void render(){
 		
-		RenderingRegistry.registerEntityRenderingHandler(EntityCard.class, new IRenderFactory() {
-
-			@Override
-			public Render<EntityCard> createRenderFor(RenderManager manager) {
-				// TODO Auto-generated method stub
-				return new RenderSnowball<EntityCard>(manager, ModItems.HISOKAS_CARD, Minecraft.getMinecraft().getRenderItem());
-			}
-			
-		});
-
-		RenderingRegistry.registerEntityRenderingHandler(EntityNeedle.class, new IRenderFactory() {
-
-			@Override
-			public Render<EntityNeedle> createRenderFor(RenderManager manager) {
-				// TODO Auto-generated method stub
-				return new RenderSnowball<EntityNeedle>(manager, ModItems.ILLUMIS_NEEDLE, Minecraft.getMinecraft().getRenderItem());
-			}
-			
-		});
-		RenderingRegistry.registerEntityRenderingHandler(YoyoProjectile.class, new IRenderFactory() {
-
-			@Override
-			public Render<YoyoProjectile> createRenderFor(RenderManager manager) {
-				// TODO Auto-generated method stub
-				return new RenderSnowball<YoyoProjectile>(manager, ModItems.YOYO, Minecraft.getMinecraft().getRenderItem());
-			}
-			
-		});
+		
 		
 		
 	}

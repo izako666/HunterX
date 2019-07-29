@@ -161,8 +161,8 @@ public class Thug extends EntityZombie implements IRangedAttackMob {
 	        double d1 = target.getEntityBoundingBox().minY + (double)(target.height / 3.0F) - bullet.posY;
 	        double d2 = target.posZ - this.posZ;
 	        double d3 = (double)MathHelper.sqrt(d0 * d0 + d2 * d2);
-	        bullet.shoot(d0*6, d1*6, d2*6, 1.6F, 0);
-	        this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
+	        bullet.shoot(d0, d1 + d3 *0.05, d2, 4F, 0);
+	        
 	        this.world.spawnEntity(bullet);
 		
 	}

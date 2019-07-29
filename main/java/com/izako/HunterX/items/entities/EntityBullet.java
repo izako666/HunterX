@@ -15,16 +15,18 @@ public class EntityBullet extends EntityThrowable {
 
 	public EntityBullet(World worldIn) {
 		super(worldIn);
-		
+		this.setSize(2, 2);
 	}
 
 	public EntityBullet(World worldIn, EntityLivingBase throwerIn) {
 		super(worldIn, throwerIn);
+		this.setSize(2, 2);
 		
 	}
 
 	public EntityBullet(World worldIn, EntityPlayer playerIn, double x, double y, double z) {
 		super(worldIn, x, y, z);
+		this.setSize(2, 2);
 		owner = playerIn;
 		
 
@@ -48,7 +50,7 @@ public class EntityBullet extends EntityThrowable {
 				this.world.setEntityState(this, (byte) 3);
 				
 				if (result.entityHit != null && result.entityHit != owner) {
-					int damageAmount = 12;
+					int damageAmount = 4;
 					result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.thrower), (float) damageAmount);
 					this.setDead();
 
