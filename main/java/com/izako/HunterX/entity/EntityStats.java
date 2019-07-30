@@ -198,7 +198,7 @@ public class EntityStats extends EntityVillager {
 			}
 		}
 		
-		player.sendMessage(new TextComponentString(""+ stats.getSpeedStat()));
+		
 
 		return true;
 	}

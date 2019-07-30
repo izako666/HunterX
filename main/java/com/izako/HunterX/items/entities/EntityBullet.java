@@ -11,7 +11,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public class EntityBullet extends EntityThrowable {
-	private EntityPlayer owner;
+	private Entity owner;
 
 	public EntityBullet(World worldIn) {
 		super(worldIn);
@@ -21,6 +21,7 @@ public class EntityBullet extends EntityThrowable {
 	public EntityBullet(World worldIn, EntityLivingBase throwerIn) {
 		super(worldIn, throwerIn);
 		this.setSize(2, 2);
+		owner = throwerIn;
 		
 	}
 
