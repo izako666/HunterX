@@ -11,6 +11,7 @@ import com.izako.HunterX.items.tools.GonsFishingRod;
 import com.izako.HunterX.items.tools.ItemCard;
 import com.izako.HunterX.items.tools.ItemNeedle;
 import com.izako.HunterX.items.tools.KurapikasSword;
+import com.izako.HunterX.items.tools.Pistol;
 import com.izako.HunterX.items.tools.ToolSword;
 import com.izako.HunterX.util.Reference;
 
@@ -81,12 +82,14 @@ public class ModItems {
 	public static final Item LOGO = new ItemBase("logo").setUnlocalizedName("logo");
 	public static final Item HUNTER_CARD = new ItemBase("hunter_card").setUnlocalizedName("hunter_card")
 			.setCreativeTab(HunterX);
+	public static final Item BULLET = new ItemBase("bullet");
 
 //Rightclick Items
 	//public static final Item YOYO = new Yoyo("yoyo").setUnlocalizedName("yoyo").setCreativeTab(HunterX);
 	public static final ItemCard HISOKAS_CARD = new ItemCard("hisokas_card");
 	public static final ItemNeedle ILLUMIS_NEEDLE = new ItemNeedle("illumis_needle");
 	public static final GonsFishingRod GONS_FISHING_ROD = new GonsFishingRod("gons_fishing_rod");
+	public static final Pistol PISTOL = new Pistol ("pistol");
 
 //Armor
 

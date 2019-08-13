@@ -31,13 +31,27 @@ import net.minecraft.world.World;
 	static int maxticks = 80;
 	public static int count = maxticks;
 	private boolean comeBack = false;
-	 private EntityPlayer owner;
+	 static EntityPlayer owner;
+	 
+	 private int xTile;
+	    private int yTile;
+	    private int zTile;
+	 
+	
 	 
 	 
 	 public YoyoProjectile(World worldIn,EntityPlayer playerIn, double x, double y, double z) {
 			super(worldIn, x, y, z);
 			this.owner=playerIn;
 		} 
+	 
+	 public YoyoProjectile(World worldIn) {
+			super(worldIn);
+		}
+
+		public YoyoProjectile(World worldIn, EntityLivingBase throwerIn) {
+			super(worldIn, throwerIn);
+		}
 	 
 	
 	 
@@ -101,7 +115,7 @@ import net.minecraft.world.World;
 		
 		
 		
-		 if(!this.world.isRemote && ticksExisted > 1)
+		 if(!this.world.isRemote)
 	        {
 	                
 	        
@@ -130,7 +144,7 @@ import net.minecraft.world.World;
             
         }
 		
-		 if(ticksExisted > 1) {
+		 if(result.entityHit != owner) {
 			  this.motionX = (this.owner.posX - this.posX)*0.05;
 			  this.motionY = (this.owner.posY + this.owner.eyeHeight - this.posY)*0.1;
 			  this.motionZ = (this.owner.posZ - this.posZ)*0.05;

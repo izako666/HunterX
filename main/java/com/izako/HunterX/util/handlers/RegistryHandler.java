@@ -7,6 +7,7 @@ package com.izako.HunterX.util.handlers;
 import com.izako.HunterX.init.EntityInit;
 import com.izako.HunterX.init.ModBlocks;
 import com.izako.HunterX.init.ModItems;
+import com.izako.HunterX.world.WorldGenCustomStructures;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -16,6 +17,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @EventBusSubscriber
 public class RegistryHandler {
@@ -41,6 +43,7 @@ public class RegistryHandler {
 	public static void preInitRegistries() {
 		EntityInit.registerEntities();
 		RenderHandler.registerEntityRenders();
+		GameRegistry.registerWorldGenerator(new WorldGenCustomStructures(), 0);
 		
 		
 	}

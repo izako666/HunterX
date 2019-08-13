@@ -55,12 +55,12 @@ public class EntityCard extends EntityThrowable {
 
 	@Override
 	protected void onImpact(RayTraceResult result) {
-		if (!this.world.isRemote && ticksExisted > 1) {
+		if (!this.world.isRemote) {
 
 			if (!this.world.isRemote) {
 				this.world.setEntityState(this, (byte) 3);
 				
-				if (result.entityHit != null && ticksExisted > 1) {
+				if (result.entityHit != null && result.entityHit != owner) {
 					int damageAmount = 6;
 					result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.thrower), (float) damageAmount);
 					this.setDead();
@@ -75,7 +75,7 @@ public class EntityCard extends EntityThrowable {
 		
 	}
 		
-		if (ticksExisted > 1) {
+		if (this.ticksExisted > 1) {
 			this.motionX = 0;
 			this.motionY = 0;
 			this.motionZ = 0;

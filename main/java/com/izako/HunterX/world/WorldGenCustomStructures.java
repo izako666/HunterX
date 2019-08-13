@@ -10,6 +10,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeForest;
 import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
@@ -31,6 +33,7 @@ public class WorldGenCustomStructures implements IWorldGenerator {
 		case 0:
 			
 			generateStructure(BLIMP, world, random, chunkX, chunkZ, 25, Blocks.GRASS , BiomePlains.class);
+			generateStructure(BLIMP, world, random, chunkX, chunkZ, 25, Blocks.GRASS , BiomeForest.class);
 			
 		break;
 		
@@ -39,7 +42,7 @@ public class WorldGenCustomStructures implements IWorldGenerator {
 		}
 		
 	}
-	private void generateStructure(WorldGenerator generator, World world, Random random, int chunkX, int chunkZ, int chance, Block topBlock, Class<?>...classes) {
+	private void generateStructure(WorldGenerator generator, World world, Random random, int chunkX, int chunkZ, int chance, Block topBlock, Class<?>... classes) {
 		
 		ArrayList<Class<?>> classesList = new ArrayList<Class<?>>(Arrays.asList(classes));
 		

@@ -1,6 +1,7 @@
 package com.izako.HunterX.proxy;
 
 import com.izako.HunterX.init.ModItems;
+import com.izako.HunterX.items.entities.EntityBullet;
 import com.izako.HunterX.items.entities.EntityCard;
 import com.izako.HunterX.items.entities.EntityNeedle;
 import com.izako.HunterX.stats.capabilities.EntityStatsBase;
@@ -42,6 +43,7 @@ public class ClientProxy extends CommonProxy{
 	@Override
 	public void render(){
 		
+<<<<<<< HEAD
 		RenderingRegistry.registerEntityRenderingHandler(EntityCard.class, new IRenderFactory() {
 
 			@Override
@@ -70,6 +72,11 @@ public class ClientProxy extends CommonProxy{
 			}
 			
 		})*/;
+=======
+		
+		
+		
+>>>>>>> 920ffd5a73cb330de45adf43f12ce21c0fa47722
 	}
 
 }
