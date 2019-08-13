@@ -3,7 +3,6 @@ package com.izako.HunterX.proxy;
 import com.izako.HunterX.init.EntityInit;
 import com.izako.HunterX.init.ModItems;
 import com.izako.HunterX.items.entities.EntityCard;
-import com.izako.HunterX.items.entities.YoyoProjectile;
 import com.izako.HunterX.stats.capabilities.EntityStatsBase;
 import com.izako.HunterX.stats.capabilities.EntityStatsCapability;
 import com.izako.HunterX.stats.capabilities.IEntityStats;

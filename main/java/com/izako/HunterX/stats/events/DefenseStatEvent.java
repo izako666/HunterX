@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class DefenseStatEvent {
 
 	private AttributeModifier defenseModifier;
-	UUID attribute_uuid = UUID.randomUUID();
+	public static UUID defense_attributemodifier_uuid = UUID.fromString("806281d3-bb17-4b3f-8142-f03f077ba2e2");
 
 	@SubscribeEvent
 	public void onHurt(LivingHurtEvent event) {
@@ -33,18 +33,19 @@ public class DefenseStatEvent {
 			IEntityStats stats = playerIn.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 			double defenseStatCap = stats.getDefenseStat();
 			if (defenseStatCap < 10.0D) {
+				//0.02
 				stats.setDefenseStat(defenseStatCap + 0.02);
 				defenseStatCap = stats.getDefenseStat();
 				if(playerIn instanceof EntityPlayerMP) {
 					ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(stats.getDefenseStat(), 2), (EntityPlayerMP) playerIn);
 				}
-				defenseModifier = new AttributeModifier(attribute_uuid, "defenseStatIncrease", defenseStatCap, 0)
+				defenseModifier = new AttributeModifier(defense_attributemodifier_uuid, "defenseStatIncrease", defenseStatCap, 0)
 						.setSaved(true);
 				attribute.removeModifier(defenseModifier);
 				attribute.applyModifier(defenseModifier);
 
 			} else if (defenseStatCap >= 10.0D) {
-				defenseModifier = new AttributeModifier(attribute_uuid, "defenseStatIncrease", 10, 0)
+				defenseModifier = new AttributeModifier(defense_attributemodifier_uuid, "defenseStatIncrease", 10, 0)
 						.setSaved(true);
 				attribute.removeModifier(defenseModifier);
 				attribute.applyModifier(defenseModifier);

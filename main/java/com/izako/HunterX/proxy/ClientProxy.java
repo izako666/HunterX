@@ -3,7 +3,6 @@ package com.izako.HunterX.proxy;
 import com.izako.HunterX.init.ModItems;
 import com.izako.HunterX.items.entities.EntityCard;
 import com.izako.HunterX.items.entities.EntityNeedle;
-import com.izako.HunterX.items.entities.YoyoProjectile;
 import com.izako.HunterX.stats.capabilities.EntityStatsBase;
 import com.izako.HunterX.stats.capabilities.EntityStatsCapability;
 import com.izako.HunterX.stats.capabilities.IEntityStats;
@@ -62,7 +61,7 @@ public class ClientProxy extends CommonProxy{
 			}
 			
 		});
-		RenderingRegistry.registerEntityRenderingHandler(YoyoProjectile.class, new IRenderFactory() {
+		/*RenderingRegistry.registerEntityRenderingHandler(YoyoProjectile.class, new IRenderFactory() {
 
 			@Override
 			public Render<YoyoProjectile> createRenderFor(RenderManager manager) {
@@ -70,7 +69,7 @@ public class ClientProxy extends CommonProxy{
 				return new RenderSnowball<YoyoProjectile>(manager, ModItems.YOYO, Minecraft.getMinecraft().getRenderItem());
 			}
 			
-		});
+		})*/;
 	}
 
 }

@@ -9,7 +9,6 @@ import com.izako.HunterX.entity.renderer.RenderEntityStats;
 import com.izako.HunterX.entity.renderer.RenderExaminer;
 import com.izako.HunterX.entity.renderer.RenderThug;
 import com.izako.HunterX.init.ModItems;
-import com.izako.HunterX.items.entities.YoyoProjectile;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;

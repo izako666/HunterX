@@ -3,6 +3,7 @@ package com.izako.HunterX.stats.events;
 import java.util.UUID;
 
 import com.izako.HunterX.network.ModidPacketHandler;
+import com.izako.HunterX.network.packets.EntityModifierServerChange;
 import com.izako.HunterX.network.packets.EntityStatsServerSync;
 import com.izako.HunterX.stats.capabilities.EntityStatsProvider;
 import com.izako.HunterX.stats.capabilities.IEntityStats;
@@ -20,7 +21,7 @@ public class SpeedStatEvent {
 
 	private AttributeModifier speedModifier;
 	private AttributeModifier speedModifierMax;
-	UUID attribute_uuid = UUID.randomUUID();
+	public static UUID speed_attribute_modifier = UUID.fromString("69082b90-7357-407c-9e82-7852b6925932");
 
 	@SubscribeEvent
 	public void onSprintEvent(TickEvent.PlayerTickEvent event) {
@@ -38,16 +39,12 @@ public class SpeedStatEvent {
 				stats.setSpeedStat(stats.getSpeedStat() + 0.000004);
 
 				stats.getSpeedStat();
-				speedModifier = new AttributeModifier(attribute_uuid, "SpeedStatIncrease", stats.getSpeedStat(), 0)
-						.setSaved(true);
-				attribute.removeModifier(speedModifier);
-				attribute.applyModifier(speedModifier);
+			
 				ModidPacketHandler.INSTANCE.sendToServer(new EntityStatsServerSync(stats.getSpeedStat(), 3));
-			} else if (stats.getSpeedStat() >= 0.2D) {
+				ModidPacketHandler.INSTANCE.sendToServer(new EntityModifierServerChange(stats.getSpeedStat(), 2));
+			} else if (stats.getSpeedStat() >= 0.15D) {
 				// maximum speed modifier is .20
-				speedModifier = new AttributeModifier(attribute_uuid, "SpeedStatIncrease", 0.2, 0).setSaved(true);
-				attribute.removeModifier(speedModifier);
-				attribute.applyModifier(speedModifier);
+				ModidPacketHandler.INSTANCE.sendToServer(new EntityModifierServerChange(0.15, 2));
 
 			}
 		}

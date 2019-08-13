@@ -29,7 +29,6 @@ public class EntityStatsServerSyncHandler implements IMessageHandler<EntityStats
 		    	  stats.setDefenseStat(amount);
 		      } else if(statType == 3) {
 		    	  stats.setSpeedStat(amount);
-		    	  System.out.println(Double.toString(stats.getSpeedStat()));
 		      } else if(statType == 4) {
 		    	  stats.setAttackStat(amount);
 		      }

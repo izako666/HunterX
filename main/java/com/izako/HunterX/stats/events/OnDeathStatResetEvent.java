@@ -1,9 +1,11 @@
 package com.izako.HunterX.stats.events;
 
+import java.util.Collection;
 import java.util.UUID;
 
 import com.izako.HunterX.network.ModidPacketHandler;
 import com.izako.HunterX.network.packets.EntityStatsClientSync;
+import com.izako.HunterX.network.packets.EntityStatsServerSync;
 import com.izako.HunterX.stats.capabilities.EntityStatsProvider;
 import com.izako.HunterX.stats.capabilities.IEntityStats;
 
@@ -30,8 +32,25 @@ public class OnDeathStatResetEvent {
 		stats.setDefenseStat(oldStats.getDefenseStat());
 		stats.setAttackStat(oldStats.getAttackStat());
 		stats.setIsHunter(oldStats.isHunter());
-		
+	//resetting the modifiers after death 
+		IAttributeInstance h = ((EntityLivingBase) p)
+				.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
+		IAttributeInstance d = ((EntityLivingBase) p)
+				.getEntityAttribute(SharedMonsterAttributes.ARMOR);
+		IAttributeInstance s = ((EntityLivingBase) p)
+				.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
+		IAttributeInstance a = ((EntityLivingBase) p)
+				.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
 
+		AttributeModifier hm = event.getOriginal().getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH).getModifier(HealthStatEvent.health_attributemodifier_uuid);
+		AttributeModifier dm = event.getOriginal().getAttributeMap().getAttributeInstance(SharedMonsterAttributes.ARMOR).getModifier(DefenseStatEvent.defense_attributemodifier_uuid);
+		AttributeModifier sm = event.getOriginal().getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MOVEMENT_SPEED).getModifier(SpeedStatEvent.speed_attribute_modifier);
+		AttributeModifier am = event.getOriginal().getAttributeMap().getAttributeInstance(SharedMonsterAttributes.ATTACK_DAMAGE).getModifier(AttackStatEvent.attack_attributemodifier_uuid);
+
+		h.applyModifier(hm);
+		d.applyModifier(dm);
+		s.applyModifier(sm);
+		a.applyModifier(am);
 	}
-	
+
 }

@@ -12,7 +12,6 @@ import com.izako.HunterX.items.tools.ItemCard;
 import com.izako.HunterX.items.tools.ItemNeedle;
 import com.izako.HunterX.items.tools.KurapikasSword;
 import com.izako.HunterX.items.tools.ToolSword;
-import com.izako.HunterX.items.tools.Yoyo;
 import com.izako.HunterX.util.Reference;
 
 import net.minecraft.client.renderer.entity.RenderSnowball;
@@ -84,7 +83,7 @@ public class ModItems {
 			.setCreativeTab(HunterX);
 
 //Rightclick Items
-	public static final Item YOYO = new Yoyo("yoyo").setUnlocalizedName("yoyo").setCreativeTab(HunterX);
+	//public static final Item YOYO = new Yoyo("yoyo").setUnlocalizedName("yoyo").setCreativeTab(HunterX);
 	public static final ItemCard HISOKAS_CARD = new ItemCard("hisokas_card");
 	public static final ItemNeedle ILLUMIS_NEEDLE = new ItemNeedle("illumis_needle");
 	public static final GonsFishingRod GONS_FISHING_ROD = new GonsFishingRod("gons_fishing_rod");

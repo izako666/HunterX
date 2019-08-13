@@ -3,6 +3,7 @@ package com.izako.HunterX.stats.events;
 import java.util.UUID;
 
 import com.izako.HunterX.network.ModidPacketHandler;
+import com.izako.HunterX.network.packets.EntityModifierServerChange;
 import com.izako.HunterX.network.packets.EntityStatsServerSync;
 import com.izako.HunterX.stats.capabilities.EntityStatsProvider;
 import com.izako.HunterX.stats.capabilities.IEntityStats;
@@ -25,7 +26,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class HealthStatEvent {
 
 	private AttributeModifier healthModifier;
-	UUID attribute_uuid = UUID.randomUUID();
+	public static UUID health_attributemodifier_uuid = UUID.fromString("135d510d-26c6-403e-8615-899862332e86");
+
+
 
 	@SubscribeEvent
 	public void onEaten(LivingEntityUseItemEvent.Finish e) {
@@ -37,20 +40,18 @@ public class HealthStatEvent {
 			IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 			Double healthStat = stats.getHealthStat();
 			if (healthStat < 10) {
+				//0.04
 				stats.setHealthStat(healthStat + 0.04);
 				healthStat = stats.getHealthStat();
 				ModidPacketHandler.INSTANCE.sendToServer(new EntityStatsServerSync(stats.getHealthStat(), 1));
-				healthModifier = new AttributeModifier(attribute_uuid, "healthStatIncrease", healthStat, 0)
-						.setSaved(true);
-				attribute.removeModifier(healthModifier);
-				attribute.applyModifier(healthModifier);
+				ModidPacketHandler.INSTANCE.sendToServer(new EntityModifierServerChange(stats.getHealthStat(), 1) );
 			} else if (healthStat >= 10) {
 
-				healthModifier = new AttributeModifier(attribute_uuid, "healthStatIncrease", 10, 0);
-				attribute.removeModifier(healthModifier);
-				attribute.applyModifier(healthModifier);
+				ModidPacketHandler.INSTANCE.sendToServer(new EntityModifierServerChange(10.0, 1) );
+
 			}
 		}
 
 	}
+
 }

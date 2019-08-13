@@ -6,7 +6,6 @@ import java.util.concurrent.Delayed;
 import javax.annotation.Nullable;
 
 import com.izako.HunterX.init.ModItems;
-import com.izako.HunterX.items.tools.Yoyo;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.entity.RenderArrow;
@@ -27,7 +26,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class YoyoProjectile extends EntityThrowable{
+/*public class YoyoProjectile extends EntityThrowable{
 	int cooldowncount = 0;
 	static int maxticks = 80;
 	public static int count = maxticks;
@@ -160,4 +159,4 @@ public class YoyoProjectile extends EntityThrowable{
 
 	
 	
-}
+}*/
