@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
  "parent": "item/generated",
  
@@ -5,4 +6,13 @@
  
  "layer0": "hntrx:items/bullet"
  }
+=======
+{
+ "parent": "item/generated",
+ 
+ "textures":{
+ 
+ "layer0": "hntrx:items/bullet"
+ }
+>>>>>>> 920ffd5a73cb330de45adf43f12ce21c0fa47722
  }

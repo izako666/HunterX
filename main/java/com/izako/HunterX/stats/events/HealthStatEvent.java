@@ -40,9 +40,13 @@ public class HealthStatEvent {
 			IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 			Double healthStat = stats.getHealthStat();
 			if (healthStat < 10) {
+<<<<<<< HEAD
 
 				stats.setHealthStat(healthStat + 0.05);
 
+=======
+				stats.setHealthStat(healthStat + 0.05);
+>>>>>>> 920ffd5a73cb330de45adf43f12ce21c0fa47722
 				healthStat = stats.getHealthStat();
 				ModidPacketHandler.INSTANCE.sendToServer(new EntityStatsServerSync(stats.getHealthStat(), 1));
 				ModidPacketHandler.INSTANCE.sendToServer(new EntityModifierServerChange(stats.getHealthStat(), 1) );
