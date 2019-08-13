@@ -1,3 +1,4 @@
+
 package com.izako.HunterX.items.tools;
 
 import com.izako.HunterX.init.ModItems;

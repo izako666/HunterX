@@ -3,6 +3,7 @@ package com.izako.HunterX.items.tools;
 
 
 import com.izako.HunterX.items.ItemBase;
+import com.izako.HunterX.items.entities.YoyoProjectile;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,7 +17,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-/*public class Yoyo extends ItemBase{
+public class Yoyo extends ItemBase{
 	public static EntityPlayer owner;
 	public Yoyo(String name) {
 		super(name);
@@ -60,4 +61,4 @@ import net.minecraft.world.World;
 		
 	}
 
-}*/
+}

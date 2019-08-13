@@ -9,13 +9,10 @@ import com.izako.HunterX.entity.renderer.RenderEntityStats;
 import com.izako.HunterX.entity.renderer.RenderExaminer;
 import com.izako.HunterX.entity.renderer.RenderThug;
 import com.izako.HunterX.init.ModItems;
-<<<<<<< HEAD
-=======
 import com.izako.HunterX.items.entities.EntityBullet;
 import com.izako.HunterX.items.entities.EntityCard;
 import com.izako.HunterX.items.entities.EntityNeedle;
 import com.izako.HunterX.items.entities.YoyoProjectile;
->>>>>>> 920ffd5a73cb330de45adf43f12ce21c0fa47722
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
