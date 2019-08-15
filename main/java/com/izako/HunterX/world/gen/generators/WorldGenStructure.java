@@ -34,7 +34,7 @@ public static String structureName;
 	public static void generateStructure(World world, BlockPos pos) {
 		
 		MinecraftServer mcServer = world.getMinecraftServer();
-		TemplateManager manager = worldserver.getStructureTemplateManager();
+		TemplateManager manager = worldServer.getStructureTemplateManager();
 		ResourceLocation location = new ResourceLocation(Reference.MOD_ID, structureName);
 		Template template = manager.get(mcServer, location);
 		
