@@ -25,24 +25,25 @@ import scala.actors.threadpool.Arrays;
 
 public class WorldGenCustomStructures implements IWorldGenerator {
 	
-	StructureSpawning data;
 	NBTTagCompound nbt = new NBTTagCompound();
+	
 
 	public static final WorldGenStructure BLIMP = new WorldGenStructure("blimp");
 	
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator,IChunkProvider chunkProvider) {
-		
+		StructureSpawning data = StructureSpawning.get(world);
 		switch(world.provider.getDimension()) {
 		case 1:
 			
 		break;
 		
 		case 0:
-			
-			generateStructure(BLIMP, world, random, chunkX, chunkZ, 1000, Blocks.GRASS , BiomePlains.class);
-			generateStructure(BLIMP, world, random, chunkX, chunkZ, 1000, Blocks.GRASS , BiomeForest.class);
-			
+		if(data.getBlimpCount() < 1) {
+			generateStructure(BLIMP, world, random, chunkX, chunkZ, 10, Blocks.GRASS , BiomePlains.class);
+			generateStructure(BLIMP, world, random, chunkX, chunkZ, 10, Blocks.GRASS , BiomeForest.class);
+			System.out.println("works");
+		} else {System.out.println(data.getBlimpCount());}
 		break;
 		
 		case -1:
@@ -57,7 +58,8 @@ public class WorldGenCustomStructures implements IWorldGenerator {
 		
 		
 			
-			
+		StructureSpawning data = StructureSpawning.get(world);
+
 			
 			
 		
@@ -74,21 +76,11 @@ public class WorldGenCustomStructures implements IWorldGenerator {
 				if (random.nextInt(chance) == 0) {
 					generator.generate(world, random, pos);
 					
-					data = data.get(Minecraft.getMinecraft().getIntegratedServer().getEntityWorld());
-					
-					nbt = data.writeToNBT(nbt);
 					
 					
-					
-					data.markDirty();
-					
-					nbt.setInteger("COUNT", nbt.getInteger("COUNT")+1);
-					
-					data.readFromNBT(nbt);
+					data.setBlimpCount(data.getBlimpCount() + 1);
 					
 					
-					
-					Minecraft.getMinecraft().getIntegratedServer().getEntityWorld().getMapStorage().setData("COUNT", data);
 					
 					data.markDirty();
 					
