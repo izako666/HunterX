@@ -2,6 +2,7 @@ package com.izako.HunterX;
 
 
 
+import com.izako.HunterX.commands.CommandLocateHxH;
 import com.izako.HunterX.init.ModItems;
 import com.izako.HunterX.init.ModRecipes;
 import com.izako.HunterX.items.entities.EntityCard;
@@ -29,6 +30,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -43,7 +45,13 @@ public class Main {
 	public static CommonProxy proxy;
 	
 	@EventHandler
+	public void serverLoad(FMLServerStartingEvent event) {
+		event.registerServerCommand(new CommandLocateHxH());
+		
+	}
+	@EventHandler
 	public static void PreInit (FMLPreInitializationEvent event){
+		
 		Main.proxy.RenderEntity();
 		Main.proxy.preinitRegistries();
 		Main.proxy.render();
@@ -59,6 +67,7 @@ public class Main {
 	{
 		proxy.init(event);
 	ModRecipes.init();
+	
 	
 	}
 	

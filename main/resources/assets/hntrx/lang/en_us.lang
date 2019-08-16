@@ -1,6 +1,9 @@
 //tabs
 itemGroup.HunterX=HunterX
 
+//commands
+command.locatehxh.usage=locatehxh
+
 //Mobs
 entity.Thug.name=Thug
 entity.Examiner.name=Examiner

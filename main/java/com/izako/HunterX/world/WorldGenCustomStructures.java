@@ -32,6 +32,7 @@ public class WorldGenCustomStructures implements IWorldGenerator {
 	
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator,IChunkProvider chunkProvider) {
+		if(!world.isRemote) {
 		StructureSpawning data = StructureSpawning.get(world);
 		switch(world.provider.getDimension()) {
 		case 1:
@@ -42,12 +43,12 @@ public class WorldGenCustomStructures implements IWorldGenerator {
 		if(data.getBlimpCount() < 1) {
 			generateStructure(BLIMP, world, random, chunkX, chunkZ, 10, Blocks.GRASS , BiomePlains.class);
 			generateStructure(BLIMP, world, random, chunkX, chunkZ, 10, Blocks.GRASS , BiomeForest.class);
-			System.out.println("works");
-		} else {System.out.println(data.getBlimpCount());}
+		} 
 		break;
 		
 		case -1:
 			
+		}
 		}
 		
 	}
@@ -56,7 +57,7 @@ public class WorldGenCustomStructures implements IWorldGenerator {
 		
 		ArrayList<Class<?>> classesList = new ArrayList<Class<?>>(Arrays.asList(classes));
 		
-		
+		if(!world.isRemote) {
 			
 		StructureSpawning data = StructureSpawning.get(world);
 
@@ -75,14 +76,13 @@ public class WorldGenCustomStructures implements IWorldGenerator {
 			if(classesList.contains(biome)) {
 				if (random.nextInt(chance) == 0) {
 					generator.generate(world, random, pos);
-					
+                     data.setPos(pos.getX(), pos.getY(), pos.getZ());					
 					
 					
 					data.setBlimpCount(data.getBlimpCount() + 1);
 					
 					
-					
-					data.markDirty();
+				}
 					
 			
 				}

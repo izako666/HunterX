@@ -1,60 +1,93 @@
 package com.izako.HunterX.worlddata;
 
-import org.apache.logging.log4j.LogManager;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.izako.HunterX.util.Reference;
-import com.sun.jna.platform.win32.Winioctl.STORAGE_DEVICE_NUMBER;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldSavedData;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class StructureSpawning extends WorldSavedData {
 
-	private static final String COUNT = "STRUCTUREDATA";
+	private static final String IDENTIFIER = Reference.MOD_ID + "WORLDDATA";
+
 	private NBTTagCompound data = new NBTTagCompound();
 	private int blimpCount = 0;
-
+	private List<Integer> pos = new ArrayList<>();
+    private int posX = 0;
+    private int posY = 0;
+    private int posZ = 0;
+    
 	public StructureSpawning(String s) {
 		super(s);
+		
 	}
 
 	public StructureSpawning() {
-		super(COUNT);
+		super(IDENTIFIER);
+		
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
-		nbt.getInteger(COUNT);
+		blimpCount = nbt.getInteger("count");
+		posX = nbt.getInteger("posX");
+		posY = nbt.getInteger("posY");
+		posZ = nbt.getInteger("posZ");
+		
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-		nbt.setInteger(COUNT, this.blimpCount);
+		nbt.setInteger("count", this.blimpCount);
+		nbt.setInteger("posX", posX);
+		nbt.setInteger("posY", posY);
+		nbt.setInteger("posZ", posZ);
 		return nbt;
 	}
 
 	public static StructureSpawning get(World world) {
 		StructureSpawning save = (StructureSpawning) world.getMapStorage().getOrLoadData(StructureSpawning.class,
-				COUNT);
-		world.getMapStorage().getOrLoadData(StructureSpawning.class, COUNT);
+				IDENTIFIER);
 
 		if (save == null) {
 
 			save = new StructureSpawning();
-			world.getMapStorage().setData(COUNT, save);
-
-		} else {
-			LogManager.getLogger().debug("getting");
+			world.getMapStorage().setData(IDENTIFIER, save);
+ 
 		}
 		return save;
 	}
 
 	public void setBlimpCount(int value) {
 		this.blimpCount = value;
+		this.markDirty();
 	}
-	public int getBlimpCount() {return this.blimpCount;}}
+	public int getBlimpCount() {return this.blimpCount;}
+	
+
+
+public void setPos(int x, int y, int z) {
+	this.posX = x;
+	this.posY = y;
+	this.posZ = z;
+	
+	pos.clear();
+	pos.add(posX);
+	pos.add(posY);
+	pos.add(posZ);
+	this.markDirty();
+    
+}
+
+public List<Integer> getPos() {
+		return pos;
+}
+
+
+
+
+}
+
