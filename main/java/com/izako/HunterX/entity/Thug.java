@@ -105,19 +105,20 @@ public class Thug extends EntityZombie {
 	@Override
 	protected SoundEvent getAmbientSound() {
 
-		return super.getAmbientSound();
+		return null;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 
-		return super.getHurtSound(source);
+		return null;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
 
-		return super.getDeathSound();
+		return null;
 	}
+
 
 }

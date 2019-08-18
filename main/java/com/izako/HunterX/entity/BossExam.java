@@ -31,91 +31,86 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
-public class BossExam extends EntityZombie{
+public class BossExam extends EntityZombie {
 
-	
 	public BossExam(World worldIn) {
 		super(worldIn);
-		
+
 	}
 
-	protected void initEntityAI()
-    {
-        this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(2, new EntityAIZombieAttack(this, 1.0D, false));
-        this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
-        this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0D));
-        this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        this.tasks.addTask(8, new EntityAILookIdle(this));
-        this.applyEntityAI();
-    }
-	
-	protected void applyEntityAI()
-    {
-        this.tasks.addTask(6, new EntityAIMoveThroughVillage(this, 1.0D, false));
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true, new Class[] {EntityPigZombie.class}));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
-    }
-	
+	protected void initEntityAI() {
+		this.tasks.addTask(0, new EntityAISwimming(this));
+		this.tasks.addTask(2, new EntityAIZombieAttack(this, 1.0D, false));
+		this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
+		this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0D));
+		this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+		this.tasks.addTask(8, new EntityAILookIdle(this));
+		this.applyEntityAI();
+	}
+
+	protected void applyEntityAI() {
+		this.tasks.addTask(6, new EntityAIMoveThroughVillage(this, 1.0D, false));
+		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true, new Class[] { EntityPigZombie.class }));
+		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
+	}
+
 	@Override
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(120.0D);
-		 this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
-	        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(10.0D);
-	        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(10.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
+		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(10.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(10.0D);
 	}
-	
-	
+
 	@Override
 	protected boolean shouldBurnInDay() {
 		return false;
 	}
-	
+
 	@Override
 	public void onKillEntity(EntityLivingBase entityLivingIn) {
 		super.onKillEntity(entityLivingIn);
 		this.setDead();
 	}
-	
-	
-	
+
 	@Override
 	protected ResourceLocation getLootTable() {
-		
+
 		return null;
 	}
-	
+
 	@Override
 	public void setChild(boolean childZombie) {
-		
+
 	}
-	
+
 	@Override
 	public void setBreakDoorsAItask(boolean enabled) {
-		
+
 	}
+
 	@Override
-	protected boolean canDropLoot() 
-	{
+	protected boolean canDropLoot() {
 		return true;
 	}
-    @Override
-    protected SoundEvent getAmbientSound() {
-    	
-    	return super.getAmbientSound();
-    }
-    
-    @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
-    	
-    	return super.getHurtSound(source);
-    }
-    
-    @Override
-    protected SoundEvent getDeathSound() {
-    	
-    	return super.getDeathSound();
-    }
+
+	@Override
+	protected SoundEvent getAmbientSound() {
+
+		return null;
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+
+		return null;
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+
+		return null;
+	}
 
 }

@@ -145,7 +145,7 @@ public class EntityStats extends EntityVillager {
 		// Strength stat text
 
 		if (stats.getAttackStat() < 5) {
-			if(!world.isRemote) {
+			if (!world.isRemote) {
 				player.sendMessage(new TextComponentString("you're not exactly strong......"));
 			}
 		} else if (stats.getAttackStat() < 7 && stats.getAttackStat() > 5) {
@@ -197,8 +197,6 @@ public class EntityStats extends EntityVillager {
 				player.sendMessage(new TextComponentString("I can see you're of immense health."));
 			}
 		}
-		
-		
 
 		return true;
 	}
@@ -226,7 +224,24 @@ public class EntityStats extends EntityVillager {
 	protected boolean canDespawn() {
 		return false;
 	}
-
 	
+	@Override
+	protected SoundEvent getAmbientSound() {
+
+		return null;
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+
+		return null;
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+
+		return null;
+	}
+
 
 }
