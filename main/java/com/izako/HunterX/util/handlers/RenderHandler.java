@@ -1,10 +1,12 @@
 package com.izako.HunterX.util.handlers;
 
 import com.izako.HunterX.entity.BossExam;
+import com.izako.HunterX.entity.EntityKiriko;
 import com.izako.HunterX.entity.EntityStats;
 import com.izako.HunterX.entity.Examiner;
 import com.izako.HunterX.entity.Thug;
 import com.izako.HunterX.entity.renderer.RenderBossExam;
+import com.izako.HunterX.entity.renderer.RenderEntityKiriko;
 import com.izako.HunterX.entity.renderer.RenderEntityStats;
 import com.izako.HunterX.entity.renderer.RenderExaminer;
 import com.izako.HunterX.entity.renderer.RenderThug;
@@ -25,53 +27,62 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 public class RenderHandler {
-	
+
 	public static void registerEntityRenders() {
-		
-		//Living Entities
-		
+
+		// Living Entities
+
 		RenderingRegistry.registerEntityRenderingHandler(Thug.class, new IRenderFactory<Thug>() {
 			@Override
 			public Render<? super Thug> createRenderFor(RenderManager manager) {
-				
+
 				return new RenderThug(manager);
 			}
 		});
-		
+
 		RenderingRegistry.registerEntityRenderingHandler(Examiner.class, new IRenderFactory<Examiner>() {
 			@Override
 			public Render<? super Examiner> createRenderFor(RenderManager manager) {
-				
+
 				return new RenderExaminer(manager);
 			}
 		});
-		
+
 		RenderingRegistry.registerEntityRenderingHandler(BossExam.class, new IRenderFactory<BossExam>() {
 			@Override
 			public Render<? super BossExam> createRenderFor(RenderManager manager) {
-				
+
 				return new RenderBossExam(manager);
 			}
 		});
-		
+
 		RenderingRegistry.registerEntityRenderingHandler(EntityStats.class, new IRenderFactory<EntityStats>() {
 			@Override
 			public Render<? super EntityStats> createRenderFor(RenderManager manager) {
-				
+
 				return new RenderEntityStats(manager);
 			}
 		});
-		
-		//Projectiles
-		
+
+		RenderingRegistry.registerEntityRenderingHandler(EntityKiriko.class, new IRenderFactory<EntityKiriko>() {
+			@Override
+			public Render<? super EntityKiriko> createRenderFor(RenderManager manager) {
+
+				return new RenderEntityKiriko(manager);
+			}
+		});
+
+		// Projectiles
+
 		RenderingRegistry.registerEntityRenderingHandler(EntityCard.class, new IRenderFactory() {
 
 			@Override
 			public Render<EntityCard> createRenderFor(RenderManager manager) {
 				// TODO Auto-generated method stub
-				return new RenderSnowball<EntityCard>(manager, ModItems.HISOKAS_CARD, Minecraft.getMinecraft().getRenderItem());
+				return new RenderSnowball<EntityCard>(manager, ModItems.HISOKAS_CARD,
+						Minecraft.getMinecraft().getRenderItem());
 			}
-			
+
 		});
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityNeedle.class, new IRenderFactory() {
@@ -79,31 +90,33 @@ public class RenderHandler {
 			@Override
 			public Render<EntityNeedle> createRenderFor(RenderManager manager) {
 				// TODO Auto-generated method stub
-				return new RenderSnowball<EntityNeedle>(manager, ModItems.ILLUMIS_NEEDLE, Minecraft.getMinecraft().getRenderItem());
+				return new RenderSnowball<EntityNeedle>(manager, ModItems.ILLUMIS_NEEDLE,
+						Minecraft.getMinecraft().getRenderItem());
 			}
-			
+
 		});
 		RenderingRegistry.registerEntityRenderingHandler(YoyoProjectile.class, new IRenderFactory() {
 
 			@Override
 			public Render<YoyoProjectile> createRenderFor(RenderManager manager) {
 				// TODO Auto-generated method stub
-				return new RenderSnowball<YoyoProjectile>(manager, ModItems.YOYO, Minecraft.getMinecraft().getRenderItem());
+				return new RenderSnowball<YoyoProjectile>(manager, ModItems.YOYO,
+						Minecraft.getMinecraft().getRenderItem());
 			}
-			
+
 		});
-		
+
 		RenderingRegistry.registerEntityRenderingHandler(EntityBullet.class, new IRenderFactory() {
 
 			@Override
 			public Render<EntityBullet> createRenderFor(RenderManager manager) {
 				// TODO Auto-generated method stub
-				return new RenderSnowball<EntityBullet>(manager, ModItems.BULLET, Minecraft.getMinecraft().getRenderItem());
+				return new RenderSnowball<EntityBullet>(manager, ModItems.BULLET,
+						Minecraft.getMinecraft().getRenderItem());
 			}
-			
+
 		});
-		
-		
+
 	}
 
 }
