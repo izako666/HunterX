@@ -80,6 +80,7 @@ public void setPos(int x, int y, int z) {
 }
 
 public List<Integer> getPos() {
+	pos.clear();
 	pos.add(posX);
 	pos.add(posY);
 	pos.add(posZ);
