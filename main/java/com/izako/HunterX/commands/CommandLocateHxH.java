@@ -39,10 +39,11 @@ public class CommandLocateHxH extends CommandBase {
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		// TODO Auto-generated method stub
-		
 		StructureSpawning data = StructureSpawning.get(server.getEntityWorld());
-	    List<Integer> pos =	data.getPos();
-	   sender.sendMessage(new TextComponentString(pos.toString())); 
+	 
+		   sender.sendMessage(new TextComponentString(data.getPos().toString())); 
+
+	   
 
 	}
 

@@ -23,7 +23,6 @@ public class OnDeathStatResetEvent {
 
 	@SubscribeEvent
 	public void onRespawn(PlayerEvent.Clone event) {
-
 		EntityPlayerMP p = (EntityPlayerMP) event.getEntityPlayer();
 		IEntityStats stats = p.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 		IEntityStats oldStats = event.getOriginal().getCapability(EntityStatsProvider.ENTITY_STATS, null);
@@ -41,16 +40,23 @@ public class OnDeathStatResetEvent {
 				.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
 		IAttributeInstance a = ((EntityLivingBase) p)
 				.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-
 		AttributeModifier hm = event.getOriginal().getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH).getModifier(HealthStatEvent.health_attributemodifier_uuid);
 		AttributeModifier dm = event.getOriginal().getAttributeMap().getAttributeInstance(SharedMonsterAttributes.ARMOR).getModifier(DefenseStatEvent.defense_attributemodifier_uuid);
 		AttributeModifier sm = event.getOriginal().getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MOVEMENT_SPEED).getModifier(SpeedStatEvent.speed_attribute_modifier);
 		AttributeModifier am = event.getOriginal().getAttributeMap().getAttributeInstance(SharedMonsterAttributes.ATTACK_DAMAGE).getModifier(AttackStatEvent.attack_attributemodifier_uuid);
-
+     if(hm != null) {
 		h.applyModifier(hm);
+     }
+     if(dm != null) {
 		d.applyModifier(dm);
+     }
+     if(sm != null)  {
 		s.applyModifier(sm);
+     } if(am != null) {
 		a.applyModifier(am);
+     }
+		
+
 	}
 
 }

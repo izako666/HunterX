@@ -7,14 +7,11 @@ import com.izako.HunterX.world.gen.generators.WorldGenStructure;
 import com.izako.HunterX.worlddata.StructureSpawning;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeForest;
 import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -32,7 +29,6 @@ public class WorldGenCustomStructures implements IWorldGenerator {
 	
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator,IChunkProvider chunkProvider) {
-		if(!world.isRemote) {
 		StructureSpawning data = StructureSpawning.get(world);
 		switch(world.provider.getDimension()) {
 		case 1:
@@ -49,7 +45,7 @@ public class WorldGenCustomStructures implements IWorldGenerator {
 		case -1:
 			
 		}
-		}
+		
 		
 	}
 	private void generateStructure(WorldGenerator generator, World world, Random random, int chunkX, int chunkZ, int chance, Block topBlock,  Class<?>... classes) {

@@ -5,15 +5,13 @@ package com.izako.HunterX.entity.model;
 
 import org.lwjgl.opengl.GL11;
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelBox;
-import net.minecraft.client.model.ModelRabbit;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
-public class ModelKiriko extends ModelBiped {
+public class  ModelKiriko extends ModelBase {
 	private final ModelRenderer Rleg;
 	private final ModelRenderer Rleg2;
 	private final ModelRenderer Lleg;
@@ -40,7 +38,7 @@ public class ModelKiriko extends ModelBiped {
 		Rleg2.setRotationPoint(0.6481F, 11.065F, -0.4454F);
 		Rleg.addChild(Rleg2);
 		Rleg2.cubeList.add(new ModelBox(Rleg2, 94, 32, -0.9503F, -0.8852F, -0.9472F, 2, 2, 2, 0.0F, false));
-		Rleg2.cubeList.add(new ModelBox(Rleg2, 0, 91, -0.4913F, 0.1585F, 5.3849F, 0, 0, 4, 0.0F, false));
+		Rleg2.cubeList.add(new ModelBox(Rleg2, 0, 91, -0.6913F, -0.8415F, 5.3849F, 1, 1, 4, 0.0F, false));
 		Rleg2.cubeList.add(new ModelBox(Rleg2, 23, 57, -0.5261F, -0.7155F, 9.3986F, 1, 1, 2, 0.0F, false));
 		Rleg2.cubeList.add(new ModelBox(Rleg2, 0, 36, -0.5261F, -0.4326F, 9.3986F, 1, 1, 2, 0.0F, false));
 		Rleg2.cubeList.add(new ModelBox(Rleg2, 99, 99, -0.3261F, -0.4326F, 9.3986F, 1, 1, 2, 0.0F, false));
@@ -76,7 +74,7 @@ public class ModelKiriko extends ModelBiped {
 		lleg2 = new ModelRenderer(this);
 		lleg2.setRotationPoint(0.0F, 10.0F, 0.0F);
 		Lleg.addChild(lleg2);
-		lleg2.cubeList.add(new ModelBox(lleg2, 0, 91, -0.8336F, 0.2274F, 5.9356F, 0, 0, 4, 0.0F, true));
+		lleg2.cubeList.add(new ModelBox(lleg2, 0, 91, -1.0336F, -0.7726F, 5.9356F, 1, 1, 4, 0.0F, true));
 		lleg2.cubeList.add(new ModelBox(lleg2, 23, 57, -0.9988F, -0.6466F, 9.9493F, 1, 1, 2, 0.0F, true));
 		lleg2.cubeList.add(new ModelBox(lleg2, 0, 36, -0.9988F, -0.3638F, 9.9493F, 1, 1, 2, 0.0F, true));
 		lleg2.cubeList.add(new ModelBox(lleg2, 99, 99, -1.1988F, -0.3638F, 9.9493F, 1, 1, 2, 0.0F, true));
@@ -239,14 +237,11 @@ public class ModelKiriko extends ModelBiped {
 		head.cubeList.add(new ModelBox(head, 96, 85, -1.44F, -0.8231F, -1.6381F, 2, 1, 2, 0.0F, false));
 		head.cubeList.add(new ModelBox(head, 96, 85, -1.44F, -0.5323F, -1.6586F, 2, 1, 2, 0.0F, false));
 		head.cubeList.add(new ModelBox(head, 0, 0, 1.024F, 0.8809F, -1.7981F, 0, 0, 2, 0.0F, false));
-		head.cubeList.add(new ModelBox(head, 15, 0, -1.126F, 0.8809F, -3.0781F, 0, 0, 2, 0.0F, false));
-		head.cubeList.add(new ModelBox(head, 11, 12, -0.646F, 0.8809F, -4.1981F, 0, 0, 3, 0.0F, false));
-		head.cubeList.add(new ModelBox(head, 12, 33, -0.506F, 0.8809F, -4.1981F, 1, 0, 4, 0.0F, false));
+		head.cubeList.add(new ModelBox(head, 12, 33, -0.506F, -0.1191F, -4.1981F, 1, 1, 4, 0.0F, false));
 		head.cubeList.add(new ModelBox(head, 10, 11, -0.576F, 1.2009F, -3.7181F, 1, 0, 4, 0.0F, false));
 		head.cubeList.add(new ModelBox(head, 10, 32, -0.896F, 1.0409F, -2.2781F, 1, 0, 4, 0.0F, false));
-		head.cubeList.add(new ModelBox(head, 64, 55, -0.576F, 0.5609F, -3.7181F, 1, 0, 4, 0.0F, false));
+		head.cubeList.add(new ModelBox(head, 64, 55, -0.576F, -0.4391F, -3.7181F, 1, 1, 4, 0.0F, false));
 		head.cubeList.add(new ModelBox(head, 14, 5, -0.256F, 0.2409F, -3.2381F, 0, 0, 4, 0.0F, false));
-		head.cubeList.add(new ModelBox(head, 0, 0, 0.614F, 0.8809F, -3.0781F, 0, 0, 2, 0.0F, false));
 
 		bone = new ModelRenderer(this);
 		bone.setRotationPoint(0.25F, 31.5667F, 5.3333F);
@@ -295,7 +290,6 @@ public class ModelKiriko extends ModelBiped {
 
 	@Override
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-		
 		Rleg.render(f5);
 		Lleg.render(f5);
 		rarm.render(f5);
@@ -308,21 +302,11 @@ public class ModelKiriko extends ModelBiped {
 		modelRenderer.rotateAngleY = y;
 		modelRenderer.rotateAngleZ = z;
 	}
-	
-	@Override
-	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
-		
-		this.Lleg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F *limbSwingAmount;
-		this.Rleg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F *limbSwingAmount;
-		
-		this.rarm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F *limbSwingAmount;
+	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
+			float headPitch, float scaleFactor, Entity entityIn) { 
+		Lleg.rotateAngleX = MathHelper.cos(limbSwing * 0.6625F + (float) Math.PI ) + -0.7854F * 1.0F * limbSwingAmount;
+		Rleg.rotateAngleX = MathHelper.cos(limbSwing * 0.6625F + (float) Math.PI) + -0.7854F * 1.0F * limbSwingAmount;
 		
 
 	}
-	
-	
-	 public void setModelAttributes(ModelBase model)
-	    {
-	        
-	    }
 }

@@ -11,7 +11,7 @@ import net.minecraft.world.storage.WorldSavedData;
 
 public class StructureSpawning extends WorldSavedData {
 
-	private static final String IDENTIFIER = Reference.MOD_ID + "WORLDDATA";
+	private static final String IDENTIFIER = Reference.MOD_ID + "_WORLDDATA";
 
 	private NBTTagCompound data = new NBTTagCompound();
 	private int blimpCount = 0;
@@ -74,15 +74,15 @@ public void setPos(int x, int y, int z) {
 	this.posY = y;
 	this.posZ = z;
 	
-	pos.clear();
-	pos.add(posX);
-	pos.add(posY);
-	pos.add(posZ);
+	
 	this.markDirty();
     
 }
 
 public List<Integer> getPos() {
+	pos.add(posX);
+	pos.add(posY);
+	pos.add(posZ);
 		return pos;
 }
 
