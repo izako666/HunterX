@@ -166,13 +166,13 @@ public class EntityStats extends EntityVillager {
 			}
 		}
 
-		if (stats.getDefenseStat() < 7 && stats.getDefenseStat() > 5) {
+		if (stats.getDefenseStat() < 15 && stats.getDefenseStat() > 5) {
 			if (world.isRemote) {
 				player.sendMessage(new TextComponentString("your endurance.... is acceptable."));
 			}
 		}
 
-		if (stats.getDefenseStat() <= 10 && stats.getDefenseStat() > 7 || stats.getDefenseStat() > 10) {
+		if (stats.getDefenseStat() <= 20 && stats.getDefenseStat() > 15 || stats.getDefenseStat() > 20) {
 			if (world.isRemote) {
 				player.sendMessage(new TextComponentString("Like a wall, you can take immense damage."));
 			}
