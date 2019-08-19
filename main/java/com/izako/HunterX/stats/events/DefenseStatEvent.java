@@ -32,9 +32,9 @@ public class DefenseStatEvent {
 					.getEntityAttribute(SharedMonsterAttributes.ARMOR);
 			IEntityStats stats = playerIn.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 			double defenseStatCap = stats.getDefenseStat();
-			if (defenseStatCap < 10.0D) {
+			if (defenseStatCap < 20.0D) {
 				//0.02
-				stats.setDefenseStat(defenseStatCap + 0.02);
+				stats.setDefenseStat(defenseStatCap + 0.05);
 				defenseStatCap = stats.getDefenseStat();
 				if(playerIn instanceof EntityPlayerMP) {
 					ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(stats.getDefenseStat(), 2, false), (EntityPlayerMP) playerIn);
@@ -44,8 +44,8 @@ public class DefenseStatEvent {
 				attribute.removeModifier(defenseModifier);
 				attribute.applyModifier(defenseModifier);
 
-			} else if (defenseStatCap >= 10.0D) {
-				defenseModifier = new AttributeModifier(defense_attributemodifier_uuid, "defenseStatIncrease", 10, 0)
+			} else if (defenseStatCap >= 20.0D) {
+				defenseModifier = new AttributeModifier(defense_attributemodifier_uuid, "defenseStatIncrease", 20, 0)
 						.setSaved(true);
 				attribute.removeModifier(defenseModifier);
 				attribute.applyModifier(defenseModifier);
