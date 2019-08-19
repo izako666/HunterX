@@ -32,7 +32,7 @@ public class DefenseStatEvent {
 					.getEntityAttribute(SharedMonsterAttributes.ARMOR);
 			IEntityStats stats = playerIn.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 			double defenseStatCap = stats.getDefenseStat();
-			if (defenseStatCap < 20.0D) {
+			if (defenseStatCap < 19.0D) {
 				//0.02
 				stats.setDefenseStat(defenseStatCap + 0.05);
 				defenseStatCap = stats.getDefenseStat();
