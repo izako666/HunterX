@@ -124,6 +124,7 @@ public class Examiner extends EntityZombie {
 		IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 		World world = player.getEntityWorld();
 		if (!stats.isHunter()) {
+			System.out.println(stats.isHunter());
 			if (!stats.hasKilledKiriko()) {
 				if (world.isRemote) {
 					Misc.sendMsg(player, "Welcome to the Hunter Exam location site.", null);
@@ -170,6 +171,7 @@ public class Examiner extends EntityZombie {
 
 				}
 			} else if (stats.hasKilledBoss()) {
+			
 					ItemStack stack = new ItemStack(ModItems.HUNTER_CARD);
 					stack.setStackDisplayName(player.getName() + "'s License");
 					int EmptySlot = player.inventory.getFirstEmptyStack();
@@ -177,12 +179,13 @@ public class Examiner extends EntityZombie {
 						if (world.isRemote) {
 							Misc.sendMsg(player, TextFormatting.DARK_RED + "empty out your inventory please.", null);
 						}
-					} else {
+					} if(EmptySlot != -1) {
 						if (world.isRemote) {
 							Misc.sendMsg(player, "Congratulations, you are now a hunter.", null);
 						}
 						player.addItemStackToInventory(stack);
 						stats.setIsHunter(true);
+						System.out.println(stats.isHunter());
 
 						ModidPacketHandler.INSTANCE.sendToServer(new EntityStatsServerSync(1D, 8, true));
 					}
