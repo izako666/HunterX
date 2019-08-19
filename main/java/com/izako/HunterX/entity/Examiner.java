@@ -6,6 +6,12 @@ import java.util.concurrent.DelayQueue;
 
 import com.ibm.icu.text.MessagePattern.Part;
 import com.izako.HunterX.init.EntityInit;
+import com.izako.HunterX.init.ModItems;
+import com.izako.HunterX.izapi.Misc;
+import com.izako.HunterX.network.ModidPacketHandler;
+import com.izako.HunterX.network.packets.EntityStatsServerSync;
+import com.izako.HunterX.stats.capabilities.EntityStatsProvider;
+import com.izako.HunterX.stats.capabilities.IEntityStats;
 
 import akka.io.Tcp.Command;
 import net.minecraft.command.ICommandSender;
@@ -26,12 +32,14 @@ import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.Explosion;
@@ -112,23 +120,75 @@ public class Examiner extends EntityZombie {
 	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
 
 		EntityLivingBase boss = new BossExam(this.world);
-		// cooldown for rightclick
-		if (cooldown <= 0) {
 
-			if (world.isRemote) {
-				player.sendMessage(new TextComponentString("You have found me I see"));
-				player.sendMessage(new TextComponentString("you have arrived at the finale of the hunter exam"));
-				player.sendMessage(new TextComponentString(
-						"all you're hardship trough weather and monsters has brought you here"));
-				player.sendMessage(new TextComponentString("you're final opponent is going to be Hanzo"));
-				player.sendMessage(new TextComponentString("now... let the battle begin!!!"));
+		IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
+		World world = player.getEntityWorld();
+		if (!stats.isHunter()) {
+			if (!stats.hasKilledKiriko()) {
+				if (world.isRemote) {
+					Misc.sendMsg(player, "Welcome to the Hunter Exam location site.", null);
+					Misc.sendMsg(player, "So you want to participate in the hunter exam eh?", null);
+					Misc.sendMsg(player,
+							"I'm afraid you can't do this exam without being able to beat a measly kiriko.", null);
+					Misc.sendMsg(player, TextFormatting.DARK_RED + "kill a kiriko first.", null);
+				}
 			}
 
-			if (!world.isRemote) {
-				boss.setLocationAndAngles(this.posX + 1, this.posY, this.posZ + 1, this.rotationYaw, 0.0F);
-				this.world.spawnEntity(boss);
+			else if (stats.hasKilledKiriko() && !stats.hasStarted2ndPhase()) {
+				if (world.isRemote) {
+					stats.setHasStarted2ndPhase(true);
+					ModidPacketHandler.INSTANCE
+							.sendToServer(new EntityStatsServerSync(1D, 6, stats.hasStarted2ndPhase()));
+					Misc.sendMsg(player, "Well first of all", null);
+					Misc.sendMsg(player, "The first exam is a test of stamina", null);
+					Misc.sendMsg(player, "You must run till your breath runs out.", null);
+					Misc.sendMsg(player, TextFormatting.DARK_RED + "run for ten minutes.", null);
+
+				}
 			}
-			cooldown = 24000;
+			if (stats.timeHasRun() > 50 && stats.hasStarted2ndPhase() && !stats.hasStarted3rdPhase()) {
+				stats.setHasStarted3rdPhase(true);
+				if (world.isRemote) {
+					Misc.sendMsg(player, "Very well, the next exam is more about your... equipment.", null);
+					Misc.sendMsg(player, "get some good equipment, without it you won't last.", null);
+					Misc.sendMsg(player, TextFormatting.DARK_RED + "get a weapon from this mod.", null);
+				}
+			}
+			if ((player.inventory.hasItemStack(new ItemStack(ModItems.HANZOS_SWORD))
+					|| player.inventory.hasItemStack(new ItemStack(ModItems.KURAPIKAS_SWORD))
+					|| player.inventory.hasItemStack(new ItemStack(ModItems.KURAPIKAS_SWORD_UNSHEATHED))
+					|| player.inventory.hasItemStack(new ItemStack(ModItems.GONS_FISHING_ROD))
+					|| player.inventory.hasItemStack(new ItemStack(ModItems.YOYO))) && stats.hasStarted3rdPhase()
+							&& !stats.hasKilledBoss()) {
+				if (world.isRemote) {
+					Misc.sendMsg(player, "Fine then, this is your final challenge.", null);
+					Misc.sendMsg(player, "beat your fellow comrade, hanzo in a one v one.", null);
+				}
+				if (!world.isRemote) {
+					boss.setLocationAndAngles(this.posX + 1, this.posY, this.posZ + 1, this.rotationYaw, 0.0F);
+					this.world.spawnEntity(boss);
+
+				}
+			} else if (stats.hasKilledBoss()) {
+					ItemStack stack = new ItemStack(ModItems.HUNTER_CARD);
+					stack.setStackDisplayName(player.getName() + "'s License");
+					int EmptySlot = player.inventory.getFirstEmptyStack();
+					if (EmptySlot == -1) {
+						if (world.isRemote) {
+							Misc.sendMsg(player, TextFormatting.DARK_RED + "empty out your inventory please.", null);
+						}
+					} else {
+						if (world.isRemote) {
+							Misc.sendMsg(player, "Congratulations, you are now a hunter.", null);
+						}
+						player.addItemStackToInventory(stack);
+						stats.setIsHunter(true);
+
+						ModidPacketHandler.INSTANCE.sendToServer(new EntityStatsServerSync(1D, 8, true));
+					}
+
+				}
+			
 		}
 
 		return true;
@@ -148,14 +208,14 @@ public class Examiner extends EntityZombie {
 	@Override
 	public boolean getCanSpawnHere() {
 
-		return this.world.getDifficulty() != EnumDifficulty.PEACEFUL;
+		return true;
 	}
 
 	@Override
 	public void setChild(boolean childZombie) {
 
 	}
-	
+
 	@Override
 	protected SoundEvent getAmbientSound() {
 
@@ -173,6 +233,5 @@ public class Examiner extends EntityZombie {
 
 		return null;
 	}
-
 
 }

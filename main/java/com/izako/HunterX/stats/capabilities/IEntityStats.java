@@ -22,7 +22,25 @@ public interface IEntityStats {
 	
 	void setAttackStat(double value);
 	
-	//misc
+	//exam
 	boolean isHunter();
 	void setIsHunter(boolean value);
+	
+	boolean hasKilledKiriko();
+	void setHasKilledKiriko(boolean value);
+	
+	boolean hasStarted2ndPhase();
+	void setHasStarted2ndPhase(boolean value);
+	
+	Double timeHasRun();
+	void setTimeHasRun(Double value);
+	
+	boolean hasStarted3rdPhase();
+	void setHasStarted3rdPhase(boolean value);
+	
+	boolean hasKilledBoss();
+	void setHasKilledBoss(boolean value);
+	
+	
+	
 }

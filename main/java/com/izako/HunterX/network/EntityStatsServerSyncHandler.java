@@ -20,6 +20,7 @@ public class EntityStatsServerSyncHandler implements IMessageHandler<EntityStats
 	    EntityPlayerMP serverPlayer = ctx.getServerHandler().player;
 	    Double amount = message.amount;
 	    int statType = message.statType;
+	    boolean value = message.value;
 
 	    serverPlayer.getServerWorld().addScheduledTask(() -> {
 		      IEntityStats stats = serverPlayer.getCapability(EntityStatsProvider.ENTITY_STATS, null);
@@ -31,6 +32,14 @@ public class EntityStatsServerSyncHandler implements IMessageHandler<EntityStats
 		    	  stats.setSpeedStat(amount);
 		      } else if(statType == 4) {
 		    	  stats.setAttackStat(amount);
+		      } else if(statType == 5) {
+		    	  stats.setHasKilledKiriko(value);
+		      } else if(statType == 6) {
+		    	  stats.setHasStarted2ndPhase(value);
+		      } else if(statType == 7) {
+		    	  stats.setTimeHasRun(amount);
+		      } else if(statType == 8) {
+		    	  stats.setIsHunter(value);
 		      }
 		    }); 
 		return null;

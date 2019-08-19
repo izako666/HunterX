@@ -37,7 +37,7 @@ public class AttackStatEvent {
 
 				attackStat = stats.getAttackStat();
 				if(player instanceof EntityPlayerMP) {
-				ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(stats.getAttackStat(), 4), (EntityPlayerMP) player);}
+				ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(stats.getAttackStat(), 4, false), (EntityPlayerMP) player);}
 				attackModifier = new AttributeModifier(attack_attributemodifier_uuid, "attackStatIncrease", attackStat, 0)
 						.setSaved(true);
 				attribute.removeModifier(attackModifier);

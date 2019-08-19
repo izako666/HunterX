@@ -40,7 +40,7 @@ public class SpeedStatEvent {
 
 				stats.getSpeedStat();
 			
-				ModidPacketHandler.INSTANCE.sendToServer(new EntityStatsServerSync(stats.getSpeedStat(), 3));
+				ModidPacketHandler.INSTANCE.sendToServer(new EntityStatsServerSync(stats.getSpeedStat(), 3, false));
 				ModidPacketHandler.INSTANCE.sendToServer(new EntityModifierServerChange(stats.getSpeedStat(), 2));
 			} else if (stats.getSpeedStat() >= 0.15D) {
 				// maximum speed modifier is .20

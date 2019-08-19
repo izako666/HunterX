@@ -37,7 +37,7 @@ public class DefenseStatEvent {
 				stats.setDefenseStat(defenseStatCap + 0.02);
 				defenseStatCap = stats.getDefenseStat();
 				if(playerIn instanceof EntityPlayerMP) {
-					ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(stats.getDefenseStat(), 2), (EntityPlayerMP) playerIn);
+					ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(stats.getDefenseStat(), 2, false), (EntityPlayerMP) playerIn);
 				}
 				defenseModifier = new AttributeModifier(defense_attributemodifier_uuid, "defenseStatIncrease", defenseStatCap, 0)
 						.setSaved(true);

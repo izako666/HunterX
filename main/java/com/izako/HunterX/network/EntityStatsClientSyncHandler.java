@@ -21,6 +21,7 @@ public class EntityStatsClientSyncHandler implements IMessageHandler<EntityStats
 		EntityPlayerSP player = Minecraft.getMinecraft().player;
 		Double amount = message.amount;
 		int statType = message.statType;
+		boolean value = message.value;
 		Minecraft.getMinecraft().addScheduledTask(() -> {
 			IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 			if (statType == 1) {
@@ -31,6 +32,16 @@ public class EntityStatsClientSyncHandler implements IMessageHandler<EntityStats
 				stats.setSpeedStat(amount);
 			} else if (statType == 4) {
 				stats.setAttackStat(amount);
+			} else if(statType == 5 ) {
+				stats.setHasKilledKiriko(value);
+			} else if(statType == 6) {
+				stats.setHasStarted2ndPhase(value);
+			} else if(statType == 7) {
+				stats.setTimeHasRun(amount);
+			} else if(statType == 8) {
+				stats.setHasKilledBoss(value);
+			} else if(statType == 9) {
+				stats.setHasStarted3rdPhase(value);
 			}
 		});
 		return null;

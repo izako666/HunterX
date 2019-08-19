@@ -46,7 +46,7 @@ public class HealthStatEvent {
 
 
 				healthStat = stats.getHealthStat();
-				ModidPacketHandler.INSTANCE.sendToServer(new EntityStatsServerSync(stats.getHealthStat(), 1));
+				ModidPacketHandler.INSTANCE.sendToServer(new EntityStatsServerSync(stats.getHealthStat(), 1, false));
 				ModidPacketHandler.INSTANCE.sendToServer(new EntityModifierServerChange(stats.getHealthStat(), 1) );
 			} else if (healthStat >= 10) {
 

@@ -1,6 +1,7 @@
 package com.izako.HunterX.world;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import com.izako.HunterX.world.gen.generators.WorldGenStructure;
@@ -18,7 +19,6 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
-import scala.actors.threadpool.Arrays;
 
 public class WorldGenCustomStructures implements IWorldGenerator {
 	
@@ -37,8 +37,9 @@ public class WorldGenCustomStructures implements IWorldGenerator {
 		
 		case 0:
 		if(data.getBlimpCount() < 1) {
-			generateStructure(BLIMP, world, random, chunkX, chunkZ, 10, Blocks.GRASS , BiomePlains.class);
-			generateStructure(BLIMP, world, random, chunkX, chunkZ, 10, Blocks.GRASS , BiomeForest.class);
+			generateStructure(BLIMP, world, random, chunkX, chunkZ, 1000, Blocks.GRASS , BiomePlains.class);
+			   System.out.println(Integer.toString(data.getBlimpCount()));
+
 		} 
 		break;
 		
@@ -73,9 +74,9 @@ public class WorldGenCustomStructures implements IWorldGenerator {
 				if (random.nextInt(chance) == 0) {
 					generator.generate(world, random, pos);
                      data.setPos(pos.getX(), pos.getY(), pos.getZ());					
+         			data.setBlimpCount(data.getBlimpCount() + 1);
+
 					
-					
-					data.setBlimpCount(data.getBlimpCount() + 1);
 					
 					
 				}

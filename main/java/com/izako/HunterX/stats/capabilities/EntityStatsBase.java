@@ -14,6 +14,11 @@ public class EntityStatsBase implements IEntityStats{
 	private double defenseStat = 0;
 	private double attackStat = 0;
 	private boolean isHunter = false;
+	private boolean hasKilledKiriko = false;
+	private boolean hasStarted2ndPhase = false;
+	private double timeHasRun = 0;
+	private boolean hasStarted3rdPhase = false;
+	private boolean hasKilledBoss = false;
 	@Override
 	public double getHealthStat() {
 		//gets the health stat
@@ -73,6 +78,69 @@ public class EntityStatsBase implements IEntityStats{
 	public void setIsHunter(boolean value) {
 		// TODO Auto-generated method stub
 		this.isHunter = value;
+		
+	}
+
+	@Override
+	public boolean hasKilledKiriko() {
+		return this.hasKilledKiriko;
+	}
+
+	@Override
+	public void setHasKilledKiriko(boolean value) {
+
+		this.hasKilledKiriko = value;
+	}
+
+	@Override
+	public boolean hasStarted2ndPhase() {
+		// TODO Auto-generated method stub
+		return this.hasStarted2ndPhase;
+	}
+
+	@Override
+	public void setHasStarted2ndPhase(boolean value) {
+		// TODO Auto-generated method stub
+		this.hasStarted2ndPhase = value;
+		
+	}
+
+	@Override
+	public Double timeHasRun() {
+		// TODO Auto-generated method stub
+		return this.timeHasRun;
+	}
+
+	@Override
+	public void setTimeHasRun(Double value) {
+		// TODO Auto-generated method stub
+		timeHasRun = value;
+		
+	}
+
+	@Override
+	public boolean hasStarted3rdPhase() {
+		// TODO Auto-generated method stub
+		return this.hasStarted3rdPhase;
+	}
+
+	@Override
+	public void setHasStarted3rdPhase(boolean value) {
+		// TODO Auto-generated method stub
+		this.hasStarted3rdPhase = value;
+		
+	}
+
+	@Override
+	public boolean hasKilledBoss() {
+		// TODO Auto-generated method stub
+		return this.hasKilledBoss;
+	}
+
+	@Override
+	public void setHasKilledBoss(boolean value) {
+		// TODO Auto-generated method stub
+		this.hasKilledBoss = value;
 		
 	}
 

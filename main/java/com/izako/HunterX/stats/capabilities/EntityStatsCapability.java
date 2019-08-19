@@ -20,6 +20,11 @@ public class EntityStatsCapability implements Capability.IStorage<IEntityStats>{
         tag.setDouble("defensestat", instance.getDefenseStat());
         tag.setDouble("attackstat", instance.getAttackStat());
         tag.setBoolean("isHunter", instance.isHunter());
+        tag.setBoolean("hasKilledKiriko", instance.hasKilledKiriko());
+        tag.setBoolean("hasStarted2ndPhase", instance.hasStarted2ndPhase());
+        tag.setDouble("timeHasRun", instance.timeHasRun());
+        tag.setBoolean("hasStarted3rdPhase", instance.hasStarted3rdPhase());
+        tag.setBoolean("hasKilledBoss", instance.hasKilledBoss());
         return tag;
 
     }
@@ -37,7 +42,11 @@ public class EntityStatsCapability implements Capability.IStorage<IEntityStats>{
         instance.setDefenseStat(tag.getDouble("defensestat"));
         instance.setAttackStat(tag.getDouble("attackstat"));
         instance.setIsHunter(tag.getBoolean("isHunter"));
-
+        instance.setHasKilledKiriko(tag.getBoolean("hasKilledKiriko"));
+        instance.setHasStarted2ndPhase(tag.getBoolean("hasStarted2ndPhase"));
+        instance.setTimeHasRun(tag.getDouble("timeHasRun"));
+        instance.setHasStarted3rdPhase(tag.hasKey("hasStarted3rdPhase"));
+        instance.setHasKilledBoss(tag.getBoolean("hasKilledBoss"));
         
 
     }

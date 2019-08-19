@@ -55,8 +55,6 @@ public class EntityInit {
 		copySpawns(Empty.class, EnumCreatureType.MONSTER, EntityCreeper.class, EnumCreatureType.MONSTER, 100, 1);
 
 		copySpawns(Thug.class, EnumCreatureType.MONSTER, EntityCreeper.class, EnumCreatureType.MONSTER, 10, 1);
-
-		copySpawns(Examiner.class, EnumCreatureType.MONSTER, EntityCreeper.class, EnumCreatureType.MONSTER, 1, 1);
 		
 		copySpawns(EntityKiriko.class, EnumCreatureType.MONSTER, EntityCreeper.class, EnumCreatureType.MONSTER, 1, 1);
 
