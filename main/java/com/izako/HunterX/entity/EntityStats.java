@@ -172,7 +172,7 @@ public class EntityStats extends EntityVillager {
 			}
 		}
 
-		if (stats.getDefenseStat() <= 19 && stats.getDefenseStat() > 14 || stats.getDefenseStat() > 19) {
+		if (stats.getDefenseStat() <= 20 && stats.getDefenseStat() > 15 || stats.getDefenseStat() > 20) {
 			if (world.isRemote) {
 				player.sendMessage(new TextComponentString("Like a wall, you can take immense damage."));
 			}
