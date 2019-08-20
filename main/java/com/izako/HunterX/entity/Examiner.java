@@ -147,9 +147,7 @@ public class Examiner extends EntityZombie {
 				}
 			}
 			if (stats.timeHasRun() > 50 && stats.hasStarted2ndPhase() && !stats.hasStarted3rdPhase()) {
-				System.out.println(stats.hasStarted3rdPhase());
 				stats.setHasStarted3rdPhase(true);
-				
 				if (world.isRemote) {
 					Misc.sendMsg(player, "Very well, the next exam is more about your... equipment.", null);
 					Misc.sendMsg(player, "get some good equipment, without it you won't last.", null);
@@ -175,7 +173,7 @@ public class Examiner extends EntityZombie {
 
 				}
 				}
-			}  if (stats.hasKilledBoss()) {
+			} else if (stats.hasKilledBoss()) {
 			
 					ItemStack stack = new ItemStack(ModItems.HUNTER_CARD);
 					stack.setStackDisplayName(player.getName() + "'s License");
