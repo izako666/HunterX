@@ -8,6 +8,8 @@ command.locatehxh.usage=locatehxh
 entity.Thug.name=Thug
 entity.Examiner.name=Examiner
 entity.BossExam.name=Hanzo
+entity.EntityKiriko.name=Kiriko
+entity.EntityStats.name=Stats
 
 //Items
 item.logo.name= HunterX Logo
