@@ -15,6 +15,7 @@ import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
@@ -50,6 +51,12 @@ public class EntityKiriko extends EntityZombie {
 		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
 		
 
+	}
+	
+	@Override
+	protected ResourceLocation getLootTable() {
+
+		return null;
 	}
 
 	@Override

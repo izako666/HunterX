@@ -42,7 +42,7 @@ public class HealthStatEvent {
 			if (healthStat < 10) {
 
 
-				stats.setHealthStat(healthStat + 0.05);
+				stats.setHealthStat(healthStat + 0.10);
 
 
 				healthStat = stats.getHealthStat();
