@@ -304,8 +304,8 @@ public class  ModelKiriko extends ModelBase {
 	}
 	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
 			float headPitch, float scaleFactor, Entity entityIn) { 
-		Lleg.rotateAngleX = MathHelper.cos(limbSwing * 0.6625F + (float) Math.PI ) + -0.7854F * 1.0F * limbSwingAmount;
-		Rleg.rotateAngleX = MathHelper.cos(limbSwing * 0.6625F + (float) Math.PI) + -0.7854F * 1.0F * limbSwingAmount;
+		Rleg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount + 5.4F;
+		Lleg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount + 5.4F;
 		
 
 	}
