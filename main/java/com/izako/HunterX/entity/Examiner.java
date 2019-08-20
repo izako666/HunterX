@@ -156,7 +156,7 @@ public class Examiner extends EntityZombie {
 					Misc.sendMsg(player, TextFormatting.DARK_RED + "get a weapon from this mod.", null);
 				}
 			}
-			if (player.inventory.hasItemStack(new ItemStack(ModItems.HANZOS_SWORD))
+			else if (player.inventory.hasItemStack(new ItemStack(ModItems.HANZOS_SWORD))
 					|| player.inventory.hasItemStack(new ItemStack(ModItems.KURAPIKAS_SWORD))
 					|| player.inventory.hasItemStack(new ItemStack(ModItems.KURAPIKAS_SWORD_UNSHEATHED))
 					|| player.inventory.hasItemStack(new ItemStack(ModItems.GONS_FISHING_ROD))
