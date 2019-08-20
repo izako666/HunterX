@@ -3,6 +3,7 @@ package com.izako.HunterX.items.tools;
 import javax.annotation.Nullable;
 
 import com.izako.HunterX.init.ModItems;
+import com.izako.HunterX.items.entities.EntityGonHook;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -73,7 +74,7 @@ public class GonsFishingRod extends ItemFishingRod{
 
             if (!worldIn.isRemote)
             {
-                EntityFishHook entityfishhook = new EntityFishHook(worldIn, playerIn);
+                EntityGonHook entityfishhook = new EntityGonHook(worldIn, playerIn);
                 int j = EnchantmentHelper.getFishingSpeedBonus(itemstack);
 
                 if (j > 0)
