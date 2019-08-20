@@ -26,7 +26,7 @@ public class EntityGonHook extends EntityFishHook{
 	    @Override
 	    public void onUpdate() {
 	    	if(this.caughtEntity instanceof EntityLiving) {
-	    		this.caughtEntity.attackEntityFrom(DamageSource.causeThrownDamage(this, this.thrower), (float) 2);
+	    		this.caughtEntity.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getAngler()), (float) 3);
 	    	}
 	    	super.onUpdate();
 	    }

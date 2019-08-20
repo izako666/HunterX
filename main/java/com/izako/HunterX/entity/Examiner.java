@@ -146,7 +146,7 @@ public class Examiner extends EntityZombie {
 
 				}
 			}
-			if (stats.timeHasRun() > 50 && stats.hasStarted2ndPhase() && !stats.hasStarted3rdPhase()) {
+			if (stats.timeHasRun() > 6000 && stats.hasStarted2ndPhase() && !stats.hasStarted3rdPhase()) {
 				stats.setHasStarted3rdPhase(true);
 				if (world.isRemote) {
 					Misc.sendMsg(player, "Very well, the next exam is more about your... equipment.", null);
@@ -154,13 +154,13 @@ public class Examiner extends EntityZombie {
 					Misc.sendMsg(player, TextFormatting.DARK_RED + "get a weapon from this mod.", null);
 				}
 			}
-			else if ((player.inventory.hasItemStack(new ItemStack(ModItems.HANZOS_SWORD))
-					|| player.inventory.hasItemStack(new ItemStack(ModItems.KURAPIKAS_SWORD))
-					|| player.inventory.hasItemStack(new ItemStack(ModItems.KURAPIKAS_SWORD_UNSHEATHED))
-					|| player.inventory.hasItemStack(new ItemStack(ModItems.GONS_FISHING_ROD))
-					|| player.inventory.hasItemStack(new ItemStack(ModItems.YOYO))) 
-					 ) {
-				if(!stats.hasKilledBoss() && stats.hasStarted3rdPhase()) {
+			else if (!stats.hasKilledBoss() && stats.hasStarted3rdPhase()) {
+				if((player.inventory.hasItemStack(new ItemStack(ModItems.HANZOS_SWORD))
+						|| player.inventory.hasItemStack(new ItemStack(ModItems.KURAPIKAS_SWORD))
+						|| player.inventory.hasItemStack(new ItemStack(ModItems.KURAPIKAS_SWORD_UNSHEATHED))
+						|| player.inventory.hasItemStack(new ItemStack(ModItems.GONS_FISHING_ROD))
+						|| player.inventory.hasItemStack(new ItemStack(ModItems.YOYO))) 
+						 ) {
 				 
 					System.out.println(stats.hasStarted3rdPhase());
 					System.out.println(stats.hasKilledBoss());
