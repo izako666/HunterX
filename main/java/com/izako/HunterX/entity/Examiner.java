@@ -124,7 +124,6 @@ public class Examiner extends EntityZombie {
 		IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 		World world = player.getEntityWorld();
 		if (!stats.isHunter()) {
-			System.out.println(stats.isHunter());
 			if (!stats.hasKilledKiriko()) {
 				if (world.isRemote) {
 					Misc.sendMsg(player, "Welcome to the Hunter Exam location site.", null);
@@ -155,12 +154,15 @@ public class Examiner extends EntityZombie {
 					Misc.sendMsg(player, TextFormatting.DARK_RED + "get a weapon from this mod.", null);
 				}
 			}
-			if ((player.inventory.hasItemStack(new ItemStack(ModItems.HANZOS_SWORD))
+			if (player.inventory.hasItemStack(new ItemStack(ModItems.HANZOS_SWORD))
 					|| player.inventory.hasItemStack(new ItemStack(ModItems.KURAPIKAS_SWORD))
 					|| player.inventory.hasItemStack(new ItemStack(ModItems.KURAPIKAS_SWORD_UNSHEATHED))
 					|| player.inventory.hasItemStack(new ItemStack(ModItems.GONS_FISHING_ROD))
-					|| player.inventory.hasItemStack(new ItemStack(ModItems.YOYO))) && stats.hasStarted3rdPhase()
-							&& !stats.hasKilledBoss()) {
+					|| player.inventory.hasItemStack(new ItemStack(ModItems.YOYO)) 
+							) {
+				if(!stats.hasKilledBoss() && stats.hasStarted3rdPhase()) {
+					System.out.println(stats.hasStarted3rdPhase());
+					System.out.println(stats.hasKilledBoss());
 				if (world.isRemote) {
 					Misc.sendMsg(player, "Fine then, this is your final challenge.", null);
 					Misc.sendMsg(player, "beat your fellow comrade, hanzo in a one v one.", null);
@@ -169,6 +171,7 @@ public class Examiner extends EntityZombie {
 					boss.setLocationAndAngles(this.posX + 1, this.posY, this.posZ + 1, this.rotationYaw, 0.0F);
 					this.world.spawnEntity(boss);
 
+				}
 				}
 			} else if (stats.hasKilledBoss()) {
 			
