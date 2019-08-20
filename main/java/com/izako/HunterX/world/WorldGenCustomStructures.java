@@ -38,7 +38,6 @@ public class WorldGenCustomStructures implements IWorldGenerator {
 		case 0:
 		if(data.getBlimpCount() < 1) {
 			generateStructure(BLIMP, world, random, chunkX, chunkZ, 1000, Blocks.GRASS , BiomePlains.class);
-			   System.out.println(Integer.toString(data.getBlimpCount()));
 
 		} 
 		break;
