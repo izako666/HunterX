@@ -4,9 +4,7 @@ import com.izako.HunterX.init.ModItems;
 import com.izako.HunterX.items.ItemBase;
 import com.izako.HunterX.items.entities.EntityCard;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntitySnowball;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
