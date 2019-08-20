@@ -27,12 +27,13 @@ public class EntityCard extends EntityThrowable {
 
 	public EntityCard(World worldIn, EntityLivingBase throwerIn) {
 		super(worldIn, throwerIn);
+		this.thrower = throwerIn;
 	}
 
 	public EntityCard(World worldIn, EntityPlayer playerIn, double x, double y, double z) {
 		super(worldIn, x, y, z);
 		owner = playerIn;
-
+        this.thrower = playerIn;
 	}
 
 

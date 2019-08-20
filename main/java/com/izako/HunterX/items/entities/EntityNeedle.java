@@ -27,11 +27,13 @@ public class EntityNeedle extends EntityThrowable {
 
 	public EntityNeedle(World worldIn, EntityLivingBase throwerIn) {
 		super(worldIn, throwerIn);
+		this.thrower = throwerIn;
 	}
 
 	public EntityNeedle(World worldIn, EntityPlayer playerIn, double x, double y, double z) {
 		super(worldIn, x, y, z);
 		owner = playerIn;
+		this.thrower = playerIn;
 
 	}
 

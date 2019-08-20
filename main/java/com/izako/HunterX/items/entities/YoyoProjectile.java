@@ -44,6 +44,7 @@ public class YoyoProjectile extends EntityThrowable{
 	 public YoyoProjectile(World worldIn,EntityPlayer playerIn, double x, double y, double z) {
 			super(worldIn, x, y, z);
 			this.owner=playerIn;
+			this.thrower = playerIn;
 		} 
 	 
 	 public YoyoProjectile(World worldIn) {
@@ -52,6 +53,7 @@ public class YoyoProjectile extends EntityThrowable{
 
 		public YoyoProjectile(World worldIn, EntityLivingBase throwerIn) {
 			super(worldIn, throwerIn);
+			this.thrower = throwerIn;
 		}
 	 
 	

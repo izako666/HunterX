@@ -20,6 +20,7 @@ public class EntityGonHook extends EntityFishHook{
 	    public EntityGonHook(World worldIn, EntityPlayer fishingPlayer)
 	    {
 	        super(worldIn, fishingPlayer);
+	        this.thrower = fishingPlayer;
 	    }
 	    
 	    @Override

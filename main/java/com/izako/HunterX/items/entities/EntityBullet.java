@@ -23,6 +23,7 @@ public class EntityBullet extends EntityThrowable {
 		super(worldIn, throwerIn);
 		this.setSize(2, 2);
 		owner = throwerIn;
+		this.thrower = throwerIn;
 		
 	}
 
@@ -30,6 +31,7 @@ public class EntityBullet extends EntityThrowable {
 		super(worldIn, x, y, z);
 		this.setSize(2, 2);
 		owner = playerIn;
+		this.thrower = playerIn;
 		
 
 	}

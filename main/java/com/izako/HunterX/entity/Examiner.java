@@ -154,13 +154,14 @@ public class Examiner extends EntityZombie {
 					Misc.sendMsg(player, TextFormatting.DARK_RED + "get a weapon from this mod.", null);
 				}
 			}
-			else if (player.inventory.hasItemStack(new ItemStack(ModItems.HANZOS_SWORD))
+			else if ((player.inventory.hasItemStack(new ItemStack(ModItems.HANZOS_SWORD))
 					|| player.inventory.hasItemStack(new ItemStack(ModItems.KURAPIKAS_SWORD))
 					|| player.inventory.hasItemStack(new ItemStack(ModItems.KURAPIKAS_SWORD_UNSHEATHED))
 					|| player.inventory.hasItemStack(new ItemStack(ModItems.GONS_FISHING_ROD))
-					|| player.inventory.hasItemStack(new ItemStack(ModItems.YOYO)) 
-							) {
+					|| player.inventory.hasItemStack(new ItemStack(ModItems.YOYO))) 
+					 ) {
 				if(!stats.hasKilledBoss() && stats.hasStarted3rdPhase()) {
+				 
 					System.out.println(stats.hasStarted3rdPhase());
 					System.out.println(stats.hasKilledBoss());
 				if (world.isRemote) {
@@ -170,10 +171,10 @@ public class Examiner extends EntityZombie {
 				if (!world.isRemote) {
 					boss.setLocationAndAngles(this.posX + 1, this.posY, this.posZ + 1, this.rotationYaw, 0.0F);
 					this.world.spawnEntity(boss);
-
 				}
 				}
-			} else if (stats.hasKilledBoss()) {
+				
+			}  if (stats.hasKilledBoss()) {
 			
 					ItemStack stack = new ItemStack(ModItems.HUNTER_CARD);
 					stack.setStackDisplayName(player.getName() + "'s License");
