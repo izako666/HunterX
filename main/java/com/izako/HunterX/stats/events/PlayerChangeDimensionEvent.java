@@ -25,7 +25,8 @@ public class PlayerChangeDimensionEvent {
 		ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(1D, 5, stats.hasKilledKiriko()), (EntityPlayerMP) p);
 		ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(1D, 6, stats.hasStarted2ndPhase()), (EntityPlayerMP) p);
 		ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(stats.timeHasRun(), 7, false), (EntityPlayerMP) p);
-		ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(1D, 9, stats.hasKilledBoss()), (EntityPlayerMP) p);
+		ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(1D, 8, stats.hasKilledBoss()), (EntityPlayerMP) p);
+		ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(1D, 9, stats.hasStarted3rdPhase()), (EntityPlayerMP) p);
 
 	}
 	    
