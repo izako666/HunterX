@@ -83,7 +83,7 @@ public class RenderHandler {
 						Minecraft.getMinecraft().getRenderItem());
 			}
 
-		});
+		}); 
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityNeedle.class, new IRenderFactory() {
 
