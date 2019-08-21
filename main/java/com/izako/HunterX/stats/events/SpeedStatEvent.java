@@ -34,7 +34,7 @@ public class SpeedStatEvent {
 				.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
 		IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 		if (player.isSprinting()) {
-			if (stats.getSpeedStat() < 0.1D) {
+			if (stats.getSpeedStat() < 0.15D) {
 				
 				stats.setSpeedStat(stats.getSpeedStat() + 0.000004);
 

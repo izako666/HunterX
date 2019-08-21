@@ -3,26 +3,21 @@ package com.izako.HunterX;
 
 
 import com.izako.HunterX.commands.CommandLocateHxH;
-import com.izako.HunterX.init.ModItems;
+import com.izako.HunterX.commands.CommandStats;
 import com.izako.HunterX.init.ModRecipes;
-import com.izako.HunterX.items.entities.EntityCard;
-import com.izako.HunterX.network.ModidPacketHandler;
 import com.izako.HunterX.network.EntityModifierServerChangeHandler;
 import com.izako.HunterX.network.EntityStatsClientSyncHandler;
 import com.izako.HunterX.network.EntityStatsServerSyncHandler;
 import com.izako.HunterX.network.HanzoArmorBasePacketHandler;
+import com.izako.HunterX.network.ModidPacketHandler;
 import com.izako.HunterX.network.packets.EntityModifierServerChange;
 import com.izako.HunterX.network.packets.EntityStatsClientSync;
 import com.izako.HunterX.network.packets.EntityStatsServerSync;
 import com.izako.HunterX.network.packets.HanzoArmorBasePacket;
 import com.izako.HunterX.proxy.CommonProxy;
 import com.izako.HunterX.util.Reference;
-import com.izako.HunterX.util.handlers.RegistryHandler;
 import com.izako.HunterX.world.ModWorldGen;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderSnowball;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -47,6 +42,7 @@ public class Main {
 	@EventHandler
 	public void serverLoad(FMLServerStartingEvent event) {
 		event.registerServerCommand(new CommandLocateHxH());
+		event.registerServerCommand(new CommandStats());
 		
 	}
 	@EventHandler

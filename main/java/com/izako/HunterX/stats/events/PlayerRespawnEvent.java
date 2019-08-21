@@ -36,6 +36,7 @@ public class PlayerRespawnEvent {
 			ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(stats.timeHasRun(), 7, false), (EntityPlayerMP) p);
 			ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(1D, 8, stats.hasKilledBoss()), (EntityPlayerMP) p);
 			ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(1D, 9, stats.hasStarted3rdPhase()), (EntityPlayerMP) p);
+			ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(1D, 10, stats.isHunter()), (EntityPlayerMP) p);
 
 		}
 	}

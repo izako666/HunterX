@@ -42,6 +42,8 @@ public class EntityStatsClientSyncHandler implements IMessageHandler<EntityStats
 				stats.setHasKilledBoss(value);
 			} else if(statType == 9) {
 				stats.setHasStarted3rdPhase(value);
+			} else if(statType == 10) {
+				stats.setIsHunter(value);
 			}
 		});
 		return null;

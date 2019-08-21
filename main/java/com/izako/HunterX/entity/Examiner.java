@@ -174,7 +174,7 @@ public class Examiner extends EntityZombie {
 				}
 				}
 				
-			}  if (stats.hasKilledBoss()) {
+			}  if (stats.hasKilledBoss() && !stats.isHunter()) {
 			
 					ItemStack stack = new ItemStack(ModItems.HUNTER_CARD);
 					stack.setStackDisplayName(player.getName() + "'s License");

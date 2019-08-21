@@ -3,6 +3,7 @@ itemGroup.HunterX=HunterX
 
 //commands
 command.locatehxh.usage=locatehxh
+command.stats.usage=stats
 
 //Mobs
 entity.Thug.name=Thug
