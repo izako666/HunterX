@@ -1,5 +1,8 @@
 package com.izako.HunterX.stats.capabilities;
 
+import java.util.HashMap;
+import java.util.List;
+
 public interface IEntityStats {
 
 	//healthstat
@@ -40,6 +43,17 @@ public interface IEntityStats {
 	
 	boolean hasKilledBoss();
 	void setHasKilledBoss(boolean value);
+	
+	//quest api
+	
+	void giveQuest(String str, Integer value);
+	
+	HashMap<String, Integer> getQuests();
+
+	void setProgress(String str, Integer value);
+	
+	
+	Integer getProgress(String value);
 	
 	
 	

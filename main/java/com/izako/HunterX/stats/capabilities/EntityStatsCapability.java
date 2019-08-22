@@ -8,6 +8,7 @@ import net.minecraftforge.common.capabilities.Capability;
 public class EntityStatsCapability implements Capability.IStorage<IEntityStats>{
 
 
+	
 
     @Override
 
@@ -25,6 +26,10 @@ public class EntityStatsCapability implements Capability.IStorage<IEntityStats>{
         tag.setDouble("timeHasRun", instance.timeHasRun());
         tag.setBoolean("hasStarted3rdPhase", instance.hasStarted3rdPhase());
         tag.setBoolean("hasKilledBoss", instance.hasKilledBoss());
+        instance.getQuests().forEach((k, v) -> {
+            tag.setInteger(k, v);
+        });
+     
         return tag;
 
     }
@@ -45,8 +50,11 @@ public class EntityStatsCapability implements Capability.IStorage<IEntityStats>{
         instance.setHasKilledKiriko(tag.getBoolean("hasKilledKiriko"));
         instance.setHasStarted2ndPhase(tag.getBoolean("hasStarted2ndPhase"));
         instance.setTimeHasRun(tag.getDouble("timeHasRun"));
-        instance.setHasStarted3rdPhase(tag.hasKey("hasStarted3rdPhase"));
+        instance.setHasStarted3rdPhase(tag.getBoolean("hasStarted3rdPhase"));
         instance.setHasKilledBoss(tag.getBoolean("hasKilledBoss"));
+        instance.getQuests().forEach((k,v) -> {
+        	instance.setProgress(k, tag.getInteger(k));
+        });
         
 
     }

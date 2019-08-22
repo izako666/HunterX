@@ -6,6 +6,7 @@ import java.util.concurrent.DelayQueue;
 
 import com.ibm.icu.text.MessagePattern.Part;
 import com.izako.HunterX.init.EntityInit;
+import com.izako.HunterX.init.ListQuests;
 import com.izako.HunterX.init.ModItems;
 import com.izako.HunterX.izapi.Misc;
 import com.izako.HunterX.network.ModidPacketHandler;
@@ -124,7 +125,7 @@ public class Examiner extends EntityZombie {
 		IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 		World world = player.getEntityWorld();
 		if (!stats.isHunter()) {
-			if (!stats.hasKilledKiriko()) {
+			if (!ListQuests.HUNTEREXAM01.doneTask(player)) {
 				if (world.isRemote) {
 					Misc.sendMsg(player, "Welcome to the Hunter Exam location site.", null);
 					Misc.sendMsg(player, "So you want to participate in the hunter exam eh?", null);

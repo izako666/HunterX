@@ -1,6 +1,15 @@
 package com.izako.HunterX.stats.capabilities;
 
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -19,7 +28,8 @@ public class EntityStatsBase implements IEntityStats{
 	private double timeHasRun = 0;
 	private boolean hasStarted3rdPhase = false;
 	private boolean hasKilledBoss = false;
-	@Override
+    private HashMap<String, Integer> quests = new HashMap<String, Integer>();
+@Override
 	public double getHealthStat() {
 		//gets the health stat
 		return this.healthStat;
@@ -143,5 +153,36 @@ public class EntityStatsBase implements IEntityStats{
 		this.hasKilledBoss = value;
 		
 	}
+
+
+
+	@Override
+	public void setProgress(String str, Integer value) {
+		// TODO Auto-generated method stub
+		this.quests.replace(str, this.quests.get(str), value);
+	}
+
+	@Override
+	public Integer getProgress(String value) {
+		// TODO Auto-generated method stub
+		return this.quests.get(value);
+	}
+
+	@Override
+	public HashMap<String, Integer> getQuests() {
+		// TODO Auto-generated method stub
+		return quests;
+	}
+
+	@Override
+	public void giveQuest(String str, Integer value) {
+		// TODO Auto-generated method stub
+		this.quests.put(str, value);
+		
+	}
+
+
+
+
 
 }
