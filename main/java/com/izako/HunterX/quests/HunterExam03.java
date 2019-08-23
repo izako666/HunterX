@@ -12,7 +12,7 @@ public class HunterExam03 extends Quests {
 	//The id of the quest.
 	@Override
 	public String  getID() {
-		return "hunterExam03";
+		return "questHunterExam03";
 	}
 	//the name of the quest.
 	@Override
