@@ -36,6 +36,10 @@ public class OnDeathStatResetEvent {
 		stats.setTimeHasRun(oldStats.timeHasRun());
 		stats.setHasStarted3rdPhase(oldStats.hasStarted3rdPhase());
 		stats.setHasKilledBoss(oldStats.hasKilledBoss());
+		oldStats.getQuests().forEach((k, v) -> {
+			stats.giveQuest(k, v);
+		});
+		System.out.println(stats.getQuests());
 	//resetting the modifiers after death 
 		IAttributeInstance h = ((EntityLivingBase) p)
 				.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);

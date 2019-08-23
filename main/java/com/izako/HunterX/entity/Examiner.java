@@ -125,6 +125,9 @@ public class Examiner extends EntityZombie {
 		IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 		World world = player.getEntityWorld();
 		if (!stats.isHunter()) {
+			if(!ListQuests.HUNTEREXAM01.hasQuest(player)) {
+			ListQuests.HUNTEREXAM01.giveQuest(player);
+			}
 			if (!ListQuests.HUNTEREXAM01.doneTask(player)) {
 				if (world.isRemote) {
 					Misc.sendMsg(player, "Welcome to the Hunter Exam location site.", null);
@@ -135,7 +138,8 @@ public class Examiner extends EntityZombie {
 				}
 			}
 
-			else if (stats.hasKilledKiriko() && !stats.hasStarted2ndPhase()) {
+			else if (ListQuests.HUNTEREXAM01.doneTask(player) && !ListQuests.HUNTEREXAM02.hasQuest(player)) {
+				ListQuests.HUNTEREXAM02.giveQuest(player);
 				if (world.isRemote) {
 					stats.setHasStarted2ndPhase(true);
 					ModidPacketHandler.INSTANCE
@@ -147,24 +151,21 @@ public class Examiner extends EntityZombie {
 
 				}
 			}
-			if (stats.timeHasRun() > 6000 && stats.hasStarted2ndPhase() && !stats.hasStarted3rdPhase()) {
-				stats.setHasStarted3rdPhase(true);
+			else if (ListQuests.HUNTEREXAM02.doneTask(player) && !ListQuests.HUNTEREXAM03.doneTask(player)) {
+				
+				if(!ListQuests.HUNTEREXAM03.hasQuest(player)) {
+					ListQuests.HUNTEREXAM03.giveQuest(player);
+				}
 				if (world.isRemote) {
 					Misc.sendMsg(player, "Very well, the next exam is more about your... equipment.", null);
 					Misc.sendMsg(player, "get some good equipment, without it you won't last.", null);
 					Misc.sendMsg(player, TextFormatting.DARK_RED + "get a weapon from this mod.", null);
 				}
 			}
-			else if (!stats.hasKilledBoss() && stats.hasStarted3rdPhase()) {
-				if((player.inventory.hasItemStack(new ItemStack(ModItems.HANZOS_SWORD))
-						|| player.inventory.hasItemStack(new ItemStack(ModItems.KURAPIKAS_SWORD))
-						|| player.inventory.hasItemStack(new ItemStack(ModItems.KURAPIKAS_SWORD_UNSHEATHED))
-						|| player.inventory.hasItemStack(new ItemStack(ModItems.GONS_FISHING_ROD))
-						|| player.inventory.hasItemStack(new ItemStack(ModItems.YOYO))) 
-						 ) {
-				 
-					System.out.println(stats.hasStarted3rdPhase());
-					System.out.println(stats.hasKilledBoss());
+			else if (ListQuests.HUNTEREXAM03.doneTask(player) && !ListQuests.HUNTEREXAM04.doneTask(player)) {
+				if(!ListQuests.HUNTEREXAM04.hasQuest(player)) {
+					ListQuests.HUNTEREXAM04.giveQuest(player);
+				}
 				if (world.isRemote) {
 					Misc.sendMsg(player, "Fine then, this is your final challenge.", null);
 					Misc.sendMsg(player, "beat your fellow comrade, hanzo in a one v one.", null);
@@ -172,10 +173,10 @@ public class Examiner extends EntityZombie {
 				if (!world.isRemote) {
 					boss.setLocationAndAngles(this.posX + 1, this.posY, this.posZ + 1, this.rotationYaw, 0.0F);
 					this.world.spawnEntity(boss);
-				}
+				
 				}
 				
-			}  if (stats.hasKilledBoss() && !stats.isHunter()) {
+			}  if (ListQuests.HUNTEREXAM04.doneTask(player) && !stats.isHunter()) {
 			
 					ItemStack stack = new ItemStack(ModItems.HUNTER_CARD);
 					stack.setStackDisplayName(player.getName() + "'s License");

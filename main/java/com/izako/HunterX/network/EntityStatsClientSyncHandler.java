@@ -23,6 +23,7 @@ public class EntityStatsClientSyncHandler implements IMessageHandler<EntityStats
 		int statType = message.statType;
 		boolean value = message.value;
 		Minecraft.getMinecraft().addScheduledTask(() -> {
+
 			IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 			if (statType == 1) {
 				stats.setHealthStat(amount);
@@ -45,6 +46,7 @@ public class EntityStatsClientSyncHandler implements IMessageHandler<EntityStats
 			} else if(statType == 10) {
 				stats.setIsHunter(value);
 			}
+			
 		});
 		return null;
 	}

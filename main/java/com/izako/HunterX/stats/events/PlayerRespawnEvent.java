@@ -5,6 +5,7 @@ import java.util.UUID;
 import com.izako.HunterX.network.ModidPacketHandler;
 import com.izako.HunterX.network.packets.EntityStatsClientSync;
 import com.izako.HunterX.network.packets.EntityStatsServerSync;
+import com.izako.HunterX.network.packets.QuestPacketSync;
 import com.izako.HunterX.stats.capabilities.EntityStatsProvider;
 import com.izako.HunterX.stats.capabilities.IEntityStats;
 
@@ -38,6 +39,10 @@ public class PlayerRespawnEvent {
 			ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(1D, 9, stats.hasStarted3rdPhase()), (EntityPlayerMP) p);
 			ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(1D, 10, stats.isHunter()), (EntityPlayerMP) p);
 
+
+			stats.getQuests().forEach((k, v) -> {
+				ModidPacketHandler.INSTANCE.sendTo(new QuestPacketSync(k, 2, v), (EntityPlayerMP)p);
+			});
 		}
 	}
 }

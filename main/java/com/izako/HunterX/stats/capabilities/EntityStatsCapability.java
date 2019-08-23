@@ -1,5 +1,7 @@
 package com.izako.HunterX.stats.capabilities;
 
+import com.izako.HunterX.init.ListQuests;
+
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -28,6 +30,7 @@ public class EntityStatsCapability implements Capability.IStorage<IEntityStats>{
         tag.setBoolean("hasKilledBoss", instance.hasKilledBoss());
         instance.getQuests().forEach((k, v) -> {
             tag.setInteger(k, v);
+
         });
      
         return tag;
@@ -52,10 +55,18 @@ public class EntityStatsCapability implements Capability.IStorage<IEntityStats>{
         instance.setTimeHasRun(tag.getDouble("timeHasRun"));
         instance.setHasStarted3rdPhase(tag.getBoolean("hasStarted3rdPhase"));
         instance.setHasKilledBoss(tag.getBoolean("hasKilledBoss"));
-        instance.getQuests().forEach((k,v) -> {
-        	instance.setProgress(k, tag.getInteger(k));
-        });
-        
+        if(tag.hasKey(ListQuests.HUNTEREXAM01.getID())) {
+        	instance.giveQuest(ListQuests.HUNTEREXAM01.getID(), tag.getInteger(ListQuests.HUNTEREXAM01.getID()));
+        }
+        if(tag.hasKey(ListQuests.HUNTEREXAM02.getID())) {
+        	instance.giveQuest(ListQuests.HUNTEREXAM02.getID(), tag.getInteger(ListQuests.HUNTEREXAM02.getID()));
+        }
+        if(tag.hasKey(ListQuests.HUNTEREXAM03.getID())) {
+        	instance.giveQuest(ListQuests.HUNTEREXAM03.getID(), tag.getInteger(ListQuests.HUNTEREXAM03.getID()));
+        }
+        if(tag.hasKey(ListQuests.HUNTEREXAM04.getID())) {
+        	instance.giveQuest(ListQuests.HUNTEREXAM04.getID(), tag.getInteger(ListQuests.HUNTEREXAM04.getID()));
+        }
 
     }
 

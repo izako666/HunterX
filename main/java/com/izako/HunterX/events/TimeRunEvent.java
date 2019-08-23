@@ -1,5 +1,6 @@
 package com.izako.HunterX.events;
 
+import com.izako.HunterX.init.ListQuests;
 import com.izako.HunterX.network.ModidPacketHandler;
 import com.izako.HunterX.network.packets.EntityStatsServerSync;
 import com.izako.HunterX.stats.capabilities.EntityStatsProvider;
@@ -14,8 +15,12 @@ public class TimeRunEvent {
 	public void timeRun(TickEvent.PlayerTickEvent e) {
 		IEntityStats stats = e.player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 		if(stats.hasStarted2ndPhase() == true) {
+			if(e.player.isSprinting()) {
 			stats.setTimeHasRun(stats.timeHasRun() + 1);
+			ListQuests.HUNTEREXAM02.setProgress(e.player, (int)Math.round(stats.timeHasRun()));
+			System.out.println(stats.getProgress(ListQuests.HUNTEREXAM02.getID()));
 			ModidPacketHandler.INSTANCE.sendToServer(new EntityStatsServerSync(stats.timeHasRun(), 7, false));
+			}
 		}
 		
 	}
