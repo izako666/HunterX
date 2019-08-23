@@ -29,10 +29,10 @@ import net.minecraft.world.World;
 
 public class YoyoProjectile extends EntityThrowable{
 	int cooldowncount = 0;
-	static int maxticks = 80;
-	public static int count = maxticks;
+	private int maxticks = 80;
+	private int count = maxticks;
 	private boolean comeBack = false;
-	 static EntityPlayer owner;
+	 private EntityPlayer owner;
 	 
 	 private int xTile;
 	    private int yTile;
