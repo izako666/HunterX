@@ -64,7 +64,7 @@ public class EntityStatsProvider implements ICapabilitySerializable<NBTTagCompou
 
 
 
-    @Override
+    
 
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing facing) {
 

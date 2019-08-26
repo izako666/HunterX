@@ -4,7 +4,10 @@ package com.izako.HunterX;
 
 import com.izako.HunterX.commands.CommandLocateHxH;
 import com.izako.HunterX.commands.CommandStats;
+import com.izako.HunterX.init.ListAbilities;
 import com.izako.HunterX.init.ModRecipes;
+import com.izako.HunterX.network.AbilityPacketClientSyncHandler;
+import com.izako.HunterX.network.AbilityPacketServerSyncHandler;
 import com.izako.HunterX.network.EntityModifierServerChangeHandler;
 import com.izako.HunterX.network.EntityStatsClientSyncHandler;
 import com.izako.HunterX.network.EntityStatsServerSyncHandler;
@@ -12,11 +15,13 @@ import com.izako.HunterX.network.HanzoArmorBasePacketHandler;
 import com.izako.HunterX.network.ModidPacketHandler;
 import com.izako.HunterX.network.QuestPacketSyncClientHandler;
 import com.izako.HunterX.network.QuestPacketSyncServerHandler;
+import com.izako.HunterX.network.packets.AbilityPacketSync;
 import com.izako.HunterX.network.packets.EntityModifierServerChange;
 import com.izako.HunterX.network.packets.EntityStatsClientSync;
 import com.izako.HunterX.network.packets.EntityStatsServerSync;
 import com.izako.HunterX.network.packets.HanzoArmorBasePacket;
 import com.izako.HunterX.network.packets.QuestPacketSync;
+import com.izako.HunterX.proxy.ClientProxy;
 import com.izako.HunterX.proxy.CommonProxy;
 import com.izako.HunterX.util.Reference;
 import com.izako.HunterX.world.ModWorldGen;
@@ -50,7 +55,7 @@ public class Main {
 	}
 	@EventHandler
 	public static void PreInit (FMLPreInitializationEvent event){
-		
+		ClientProxy.keyBinds();
 		Main.proxy.RenderEntity();
 		Main.proxy.preinitRegistries();
 		Main.proxy.render();
@@ -61,6 +66,8 @@ public class Main {
 		ModidPacketHandler.INSTANCE.registerMessage(EntityModifierServerChangeHandler.class, EntityModifierServerChange.class, 3, Side.SERVER );
 		ModidPacketHandler.INSTANCE.registerMessage(QuestPacketSyncServerHandler.class, QuestPacketSync.class, 4, Side.SERVER );
 		ModidPacketHandler.INSTANCE.registerMessage(QuestPacketSyncClientHandler.class, QuestPacketSync.class, 5, Side.CLIENT );
+		ModidPacketHandler.INSTANCE.registerMessage(AbilityPacketServerSyncHandler.class, AbilityPacketSync.class, 6, Side.SERVER );
+		ModidPacketHandler.INSTANCE.registerMessage(AbilityPacketClientSyncHandler.class, AbilityPacketSync.class, 7, Side.CLIENT );
 
 	
 	}
@@ -68,6 +75,7 @@ public class Main {
 	@EventHandler
 	public static void init (FMLInitializationEvent event)
 	{
+		ListAbilities.registerAbilities();
 		proxy.init(event);
 	ModRecipes.init();
 	

@@ -39,7 +39,9 @@ public class CommonProxy {
  
 	public static void preinitRegistries() {
 		EventsHandler.registerEvents();
+		
 	}
+	public static void keyBinds() {}
 	
 
 }

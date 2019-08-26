@@ -1,5 +1,6 @@
 package com.izako.HunterX.quests;
 
+import com.izako.HunterX.init.ListQuests;
 import com.izako.HunterX.izapi.quests.Quests;
 import com.izako.HunterX.network.ModidPacketHandler;
 import com.izako.HunterX.network.packets.QuestPacketSync;
@@ -30,13 +31,18 @@ public class HunterExam02 extends Quests {
 
 	@Override
 	public void setProgress(EntityPlayer player, Integer value) {
+		if(ListQuests.HUNTEREXAM02.hasQuest(player)) {
 		IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
            stats.setProgress(this.getID(), (int) Math.round(stats.timeHasRun()));
+           
            if(player instanceof EntityPlayerMP) {
            ModidPacketHandler.INSTANCE.sendTo(new QuestPacketSync(this.getID(), 1, stats.getProgress(this.getID())), (EntityPlayerMP) player);
-           }
-           ModidPacketHandler.INSTANCE.sendToServer(new QuestPacketSync(this.getID(), 1, stats.getProgress(this.getID())));
 
+           }
+           
+           ModidPacketHandler.INSTANCE.sendToServer(new QuestPacketSync(this.getID(), 1, stats.getProgress(this.getID())));
+		}
+           
 	}
 	@Override
 	public boolean doneTask(EntityPlayer player) {

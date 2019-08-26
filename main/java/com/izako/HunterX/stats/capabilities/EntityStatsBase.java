@@ -10,6 +10,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.izako.HunterX.init.ListAbilities;
+import com.izako.HunterX.izapi.abilities.Ability;
+import com.izako.HunterX.network.ModidPacketHandler;
+import com.izako.HunterX.network.packets.AbilityPacketSync;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -29,6 +36,10 @@ public class EntityStatsBase implements IEntityStats{
 	private boolean hasStarted3rdPhase = false;
 	private boolean hasKilledBoss = false;
     private HashMap<String, Integer> quests = new HashMap<String, Integer>();
+    private List<Ability> abilities = new ArrayList<Ability>();
+    private HashMap<String, Boolean> isPassiveActive = new HashMap<String, Boolean>();
+    private HashMap<String, Boolean> isOnCooldown = new HashMap<String, Boolean>();
+    private List<Ability> Slots = new ArrayList<Ability>();
 @Override
 	public double getHealthStat() {
 		//gets the health stat
@@ -179,6 +190,102 @@ public class EntityStatsBase implements IEntityStats{
 		// TODO Auto-generated method stub
 		this.quests.put(str, value);
 		
+	}
+
+	@Override
+	public void giveAbility(Ability ability) {
+		// TODO Auto-generated method stub
+		this.abilities.add(ability);
+	}
+
+	@Override
+	public void removeAbility(Ability ability) {
+		// TODO Auto-generated method stub
+		this.abilities.remove(ability);
+	}
+
+	@Override
+	public List<Ability> getAbilities() {
+		// TODO Auto-generated method stub
+		return this.abilities;
+	}
+
+	@Override
+	public boolean isPassiveActive(String str) {
+		// TODO Auto-generated method stub
+		return this.isPassiveActive.get(str);
+	}
+
+	@Override
+	public boolean isOnCooldown(String str) {
+		// TODO Auto-generated method stub
+		return this.isOnCooldown.get(str);
+	}
+
+	@Override
+	public void setIsPassiveActive(boolean value, String str) {
+		// TODO Auto-generated method stub
+		if(this.isPassiveActive.get(str) == null) {
+		this.isPassiveActive.put(str, value);
+		} else {
+			this.isPassiveActive.replace(str, this.isPassiveActive.get(str), value);
+		}
+	}
+
+	@Override
+	public void setIsOnCooldown(boolean value, String str) {
+		if(this.isPassiveActive.get(str) == null) {
+		this.isPassiveActive.put(str, value);
+		} else {
+			this.isPassiveActive.replace(str, this.isPassiveActive.get(str), value);
+		}
+		
+	}
+
+	@Override
+	public HashMap<String, Boolean> getIsPassiveActiveAll() {
+		// TODO Auto-generated method stub
+		return this.isPassiveActive;
+	}
+
+	@Override
+	public HashMap<String, Boolean> getIsOnCooldownAll() {
+		// TODO Auto-generated method stub
+		return this.isOnCooldown;
+	}
+
+	@Override
+	public void setAbilityToSlot(Integer slot, Ability a) {
+		// TODO Auto-generated method stub
+		if(!this.Slots.contains(a)) {
+		this.Slots.add(slot, a);
+		System.out.println(this.Slots.get(slot).getID());
+		System.out.println(slot);
+				}
+	}
+
+	@Override
+	public void removeAbilityFromSlot(Ability a) {
+		// TODO Auto-generated method stub
+		
+		this.Slots.remove(a);
+		
+	}
+
+	@Override
+	public List<Ability> getSlotsList() {
+		// TODO Auto-generated method stub
+		return this.Slots;
+	}
+
+	@Override
+	public Ability getAbilityNonNull(Integer slot) {
+		// TODO Auto-generated method stub
+		if(this.Slots.get(slot) != null) {
+		return this.Slots.get(slot);
+		}
+		System.out.println("is null");
+		return null;
 	}
 
 

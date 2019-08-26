@@ -40,6 +40,14 @@ public class OnDeathStatResetEvent {
 			stats.giveQuest(k, v);
 		});
 		System.out.println(stats.getQuests());
+		
+		oldStats.getAbilities().forEach((k) -> {
+			stats.giveAbility(k);
+		});
+		
+		oldStats.getSlotsList().forEach((s) -> {
+			stats.setAbilityToSlot(oldStats.getSlotsList().indexOf(s), s);
+		});
 	//resetting the modifiers after death 
 		IAttributeInstance h = ((EntityLivingBase) p)
 				.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);

@@ -1,5 +1,6 @@
 package com.izako.HunterX.stats.capabilities;
 
+import com.izako.HunterX.init.ListAbilities;
 import com.izako.HunterX.init.ListQuests;
 
 import net.minecraft.nbt.NBTBase;
@@ -32,6 +33,23 @@ public class EntityStatsCapability implements Capability.IStorage<IEntityStats>{
             tag.setInteger(k, v);
 
         });
+        instance.getAbilities().forEach((a) ->{
+        	tag.setString(a.getID(), a.getID());
+        });
+        
+        instance.getIsPassiveActiveAll().forEach((k, v) -> {
+        	tag.setBoolean(k, v);
+        });
+        instance.getIsOnCooldownAll().forEach((k, v) -> {
+        	tag.setBoolean(k, v);
+        });
+        
+        instance.getSlotsList().forEach((a) -> {
+        	if(a != null) {
+        	tag.setInteger("slot" + a.getID(), instance.getSlotsList().indexOf(a));
+        	System.out.println(a.getID());
+        	}
+        });
      
         return tag;
 
@@ -59,10 +77,33 @@ public class EntityStatsCapability implements Capability.IStorage<IEntityStats>{
         tag.getKeySet().forEach((k) -> {
         	if(k.startsWith("quest")) {
         		instance.giveQuest(k, tag.getInteger(k));
+        		System.out.println(k);
+        	}
+        });
+        
+        tag.getKeySet().forEach((k) -> {
+        	if(k.startsWith("Ability") && !k.endsWith("isPassiveActive") && !k.endsWith("isOnCooldown")) {
+        	instance.giveAbility(ListAbilities.getAbilityFromID(k));
+        		
         	}
         });
       
+        tag.getKeySet().forEach((k) -> {
+        	if(k.endsWith("isPassiveActive")) {
+        		instance.setIsPassiveActive(tag.getBoolean(k), k);
+        	}
+        });
 
+        tag.getKeySet().forEach((k) -> {
+        	if(k.endsWith("isOnCooldown")) {
+        		instance.setIsOnCooldown(tag.getBoolean(k), k);
+        	}
+        });
+        tag.getKeySet().forEach((k) -> {
+        	if(k.startsWith("slot")) {
+        		instance.setAbilityToSlot(tag.getInteger(k), ListAbilities.getAbilityFromID(k.substring(4)));
+        	}
+        });
     }
 
 

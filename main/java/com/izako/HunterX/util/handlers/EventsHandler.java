@@ -2,6 +2,7 @@ package com.izako.HunterX.util.handlers;
 
 import com.izako.HunterX.events.HanzoArmorBaseEvent;
 import com.izako.HunterX.events.HanzoSwordDropEvent;
+import com.izako.HunterX.events.KeyBindHandlerEvent;
 import com.izako.HunterX.events.OnKillBossEvent;
 import com.izako.HunterX.events.OnKillKirikoEvent;
 import com.izako.HunterX.events.ThugDropEvent;
@@ -37,6 +38,7 @@ public class EventsHandler {
 		OnKillKirikoEvent onKillKirikoEvent = new OnKillKirikoEvent();
 		TimeRunEvent timeRunEvent = new TimeRunEvent();
 		OnKillBossEvent onKillBossEvent = new OnKillBossEvent();
+		KeyBindHandlerEvent keyBindHandlerEvent = new KeyBindHandlerEvent();
 		
 		
 		MinecraftForge.EVENT_BUS.register(hanzoArmorBaseEvent);
@@ -54,6 +56,9 @@ public class EventsHandler {
 		MinecraftForge.EVENT_BUS.register(onKillKirikoEvent);
 		MinecraftForge.EVENT_BUS.register(timeRunEvent);
 		MinecraftForge.EVENT_BUS.register(onKillBossEvent);
+		MinecraftForge.EVENT_BUS.register(keyBindHandlerEvent);
+
+
 
 
 

@@ -11,15 +11,15 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class CapabilityAttachEvent {
 
+	static ResourceLocation key = new ResourceLocation(Reference.MOD_ID + ":stats");
+
 	@SubscribeEvent
 	public void attachCapabilities(AttachCapabilitiesEvent<Entity> event) {
-		ResourceLocation key = new ResourceLocation(Reference.MOD_ID + ":stats");
 		if (event.getObject() instanceof EntityPlayer) {
 
-			if (!event.getCapabilities().containsKey(key)) {
 				event.addCapability(key, new EntityStatsProvider());
 				System.out.println("attached");
-			}
+			
 
 		}
 

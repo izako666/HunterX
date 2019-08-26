@@ -1,6 +1,7 @@
 package com.izako.HunterX.stats.events;
 
 import com.izako.HunterX.network.ModidPacketHandler;
+import com.izako.HunterX.network.packets.AbilityPacketSync;
 import com.izako.HunterX.network.packets.EntityStatsClientSync;
 import com.izako.HunterX.network.packets.QuestPacketSync;
 import com.izako.HunterX.stats.capabilities.EntityStatsProvider;
@@ -32,6 +33,14 @@ public class PlayerLoggedInEvent {
 
 		stats.getQuests().forEach((k, v) -> {
 			ModidPacketHandler.INSTANCE.sendTo(new QuestPacketSync(k, 2, v), (EntityPlayerMP)p);
+		});
+		stats.getAbilities().forEach((k) -> {
+
+			ModidPacketHandler.INSTANCE.sendTo(new AbilityPacketSync(k, 1, 3), (EntityPlayerMP) p);
+		});
+		
+		stats.getSlotsList().forEach((s) -> {
+			ModidPacketHandler.INSTANCE.sendTo(new AbilityPacketSync(s, stats.getSlotsList().indexOf(s), 1), (EntityPlayerMP) p);
 		});
 	}
 		}

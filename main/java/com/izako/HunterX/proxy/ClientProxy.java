@@ -1,5 +1,6 @@
 package com.izako.HunterX.proxy;
 
+import com.izako.HunterX.init.ListKeybinds;
 import com.izako.HunterX.init.ModItems;
 import com.izako.HunterX.items.entities.EntityBullet;
 import com.izako.HunterX.items.entities.EntityCard;
@@ -28,6 +29,7 @@ public class ClientProxy extends CommonProxy{
 	@Override
 	public  void preInit(FMLPreInitializationEvent event)
 	{
+	    ListKeybinds.register();
 	}
 	
     @Override
@@ -48,5 +50,10 @@ public class ClientProxy extends CommonProxy{
 		
 		
 	}
+	public static void keyBinds() {
+		ListKeybinds.register();
+	}
+	
+	
 
 }
