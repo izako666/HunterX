@@ -18,6 +18,7 @@ public class ListKeybinds {
 	public static KeyBinding eight;
 	public static KeyBinding nine;
 	public static KeyBinding activate;
+	public static KeyBinding openSelection;
     public static void register()
     {
         one = new KeyBinding("key.1", Keyboard.KEY_1, "key.categories.hntx");
@@ -30,6 +31,7 @@ public class ListKeybinds {
         eight = new KeyBinding("key.8", Keyboard.KEY_8, "key.categories.hntx");
         nine = new KeyBinding("key.9", Keyboard.KEY_9, "key.categories.hntx");
         activate = new KeyBinding("key.activate", Keyboard.KEY_GRAVE, "key.categories.hntrx");
+        openSelection = new KeyBinding("key.openSelection", Keyboard.KEY_R, "key.categories.hntrx");
 
         ClientRegistry.registerKeyBinding(one);
         ClientRegistry.registerKeyBinding(two);
@@ -41,6 +43,8 @@ public class ListKeybinds {
         ClientRegistry.registerKeyBinding(eight);
         ClientRegistry.registerKeyBinding(nine);
         ClientRegistry.registerKeyBinding(activate);
+        ClientRegistry.registerKeyBinding(openSelection);
+
 
     }
 

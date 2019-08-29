@@ -40,5 +40,17 @@ public class Ability {
 		}
 		ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(this, index, 1));
 	}
+	
+	public void giveAbility(EntityPlayer player) {
+		IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
+		stats.removeAbility(this);
+		stats.giveAbility(this);
+		if(player instanceof EntityPlayerMP) {
+			ModidPacketHandler.INSTANCE.sendTo(new AbilityPacketSync(this, 1, 3), (EntityPlayerMP) player);
+		}
+		ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(this, 1, 3));
+
+	}
+	
 
 }

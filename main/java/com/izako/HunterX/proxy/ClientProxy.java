@@ -1,5 +1,7 @@
 package com.izako.HunterX.proxy;
 
+import com.izako.HunterX.Main;
+import com.izako.HunterX.gui.GuiHandler;
 import com.izako.HunterX.init.ListKeybinds;
 import com.izako.HunterX.init.ModItems;
 import com.izako.HunterX.items.entities.EntityBullet;
@@ -22,6 +24,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 public class ClientProxy extends CommonProxy{
 	
@@ -35,6 +38,7 @@ public class ClientProxy extends CommonProxy{
     @Override
 	public  void init (FMLInitializationEvent event)
 	{
+    	NetworkRegistry.INSTANCE.registerGuiHandler(Main.instance, new GuiHandler());
     	super.init(event);
     	
 	}

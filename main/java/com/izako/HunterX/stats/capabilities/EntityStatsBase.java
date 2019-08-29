@@ -257,11 +257,10 @@ public class EntityStatsBase implements IEntityStats{
 	@Override
 	public void setAbilityToSlot(Integer slot, Ability a) {
 		// TODO Auto-generated method stub
+		
 		if(!this.Slots.contains(a)) {
 		this.Slots.add(slot, a);
-		System.out.println(this.Slots.get(slot).getID());
-		System.out.println(slot);
-				}
+		}
 	}
 
 	@Override
@@ -281,11 +280,8 @@ public class EntityStatsBase implements IEntityStats{
 	@Override
 	public Ability getAbilityNonNull(Integer slot) {
 		// TODO Auto-generated method stub
-		if(this.Slots.get(slot) != null) {
 		return this.Slots.get(slot);
-		}
-		System.out.println("is null");
-		return null;
+		
 	}
 
 

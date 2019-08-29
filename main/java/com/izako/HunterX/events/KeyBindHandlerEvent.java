@@ -1,5 +1,6 @@
 package com.izako.HunterX.events;
 
+import com.izako.HunterX.Main;
 import com.izako.HunterX.init.ListAbilities;
 import com.izako.HunterX.init.ListKeybinds;
 import com.izako.HunterX.network.ModidPacketHandler;
@@ -8,6 +9,7 @@ import com.izako.HunterX.stats.capabilities.EntityStatsProvider;
 import com.izako.HunterX.stats.capabilities.IEntityStats;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 
@@ -15,7 +17,13 @@ public class KeyBindHandlerEvent {
 
 	@SubscribeEvent
 	public void onPress(KeyInputEvent e) {
-		IEntityStats stats = Minecraft.getMinecraft().player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
+		
+		EntityPlayerSP p = Minecraft.getMinecraft().player;
+		IEntityStats stats = p.getCapability(EntityStatsProvider.ENTITY_STATS, null);
+		
+		if(ListKeybinds.openSelection.isPressed()) {
+			p.openGui(Main.instance, 0, Minecraft.getMinecraft().world, (int)p.posX, (int)p.posY, (int)p.posZ);
+		}
 		if(ListKeybinds.one.isPressed() && ListKeybinds.activate.isPressed()) {
 
 			if(stats.getSlotsList().size() > 0) {
@@ -23,6 +31,7 @@ public class KeyBindHandlerEvent {
 			}
 		}
 		if(ListKeybinds.two.isPressed() && ListKeybinds.activate.isPressed()) {
+			ListAbilities.ABILITY_JAJANKEN.giveAbility(p);
 			if(stats.getSlotsList().size() > 1) {
 				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(stats.getAbilityNonNull(1), 1, 2));
 			}			
