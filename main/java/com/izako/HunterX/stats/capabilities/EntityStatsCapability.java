@@ -44,12 +44,13 @@ public class EntityStatsCapability implements Capability.IStorage<IEntityStats>{
         	tag.setBoolean(k, v);
         });
         
-        instance.getSlotsList().forEach((a) -> {
-        	if(a != null) {
-        	tag.setInteger("slot" + a.getID(), instance.getSlotsList().indexOf(a));
-        	System.out.println(a.getID());
-        	}
-        });
+       for(int i = 0; i < instance.getSlotsList().length; i++) {
+    	   if(instance.getSlotsList()[i] != null) {
+    	   tag.setInteger("slot" + instance.getSlotsList()[i].getID(), i);
+    	   System.out.println(instance.getSlotsList()[i].getID());
+    	   }
+       }
+   
      
         return tag;
 

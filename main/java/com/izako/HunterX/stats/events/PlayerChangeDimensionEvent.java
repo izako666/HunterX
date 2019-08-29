@@ -40,9 +40,11 @@ public class PlayerChangeDimensionEvent {
 			ModidPacketHandler.INSTANCE.sendTo(new AbilityPacketSync(k, 1, 3), (EntityPlayerMP) p);
 		});
 		
-		stats.getSlotsList().forEach((s) -> {
-			ModidPacketHandler.INSTANCE.sendTo(new AbilityPacketSync(s, stats.getSlotsList().indexOf(s), 1), (EntityPlayerMP) p);
-		});
+		for(int i = 0; i < stats.getSlotsList().length; i++) {
+			if(stats.getSlotsList()[i] != null) {
+			ModidPacketHandler.INSTANCE.sendTo(new AbilityPacketSync(stats.getSlotsList()[i], i, 1), (EntityPlayerMP) p);
+			}
+		}
 	}
 	    
 	}

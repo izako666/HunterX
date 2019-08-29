@@ -39,7 +39,7 @@ public class EntityStatsBase implements IEntityStats{
     private List<Ability> abilities = new ArrayList<Ability>();
     private HashMap<String, Boolean> isPassiveActive = new HashMap<String, Boolean>();
     private HashMap<String, Boolean> isOnCooldown = new HashMap<String, Boolean>();
-    private List<Ability> Slots = new ArrayList<Ability>();
+    private Ability[] Slots = new Ability[9];
 @Override
 	public double getHealthStat() {
 		//gets the health stat
@@ -258,21 +258,29 @@ public class EntityStatsBase implements IEntityStats{
 	public void setAbilityToSlot(Integer slot, Ability a) {
 		// TODO Auto-generated method stub
 		
-		if(!this.Slots.contains(a)) {
-		this.Slots.add(slot, a);
-		}
+       for(int i = 0; i < this.Slots.length; i++) {
+    	   if(this.Slots[i] == a) {
+    		   this.Slots[i] = null;
+    		   
+    	   }
+       }
+       this.Slots[slot] = a;
 	}
 
 	@Override
 	public void removeAbilityFromSlot(Ability a) {
 		// TODO Auto-generated method stub
 		
-		this.Slots.remove(a);
+		for(int i =0; i < this.Slots.length; i++) {
+			if(this.Slots[i] == a) {
+				this.Slots[i] = null;
+			}
+		}
 		
 	}
 
 	@Override
-	public List<Ability> getSlotsList() {
+	public Ability[] getSlotsList() {
 		// TODO Auto-generated method stub
 		return this.Slots;
 	}
@@ -280,7 +288,7 @@ public class EntityStatsBase implements IEntityStats{
 	@Override
 	public Ability getAbilityNonNull(Integer slot) {
 		// TODO Auto-generated method stub
-		return this.Slots.get(slot);
+		return this.Slots[slot];
 		
 	}
 

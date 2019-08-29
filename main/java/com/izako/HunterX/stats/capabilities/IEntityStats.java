@@ -73,7 +73,7 @@ public interface IEntityStats {
 	void setIsOnCooldown(boolean value, String str);
 	void setAbilityToSlot(Integer slot, Ability a);
 	void removeAbilityFromSlot(Ability a);
-	List<Ability> getSlotsList();
+	Ability[] getSlotsList();
 	public Ability getAbilityNonNull(Integer slot);
 	
 	

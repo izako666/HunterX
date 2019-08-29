@@ -26,49 +26,51 @@ public class KeyBindHandlerEvent {
 		}
 		if(ListKeybinds.one.isPressed() && ListKeybinds.activate.isPressed()) {
 
-			if(stats.getSlotsList().size() > 0) {
+			if(stats.getSlotsList()[0] != null) {
 				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(stats.getAbilityNonNull(0), 0, 2));
 			}
 		}
 		if(ListKeybinds.two.isPressed() && ListKeybinds.activate.isPressed()) {
 			ListAbilities.ABILITY_JAJANKEN.giveAbility(p);
-			if(stats.getSlotsList().size() > 1) {
+			if(stats.getSlotsList()[1] != null) {
 				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(stats.getAbilityNonNull(1), 1, 2));
-			}			
+			}
 
 		}
 		if(ListKeybinds.three.isPressed() && ListKeybinds.activate.isPressed()) {
-			if(stats.getSlotsList().size() > 2) {
+			if(stats.getSlotsList()[2] != null) {
+
 				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(stats.getAbilityNonNull(2), 2, 2));
 			}
 		
 		if(ListKeybinds.four.isPressed() && ListKeybinds.activate.isPressed()) {
-			if(stats.getSlotsList().size() > 3) {
+			if(stats.getSlotsList()[3] != null) {
+
 				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(stats.getAbilityNonNull(3), 3, 2));
 			}
 		}
 		if(ListKeybinds.five.isPressed() && ListKeybinds.activate.isPressed()) {
-			if(stats.getSlotsList().size() > 4) {
+			if(stats.getSlotsList()[4] != null) {
 				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(stats.getAbilityNonNull(4), 4, 2));
 			}
 		}
 		if(ListKeybinds.six.isPressed() && ListKeybinds.activate.isPressed()) {
-			if(stats.getSlotsList().size() > 5) {
+			if(stats.getSlotsList()[5] != null) {
 				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(stats.getAbilityNonNull(5), 5, 2));
 			}
 		}
 		if(ListKeybinds.seven.isPressed() && ListKeybinds.activate.isPressed()) {
-			if(stats.getSlotsList().size() > 6) {
+			if(stats.getSlotsList()[6] != null) {
 				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(stats.getAbilityNonNull(6), 6, 2));
 			}
 		}
 		if(ListKeybinds.eight.isPressed() && ListKeybinds.activate.isPressed()) {
-			if(stats.getSlotsList().size() > 7) {
+			if(stats.getSlotsList()[7] != null) {
 				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(stats.getAbilityNonNull(7), 7, 2));
 			}
 		}
 		if(ListKeybinds.nine.isPressed() && ListKeybinds.activate.isPressed()) {
-			if(stats.getSlotsList().size() > 8) {
+			if(stats.getSlotsList()[8] != null) {
 				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(stats.getAbilityNonNull(8), 8, 2));
 			}
 		}

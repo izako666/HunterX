@@ -24,13 +24,12 @@ public class HotBarEvent {
 	gui.mc.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/abilities/slots.png"));
 	 
 	for(int i = 0; i < 9; i++ ) {
-	    	  if(stats.getSlotsList().size() > i) {
+	    	  
 	    	  if(stats.getAbilityNonNull(i) != null) {
-	    		  gui.drawTexturedModalRect(posX - posX + 2, i * 24, 256, 256, 23, 23);
-	    		  RenderHelper.drawAbilityIcon(stats.getAbilityNonNull(i).getID(),  posX - posX + 6, i * 2 + 5, 16, 16);
+	    		  gui.drawTexturedModalRect(posX - posX + 2, i * 22, 256, 256, 23, 23);
+	    		  RenderHelper.drawAbilityIcon(stats.getAbilityNonNull(i).getID(),  posX - posX + 6,(i * 22) + 4, 16, 16);
 
-	    	  } 
-	    	  } else {
+	    	  }  else {
 	    			gui.mc.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/abilities/slots.png"));
 	    		  gui.drawTexturedModalRect(posX - posX + 2, i * 22, 256, 256, 23, 23);
 

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
 
+import com.izako.HunterX.init.ListAbilities;
 import com.izako.HunterX.init.ListKeybinds;
 import com.izako.HunterX.izapi.RenderHelper;
 import com.izako.HunterX.izapi.abilities.Ability;
@@ -52,14 +53,13 @@ public class GeneralGui extends GuiScreen {
 		this.mc.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/abilities/slots.png"));
 
 		for (int i = 0; i < 9; i++) {
-			if (stats.getSlotsList().size() > i) {
 				if (stats.getAbilityNonNull(i) != null) {
-					this.drawTexturedModalRect(posX - posX + 2, i * 24, 256, 256, 23, 23);
-					RenderHelper.drawAbilityIcon(stats.getAbilityNonNull(i).getID(), posX - posX + 6, i * 2 + 5, 16,
+					this.drawTexturedModalRect(posX - posX + 2, i * 22, 256, 256, 23, 23);
+					RenderHelper.drawAbilityIcon(stats.getAbilityNonNull(i).getID(), posX - posX + 6, (i * 22) + 4, 16,
 							16);
 
 				}
-			} else {
+			 else {
 				this.mc.getTextureManager()
 						.bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/abilities/slots.png"));
 				this.drawTexturedModalRect(posX - posX + 2, i * 22, 256, 256, 23, 23);
@@ -111,6 +111,8 @@ public class GeneralGui extends GuiScreen {
 	protected void keyTyped(char c, int a) throws IOException {
 
 		
+	
+		
 		if (canDrawString == true) {
 
 			if (currentAbility != null) {
@@ -143,6 +145,7 @@ public class GeneralGui extends GuiScreen {
 					stats.setAbilityToSlot(8, currentAbility);
 					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 8, 1));
 				}
+				canDrawString = false;
 			}
 		}
 		super.keyTyped(c, a);
