@@ -35,6 +35,7 @@ public class EntityStatsCapability implements Capability.IStorage<IEntityStats>{
         });
         instance.getAbilities().forEach((a) ->{
         	tag.setString(a.getID(), a.getID());
+        	System.out.println(a.getID());
         });
         
         instance.getIsPassiveActiveAll().forEach((k, v) -> {
@@ -85,6 +86,7 @@ public class EntityStatsCapability implements Capability.IStorage<IEntityStats>{
         tag.getKeySet().forEach((k) -> {
         	if(k.startsWith("Ability") && !k.endsWith("isPassiveActive") && !k.endsWith("isOnCooldown")) {
         	instance.giveAbility(ListAbilities.getAbilityFromID(k));
+        	System.out.println(k);
         		
         	}
         });

@@ -20,14 +20,19 @@ public class AbilityPacketServerSyncHandler  implements IMessageHandler<AbilityP
 	    int type = message.type;
 
 	    serverPlayer.getServerWorld().addScheduledTask(() -> {
+  	    	IEntityStats stats = serverPlayer.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 	    	  if(type == 1) {
-	  	    	IEntityStats stats = serverPlayer.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 	  	    	stats.setAbilityToSlot(index, a);
 	  		   } else if(type == 2) {
 	  			   a.startAbility(serverPlayer);
 	  		   } else if(type == 3) {
-		  	    	IEntityStats stats = serverPlayer.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 	  			   stats.giveAbility(a);
+	  		   } else if(type == 4) {
+ 
+		  	    	stats.removeAbilityFromSlot(a);
+	  		   } else if(type == 5) {
+	  			   stats.getAbilities().remove(a);
+	  			   System.out.println("should work");
 	  		   }
 	    });
 		return null;

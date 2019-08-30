@@ -265,6 +265,7 @@ public class EntityStatsBase implements IEntityStats{
     	   }
        }
        this.Slots[slot] = a;
+       System.out.println(this.Slots[slot]);
 	}
 
 	@Override

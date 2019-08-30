@@ -39,7 +39,6 @@ public class OnDeathStatResetEvent {
 		oldStats.getQuests().forEach((k, v) -> {
 			stats.giveQuest(k, v);
 		});
-		System.out.println(stats.getQuests());
 		
 		oldStats.getAbilities().forEach((k) -> {
 			stats.giveAbility(k);
