@@ -14,9 +14,11 @@ import com.izako.HunterX.stats.capabilities.IEntityStats;
 import com.izako.HunterX.util.handlers.RegistryHandler;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSnowball;
+import net.minecraft.entity.Entity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
@@ -56,6 +58,11 @@ public class ClientProxy extends CommonProxy{
 	}
 	public static void keyBinds() {
 		ListKeybinds.register();
+	}
+	@Override
+	public void spawnCustomParticles(Particle particle) {
+		Minecraft.getMinecraft().effectRenderer.addEffect(particle);
+		System.out.println("spawn please uwu owo");
 	}
 	
 	

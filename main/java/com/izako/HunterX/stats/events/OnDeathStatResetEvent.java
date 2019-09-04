@@ -36,6 +36,7 @@ public class OnDeathStatResetEvent {
 		stats.setTimeHasRun(oldStats.timeHasRun());
 		stats.setHasStarted3rdPhase(oldStats.hasStarted3rdPhase());
 		stats.setHasKilledBoss(oldStats.hasKilledBoss());
+		stats.setNenCapacity(oldStats.getNenCapacity());
 		oldStats.getQuests().forEach((k, v) -> {
 			stats.giveQuest(k, v);
 		});

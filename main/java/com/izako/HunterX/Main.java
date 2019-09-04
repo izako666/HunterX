@@ -13,6 +13,9 @@ import com.izako.HunterX.network.EntityStatsClientSyncHandler;
 import com.izako.HunterX.network.EntityStatsServerSyncHandler;
 import com.izako.HunterX.network.HanzoArmorBasePacketHandler;
 import com.izako.HunterX.network.ModidPacketHandler;
+import com.izako.HunterX.network.NenPacketClientSyncHandler;
+import com.izako.HunterX.network.NenPacketServerSyncHandler;
+import com.izako.HunterX.network.PacketParticleHandler;
 import com.izako.HunterX.network.QuestPacketSyncClientHandler;
 import com.izako.HunterX.network.QuestPacketSyncServerHandler;
 import com.izako.HunterX.network.packets.AbilityPacketSync;
@@ -20,6 +23,8 @@ import com.izako.HunterX.network.packets.EntityModifierServerChange;
 import com.izako.HunterX.network.packets.EntityStatsClientSync;
 import com.izako.HunterX.network.packets.EntityStatsServerSync;
 import com.izako.HunterX.network.packets.HanzoArmorBasePacket;
+import com.izako.HunterX.network.packets.NenPacketSync;
+import com.izako.HunterX.network.packets.PacketParticles;
 import com.izako.HunterX.network.packets.QuestPacketSync;
 import com.izako.HunterX.proxy.ClientProxy;
 import com.izako.HunterX.proxy.CommonProxy;
@@ -68,7 +73,9 @@ public class Main {
 		ModidPacketHandler.INSTANCE.registerMessage(QuestPacketSyncClientHandler.class, QuestPacketSync.class, 5, Side.CLIENT );
 		ModidPacketHandler.INSTANCE.registerMessage(AbilityPacketServerSyncHandler.class, AbilityPacketSync.class, 6, Side.SERVER );
 		ModidPacketHandler.INSTANCE.registerMessage(AbilityPacketClientSyncHandler.class, AbilityPacketSync.class, 7, Side.CLIENT );
-
+		ModidPacketHandler.INSTANCE.registerMessage(NenPacketServerSyncHandler.class, NenPacketSync.class, 8, Side.SERVER );
+		ModidPacketHandler.INSTANCE.registerMessage(NenPacketClientSyncHandler.class, NenPacketSync.class, 9, Side.CLIENT );
+        ModidPacketHandler.INSTANCE.registerMessage(PacketParticleHandler.class, PacketParticles.class, 10, Side.CLIENT);
 	
 	}
 	

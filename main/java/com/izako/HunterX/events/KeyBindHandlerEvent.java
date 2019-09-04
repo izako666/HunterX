@@ -42,7 +42,7 @@ public class KeyBindHandlerEvent {
 			}
 		}
 		if (ListKeybinds.two.isPressed() && ListKeybinds.activate.isKeyDown()) {
-			ListAbilities.ABILITY_JAJANKEN.giveAbility(p);
+			ListAbilities.ABILITYTEN.giveAbility(p);
 			if (stats.getSlotsList()[1] != null) {
 				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(stats.getAbilityNonNull(1), 1, 2));
 			}

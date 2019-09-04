@@ -10,6 +10,7 @@ import com.izako.HunterX.util.handlers.EventsHandler;
 import com.izako.HunterX.util.handlers.RegistryHandler;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -44,4 +45,7 @@ public class CommonProxy {
 	public static void keyBinds() {}
 	
 
+	public void spawnCustomParticles(Particle particle) {
+		
+	}
 }

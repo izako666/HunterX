@@ -1,27 +1,12 @@
 package com.izako.HunterX.stats.capabilities;
 
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.izako.HunterX.init.ListAbilities;
+import com.izako.HunterX.abilities.EnumNenType;
 import com.izako.HunterX.izapi.abilities.Ability;
-import com.izako.HunterX.network.ModidPacketHandler;
-import com.izako.HunterX.network.packets.AbilityPacketSync;
-
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import net.minecraftforge.common.util.INBTSerializable;
 
 public class EntityStatsBase implements IEntityStats{
 
@@ -40,6 +25,8 @@ public class EntityStatsBase implements IEntityStats{
     private HashMap<String, Boolean> isPassiveActive = new HashMap<String, Boolean>();
     private HashMap<String, Boolean> isOnCooldown = new HashMap<String, Boolean>();
     private Ability[] Slots = new Ability[9];
+    private int nenCapacity = 0;
+    private EnumNenType nenType = EnumNenType.EHANCEMENT;
 @Override
 	public double getHealthStat() {
 		//gets the health stat
@@ -213,12 +200,19 @@ public class EntityStatsBase implements IEntityStats{
 	@Override
 	public boolean isPassiveActive(String str) {
 		// TODO Auto-generated method stub
+		if(!this.isPassiveActive.containsKey(str)) {
+		this.isPassiveActive.put(str, false);
+		}
+		System.out.println("gamer");
 		return this.isPassiveActive.get(str);
 	}
 
 	@Override
 	public boolean isOnCooldown(String str) {
 		// TODO Auto-generated method stub
+		if(!this.isOnCooldown.containsKey(str)) {
+			this.isOnCooldown.put(str, false);
+		}
 		return this.isOnCooldown.get(str);
 	}
 
@@ -227,17 +221,19 @@ public class EntityStatsBase implements IEntityStats{
 		// TODO Auto-generated method stub
 		if(this.isPassiveActive.get(str) == null) {
 		this.isPassiveActive.put(str, value);
+		System.out.println("wasnull");
 		} else {
 			this.isPassiveActive.replace(str, this.isPassiveActive.get(str), value);
+			System.out.println("wasnotnull" + this.isPassiveActive.get(str));
 		}
 	}
 
 	@Override
 	public void setIsOnCooldown(boolean value, String str) {
-		if(this.isPassiveActive.get(str) == null) {
-		this.isPassiveActive.put(str, value);
+		if(this.isOnCooldown.get(str) == null) {
+		this.isOnCooldown.put(str, value);
 		} else {
-			this.isPassiveActive.replace(str, this.isPassiveActive.get(str), value);
+			this.isOnCooldown.replace(str, this.isOnCooldown.get(str), value);
 		}
 		
 	}
@@ -291,6 +287,30 @@ public class EntityStatsBase implements IEntityStats{
 		// TODO Auto-generated method stub
 		return this.Slots[slot];
 		
+	}
+
+	@Override
+	public int getNenCapacity() {
+		// TODO Auto-generated method stub
+		return this.nenCapacity;
+	}
+
+	@Override
+	public void setNenCapacity(int value) {
+		// TODO Auto-generated method stub
+		this.nenCapacity = value;
+	}
+
+	@Override
+	public EnumNenType getNenType() {
+		// TODO Auto-generated method stub
+		return this.nenType;
+	}
+
+	@Override
+	public void setNenType(EnumNenType value) {
+		// TODO Auto-generated method stub
+		this.nenType = value;
 	}
 
 

@@ -3,6 +3,7 @@ package com.izako.HunterX.stats.events;
 import com.izako.HunterX.network.ModidPacketHandler;
 import com.izako.HunterX.network.packets.AbilityPacketSync;
 import com.izako.HunterX.network.packets.EntityStatsClientSync;
+import com.izako.HunterX.network.packets.NenPacketSync;
 import com.izako.HunterX.network.packets.QuestPacketSync;
 import com.izako.HunterX.stats.capabilities.EntityStatsProvider;
 import com.izako.HunterX.stats.capabilities.IEntityStats;
@@ -31,6 +32,8 @@ public class PlayerChangeDimensionEvent {
 		ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(1D, 9, stats.hasStarted3rdPhase()), (EntityPlayerMP) p);
 		ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(1D, 10, stats.isHunter()), (EntityPlayerMP) p);
 
+		ModidPacketHandler.INSTANCE.sendTo(new NenPacketSync(1, stats.getNenCapacity()), (EntityPlayerMP) p);
+		ModidPacketHandler.INSTANCE.sendTo(new NenPacketSync(2, stats.getNenType().getIndex(stats.getNenType())), (EntityPlayerMP) p);
 		stats.getQuests().forEach((k, v) -> {
 			ModidPacketHandler.INSTANCE.sendTo(new QuestPacketSync(k, 2, v), (EntityPlayerMP)p);
 		});

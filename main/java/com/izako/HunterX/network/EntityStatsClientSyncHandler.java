@@ -18,12 +18,11 @@ public class EntityStatsClientSyncHandler implements IMessageHandler<EntityStats
 
 	@Override
 	public IMessage onMessage(EntityStatsClientSync message, MessageContext ctx) {
-		EntityPlayerSP player = Minecraft.getMinecraft().player;
 		Double amount = message.amount;
 		int statType = message.statType;
 		boolean value = message.value;
 		Minecraft.getMinecraft().addScheduledTask(() -> {
-
+			EntityPlayerSP player = Minecraft.getMinecraft().player;
 			IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 			if (statType == 1) {
 				stats.setHealthStat(amount);

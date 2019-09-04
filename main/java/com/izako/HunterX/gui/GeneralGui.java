@@ -71,6 +71,18 @@ public class GeneralGui extends GuiScreen {
 						TextFormatting.BLACK.getColorIndex());
 			}
 		}
+		
+		if(stats.getAbilities().size() != this.buttonList.size()) {
+			this.buttonList.clear();
+			for (int i = 0; i < 9; i++) {
+				if (stats.getAbilities().size() > i) {
+
+					this.buttonList.add(new GuiButtonTextured(i, 200, (i + 5) * 15, 16, 16, Integer.toString(i),
+							stats.getAbilities().get(i).getAbilityTexture()));
+					System.out.println(i);
+				}
+			}
+		}
 		super.drawScreen(x, y, f);
 	}
 

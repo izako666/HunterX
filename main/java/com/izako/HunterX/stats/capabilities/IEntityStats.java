@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import com.izako.HunterX.abilities.EnumNenType;
 import com.izako.HunterX.izapi.abilities.Ability;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -74,7 +75,12 @@ public interface IEntityStats {
 	void setAbilityToSlot(Integer slot, Ability a);
 	void removeAbilityFromSlot(Ability a);
 	Ability[] getSlotsList();
-	public Ability getAbilityNonNull(Integer slot);
+	 Ability getAbilityNonNull(Integer slot);
+	 int getNenCapacity();
+	 void setNenCapacity(int value);
+	 EnumNenType getNenType();
+	 void setNenType(EnumNenType value);
+	
 	
 	
 	

@@ -3,17 +3,16 @@ package com.izako.HunterX.init;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.izako.HunterX.abilities.AbilityJajanken;
+import com.izako.HunterX.abilities.AbilityTen;
 import com.izako.HunterX.izapi.abilities.Ability;
 
 public class ListAbilities {
 
-	public static AbilityJajanken ABILITY_JAJANKEN = new AbilityJajanken("AbilityJajanken");
 	
 	public static List<Ability> Abilities = new ArrayList<Ability>();
+	public static AbilityTen ABILITYTEN = new AbilityTen("AbilityTen");
 	public static void registerAbilities() {
-		Abilities.add(ABILITY_JAJANKEN);
-		
+		Abilities.add(ABILITYTEN);
 		
 	}
 	
