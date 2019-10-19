@@ -51,7 +51,7 @@ public class Empty extends EntityZombie {
 	@Override
 	public boolean getCanSpawnHere() {
 
-		return this.world.getDifficulty() != EnumDifficulty.PEACEFUL;
+		return true;
 	}
 
 	@Override
