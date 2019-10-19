@@ -14,4 +14,5 @@ public class Reference {
 	public static final int BOSSEXAM = 122;
 	public static final int ENTITYSTATS = 123;
 	public static final int ENTITYKIRIKO = 119;
+	public static final int ENTITYFOXBEAR = 118;
 }
