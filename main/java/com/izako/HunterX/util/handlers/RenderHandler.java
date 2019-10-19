@@ -1,11 +1,13 @@
 package com.izako.HunterX.util.handlers;
 
 import com.izako.HunterX.entity.BossExam;
+import com.izako.HunterX.entity.EntityFoxbear;
 import com.izako.HunterX.entity.EntityKiriko;
 import com.izako.HunterX.entity.EntityStats;
 import com.izako.HunterX.entity.Examiner;
 import com.izako.HunterX.entity.Thug;
 import com.izako.HunterX.entity.renderer.RenderBossExam;
+import com.izako.HunterX.entity.renderer.RenderEntityFoxbear;
 import com.izako.HunterX.entity.renderer.RenderEntityKiriko;
 import com.izako.HunterX.entity.renderer.RenderEntityStats;
 import com.izako.HunterX.entity.renderer.RenderExaminer;
@@ -69,6 +71,14 @@ public class RenderHandler {
 			public Render<? super EntityKiriko> createRenderFor(RenderManager manager) {
 
 				return new RenderEntityKiriko(manager);
+			}
+		});
+		
+		RenderingRegistry.registerEntityRenderingHandler(EntityFoxbear.class, new IRenderFactory<EntityFoxbear>() {
+			@Override
+			public Render<? super EntityFoxbear> createRenderFor(RenderManager manager) {
+
+				return new RenderEntityFoxbear(manager);
 			}
 		});
 
