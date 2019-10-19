@@ -203,7 +203,6 @@ public class EntityStatsBase implements IEntityStats{
 		if(!this.isPassiveActive.containsKey(str)) {
 		this.isPassiveActive.put(str, false);
 		}
-		System.out.println("gamer");
 		return this.isPassiveActive.get(str);
 	}
 
@@ -222,6 +221,7 @@ public class EntityStatsBase implements IEntityStats{
 		if(this.isPassiveActive.get(str) == null) {
 		this.isPassiveActive.put(str, value);
 		System.out.println("wasnull");
+		System.out.println(this.getIsPassiveActiveAll());
 		} else {
 			this.isPassiveActive.replace(str, this.isPassiveActive.get(str), value);
 			System.out.println("wasnotnull" + this.isPassiveActive.get(str));

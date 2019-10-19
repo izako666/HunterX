@@ -48,6 +48,12 @@ public class OnDeathStatResetEvent {
 		for(int i = 0; i < oldStats.getSlotsList().length; i++) {
 			stats.setAbilityToSlot(i, oldStats.getSlotsList()[i]);
 		}
+		oldStats.getIsPassiveActiveAll().forEach((k, v) -> {
+			stats.setIsPassiveActive(v, k);
+			System.out.println("passive" + k);
+			System.out.println("passive" + v);
+
+		});
 	
 	//resetting the modifiers after death 
 		IAttributeInstance h = ((EntityLivingBase) p)

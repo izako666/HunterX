@@ -23,7 +23,9 @@ public class EntityStatsClientSyncHandler implements IMessageHandler<EntityStats
 		boolean value = message.value;
 		Minecraft.getMinecraft().addScheduledTask(() -> {
 			EntityPlayerSP player = Minecraft.getMinecraft().player;
+			try {
 			IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
+			
 			if (statType == 1) {
 				stats.setHealthStat(amount);
 			} else if (statType == 2) {
@@ -44,6 +46,9 @@ public class EntityStatsClientSyncHandler implements IMessageHandler<EntityStats
 				stats.setHasStarted3rdPhase(value);
 			} else if(statType == 10) {
 				stats.setIsHunter(value);
+			}
+			} catch(Exception e) {
+				e.printStackTrace();
 			}
 			
 		});

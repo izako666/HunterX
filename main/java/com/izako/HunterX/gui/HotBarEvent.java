@@ -21,7 +21,7 @@ public class HotBarEvent {
 	int posY = e.getResolution().getScaledHeight();
 
 	
-	gui.mc.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/abilities/slots.png"));
+	gui.mc.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/abilities/hotbar.png"));
 	 
 	for(int i = 0; i < 9; i++ ) {
 	    	  
@@ -30,7 +30,7 @@ public class HotBarEvent {
 	    		  RenderHelper.drawAbilityIcon(stats.getAbilityNonNull(i).getID(),  posX - posX + 6,(i * 22) + 4, 16, 16);
 
 	    	  }  else {
-	    			gui.mc.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/abilities/slots.png"));
+	    			gui.mc.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/abilities/hotbar.png"));
 	    		  gui.drawTexturedModalRect(posX - posX + 2, i * 22, 256, 256, 23, 23);
 
 	    	  }

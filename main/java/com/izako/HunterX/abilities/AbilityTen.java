@@ -18,9 +18,10 @@ public class AbilityTen extends Ability {
 	@Override
 	public void startAbility(EntityPlayer player) {
 
-		System.out.println("gamer");
-		ModidPacketHandler.INSTANCE.sendToAllAround(new PacketParticles("ParticleTen", player), new NetworkRegistry.TargetPoint(player.dimension, player.posX, player.posY, player.posZ, 60));                                   
+		System.out.println(this.isPassiveActive(player));
 	
+		super.startAbility(player);
+		
 	}
 
 }

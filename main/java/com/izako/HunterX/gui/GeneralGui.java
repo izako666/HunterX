@@ -40,8 +40,8 @@ public class GeneralGui extends GuiScreen {
 
 		int posX = sr.getScaledWidth();
 		int posY = sr.getScaledHeight();
-		drawTexturedModalRect((posX - 250) / 2, (posY - 230) / 2, 0, 0, 256, 256);
-		drawTexturedModalRect((posX - 250) / 2, posY - 60, 0, 0, 256, 256);
+		this.mc.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/abilities/slots.png"));
+		drawTexturedModalRect((int) (posX - (posX * 0.74)), 0, 0, 0, 256, 256);
 
 		for (int i = 0; i < 9; i++) {
 			if (stats.getAbilities().size() > i) {
@@ -50,16 +50,17 @@ public class GeneralGui extends GuiScreen {
 			}
 		}
 
-		this.mc.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/abilities/slots.png"));
 
 		for (int i = 0; i < 9; i++) {
 			if (stats.getAbilityNonNull(i) != null) {
+				this.mc.getTextureManager()
+				.bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/abilities/hotbar.png"));
 				this.drawTexturedModalRect(posX - posX + 2, i * 22, 256, 256, 23, 23);
 				RenderHelper.drawAbilityIcon(stats.getAbilityNonNull(i).getID(), posX - posX + 6, (i * 22) + 4, 16, 16);
 
 			} else {
 				this.mc.getTextureManager()
-						.bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/abilities/slots.png"));
+						.bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/abilities/hotbar.png"));
 				this.drawTexturedModalRect(posX - posX + 2, i * 22, 256, 256, 23, 23);
 
 			}
@@ -129,59 +130,59 @@ public class GeneralGui extends GuiScreen {
 				if (Keyboard.isKeyDown(Keyboard.KEY_1)) {
 					stats.setAbilityToSlot(0, currentAbility);
 					stats.getAbilities().remove(currentAbility);
-					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 0, 1));
-					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 0, 5));
+					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 0, 1, false));
+					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 0, 5, false));
 				} else if (Keyboard.isKeyDown(Keyboard.KEY_2)) {
 
 					stats.setAbilityToSlot(1, currentAbility);
 					stats.getAbilities().remove(currentAbility);
-					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 1, 1));
-					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 0, 5));
+					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 1, 1, false));
+					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 0, 5, false));
 				} else if (Keyboard.isKeyDown(Keyboard.KEY_3)) {
 					stats.setAbilityToSlot(2, currentAbility);
 					stats.getAbilities().remove(currentAbility);
 
-					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 2, 1));
-					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 0, 5));
+					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 2, 1, false));
+					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 0, 5, false));
 				} else if (Keyboard.isKeyDown(Keyboard.KEY_4)) {
 					stats.setAbilityToSlot(3, currentAbility);
 					stats.getAbilities().remove(currentAbility);
 
-					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 3, 1));
-					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 0, 5));
+					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 3, 1, false));
+					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 0, 5, false));
 				} else if (Keyboard.isKeyDown(Keyboard.KEY_5)) {
 					stats.setAbilityToSlot(4, currentAbility);
 					stats.getAbilities().remove(currentAbility);
 
-					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 4, 1));
-					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 0, 5));
+					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 4, 1, false));
+					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 0, 5, false));
 				} else if (Keyboard.isKeyDown(Keyboard.KEY_6)) {
 					stats.setAbilityToSlot(5, currentAbility);
 					stats.getAbilities().remove(currentAbility);
 
-					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 5, 1));
-					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 0, 5));
+					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 5, 1, false));
+					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 0, 5, false));
 
 				} else if (Keyboard.isKeyDown(Keyboard.KEY_7)) {
 					stats.setAbilityToSlot(6, currentAbility);
 					stats.getAbilities().remove(currentAbility);
 
-					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 6, 1));
-					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 0, 5));
+					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 6, 1, false));
+					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 0, 5, false));
 
 				} else if (Keyboard.isKeyDown(Keyboard.KEY_8)) {
 					stats.setAbilityToSlot(7, currentAbility);
 					stats.getAbilities().remove(currentAbility);
 
-					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 7, 1));
-					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 0, 5));
+					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 7, 1, false));
+					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 0, 5, false));
 
 				} else if (Keyboard.isKeyDown(Keyboard.KEY_9)) {
 					stats.setAbilityToSlot(8, currentAbility);
 					stats.getAbilities().remove(currentAbility);
 
-					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 8, 1));
-					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 0, 5));
+					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 8, 1, false));
+					ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(currentAbility, 0, 5, false));
 
 				}
 				canDrawString = false;
@@ -190,73 +191,73 @@ public class GeneralGui extends GuiScreen {
 			if (Keyboard.isKeyDown(Keyboard.KEY_1) && stats.getSlotsList()[0] != null) {
 				Ability abl = stats.getSlotsList()[0];
 				stats.giveAbility(abl);
-				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 , 3));
+				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 , 3, false));
 				stats.removeAbilityFromSlot(abl);
-				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 ,4));
+				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 ,4, false));
 
 			}
 			if (Keyboard.isKeyDown(Keyboard.KEY_2) && stats.getSlotsList()[1] != null) {
 				Ability abl = stats.getSlotsList()[1];
 				stats.giveAbility(abl);
-				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 , 3));
+				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 , 3, false));
 				stats.removeAbilityFromSlot(abl);
-				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 ,4));
+				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 ,4, false));
 
 			}
 			if (Keyboard.isKeyDown(Keyboard.KEY_3) && stats.getSlotsList()[2] != null) {
 				Ability abl = stats.getSlotsList()[2];
 				stats.giveAbility(abl);
-				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 , 3));
+				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 , 3, false));
 				stats.removeAbilityFromSlot(abl);
-				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 ,4));
+				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 ,4, false));
 
 			}
 			if (Keyboard.isKeyDown(Keyboard.KEY_4) && stats.getSlotsList()[3] != null) {
 				Ability abl = stats.getSlotsList()[3];
 				stats.giveAbility(abl);
-				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 , 3));
+				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 , 3, false));
 				stats.removeAbilityFromSlot(abl);
-				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 ,4));
+				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 ,4, false));
 
 			}
 			if (Keyboard.isKeyDown(Keyboard.KEY_5) && stats.getSlotsList()[4] != null) {
 				Ability abl = stats.getSlotsList()[4];
 				stats.giveAbility(abl);
-				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 , 3));
+				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 , 3, false));
 				stats.removeAbilityFromSlot(abl);
-				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 ,4));
+				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 ,4, false));
 
 			}
 			if (Keyboard.isKeyDown(Keyboard.KEY_6) && stats.getSlotsList()[5] != null) {
 				Ability abl = stats.getSlotsList()[5];
 				stats.giveAbility(abl);
-				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 , 3));
+				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 , 3, false));
 				stats.removeAbilityFromSlot(abl);
-				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 ,4));
+				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 ,4, false));
 
 			}
 			if (Keyboard.isKeyDown(Keyboard.KEY_7) && stats.getSlotsList()[6] != null) {
 				Ability abl = stats.getSlotsList()[6];
 				stats.giveAbility(abl);
-				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 , 3));
+				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 , 3, false));
 				stats.removeAbilityFromSlot(abl);
-				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 ,4));
+				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 ,4, false));
 
 			}
 			if (Keyboard.isKeyDown(Keyboard.KEY_8) && stats.getSlotsList()[7] != null) {
 				Ability abl = stats.getSlotsList()[7];
 				stats.giveAbility(abl);
-				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 , 3));
+				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 , 3, false));
 				stats.removeAbilityFromSlot(abl);
-				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 ,4));
+				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 ,4, false));
 
 			}
 			if (Keyboard.isKeyDown(Keyboard.KEY_9) && stats.getSlotsList()[8] != null) {
 				Ability abl = stats.getSlotsList()[8];
 				stats.giveAbility(abl);
-				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 , 3));
+				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 , 3, false));
 				stats.removeAbilityFromSlot(abl);
-				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 ,4));
+				ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(abl, 0 ,4, false));
 
 			}
 		}

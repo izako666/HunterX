@@ -19,6 +19,7 @@ public class AbilityPacketClientSyncHandler  implements IMessageHandler<AbilityP
 	    Ability a = message.a;
 	    int index = message.index;
 	    int type = message.type;
+	    boolean valuebool = message.valuebool;
 
 	   Minecraft.getMinecraft().addScheduledTask(() -> {
 		    EntityPlayer clientPlayer = Minecraft.getMinecraft().player;
@@ -31,6 +32,10 @@ public class AbilityPacketClientSyncHandler  implements IMessageHandler<AbilityP
 		    	IEntityStats stats = clientPlayer.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 
 		    	stats.giveAbility(a);
+		   } else if(type == 4) {
+		    	IEntityStats stats = clientPlayer.getCapability(EntityStatsProvider.ENTITY_STATS, null);
+
+			   stats.setIsPassiveActive(valuebool, a.getID());
 		   }
 	    });
 		return null;

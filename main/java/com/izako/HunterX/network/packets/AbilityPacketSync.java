@@ -19,10 +19,12 @@ public class AbilityPacketSync implements IMessage{
 	  public int index;
 	  public Ability a;
 	  public int type;
-	  public AbilityPacketSync(Ability a, Integer index, Integer type) {
+	  public boolean valuebool;
+	  public AbilityPacketSync(Ability a, Integer index, Integer type, boolean valuebool) {
 	   this.index = index;
 	   this.a = a;
 	   this.type = type;
+	   this.valuebool = valuebool;
 	  }
 
 	  @Override public void toBytes(ByteBuf buf) {
@@ -32,6 +34,7 @@ public class AbilityPacketSync implements IMessage{
 		  buf.writeInt(index);
 		  pbuf.writeInt(a.getID().length());
 		  pbuf.writeString(a.getID());
+		  buf.writeBoolean(valuebool);
 	    
 	  }
 
@@ -42,6 +45,7 @@ public class AbilityPacketSync implements IMessage{
 		  index = buf.readInt();
 		  int length = pbuf.readInt();
 	   a = ListAbilities.getAbilityFromID(pbuf.readString(length));
+	   valuebool = buf.readBoolean();
 	  }
 
 }

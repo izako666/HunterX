@@ -5,6 +5,7 @@ import com.izako.HunterX.events.HanzoSwordDropEvent;
 import com.izako.HunterX.events.KeyBindHandlerEvent;
 import com.izako.HunterX.events.OnKillBossEvent;
 import com.izako.HunterX.events.OnKillKirikoEvent;
+import com.izako.HunterX.events.PlayerRenderEvent;
 import com.izako.HunterX.events.ThugDropEvent;
 import com.izako.HunterX.events.TimeRunEvent;
 import com.izako.HunterX.gui.HotBarEvent;
@@ -41,6 +42,7 @@ public class EventsHandler {
 		OnKillBossEvent onKillBossEvent = new OnKillBossEvent();
 		KeyBindHandlerEvent keyBindHandlerEvent = new KeyBindHandlerEvent();
 		HotBarEvent hotBarEvent = new HotBarEvent();
+		PlayerRenderEvent playerRenderEvent = new PlayerRenderEvent();
 		
 		
 		MinecraftForge.EVENT_BUS.register(hanzoArmorBaseEvent);
@@ -60,6 +62,8 @@ public class EventsHandler {
 		MinecraftForge.EVENT_BUS.register(onKillBossEvent);
 		MinecraftForge.EVENT_BUS.register(keyBindHandlerEvent);
 		MinecraftForge.EVENT_BUS.register(hotBarEvent);
+		MinecraftForge.EVENT_BUS.register(playerRenderEvent);
+
 
 
 

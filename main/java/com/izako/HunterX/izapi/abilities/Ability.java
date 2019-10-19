@@ -33,6 +33,10 @@ public class Ability {
 		if (!isOnCooldown) {
 			if (!isPassiveActive) {
 				stats.setIsPassiveActive(true, this.getID());
+				if(player instanceof EntityPlayerMP) {
+				ModidPacketHandler.INSTANCE.sendTo(new AbilityPacketSync(this,0, 4, true), (EntityPlayerMP) player);
+				}
+				
 			} else {
 				this.endAbility(player);
 			}
@@ -50,6 +54,9 @@ public class Ability {
 		IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 
 		stats.setIsPassiveActive(false, this.getID());
+		if(player instanceof EntityPlayerMP) {
+			ModidPacketHandler.INSTANCE.sendTo(new AbilityPacketSync(this,0, 4, false), (EntityPlayerMP) player);
+			}
 	}
 
 	public ResourceLocation getAbilityTexture() {
@@ -60,9 +67,9 @@ public class Ability {
 		IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 		stats.setAbilityToSlot(index, this);
 		if (player instanceof EntityPlayerMP) {
-			ModidPacketHandler.INSTANCE.sendTo(new AbilityPacketSync(this, index, 1), (EntityPlayerMP) player);
+			ModidPacketHandler.INSTANCE.sendTo(new AbilityPacketSync(this, index, 1, false), (EntityPlayerMP) player);
 		}
-		ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(this, index, 1));
+		ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(this, index, 1, false));
 	}
 
 	public void giveAbility(EntityPlayer player) {
@@ -70,10 +77,15 @@ public class Ability {
 		stats.removeAbility(this);
 		stats.giveAbility(this);
 		if (player instanceof EntityPlayerMP) {
-			ModidPacketHandler.INSTANCE.sendTo(new AbilityPacketSync(this, 1, 3), (EntityPlayerMP) player);
+			ModidPacketHandler.INSTANCE.sendTo(new AbilityPacketSync(this, 1, 3, false), (EntityPlayerMP) player);
 		}
-		ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(this, 1, 3));
+		ModidPacketHandler.INSTANCE.sendToServer(new AbilityPacketSync(this, 1, 3, false));
 
 	}
 
+	public boolean isPassiveActive(EntityPlayer p) {
+		IEntityStats stats = p.getCapability(EntityStatsProvider.ENTITY_STATS, null);
+
+		return stats.isPassiveActive(this.getID());
+	}
 }

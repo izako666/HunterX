@@ -1,5 +1,6 @@
 package com.izako.HunterX.stats.events;
 
+import com.izako.HunterX.init.ListAbilities;
 import com.izako.HunterX.network.ModidPacketHandler;
 import com.izako.HunterX.network.packets.AbilityPacketSync;
 import com.izako.HunterX.network.packets.EntityStatsClientSync;
@@ -42,24 +43,33 @@ public class PlayerLoggedInEvent {
 				ModidPacketHandler.INSTANCE.sendTo(new EntityStatsClientSync(1D, 10, stats.isHunter()),
 						(EntityPlayerMP) p);
 				ModidPacketHandler.INSTANCE.sendTo(new NenPacketSync(1, stats.getNenCapacity()), (EntityPlayerMP) p);
-				ModidPacketHandler.INSTANCE.sendTo(new NenPacketSync(2, stats.getNenType().getIndex(stats.getNenType())), (EntityPlayerMP) p);
-
+				ModidPacketHandler.INSTANCE.sendTo(
+						new NenPacketSync(2, stats.getNenType().getIndex(stats.getNenType())), (EntityPlayerMP) p);
 
 				stats.getQuests().forEach((k, v) -> {
 					ModidPacketHandler.INSTANCE.sendTo(new QuestPacketSync(k, 2, v), (EntityPlayerMP) p);
 				});
 				stats.getAbilities().forEach((k) -> {
 
-					ModidPacketHandler.INSTANCE.sendTo(new AbilityPacketSync(k, 1, 3), (EntityPlayerMP) p);
+					ModidPacketHandler.INSTANCE.sendTo(new AbilityPacketSync(k, 1, 3, false), (EntityPlayerMP) p);
 				});
 
 				for (int i = 0; i < stats.getSlotsList().length; i++) {
 					if (stats.getSlotsList()[i] != null) {
 
-						ModidPacketHandler.INSTANCE.sendTo(new AbilityPacketSync(stats.getSlotsList()[i], i, 1),
+						ModidPacketHandler.INSTANCE.sendTo(new AbilityPacketSync(stats.getSlotsList()[i], i, 1, false),
 								(EntityPlayerMP) p);
 					}
 				}
+
+				stats.getIsPassiveActiveAll().forEach((k, v) -> {
+					if (ListAbilities.getAbilityFromID(k) != null) {
+						ModidPacketHandler.INSTANCE.sendTo(
+								new AbilityPacketSync(ListAbilities.getAbilityFromID(k), 1, 4, v), (EntityPlayerMP) p);
+					}
+
+				});
+
 			}
 		}
 	}

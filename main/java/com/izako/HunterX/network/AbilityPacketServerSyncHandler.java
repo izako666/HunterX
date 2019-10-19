@@ -18,6 +18,7 @@ public class AbilityPacketServerSyncHandler  implements IMessageHandler<AbilityP
 	    Ability a = message.a;
 	    int index = message.index;
 	    int type = message.type;
+	    boolean valuebool = message.valuebool;
 
 	    serverPlayer.getServerWorld().addScheduledTask(() -> {
   	    	IEntityStats stats = serverPlayer.getCapability(EntityStatsProvider.ENTITY_STATS, null);
@@ -33,6 +34,8 @@ public class AbilityPacketServerSyncHandler  implements IMessageHandler<AbilityP
 	  		   } else if(type == 5) {
 	  			   stats.getAbilities().remove(a);
 	  			   System.out.println("should work");
+	  		   } else if(type == 6) {
+	  			   stats.setIsPassiveActive(valuebool, a.getID());
 	  		   }
 	    });
 		return null;

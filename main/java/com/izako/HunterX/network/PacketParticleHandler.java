@@ -23,9 +23,10 @@ public class PacketParticleHandler  implements IMessageHandler<PacketParticles, 
 			double posY = message.posY;
 			double posZ = message.posZ;
 			String particle = message.particle;
+			EntityPlayerSP p = Minecraft.getMinecraft().player;
 
 			if(particle.equalsIgnoreCase("ParticleTen")) {
-				Main.proxy.spawnCustomParticles(new EntityTenParticle(Minecraft.getMinecraft().player.world, posX, posY, posZ));
+				Main.proxy.spawnCustomParticles(new EntityTenParticle(Minecraft.getMinecraft().player.world, posX, posY, posZ, p));
 		
 			}
 	   
