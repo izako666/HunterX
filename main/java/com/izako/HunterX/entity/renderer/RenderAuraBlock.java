@@ -1,10 +1,8 @@
 package com.izako.HunterX.entity.renderer;
 
-import java.awt.Color;
 
 import com.izako.HunterX.util.Reference;
 
-import assets.hntrx.models.AuraBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelPlayer;

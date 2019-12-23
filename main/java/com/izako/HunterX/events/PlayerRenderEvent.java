@@ -1,13 +1,11 @@
 package com.izako.HunterX.events;
 
-import java.awt.Color;
 
 import org.lwjgl.opengl.GL11;
 
 import com.izako.HunterX.entity.renderer.RenderAuraBlock;
 import com.izako.HunterX.init.ListAbilities;
 
-import assets.hntrx.models.AuraBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.BufferBuilder;
