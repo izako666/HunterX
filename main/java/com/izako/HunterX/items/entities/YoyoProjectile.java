@@ -32,7 +32,7 @@ public class YoyoProjectile extends EntityThrowable{
 	private int maxticks = 80;
 	private int count = maxticks;
 	private boolean comeBack = false;
-	 private EntityPlayer owner;
+	 public EntityPlayer owner;
 	 
 	 private int xTile;
 	    private int yTile;
@@ -63,24 +63,7 @@ public class YoyoProjectile extends EntityThrowable{
 	 
 	
 	 
-	//Sets the entity NBT
-	    public void writeEntityToNBT(NBTTagCompound compound)
-	    {
-	        compound.setBoolean("comeBack", this.comeBack);
-	    }
-
-	    //Reads the Entity NBT
-	    public void readEntityFromNBT(NBTTagCompound compound)
-	    {
-	        this.comeBack = compound.getBoolean("comeBack");
-	    }
-    
-    
-
-	public boolean isComingBack()
-    {
-        return this.comeBack;
-    }
+	
 
 	
 	//Manages when the yoyo should come back and when it despawns
@@ -101,12 +84,15 @@ public class YoyoProjectile extends EntityThrowable{
 			 
 		 }
         
+        if(!this.world.isRemote)
+        {
         if(this.ticksExisted == maxticks/2-2 && count == maxticks) {
         	this.motionX = (this.owner.posX - this.posX)*0.05;
 			  this.motionY = (this.owner.posY + this.owner.eyeHeight - this.posY)*0.1;
 			  this.motionZ = (this.owner.posZ - this.posZ)*0.05;
 			 count = this.ticksExisted;
 			 cooldowncount ++;
+        }
         }
         super.onEntityUpdate();
     }
@@ -120,6 +106,19 @@ public class YoyoProjectile extends EntityThrowable{
 		
 		 if(!this.world.isRemote)
 	        {
+			 
+			 if(result.entityHit != owner) {
+				  this.motionX = (this.owner.posX - this.posX)*0.05;
+				  this.motionY = (this.owner.posY + this.owner.eyeHeight - this.posY)*0.1;
+				  this.motionZ = (this.owner.posZ - this.posZ)*0.05;
+				 
+				 if(cooldowncount ==0) {
+				 count = this.ticksExisted;
+				 owner.getCooldownTracker().setCooldown(ModItems.YOYO, count);
+				 }
+				 cooldowncount ++;
+				  
+			 }
 	                
 	        
 		 if (!this.world.isRemote)
@@ -147,18 +146,7 @@ public class YoyoProjectile extends EntityThrowable{
             
         }
 		
-		 if(result.entityHit != owner) {
-			  this.motionX = (this.owner.posX - this.posX)*0.05;
-			  this.motionY = (this.owner.posY + this.owner.eyeHeight - this.posY)*0.1;
-			  this.motionZ = (this.owner.posZ - this.posZ)*0.05;
-			 
-			 if(cooldowncount ==0) {
-			 count = this.ticksExisted;
-			 owner.getCooldownTracker().setCooldown(ModItems.YOYO, count);
-			 }
-			 cooldowncount ++;
-			  
-		 }
+		 
 		
 	        }
 		 

@@ -3,6 +3,7 @@ package com.izako.HunterX.init;
 import com.izako.HunterX.Main;
 import com.izako.HunterX.entity.BossExam;
 import com.izako.HunterX.entity.Empty;
+import com.izako.HunterX.entity.EntityFoxbear;
 import com.izako.HunterX.entity.EntityKiriko;
 import com.izako.HunterX.entity.EntityStats;
 import com.izako.HunterX.entity.Examiner;
@@ -33,6 +34,7 @@ public class EntityInit {
 		registerEntity("BossExam", BossExam.class, Reference.BOSSEXAM, 50, 001011, 101101);
 		registerEntity("EntityStats", EntityStats.class, Reference.ENTITYSTATS, 50, 110100, 010010);
 		registerEntity("EntityKiriko", EntityKiriko.class, Reference.ENTITYKIRIKO, 50, 641641, 101101);
+		registerEntity("EntityFoxbear", EntityFoxbear.class, Reference.ENTITYFOXBEAR, 50, 696969, 911911);
 		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID + ":" + "EntityCard"), EntityCard.class,
 				"EntityCard", 124, Main.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID + ":" + "EntityNeedle"),
@@ -60,6 +62,8 @@ public class EntityInit {
 		copySpawns(Thug.class, EnumCreatureType.MONSTER, EntityCreeper.class, EnumCreatureType.MONSTER, 10, 1);
 		
 		copySpawns(EntityKiriko.class, EnumCreatureType.MONSTER, EntityCreeper.class, EnumCreatureType.MONSTER, 10, 1);
+		
+		copySpawns(EntityKiriko.class, EnumCreatureType.MONSTER, EntityCreeper.class, EnumCreatureType.MONSTER, 2, 1);
 
 	}
 

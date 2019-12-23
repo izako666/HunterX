@@ -37,12 +37,16 @@ public class HunterExam03 extends Quests {
 			return true;
 			
 		}
+		return false;
 		}
 		return false;
 		
 	}
 	@Override
 	public boolean canProgress(EntityPlayer player) {
-		return ListQuests.HUNTEREXAM02.doneTask(player);
+		if(ListQuests.HUNTEREXAM02.doneTask(player)) {
+			return true;
+		}
+		return false;
 	}
 }

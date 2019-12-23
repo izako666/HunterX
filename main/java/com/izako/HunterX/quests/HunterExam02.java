@@ -20,13 +20,13 @@ public class HunterExam02 extends Quests {
 	//the name of the quest.
 	@Override
 	public String getName() {
-		return "Run for 5 Minutes.";
+		return "Level up your Speed stat (5 minutes running)";
 		
 	}
 	//quest description
 	@Override
 	public String getDesc() {
-		return "You must run for 5 minutes to prove your endurance";
+		return "Prove your speed to me, or I cant let you advance";
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class HunterExam02 extends Quests {
 		IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 		
 		System.out.println(stats.getProgress(this.getID()));
-		if(stats.getProgress(this.getID()) > 60) {
+		if(stats.getSpeedStat() > 0.072) {
 			
 		
 		return true;

@@ -31,8 +31,9 @@ public class HunterExam01 extends Quests{
 		IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 		 if(stats.hasKilledKiriko()) {
 			 return true;
-		 }
+		 }else {
 		return false;
+		 }
 	}
 
 }
