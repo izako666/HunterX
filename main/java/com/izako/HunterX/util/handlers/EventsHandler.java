@@ -10,6 +10,7 @@ import com.izako.HunterX.events.ThugDropEvent;
 import com.izako.HunterX.events.TimeRunEvent;
 import com.izako.HunterX.gui.HotBarEvent;
 import com.izako.HunterX.stats.events.AttackStatEvent;
+import com.izako.HunterX.stats.events.AuraEvent;
 import com.izako.HunterX.stats.events.CapabilityAttachEvent;
 import com.izako.HunterX.stats.events.DefenseStatEvent;
 import com.izako.HunterX.stats.events.HealthStatEvent;
@@ -25,6 +26,7 @@ public class EventsHandler {
 
 	public static void registerEvents() {
 		// TODO Auto-generated method stub
+		AuraEvent Auraregen = new AuraEvent();
 		HanzoArmorBaseEvent hanzoArmorBaseEvent = new HanzoArmorBaseEvent();
 		HanzoSwordDropEvent hanzoSwordDropEvent = new HanzoSwordDropEvent();
 		ThugDropEvent thugDropEvent = new ThugDropEvent();
@@ -44,7 +46,7 @@ public class EventsHandler {
 		HotBarEvent hotBarEvent = new HotBarEvent();
 		PlayerRenderEvent playerRenderEvent = new PlayerRenderEvent();
 		
-		
+		MinecraftForge.EVENT_BUS.register(Auraregen);
 		MinecraftForge.EVENT_BUS.register(hanzoArmorBaseEvent);
 		MinecraftForge.EVENT_BUS.register(hanzoSwordDropEvent);
 		MinecraftForge.EVENT_BUS.register(thugDropEvent);
