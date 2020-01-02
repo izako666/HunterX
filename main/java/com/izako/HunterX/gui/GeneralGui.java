@@ -2,7 +2,9 @@ package com.izako.HunterX.gui;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.core.layout.GelfLayout;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
 
 import com.izako.HunterX.init.ListAbilities;
 import com.izako.HunterX.init.ListKeybinds;
@@ -17,12 +19,15 @@ import com.izako.HunterX.util.Reference;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.boss.dragon.phase.PhaseChargingPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 
 public class GeneralGui extends GuiScreen {
+	
+	
 
 	EntityPlayer p;
 	IEntityStats stats;

@@ -1,5 +1,7 @@
 package com.izako.HunterX.gui;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -7,6 +9,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiButtonTextured extends GuiButton{
+	
 
 	ResourceLocation texture;
 	public GuiButtonTextured(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText, ResourceLocation texture) {
