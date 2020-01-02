@@ -10,6 +10,8 @@ import com.izako.HunterX.izapi.abilities.Ability;
 
 public class EntityStatsBase implements IEntityStats{
 
+	private double auraCapacity = 100;
+	private double aura = 0;
 	private double healthStat = 0;
 	private double speedStat = 0;
 	private double defenseStat = 0;
@@ -27,6 +29,36 @@ public class EntityStatsBase implements IEntityStats{
     private Ability[] Slots = new Ability[9];
     private int nenCapacity = 0;
     private EnumNenType nenType = EnumNenType.EHANCEMENT;
+    
+    @Override
+    public double getAuraCapacity() {
+    	//gets Aura Capacity
+    	return this.auraCapacity;
+    	
+    }
+    
+    @Override
+    public void setAuraCapacity(double value) {
+    	//sets the Aura Capacity
+    	this.auraCapacity = value;
+    	
+    }
+    
+    @Override
+    public double getAura() {
+    	//gets current Aura
+    	return this.aura;
+    	
+    }
+    
+    @Override
+    public void setAura(double value) {
+    	//sets current Aura
+    	this.aura = value;
+    }
+    
+    
+    
 @Override
 	public double getHealthStat() {
 		//gets the health stat

@@ -20,6 +20,8 @@ public class EntityStatsCapability implements Capability.IStorage<IEntityStats>{
 
         final NBTTagCompound tag = new NBTTagCompound();
 
+        tag.setDouble("aura", instance.getAura());
+        tag.setDouble("auraCapacity", instance.getAuraCapacity());
         tag.setDouble("healthstat", instance.getHealthStat());
         tag.setDouble("speedstat", instance.getSpeedStat());
         tag.setDouble("defensestat", instance.getDefenseStat());
@@ -69,6 +71,8 @@ public class EntityStatsCapability implements Capability.IStorage<IEntityStats>{
 
         final NBTTagCompound tag = (NBTTagCompound) nbt;
 
+        instance.setAura(tag.getDouble("aura"));
+        instance.setAuraCapacity(tag.getDouble("auraCapacity"));
         instance.setHealthStat(tag.getDouble("healthstat"));
         instance.setSpeedStat(tag.getDouble("speedstat"));
         instance.setDefenseStat(tag.getDouble("defensestat"));

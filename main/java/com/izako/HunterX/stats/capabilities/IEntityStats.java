@@ -11,6 +11,16 @@ import com.izako.HunterX.izapi.abilities.Ability;
 import net.minecraft.entity.player.EntityPlayer;
 
 public interface IEntityStats {
+	
+	//AuraCapacity
+	double getAuraCapacity();
+	
+	void setAuraCapacity(double value);
+	
+	//CurrentAura
+	double getAura();
+	
+	void setAura(double value);
 
 	//healthstat
 	double getHealthStat();

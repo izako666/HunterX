@@ -50,7 +50,7 @@ public class HealthStatEvent {
 				ModidPacketHandler.INSTANCE.sendToServer(new EntityModifierServerChange(stats.getHealthStat(), 1) );
 			} else if (healthStat >= 10) {
 
-				ModidPacketHandler.INSTANCE.sendToServer(new EntityModifierServerChange(10.0, 1) );
+				
 
 			}
 		}

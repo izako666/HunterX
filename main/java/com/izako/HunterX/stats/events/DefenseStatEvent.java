@@ -45,10 +45,7 @@ public class DefenseStatEvent {
 				attribute.applyModifier(defenseModifier);
 
 			} else if (defenseStatCap >= 20.0D) {
-				defenseModifier = new AttributeModifier(defense_attributemodifier_uuid, "defenseStatIncrease", 20, 0)
-						.setSaved(true);
-				attribute.removeModifier(defenseModifier);
-				attribute.applyModifier(defenseModifier);
+				
 			}
 		}
 
