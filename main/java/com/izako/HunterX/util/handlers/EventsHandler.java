@@ -8,7 +8,7 @@ import com.izako.HunterX.events.OnKillKirikoEvent;
 import com.izako.HunterX.events.PlayerRenderEvent;
 import com.izako.HunterX.events.ThugDropEvent;
 import com.izako.HunterX.events.TimeRunEvent;
-import com.izako.HunterX.gui.HotBarEvent;
+import com.izako.HunterX.gui.GuiActive;
 import com.izako.HunterX.stats.events.AttackStatEvent;
 import com.izako.HunterX.stats.events.AuraEvent;
 import com.izako.HunterX.stats.events.CapabilityAttachEvent;
@@ -43,7 +43,7 @@ public class EventsHandler {
 		TimeRunEvent timeRunEvent = new TimeRunEvent();
 		OnKillBossEvent onKillBossEvent = new OnKillBossEvent();
 		KeyBindHandlerEvent keyBindHandlerEvent = new KeyBindHandlerEvent();
-		HotBarEvent hotBarEvent = new HotBarEvent();
+		GuiActive hotBarEvent = new GuiActive();
 		PlayerRenderEvent playerRenderEvent = new PlayerRenderEvent();
 		
 		MinecraftForge.EVENT_BUS.register(Auraregen);

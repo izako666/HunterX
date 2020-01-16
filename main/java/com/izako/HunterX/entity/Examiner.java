@@ -125,9 +125,7 @@ public class Examiner extends EntityZombie {
 		IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 		World world = player.getEntityWorld();
 		if (!stats.isHunter()) {
-			if(!ListQuests.HUNTEREXAM01.hasQuest(player)) {
-			ListQuests.HUNTEREXAM01.giveQuest(player);
-			}
+		
 			if (!ListQuests.HUNTEREXAM01.doneTask(player)) {
 				if (world.isRemote) {
 					Misc.sendMsg(player, "Welcome to the Hunter Exam location site.", null);
@@ -137,6 +135,9 @@ public class Examiner extends EntityZombie {
 					Misc.sendMsg(player, TextFormatting.DARK_RED + "kill a kiriko first.", null);
 				}
 			}
+			if(!ListQuests.HUNTEREXAM01.hasQuest(player)) {
+				ListQuests.HUNTEREXAM01.giveQuest(player);
+				}
 
 			else if (ListQuests.HUNTEREXAM01.doneTask(player) && !ListQuests.HUNTEREXAM02.hasQuest(player)) {
 				ListQuests.HUNTEREXAM02.giveQuest(player);
@@ -147,25 +148,28 @@ public class Examiner extends EntityZombie {
 					Misc.sendMsg(player, "Well first of all", null);
 					Misc.sendMsg(player, "The first exam is a test of stamina", null);
 					Misc.sendMsg(player, "You must run till your breath runs out.", null);
-					Misc.sendMsg(player, TextFormatting.DARK_RED + "run for ten minutes.", null);
+					Misc.sendMsg(player, TextFormatting.DARK_RED + "get your speed stat to 4.0", null);
+
+				}
+				if(!ListQuests.HUNTEREXAM02.hasQuest(player)) {
+					ListQuests.HUNTEREXAM02.giveQuest(player);
 
 				}
 			}
 			else if (ListQuests.HUNTEREXAM02.doneTask(player) && !ListQuests.HUNTEREXAM03.doneTask(player)) {
 				
-				if(!ListQuests.HUNTEREXAM03.hasQuest(player)) {
-					ListQuests.HUNTEREXAM03.giveQuest(player);
-				}
+			
 				if (world.isRemote) {
 					Misc.sendMsg(player, "Very well, the next exam is more about your... equipment.", null);
 					Misc.sendMsg(player, "get some good equipment, without it you won't last.", null);
 					Misc.sendMsg(player, TextFormatting.DARK_RED + "get a weapon from this mod.", null);
 				}
+				if(!ListQuests.HUNTEREXAM03.hasQuest(player)) {
+					ListQuests.HUNTEREXAM03.giveQuest(player);
+				}
 			}
 			else if (ListQuests.HUNTEREXAM03.doneTask(player) && !ListQuests.HUNTEREXAM04.doneTask(player)) {
-				if(!ListQuests.HUNTEREXAM04.hasQuest(player)) {
-					ListQuests.HUNTEREXAM04.giveQuest(player);
-				}
+				
 				if (world.isRemote) {
 					Misc.sendMsg(player, "Fine then, this is your final challenge.", null);
 					Misc.sendMsg(player, "beat your fellow comrade, hanzo in a one v one.", null);
@@ -174,6 +178,9 @@ public class Examiner extends EntityZombie {
 					boss.setLocationAndAngles(this.posX + 1, this.posY, this.posZ + 1, this.rotationYaw, 0.0F);
 					this.world.spawnEntity(boss);
 				
+				}
+				if(!ListQuests.HUNTEREXAM04.hasQuest(player)) {
+					ListQuests.HUNTEREXAM04.giveQuest(player);
 				}
 				
 			}  if (ListQuests.HUNTEREXAM04.doneTask(player) && !stats.isHunter()) {

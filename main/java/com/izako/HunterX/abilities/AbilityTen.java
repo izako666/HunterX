@@ -12,6 +12,7 @@ import com.izako.HunterX.network.packets.EntityStatsServerSync;
 import com.izako.HunterX.network.packets.PacketParticles;
 import com.izako.HunterX.stats.capabilities.EntityStatsProvider;
 import com.izako.HunterX.stats.capabilities.IEntityStats;
+import com.izako.HunterX.util.Reference;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -20,6 +21,7 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 public class AbilityTen extends Ability {
@@ -29,6 +31,7 @@ public class AbilityTen extends Ability {
 	
 	private AttributeModifier healthModifier;
 	public static UUID health_attributemodifier_uuid = UUID.fromString("135d510d-26c6-403e-8615-899862332e86");
+	public ResourceLocation texture = new ResourceLocation(Reference.MOD_ID + ":textures/abilities/abilityjajanken.png");
 
 	public AbilityTen(String str) {
 		super(str);
@@ -90,5 +93,6 @@ public class AbilityTen extends Ability {
 		
 
 	}
-
+	
+	
 }

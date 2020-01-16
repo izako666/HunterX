@@ -48,8 +48,8 @@ public class HunterExam02 extends Quests {
 	public boolean doneTask(EntityPlayer player) {
 		IEntityStats stats = player.getCapability(EntityStatsProvider.ENTITY_STATS, null);
 		
-		System.out.println(stats.getProgress(this.getID()));
-		if(stats.getSpeedStat() > 0.072) {
+		System.out.println(stats.getSpeedStat());
+		if(stats.getSpeedStat() > 0.05) {
 			
 		
 		return true;

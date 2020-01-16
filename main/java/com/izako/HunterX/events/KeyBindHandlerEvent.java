@@ -1,5 +1,7 @@
 package com.izako.HunterX.events;
 
+import java.awt.Color;
+
 import org.lwjgl.input.Keyboard;
 
 import com.izako.HunterX.Main;
@@ -21,6 +23,9 @@ public class KeyBindHandlerEvent {
 
 	@SubscribeEvent
 	public void onPress(KeyInputEvent e) {
+		
+		int posX = Minecraft.getMinecraft().displayWidth;
+		int posY = Minecraft.getMinecraft().displayHeight;
 
 		EntityPlayerSP p = Minecraft.getMinecraft().player;
 		IEntityStats stats = p.getCapability(EntityStatsProvider.ENTITY_STATS, null);

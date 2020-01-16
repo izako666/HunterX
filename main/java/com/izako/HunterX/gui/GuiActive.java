@@ -27,7 +27,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class HotBarEvent {
+public class GuiActive {
 
 	@SubscribeEvent
 	public void renderEvent(RenderGameOverlayEvent e) {
@@ -63,9 +63,12 @@ public class HotBarEvent {
 	    	  
 	    	  
 	      }
-	
-Minecraft.getMinecraft().fontRenderer.drawString(stats.getAura()+" / "+stats.getAuraCapacity(), 250, 10, 125);
-	
+	int barLength = (int) (stats.getAura() * (125 / stats.getAuraCapacity()));
+	gui.mc.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/abilities/nenbar.png"));
+	gui.drawTexturedModalRect(posX - posX + 60, 0, 100, 100, 125, 15);
+	gui.drawTexturedModalRect(posX - posX + 60, 0, 256, 256, barLength, 15);
+Minecraft.getMinecraft().fontRenderer.drawString(stats.getAura()+" / "+stats.getAuraCapacity(), posX - posX + 60, posY - posY + 17, 125);
+	System.out.println("aura" + stats.getAura() + ",auracap" + stats.getAuraCapacity() + ",barLength" + barLength );
 
 	
 	}
