@@ -1,0 +1,16 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "hntrx:item/kurapikas_stick"
+	},
+	"overrides":
+	[
+		{
+			"predicate": 
+			{
+				"sheath": 1
+			},
+			"model": "hntrx:item/kurapikas_sword"
+		}
+	]
+}
