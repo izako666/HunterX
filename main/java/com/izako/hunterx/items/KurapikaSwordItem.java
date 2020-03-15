@@ -1,14 +1,17 @@
 package com.izako.hunterx.items;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
+import java.util.List;
+import java.util.UUID;
 
+import javax.annotation.Nullable;
+
+
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
@@ -18,12 +21,17 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class KurapikaSword extends SwordItem {
-	private double attackDamage = 0;
+public class KurapikaSwordItem extends SwordItem {
 
-	public KurapikaSword(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {
+	private final UUID attackUUID = UUID.fromString("b34f7773-0533-48ae-8d7b-807bba9983e2");
+	
+	public KurapikaSwordItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {
 		super(tier, attackDamageIn, attackSpeedIn, builder);
 		this.addPropertyOverride(new ResourceLocation("sheath"), this.sheathProperty);
 	}
@@ -36,7 +44,7 @@ public class KurapikaSword extends SwordItem {
 			IAttributeInstance attribute = ((LivingEntity) playerIn)
 					.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
 
-			AttributeModifier attr = new AttributeModifier(ATTACK_DAMAGE_MODIFIER.toString(), 10,
+			AttributeModifier attr = new AttributeModifier(attackUUID, ATTACK_DAMAGE_MODIFIER.toString(), 10,
 					AttributeModifier.Operation.ADDITION);
 			ItemStack itemstack = playerIn.getHeldItem(handIn);
 			if (!itemstack.hasTag()) {
@@ -47,19 +55,19 @@ public class KurapikaSword extends SwordItem {
 			if (playerIn.isSneaking()) {
 				if (nbt.getBoolean("sheathed")) {
 					nbt.putBoolean("sheathed", false);
-					attribute.removeAllModifiers();
-					attribute.removeModifier(attr);
+
+					attribute.removeModifier(attackUUID);
 					attribute.applyModifier(attr);
 					return new ActionResult<ItemStack>(ActionResultType.SUCCESS, itemstack);
 
 				} else if (!nbt.getBoolean("sheathed")) {
 					nbt.putBoolean("sheathed", true);
-					attr = new AttributeModifier(ATTACK_DAMAGE_MODIFIER.toString(), 6,
+					attr = new AttributeModifier(attackUUID ,ATTACK_DAMAGE_MODIFIER.toString(), 1,
 							AttributeModifier.Operation.ADDITION);
 
-					attribute.removeAllModifiers();
-					attribute.removeModifier(attr);
+					attribute.removeModifier(attackUUID);
 					attribute.applyModifier(attr);
+					System.out.print(attribute.getModifiers().toString());
 					return new ActionResult<ItemStack>(ActionResultType.SUCCESS, itemstack);
 
 				} else {
@@ -84,21 +92,19 @@ public class KurapikaSword extends SwordItem {
 		}
 		return 0.0f;
 	};
-	/*
-	 * @Override public Multimap<String, AttributeModifier>
-	 * getAttributeModifiers(EquipmentSlotType equipmentSlot) { Multimap<String,
-	 * AttributeModifier> multimap = HashMultimap.create();
-	 * 
-	 * AttributeModifier attr = new
-	 * AttributeModifier(ATTACK_DAMAGE_MODIFIER.toString(), attackDamage,
-	 * AttributeModifier.Operation.ADDITION);
-	 * 
-	 * 
-	 * multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), attr);
-	 * 
-	 * return multimap;
-	 * 
-	 * }
-	 */
+	   @Override
+	   @OnlyIn(Dist.CLIENT)
+	   public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	  
+		   if(stack.hasTag()) {
+		   if(!stack.getTag().getBoolean("sheathed")) {
+		   tooltip.add(new StringTextComponent("unsheathed"));
+		   } else {
+			   tooltip.add(new StringTextComponent("sheathed"));
+		   }
+		   
+		   }
+	 }
+
 
 }
