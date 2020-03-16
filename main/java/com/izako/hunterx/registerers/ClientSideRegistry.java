@@ -4,9 +4,7 @@ import com.izako.hunterx.Main;
 import com.izako.hunterx.items.entities.YoyoEntity;
 import com.izako.hunterx.items.renderers.YoyoRenderer;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -19,9 +17,9 @@ public class ClientSideRegistry {
 	public static void RegisterEntityRenderers() {
 		RenderingRegistry.registerEntityRenderingHandler(YoyoEntity.class, new IRenderFactory<YoyoEntity>() {
 			@Override
-			public SpriteRenderer<? super YoyoEntity> createRenderFor(EntityRendererManager manager) {
+			public YoyoRenderer<YoyoEntity> createRenderFor(EntityRendererManager manager) {
 
-				return new YoyoRenderer(manager, Minecraft.getInstance().getItemRenderer());
+				return new YoyoRenderer<YoyoEntity>(manager);
 			}
 		});
 		System.out.println("rendererRegistered");

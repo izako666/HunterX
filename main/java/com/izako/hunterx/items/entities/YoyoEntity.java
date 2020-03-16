@@ -14,15 +14,15 @@ import net.minecraft.world.World;
 
 public class YoyoEntity extends ProjectileItemEntity{
 
-	  public YoyoEntity(EntityType type, World worldIn) {
+	  public YoyoEntity(EntityType<? extends YoyoEntity> type, World worldIn) {
 	      super(type, worldIn);
 	   }
 
-	   public YoyoEntity(EntityType<? extends ProjectileItemEntity> type, double x, double y, double z, World worldIn) {
+	   public YoyoEntity(EntityType<? extends YoyoEntity> type, double x, double y, double z, World worldIn) {
 	      super(type, x, y, z, worldIn);
 	   }
 
-	   public YoyoEntity(EntityType type, LivingEntity livingEntityIn, World worldIn) {
+	   public YoyoEntity(EntityType<? extends YoyoEntity> type, LivingEntity livingEntityIn, World worldIn) {
 	      super(type, livingEntityIn, worldIn);
 	   }
 

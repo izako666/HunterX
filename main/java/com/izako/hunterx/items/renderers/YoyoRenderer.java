@@ -1,24 +1,22 @@
 package com.izako.hunterx.items.renderers;
 
+
 import com.izako.hunterx.Main;
 import com.izako.hunterx.items.entities.YoyoEntity;
 import com.mojang.blaze3d.platform.GlStateManager;
 
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
-public class YoyoRenderer extends  SpriteRenderer<YoyoEntity> {
+public class YoyoRenderer<T extends Entity> extends  EntityRenderer<YoyoEntity> {
 
-	   public YoyoRenderer(EntityRendererManager p_i50956_1_, net.minecraft.client.renderer.ItemRenderer p_i50956_2_, float p_i50956_3_) {
-		      super(p_i50956_1_, p_i50956_2_, p_i50956_3_);
-		   }
-
-		   public YoyoRenderer(EntityRendererManager p_i50957_1_, net.minecraft.client.renderer.ItemRenderer p_i50957_2_) {
-		      this(p_i50957_1_, p_i50957_2_, 1.0F);
+	   public YoyoRenderer(EntityRendererManager p_i50956_1_) {
+		      super(p_i50956_1_);
 		   }
 
 	@Override
@@ -34,9 +32,9 @@ public class YoyoRenderer extends  SpriteRenderer<YoyoEntity> {
 		   System.out.println("shouldrender");
 	         Tessellator tessellator = Tessellator.getInstance();
 	        BufferBuilder bufferbuilder = tessellator.getBuffer();
+	        this.bindEntityTexture(entity);
 		  super.doRender(entity, x, y, z, entityYaw, partialTicks);
 	        bufferbuilder.begin(3, DefaultVertexFormats.POSITION_COLOR);
-	         int j = 16;
 
 	         for(int k = 0; k <= 16; ++k) {
 	            float f6 = (float)k / 16.0F;

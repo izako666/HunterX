@@ -1,6 +1,7 @@
 package com.izako.hunterx.items;
 
 import com.izako.hunterx.items.entities.YoyoEntity;
+import com.izako.hunterx.registerers.ModEventSubscriber;
 
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -31,7 +32,7 @@ public class YoyoItem extends Item {
 			
 			if(!worldIn.isRemote) {
 				
-				YoyoEntity yoyo_front = new YoyoEntity(EntityType.Builder.create(YoyoEntity::new, EntityClassification.MISC).build("yoyo"), playerIn, worldIn);
+				YoyoEntity yoyo_front = new YoyoEntity(ModEventSubscriber.type, playerIn, worldIn);
 				playerIn.getCooldownTracker().setCooldown(this, 60);
 				
 							

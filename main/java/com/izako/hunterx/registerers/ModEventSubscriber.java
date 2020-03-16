@@ -24,10 +24,17 @@ public final class ModEventSubscriber {
 		entry.setRegistryName(registryName);
 		return entry;
 	}
+	@SuppressWarnings("unchecked")
+	public static EntityType<YoyoEntity> type = (EntityType<YoyoEntity>) EntityType.Builder.<YoyoEntity>create(YoyoEntity::new ,EntityClassification.MISC)
+	.setTrackingRange(128)
+	.setShouldReceiveVelocityUpdates(true)
+	.size(1, 1)
+	.setUpdateInterval(1)
+	.build("yoyo")
+	.setRegistryName(Main.MODID, "yoyo");
 	  @SubscribeEvent
       public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event)
       {
-		  EntityType<?> type = EntityType.Builder.create(YoyoEntity::new ,EntityClassification.MISC).build("yoyo").setRegistryName(Main.MODID, "yoyo");
 		  event.getRegistry().registerAll(type);
       }
 }
