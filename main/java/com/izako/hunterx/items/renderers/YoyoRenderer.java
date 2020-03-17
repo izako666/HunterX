@@ -5,10 +5,12 @@ import com.izako.hunterx.Main;
 import com.izako.hunterx.items.entities.YoyoEntity;
 import com.mojang.blaze3d.platform.GlStateManager;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
@@ -22,7 +24,7 @@ public class YoyoRenderer<T extends Entity> extends  EntityRenderer<YoyoEntity> 
 	@Override
 	protected ResourceLocation getEntityTexture(YoyoEntity entity) {
 		// TODO Auto-generated method stub
-		return new ResourceLocation(Main.MODID, "yoyo");
+		return new ResourceLocation(Main.MODID, "textures/item/yoyo.png");
 	}
 
 	

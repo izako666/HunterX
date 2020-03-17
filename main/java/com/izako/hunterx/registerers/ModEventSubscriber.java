@@ -30,6 +30,7 @@ public final class ModEventSubscriber {
 	.setShouldReceiveVelocityUpdates(true)
 	.size(1, 1)
 	.setUpdateInterval(1)
+	.setCustomClientFactory(YoyoEntity::new)
 	.build("yoyo")
 	.setRegistryName(Main.MODID, "yoyo");
 	  @SubscribeEvent

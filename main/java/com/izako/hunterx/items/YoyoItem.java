@@ -3,6 +3,8 @@ package com.izako.hunterx.items;
 import com.izako.hunterx.items.entities.YoyoEntity;
 import com.izako.hunterx.registerers.ModEventSubscriber;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,9 +32,9 @@ public class YoyoItem extends Item {
 		 ItemStack item = playerIn.getHeldItem(handIn);
 			Vec3d aim = playerIn.getLookVec();
 			
+			YoyoEntity yoyo_front = new YoyoEntity(ModEventSubscriber.type, playerIn, worldIn);
 			if(!worldIn.isRemote) {
 				
-				YoyoEntity yoyo_front = new YoyoEntity(ModEventSubscriber.type, playerIn, worldIn);
 				playerIn.getCooldownTracker().setCooldown(this, 60);
 				
 							

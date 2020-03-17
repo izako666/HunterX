@@ -4,7 +4,9 @@ import com.izako.hunterx.Main;
 import com.izako.hunterx.items.entities.YoyoEntity;
 import com.izako.hunterx.items.renderers.YoyoRenderer;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
