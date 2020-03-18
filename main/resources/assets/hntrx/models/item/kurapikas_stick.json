@@ -1,7 +1,7 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "hntrx:item/kurapikas_stick"
+		"layer0": "hntrx:items/kurapikas_stick"
 	},
 	"overrides":
 	[

@@ -17,6 +17,9 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.FMLNetworkConstants;
+import net.minecraftforge.fml.network.FMLPlayMessages;
+import net.minecraftforge.fml.network.NetworkDirection;
 
 public class YoyoItem extends Item {
 
@@ -32,15 +35,15 @@ public class YoyoItem extends Item {
 		 ItemStack item = playerIn.getHeldItem(handIn);
 			Vec3d aim = playerIn.getLookVec();
 			
-			YoyoEntity yoyo_front = new YoyoEntity(ModEventSubscriber.type, playerIn, worldIn);
+			YoyoEntity yoyo_front = new YoyoEntity(YoyoEntity.type, playerIn, worldIn);
 			if(!worldIn.isRemote) {
 				
-				playerIn.getCooldownTracker().setCooldown(this, 60);
+				playerIn.getCooldownTracker().setCooldown(this, 200);
 				
 							
 				yoyo_front.setPosition(playerIn.posX + aim.x, playerIn.posY + playerIn.getEyeHeight(), playerIn.posZ + aim.z);
 				yoyo_front.setMotion(aim.x * 2, aim.y * 2, aim.z * 2);
-				worldIn.addEntity(yoyo_front);
+				playerIn.world.addEntity(yoyo_front);
 				System.out.println("shouldspawn");
 				
 	   }
