@@ -1,18 +1,14 @@
 package com.izako.hunterx.items.renderers;
 
 
-import java.awt.Color;
-
-import org.lwjgl.opengl.GL11;
-
 import com.izako.hunterx.Main;
+import com.izako.hunterx.items.YoyoItem;
 import com.izako.hunterx.items.entities.YoyoEntity;
 import com.mojang.blaze3d.platform.GlStateManager;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -23,7 +19,6 @@ import net.minecraft.util.HandSide;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 
 public class YoyoRenderer<T extends Entity> extends  SpriteRenderer<YoyoEntity> {
 
@@ -31,8 +26,8 @@ public class YoyoRenderer<T extends Entity> extends  SpriteRenderer<YoyoEntity> 
 		      super(p_i50956_1_, Minecraft.getInstance().getItemRenderer());
 		   }
 
-	@Override
-	protected ResourceLocation getEntityTexture(YoyoEntity entity) {
+	
+	protected ResourceLocation getYoyoEntityTexture(YoyoEntity entity) {
 		// TODO Auto-generated method stub
 		return new ResourceLocation(Main.MODID, "textures/items/yoyo.png");
 	}
@@ -42,12 +37,11 @@ public class YoyoRenderer<T extends Entity> extends  SpriteRenderer<YoyoEntity> 
 	  public void doRender(YoyoEntity entity, double x, double y, double z, float entityYaw, float partialTicks) {
 	        PlayerEntity p = (PlayerEntity) entity.world.getEntityByID(entity.entityId);
 		  if(p != null) {
-		   System.out.println("shouldrender");
 	         Tessellator tessellator = Tessellator.getInstance();
 	        BufferBuilder bufferbuilder = tessellator.getBuffer();
 	         int i = p.getPrimaryHand() == HandSide.RIGHT ? 1 : -1;
 	         ItemStack itemstack = p.getHeldItemMainhand();
-	         if (!(itemstack.getItem() instanceof net.minecraft.item.FishingRodItem)) {
+	         if (!(itemstack.getItem() instanceof YoyoItem)) {
 	            i = -i;
 	         }
 	         float f3 = p.getSwingProgress(partialTicks);
@@ -104,7 +98,7 @@ public class YoyoRenderer<T extends Entity> extends  SpriteRenderer<YoyoEntity> 
 	         GlStateManager.enableLighting();
 	         GlStateManager.enableTexture();
 
-		        this.bindEntityTexture(entity);
+		        this.bindTexture(getYoyoEntityTexture(entity));
 				  super.doRender(entity, x, y, z, entityYaw, partialTicks);
 
 

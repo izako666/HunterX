@@ -1,12 +1,18 @@
 package com.izako.hunterx.registerers;
 
 import com.izako.hunterx.Main;
+import com.izako.hunterx.entities.ThugEntity;
+import com.izako.hunterx.items.entities.CardEntity;
+import com.izako.hunterx.items.entities.NeedleEntity;
 import com.izako.hunterx.items.entities.YoyoEntity;
 
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EntityType.IFactory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biome.SpawnListEntry;
+import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -27,6 +33,15 @@ public final class ModEventSubscriber {
 	  @SubscribeEvent
       public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event)
       {
-		  event.getRegistry().registerAll(YoyoEntity.type);
+		  event.getRegistry().registerAll(YoyoEntity.type, CardEntity.type, NeedleEntity.type, ThugEntity.type);
+		  registerEntityWorldSpawn(ThugEntity.type, Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH, Biomes.JUNGLE);
       }
+	  
+	  public static void registerEntityWorldSpawn(EntityType<?> type, Biome... biomes) {
+		  for(Biome biome : biomes) {
+			  if(biome != null) {
+				  biome.getSpawns(type.getClassification()).add(new SpawnListEntry(type, 10, 1, 3));
+			  }
+		  }
+	  }
 }

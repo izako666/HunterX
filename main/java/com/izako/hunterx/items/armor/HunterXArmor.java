@@ -25,7 +25,6 @@ public class HunterXArmor extends ArmorItem{
 	
 
 	private String skinType = "slim";
-	private String name;
 	private String pathName;
 
 
@@ -37,7 +36,6 @@ public class HunterXArmor extends ArmorItem{
 
         super( ModItems.HUNTERX_ARMOR_MATERIAL, equipmentSlot, builder);
 
-        this.name = name;
 
         this.pathName = pathName;
 

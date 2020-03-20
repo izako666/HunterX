@@ -1,4 +1,59 @@
 {
-  "item.hntrx.kurapikas_stick": "kurapikas sword"
+    "item.hntrx.kurapikas_stick": "kurapikas sword",
+    "item.hntrx.yoyo":"Yoyo",
+    "item.hntrx.card":"Hisoka's Card",
+    "item.hntrx.hanzo_sword":"Hanzo's Sword",
+    "item.hntrx.needle":"Illumi's Needle",
+    "item.hntrx.gons_fishing_rod": "Gon's Fishing Rod",
+    "item.hntrx.thug_egg": "Thug Spawn Egg",
+    "item.hntrx.gon_chestplate": "Gon's Jacket",
+    "item.hntrx.gon_leggings": "Gon's Shorts",
+    "item.hntrx.gon_boots": "Gon's Boots",
+
+
+    "item.hntrx.killua_chestplate": "Killua's Shirt",
+    "item.hntrx.killua_leggings": "Killua's Shorts",
+    "item.hntrx.killua_boots": "Killua's Boots",
+
+    "item.hntrx.hanzo_chestplate": "Hanzo's Chestplate",
+    "item.hntrx.hanzo_leggings": "Hanzo's Pants",
+    "item.hntrx.hanzo_boots": "Hanzo's Boots",
+
+    "item.hntrx.leorio_chestplate": "Leorio's Jacket",
+    "item.hntrx.leorio_leggings": "Leorio's Pants",
+    "item.hntrx.leorio_boots": "Leorio's Shoes",
+
+
+    "item.hntrx.kurapika_chestplate": "Kurapika's Shirt",
+    "item.hntrx.kurapika_leggings": "Kurapika's Pants",
+    "item.hntrx.kurapika_boots": "Kurapika's Shoes",
+
+
+    "item.hntrx.illumi_chestplate": "Illumi's Top",
+    "item.hntrx.illumi_leggings": "Illumi's Pants",
+    "item.hntrx.illumi_boots": "Illumi's Shoes",
+
+
+    "item.hntrx.hisoka_chestplate": "Hisoka's Top",
+    "item.hntrx.hisoka_leggings": "Hisoka's Pants",
+    "item.hntrx.hisoka_boots": "Hisoka's Shoes",
+
+
+    "item.hntrx.netero_chestplate": "Netero's Shirt",
+    "item.hntrx.netero_leggings": "Netero's Shorts",
+    "item.hntrx.netero_boots": "Netero's Shoes",
+
+
+    "item.hntrx.ging_chestplate": "Ging's Top",
+    "item.hntrx.ging_leggings": "Ging's Pants",
+    "item.hntrx.ging_boots": "Ging's Shoes",
+
+
+
+
+    "item.hntrx.kite_chestplate": "Kite's Shirt",
+    "item.hntrx.kite_leggings": "Kite's Pants",
+    "item.hntrx.kite_boots": "Kite's Shoes",
+    "itemGroup.hunterxitemgroup": "HunterX"
 
 }

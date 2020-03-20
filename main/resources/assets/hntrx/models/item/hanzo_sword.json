@@ -1,6 +1,6 @@
 {
    "parent": "item/handheld",
    "textures": {
-       "layer0": "hntrx:items/hanzos_sword"
+       "layer0": "hntrx:items/hanzo_sword"
    }
 }

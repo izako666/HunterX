@@ -11,8 +11,11 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -29,6 +32,7 @@ public class YoyoEntity extends ProjectileItemEntity implements IEntityAdditiona
 	private int maxticks = 15;
 	private int count = 0;
 	private boolean comeBack = false;
+	private ItemStack itemStack;
 
 	@SuppressWarnings("unchecked")
 	public static EntityType<YoyoEntity> type = (EntityType<YoyoEntity>) EntityType.Builder
@@ -50,7 +54,24 @@ public class YoyoEntity extends ProjectileItemEntity implements IEntityAdditiona
 		super(type, livingEntityIn, worldIn);
 		owner = (PlayerEntity) livingEntityIn;
 		ownerID = livingEntityIn.getUniqueID();
+		
 	}
+	
+	public YoyoEntity(EntityType<? extends YoyoEntity> type, LivingEntity livingEntityIn, World worldIn, ItemStack item) {
+
+		super(type, livingEntityIn, worldIn);
+		owner = (PlayerEntity) livingEntityIn;
+		ownerID = livingEntityIn.getUniqueID();
+		if(!item.hasTag()) {
+			item.setTag(new CompoundNBT());
+			item.getTag().putBoolean("cast", true);
+		} else {
+			item.getTag().putBoolean("cast", true);
+		}
+		itemStack = item;
+		
+	}
+
 
 	public YoyoEntity(FMLPlayMessages.SpawnEntity packet, World worldIn) {
 		super(type, worldIn);
@@ -79,9 +100,11 @@ public class YoyoEntity extends ProjectileItemEntity implements IEntityAdditiona
 							(this.owner.posY + this.owner.getEyeHeight() - this.posY) * 0.1,
 							(this.owner.posZ - this.posZ) * 0.05);
 
+					((EntityRayTraceResult) result).getEntity().attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 20);
 					this.comeBack = true;
 					owner.getCooldownTracker().setCooldown(ModItems.YOYO, count);
 
+					
 				} else {
 
 				}
@@ -129,6 +152,9 @@ public class YoyoEntity extends ProjectileItemEntity implements IEntityAdditiona
 			this.remove();
 			this.count = 0;
 			owner.getCooldownTracker().setCooldown(ModItems.YOYO, 0);
+			if(itemStack.hasTag()) {
+				itemStack.getTag().putBoolean("cast", false);
+			}
 		}
 			if(this.owner != null) {
 			if(this.ticksExisted > maxticks && comeBack == false)  {

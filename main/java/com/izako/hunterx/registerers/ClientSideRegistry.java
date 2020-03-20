@@ -1,10 +1,15 @@
 package com.izako.hunterx.registerers;
 
 import com.izako.hunterx.Main;
+import com.izako.hunterx.entities.ThugEntity;
+import com.izako.hunterx.items.entities.CardEntity;
+import com.izako.hunterx.items.entities.NeedleEntity;
 import com.izako.hunterx.items.entities.YoyoEntity;
 import com.izako.hunterx.items.renderers.YoyoRenderer;
+import com.izako.hunterx.renderers.ThugRenderer;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraftforge.api.distmarker.Dist;
@@ -24,7 +29,30 @@ public class ClientSideRegistry {
 				return new YoyoRenderer<YoyoEntity>(manager);
 			}
 		});
-		System.out.println("rendererRegistered");
+		RenderingRegistry.registerEntityRenderingHandler(CardEntity.class, new IRenderFactory<CardEntity>() {
+
+			@Override
+			public SpriteRenderer<CardEntity> createRenderFor(EntityRendererManager manager) {
+				// TODO Auto-generated method stub
+				return new SpriteRenderer<CardEntity>(manager, Minecraft.getInstance().getItemRenderer());
+			}});
+		RenderingRegistry.registerEntityRenderingHandler(NeedleEntity.class, new IRenderFactory<NeedleEntity>() {
+
+			@Override
+			public SpriteRenderer<NeedleEntity> createRenderFor(EntityRendererManager manager) {
+				// TODO Auto-generated method stub
+				return new SpriteRenderer<NeedleEntity>(manager, Minecraft.getInstance().getItemRenderer());
+			}});
+		
+		RenderingRegistry.registerEntityRenderingHandler(ThugEntity.class, new IRenderFactory<ThugEntity>() {
+
+			@Override
+			public ThugRenderer createRenderFor(EntityRendererManager manager) {
+				// TODO Auto-generated method stub
+				return new ThugRenderer(manager);
+			}
+			
+		});
 	}
 	
 }
