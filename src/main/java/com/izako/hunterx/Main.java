@@ -37,7 +37,6 @@ public final class Main {
 		ModidPacketHandler.registerPackets();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onFeatureRegistry);
 	}
 	
 	private void clientSetup(FMLClientSetupEvent event) {
@@ -58,12 +57,6 @@ public final class Main {
         }));
 
 	}
-    @SubscribeEvent
-    public void onFeatureRegistry(final RegistryEvent.Register<Feature<?>> event) {
-        IForgeRegistry<Feature<?>> registry = event.getRegistry();
-
-        ModStructures.registerStructure(registry);
-    }
 
 
 }

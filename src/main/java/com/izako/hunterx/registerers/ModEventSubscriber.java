@@ -1,23 +1,22 @@
 package com.izako.hunterx.registerers;
 
 import com.izako.hunterx.Main;
-import com.izako.hunterx.data.hunterdata.HunterDataProvider;
 import com.izako.hunterx.entities.ThugEntity;
+import com.izako.hunterx.init.ModStructures;
 import com.izako.hunterx.items.entities.CardEntity;
 import com.izako.hunterx.items.entities.NeedleEntity;
 import com.izako.hunterx.items.entities.YoyoEntity;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.biome.Biomes;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 @EventBusSubscriber(modid = Main.MODID, bus = EventBusSubscriber.Bus.MOD)
@@ -46,5 +45,10 @@ public final class ModEventSubscriber {
 			  }
 		  }
 	  }
-	  
+	   @SubscribeEvent
+	    public static void onFeatureRegistry(final RegistryEvent.Register<Feature<?>> event) {
+	        IForgeRegistry<Feature<?>> registry = event.getRegistry();
+
+	        ModStructures.registerStructure(registry);
+	    }
 }
