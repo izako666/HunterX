@@ -1,18 +1,20 @@
 package com.izako.hunterx.registerers;
 
 import com.izako.hunterx.Main;
+import com.izako.hunterx.data.hunterdata.HunterDataProvider;
 import com.izako.hunterx.entities.ThugEntity;
 import com.izako.hunterx.items.entities.CardEntity;
 import com.izako.hunterx.items.entities.NeedleEntity;
 import com.izako.hunterx.items.entities.YoyoEntity;
 
-import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EntityType.IFactory;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraft.world.biome.Biomes;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -44,4 +46,5 @@ public final class ModEventSubscriber {
 			  }
 		  }
 	  }
+	  
 }

@@ -3,14 +3,27 @@ package com.izako.hunterx;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.events.EventsHandler;
+import com.izako.hunterx.init.ModQuests;
+import com.izako.hunterx.init.ModStructures;
 import com.izako.hunterx.networking.ModidPacketHandler;
 import com.izako.hunterx.registerers.ClientSideRegistry;
 
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.IFeatureConfig;
+import net.minecraft.world.gen.placement.IPlacementConfig;
+import net.minecraft.world.gen.placement.Placement;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.IForgeRegistry;
 
 @Mod(Main.MODID)
 public final class Main {
@@ -24,7 +37,7 @@ public final class Main {
 		ModidPacketHandler.registerPackets();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
-
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onFeatureRegistry);
 	}
 	
 	private void clientSetup(FMLClientSetupEvent event) {
@@ -33,7 +46,24 @@ public final class Main {
 
 	private  void commonSetup(FMLCommonSetupEvent event) {
 		EventsHandler.registerEvents();
+		HunterDataCapability.register();
+
+		ModQuests.questRegister();
+		
+        ForgeRegistries.BIOMES.getValues().stream().forEach((biome -> {
+            biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Biome.createDecoratedFeature(ModStructures.BLIMP, IFeatureConfig.NO_FEATURE_CONFIG, Placement.NOPE, IPlacementConfig.NO_PLACEMENT_CONFIG));
+            if (biome.getCategory() == Biome.Category.FOREST || biome.getCategory() == Biome.Category.PLAINS) {
+                biome.addStructure(ModStructures.BLIMP, IFeatureConfig.NO_FEATURE_CONFIG);
+            }
+        }));
 
 	}
+    @SubscribeEvent
+    public void onFeatureRegistry(final RegistryEvent.Register<Feature<?>> event) {
+        IForgeRegistry<Feature<?>> registry = event.getRegistry();
+
+        ModStructures.registerStructure(registry);
+    }
+
 
 }
