@@ -5,24 +5,24 @@ import com.izako.hunterx.izapi.quest.QuestLine;
 
 import net.minecraft.client.Minecraft;
 
-public class HunterExam01 extends Quest {
+public class HunterExam03 extends Quest{
 
 	@Override
 	public String getId() {
 		// TODO Auto-generated method stub
-		return "hunterexam01";
+		return "hunterexam03";
 	}
 
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "Exam Location";
+		return "Run.";
 	}
 
 	@Override
 	public String getDescription() {
 		// TODO Auto-generated method stub
-		return "Wing has informed you that you must get to the hunter exam in two days.";
+		return "You must get atleast 100 blocks far away from the examiner in 2 minutes.";
 	}
 
 	@Override
@@ -34,12 +34,10 @@ public class HunterExam01 extends Quest {
 	@Override
 	public void renderDesc(int x, int y) {
 		// TODO Auto-generated method stub
-		
-		Minecraft.getInstance().currentScreen.drawString(Minecraft.getInstance().fontRenderer, "Wing has informed you ", x, y, 16777215);
-		Minecraft.getInstance().currentScreen.drawString(Minecraft.getInstance().fontRenderer, "that you must get to the", x, y + 20, 16777215);
-		Minecraft.getInstance().currentScreen.drawString(Minecraft.getInstance().fontRenderer, "hunter exam in two days.", x, y + 40, 16777215);
+		Minecraft.getInstance().currentScreen.drawString(Minecraft.getInstance().fontRenderer, "You must get atleast 100", x, y, 16777215);
+		Minecraft.getInstance().currentScreen.drawString(Minecraft.getInstance().fontRenderer, "blocks away from the ", x, y + 20, 16777215);
+		Minecraft.getInstance().currentScreen.drawString(Minecraft.getInstance().fontRenderer, "examiner in 2 minutes.", x, y + 40, 16777215);
 
 	}
 
-	
 }

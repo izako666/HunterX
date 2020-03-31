@@ -1,8 +1,13 @@
 package com.izako.hunterx.registerers;
 
 import com.izako.hunterx.Main;
+import com.izako.hunterx.entities.ExaminerEntity;
+import com.izako.hunterx.entities.HanzoEntity;
+import com.izako.hunterx.entities.KirikoEntity;
 import com.izako.hunterx.entities.ThugEntity;
+import com.izako.hunterx.entities.WingEntity;
 import com.izako.hunterx.init.ModStructures;
+import com.izako.hunterx.items.entities.BulletEntity;
 import com.izako.hunterx.items.entities.CardEntity;
 import com.izako.hunterx.items.entities.NeedleEntity;
 import com.izako.hunterx.items.entities.YoyoEntity;
@@ -11,8 +16,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
-import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.biome.Biomes;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -34,14 +39,18 @@ public final class ModEventSubscriber {
 	  @SubscribeEvent
       public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event)
       {
-		  event.getRegistry().registerAll(YoyoEntity.type, CardEntity.type, NeedleEntity.type, ThugEntity.type);
-		  registerEntityWorldSpawn(ThugEntity.type, Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH, Biomes.JUNGLE);
+		  event.getRegistry().registerAll(YoyoEntity.type, CardEntity.type,BulletEntity.type, NeedleEntity.type, ThugEntity.type, KirikoEntity.type, WingEntity.type, ExaminerEntity.type, HanzoEntity.type);
+		  registerEntityWorldSpawn(ThugEntity.type, 6, 3, Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH, Biomes.JUNGLE);
+		  registerEntityWorldSpawn(KirikoEntity.type, 2, 1,Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH, Biomes.JUNGLE);
+		  registerEntityWorldSpawn(WingEntity.type, 6, 1,Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH, Biomes.JUNGLE);
+
       }
 	  
-	  public static void registerEntityWorldSpawn(EntityType<?> type, Biome... biomes) {
+	  public static void registerEntityWorldSpawn(EntityType<?> type, int weight, int maxGroup, Biome... biomes) {
 		  for(Biome biome : biomes) {
 			  if(biome != null) {
-				  biome.getSpawns(type.getClassification()).add(new SpawnListEntry(type, 10, 1, 3));
+				  biome.getSpawns(type.getClassification()).add(new SpawnListEntry(type, weight, 1, maxGroup));
+				  
 			  }
 		  }
 	  }

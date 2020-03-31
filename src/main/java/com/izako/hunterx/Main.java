@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.events.EventsHandler;
+import com.izako.hunterx.init.ModKeybindings;
 import com.izako.hunterx.init.ModQuests;
 import com.izako.hunterx.init.ModStructures;
 import com.izako.hunterx.networking.ModidPacketHandler;
@@ -12,20 +13,14 @@ import com.izako.hunterx.registerers.ClientSideRegistry;
 
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.GenerationStage.Decoration;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.placement.IPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
 
 @Mod(Main.MODID)
 public final class Main {
@@ -43,8 +38,10 @@ public final class Main {
 	
 	private void clientSetup(FMLClientSetupEvent event) {
 		ClientSideRegistry.RegisterEntityRenderers();
+		ModKeybindings.init();
 	}
 
+	@SuppressWarnings("deprecation")
 	private  void commonSetup(FMLCommonSetupEvent event) {
 		EventsHandler.registerEvents();
 		HunterDataCapability.register();
@@ -58,6 +55,7 @@ public final class Main {
 
             }
         }));
+        
 
 	}
 

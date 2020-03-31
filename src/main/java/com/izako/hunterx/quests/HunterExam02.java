@@ -5,24 +5,24 @@ import com.izako.hunterx.izapi.quest.QuestLine;
 
 import net.minecraft.client.Minecraft;
 
-public class HunterExam01 extends Quest {
+public class HunterExam02 extends Quest {
 
 	@Override
 	public String getId() {
 		// TODO Auto-generated method stub
-		return "hunterexam01";
+		return "hunterexam02";
 	}
 
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "Exam Location";
+		return "Kiriko Hunt";
 	}
 
 	@Override
 	public String getDescription() {
 		// TODO Auto-generated method stub
-		return "Wing has informed you that you must get to the hunter exam in two days.";
+		return "You must kill a kiriko to prove your skill.";
 	}
 
 	@Override
@@ -34,12 +34,9 @@ public class HunterExam01 extends Quest {
 	@Override
 	public void renderDesc(int x, int y) {
 		// TODO Auto-generated method stub
-		
-		Minecraft.getInstance().currentScreen.drawString(Minecraft.getInstance().fontRenderer, "Wing has informed you ", x, y, 16777215);
-		Minecraft.getInstance().currentScreen.drawString(Minecraft.getInstance().fontRenderer, "that you must get to the", x, y + 20, 16777215);
-		Minecraft.getInstance().currentScreen.drawString(Minecraft.getInstance().fontRenderer, "hunter exam in two days.", x, y + 40, 16777215);
+		Minecraft.getInstance().currentScreen.drawString(Minecraft.getInstance().fontRenderer, "You must kill a ", x, y, 16777215);
+		Minecraft.getInstance().currentScreen.drawString(Minecraft.getInstance().fontRenderer, "kiriko to prove your skill.", x, y + 20, 16777215);
 
 	}
 
-	
 }

@@ -12,6 +12,7 @@ public abstract class Quest {
 	public abstract String getName();
 	public abstract String getDescription();
 	public abstract QuestLine getQuestLine();
+	public abstract void renderDesc(int x, int y);
 	
 	public boolean doneTask(PlayerEntity p) {
 		IHunterData data = HunterDataCapability.get(p);
@@ -28,5 +29,19 @@ public abstract class Quest {
 		IHunterData data = HunterDataCapability.get(p);
 		return data.getQuests().get(this.getId()) != null ? true : false;
 	}
+	
+	public void finishQuest(PlayerEntity p) {
+		IHunterData data = HunterDataCapability.get(p);
+		data.finishQuest(this.getId());
+	}
+	
+	public boolean isFinished(PlayerEntity p ) {
+		IHunterData data = HunterDataCapability.get(p);
+		if(data.getProgress(this.getId()) > 100) {
+			return true;
+		}
+		return false;
+	}
+	
 
 }

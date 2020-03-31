@@ -3,6 +3,7 @@ package com.izako.hunterx.data.hunterdata;
 import java.util.HashMap;
 
 import com.izako.hunterx.init.ModQuests;
+import com.izako.hunterx.izapi.quest.Quest;
 
 public class HunterDataBase implements IHunterData {
 
@@ -10,6 +11,7 @@ public class HunterDataBase implements IHunterData {
 	double speedStat = 0;
 	double attackStat = 0;
 	double defenseStat = 0;
+	boolean isHunter = false;
 	HashMap<String, Integer> quests = new HashMap<>();
 
 	@Override
@@ -95,7 +97,7 @@ public class HunterDataBase implements IHunterData {
 		// TODO Auto-generated method stub
 
 		if (quests.containsKey(str)) {
-			quests.remove(str);
+			this.setProgress(str, 101);
 		}
 	}
 
@@ -113,13 +115,38 @@ public class HunterDataBase implements IHunterData {
 			return;
 		}
 		if (quests.containsKey(str)) {
-			if (value > 100) {
-				quests.replace(str, quests.get(str), 100);
-
-			} else {
 				quests.replace(str, quests.get(str), value);
-			}
+			
 		}
 	}
+
+	@Override
+	public void setQuests(HashMap<String, Integer> quests) {
+		// TODO Auto-generated method stub
+		this.quests = quests;
+	}
+
+	@Override
+	public void removeQuest(String str) {
+		// TODO Auto-generated method stub
+		
+		if(this.quests.containsKey(str)) {
+			this.quests.remove(str);
+		}
+	}
+
+	@Override
+	public boolean isHunter() {
+		// TODO Auto-generated method stub
+		return this.isHunter;
+	}
+
+	@Override
+	public void setIsHunter(boolean val) {
+		// TODO Auto-generated method stub
+		this.isHunter = val;
+	}
+
+
 
 }

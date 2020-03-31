@@ -25,7 +25,7 @@ public class HunterDataCapability {
 				props.putDouble("speed_stat", instance.getSpeedStat());
 				props.putDouble("defense_stat", instance.getDefenseStat());
 				props.putDouble("attack_stat", instance.getAttackStat());
-			
+			    props.putBoolean("ishunter", instance.isHunter());
 					instance.getQuests().forEach((k, v) -> {
 						props.putInt("quest" + k, v);
 					});
@@ -41,7 +41,7 @@ public class HunterDataCapability {
 				instance.setSpeedStat(props.getDouble("speed_stat"));
 				instance.setDefenseStat(props.getDouble("defense_stat"));
 				instance.setAttackStat(props.getDouble("attack_stat"));
-
+                instance.setIsHunter(props.getBoolean("ishunter"));
 				props.keySet().forEach((k) -> {
 					if (k.contains("quest")) {
 						String newK = k.substring(5, k.length());

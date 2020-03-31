@@ -1,25 +1,28 @@
 package com.izako.hunterx.init;
 
 import com.izako.hunterx.Main;
+import com.izako.hunterx.entities.KirikoEntity;
 import com.izako.hunterx.entities.ThugEntity;
+import com.izako.hunterx.entities.WingEntity;
+import com.izako.hunterx.items.BadgeItem;
 import com.izako.hunterx.items.CardItem;
+import com.izako.hunterx.items.HunterLicenseItem;
 import com.izako.hunterx.items.HunterXArmorMaterial;
 import com.izako.hunterx.items.KurapikaSwordItem;
 import com.izako.hunterx.items.NeedleItem;
+import com.izako.hunterx.items.PistolItem;
 import com.izako.hunterx.items.YoyoItem;
 import com.izako.hunterx.items.armor.HunterXArmor;
 import com.izako.hunterx.items.tiers.HunterXItemTier;
 import com.izako.hunterx.registerers.ModEventSubscriber;
 
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.FishingRodItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.item.SwordItem;
-import net.minecraft.item.Item.Properties;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.RegistryEvent;
@@ -48,10 +51,16 @@ public class ModItems {
 	public static final CardItem CARD = new CardItem(new Item.Properties().group(HUNTERX_ITEM_GROUP).maxStackSize(16));
 	public static final NeedleItem NEEDLE = new NeedleItem(
 			new Item.Properties().group(HUNTERX_ITEM_GROUP).maxStackSize(16));
-	
+	public static final PistolItem PISTOL = new PistolItem(new Item.Properties().group(HUNTERX_ITEM_GROUP).maxStackSize(1));
+	public static final BadgeItem BADGE = new BadgeItem(new Item.Properties().maxStackSize(1));
+
+	public static final HunterLicenseItem HUNTER_LICENSE = new HunterLicenseItem(new Item.Properties().maxStackSize(1));
 	public static final SwordItem HANZO_SWORD = new SwordItem(HANZO_SWORD_TIER, 3, -2f, new Item.Properties());
 
 	public static final SpawnEggItem THUG_EGG = new SpawnEggItem(ThugEntity.type, 4996656, 9794134, new Item.Properties().group(ItemGroup.MISC));
+	public static final SpawnEggItem KIRIKO_EGG = new SpawnEggItem(KirikoEntity.type, 13552826, 16711680, new Item.Properties().group(ItemGroup.MISC));
+	public static final SpawnEggItem WING_EGG = new SpawnEggItem(WingEntity.type, 16711680, 13552826, new Item.Properties().group(ItemGroup.MISC));
+
 	// Armor Material
 	public static final HunterXArmorMaterial HUNTERX_ARMOR_MATERIAL = new HunterXArmorMaterial(
 			Main.MODID + ":hunterx_armor_material", 40, new int[] { 6, 10, 8, 0 }, 30);
@@ -134,10 +143,15 @@ public class ModItems {
 				ModEventSubscriber.setup(KURAPIKAS_STICK, "kurapikas_stick"),
 				ModEventSubscriber.setup(YOYO, "yoyo"),
 				ModEventSubscriber.setup(CARD, "card"),
+				ModEventSubscriber.setup(PISTOL, "pistol"),
+				ModEventSubscriber.setup(BADGE, "badge"),
+				ModEventSubscriber.setup(HUNTER_LICENSE, "hunter_license"),
 				ModEventSubscriber.setup(NEEDLE, "needle"),
 				ModEventSubscriber.setup(HANZO_SWORD, "hanzo_sword"),
 				ModEventSubscriber.setup(GONS_FISHING_ROD, "gons_fishing_rod"),
 				ModEventSubscriber.setup(THUG_EGG, "thug_egg"),
+				ModEventSubscriber.setup(KIRIKO_EGG, "kiriko_egg"),
+				ModEventSubscriber.setup(WING_EGG, "wing_egg"),
 				ModEventSubscriber.setup(GON_CHESTPLATE, "gon_chestplate"),
 				ModEventSubscriber.setup(GON_LEGGINGS, "gon_leggings"),
 				ModEventSubscriber.setup(GON_BOOTS, "gon_boots"),

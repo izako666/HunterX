@@ -1,5 +1,8 @@
 package com.izako.hunterx.items;
 
+import com.izako.hunterx.data.hunterdata.HunterDataCapability;
+import com.izako.hunterx.data.hunterdata.IHunterData;
+import com.izako.hunterx.init.ModQuests;
 import com.izako.hunterx.items.entities.YoyoEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;

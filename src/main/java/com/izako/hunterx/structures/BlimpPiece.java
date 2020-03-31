@@ -33,6 +33,7 @@ public class BlimpPiece extends TemplateStructurePiece {
 	private static final BlockPos STRUCTURE_OFFSET = new BlockPos(4, 0, 15);
 	private final Rotation rotation;
 	private final ResourceLocation resource;
+	public ChunkPos chunkpos;
 
 	public BlimpPiece(TemplateManager temp, IStructurePieceType p_i51339_1_, CompoundNBT p_i51339_2_) {
 		super(p_i51339_1_, p_i51339_2_);
@@ -80,7 +81,7 @@ public class BlimpPiece extends TemplateStructurePiece {
 
 	public static void addPieces(TemplateManager temp, List<StructurePiece> values, CompoundNBT nbt, Random rand) {
 
-		if(rand.nextInt(100) > 98)
+		if(rand.nextInt(500) > 498)
 				values.add(new BlimpPiece(temp, ModStructures.BLIMP_PIECE_TYPE, nbt));
 		
 	}
@@ -90,6 +91,7 @@ public class BlimpPiece extends TemplateStructurePiece {
 			MutableBoundingBox sbb) {
 		// TODO Auto-generated method stub
 
+	 
 	}
 
 }

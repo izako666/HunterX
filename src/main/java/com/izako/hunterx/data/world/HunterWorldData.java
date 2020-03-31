@@ -3,6 +3,7 @@ package com.izako.hunterx.data.world;
 import com.izako.hunterx.Main;
 
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.DimensionSavedDataManager;
@@ -15,6 +16,7 @@ public class HunterWorldData extends WorldSavedData{
 		super(IDENTIFIER);
 	}
 	public boolean spawned = false;
+	public BlockPos pos;
 	public HunterWorldData(String name) {
 		super(name);
 		// TODO Auto-generated constructor stub
@@ -36,12 +38,19 @@ public class HunterWorldData extends WorldSavedData{
 	public void read(CompoundNBT nbt) {
 		// TODO Auto-generated method stub
 		this.spawned = nbt.getBoolean("spawned");
+		this.pos = new BlockPos(nbt.getInt("posx"),nbt.getInt("posy"),nbt.getInt("posz"));
+	
+		System.out.println("debug");
 	}
 
 	@Override
 	public CompoundNBT write(CompoundNBT compound) {
 		// TODO Auto-generated method stub
 		compound.putBoolean("spawned", this.spawned);
+		compound.putInt("posx", this.pos.getX());
+		compound.putInt("posy", this.pos.getY());
+		compound.putInt("posz", this.pos.getZ());
+
 		return compound;
 	}
 
@@ -52,5 +61,12 @@ public class HunterWorldData extends WorldSavedData{
 	public void setSpawned(boolean val) {
 		this.spawned = val;
 		this.markDirty();
+	}
+	public void setPos(BlockPos pos) {
+		this.pos = pos;
+		this.markDirty();
+	}
+	public BlockPos getPos() {
+		return this.pos;
 	}
 }

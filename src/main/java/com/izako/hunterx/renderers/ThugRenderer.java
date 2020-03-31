@@ -13,6 +13,11 @@ public class ThugRenderer extends BipedRenderer<ThugEntity, BipedModel<ThugEntit
 
 	public static final ResourceLocation TEXTURE = new ResourceLocation(
 			Main.MODID + ":textures/entity/thug.png");
+	public static final ResourceLocation TEXTURE2 = new ResourceLocation(
+			Main.MODID + ":textures/entity/thug2.png");
+	public static final ResourceLocation TEXTURE3 = new ResourceLocation(
+			Main.MODID + ":textures/entity/thug3.png");
+
 
 	public ThugRenderer(EntityRendererManager manager) {
 		super(manager, new BipedModel<ThugEntity>(1f, 0.0f, 64, 64), 0.5f);
@@ -22,7 +27,16 @@ public class ThugRenderer extends BipedRenderer<ThugEntity, BipedModel<ThugEntit
 	@Override
 	protected ResourceLocation getEntityTexture(ThugEntity entity) {
 		// TODO Auto-generated method stub
-		return TEXTURE;
+		switch(entity.getTextureId()) {
+		case 0: 
+			return TEXTURE;
+		case 1:
+		return TEXTURE2;
+		case 2: 
+			return TEXTURE3;
+		default: 
+			return TEXTURE;
+		}
 	}
 	
 

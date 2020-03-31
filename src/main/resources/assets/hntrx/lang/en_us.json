@@ -9,6 +9,10 @@
     "item.hntrx.gon_chestplate": "Gon's Jacket",
     "item.hntrx.gon_leggings": "Gon's Shorts",
     "item.hntrx.gon_boots": "Gon's Boots",
+    "item.hntrx.kiriko_egg": "Kiriko Spawn Egg",
+    "item.hntrx.wing_egg": "Wing Spawn Egg",
+    "item.hntrx.badge": "Badge",
+    "item.hntrx.hunter_license": "Hunter License",
 
 
     "item.hntrx.killua_chestplate": "Killua's Shirt",
@@ -54,6 +58,8 @@
     "item.hntrx.kite_chestplate": "Kite's Shirt",
     "item.hntrx.kite_leggings": "Kite's Pants",
     "item.hntrx.kite_boots": "Kite's Shoes",
-    "itemGroup.hunterxitemgroup": "HunterX"
+    "itemGroup.hunterxitemgroup": "HunterX",
+    "key.categories.hntrx": "HunterX",
+    "key.huntergui": "Gui Open"
 
 }
