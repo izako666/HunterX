@@ -71,7 +71,7 @@ public class HanzoEntity extends ZombieEntity{
 		super.registerAttributes();
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(80.0D);
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
-		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0D);
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(10.0D);
 		this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(20.0D);
 	}
 

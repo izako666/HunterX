@@ -19,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -69,14 +70,20 @@ public class ExaminerEntity extends CreatureEntity {
 
 			if (data.getProgress(ModQuests.HUNTEREXAM01.getId()) < 100) {
 				if (world.isRemote) {
-					p.sendMessage(new StringTextComponent("here exam02"));
+					p.sendMessage(new StringTextComponent("Oh are you here for the hunter exam?"));
+					p.sendMessage(new StringTextComponent("well You're just in time!"));
+					p.sendMessage(new StringTextComponent("the first stage was finding this place."));
+					p.sendMessage(new StringTextComponent("Now we will start the second phase"));
+					p.sendMessage(new StringTextComponent("Hunt a kiriko to prove your skills.").applyTextStyle(TextFormatting.BLUE));
+
+				
 				}
 				ModQuests.HUNTEREXAM01.finishQuest(p);
 				data.giveQuest(ModQuests.HUNTEREXAM02.getId(), 0);
 				return true;
 			}
 			if (data.getProgress(ModQuests.HUNTEREXAM01.getId()) == 100) {
-				p.sendMessage(new StringTextComponent("exam01 failed"));
+				p.sendMessage(new StringTextComponent("Sorry the Hunter Exam this year is already over."));
 				data.removeQuest(ModQuests.HUNTEREXAM01.getId());
 				return true;
 			}
@@ -84,7 +91,11 @@ public class ExaminerEntity extends CreatureEntity {
 		if (ModQuests.HUNTEREXAM02.hasQuest(p) && !ModQuests.HUNTEREXAM02.isFinished(p)) {
 			if (data.getProgress(ModQuests.HUNTEREXAM02.getId()) == 100) {
 				if (world.isRemote) {
-					p.sendMessage(new StringTextComponent("exam02 passed"));
+					p.sendMessage(new StringTextComponent("Oh you killed it? I'm astonished!"));
+					p.sendMessage(new StringTextComponent("The next exam will be a test of speed and stamina"));
+					p.sendMessage(new StringTextComponent("lets see how far you can get away from here in hmmm..."));
+					p.sendMessage(new StringTextComponent("2 minutes? timer starts now."));
+
 				}
 				ModQuests.HUNTEREXAM02.finishQuest(p);
 				data.giveQuest(ModQuests.HUNTEREXAM03.getId(), 0);
@@ -101,7 +112,11 @@ public class ExaminerEntity extends CreatureEntity {
 		if (ModQuests.HUNTEREXAM04.hasQuest(p) && !ModQuests.HUNTEREXAM04.isFinished(p)) {
 			if (bossSpawned == false) {
 				if (world.isRemote) {
-					p.sendMessage(new StringTextComponent("here exam04"));
+					p.sendMessage(new StringTextComponent("Congratulations for passing the third exam"));
+					p.sendMessage(new StringTextComponent("now for the final exam you must get your targets badge"));
+					p.sendMessage(new StringTextComponent("to earn the required points."));
+					p.sendMessage(new StringTextComponent("your target is Hanzo.").applyTextStyle(TextFormatting.BLUE));
+
 				}
 				if (!world.isRemote) {
 					boss.setLocationAndAngles(this.posX + 1, this.posY, this.posZ + 1, this.rotationYaw, 0.0F);
@@ -111,19 +126,21 @@ public class ExaminerEntity extends CreatureEntity {
 
 				return true;
 			}
-			return false;
+			return true;
 		}
 		if (ModQuests.HUNTEREXAM04.hasQuest(p) && ModQuests.HUNTEREXAM04.isFinished(p) && !data.isHunter()) {
 			if (p.inventory.hasItemStack(new ItemStack(ModItems.BADGE))) {
-				p.sendMessage(new StringTextComponent("exam done"));
+				if(world.isRemote) {
+				p.sendMessage(new StringTextComponent("Congratulations! You are now a professional Hunter!"));
+				}
 				int emptySlot = p.inventory.getFirstEmptyStack();
 				if (emptySlot == -1) {
 					if (world.isRemote) {
-						p.sendMessage(new StringTextComponent("cant give license"));
+						p.sendMessage(new StringTextComponent("Empty out your inventory").applyTextStyle(TextFormatting.RED));
 					}
 				} else {
 					if (world.isRemote) {
-						p.sendMessage(new StringTextComponent("u a hunter now."));
+						p.sendMessage(new StringTextComponent("Here's your Hunter License."));
 					}
 					p.inventory.removeStackFromSlot(this.getSlotForStack(new ItemStack(ModItems.BADGE), p));
 					ItemStack license = new ItemStack(ModItems.HUNTER_LICENSE);
@@ -137,7 +154,7 @@ public class ExaminerEntity extends CreatureEntity {
 		}
 		if (!ModQuests.HUNTEREXAM01.hasQuest(p)) {
 			if (world.isRemote) {
-				p.sendMessage(new StringTextComponent("exams havent started yet"));
+				p.sendMessage(new StringTextComponent("The Hunter Exam hasn't started yet."));
 			}
 			return true;
 		}

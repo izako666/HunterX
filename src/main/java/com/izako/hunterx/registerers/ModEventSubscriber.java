@@ -40,7 +40,7 @@ public final class ModEventSubscriber {
       public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event)
       {
 		  event.getRegistry().registerAll(YoyoEntity.type, CardEntity.type,BulletEntity.type, NeedleEntity.type, ThugEntity.type, KirikoEntity.type, WingEntity.type, ExaminerEntity.type, HanzoEntity.type);
-		  registerEntityWorldSpawn(ThugEntity.type, 6, 3, Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH, Biomes.JUNGLE);
+		  registerEntityWorldSpawn(ThugEntity.type, 4, 3, Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH, Biomes.JUNGLE);
 		  registerEntityWorldSpawn(KirikoEntity.type, 2, 1,Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH, Biomes.JUNGLE);
 		  registerEntityWorldSpawn(WingEntity.type, 6, 1,Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH, Biomes.JUNGLE);
 

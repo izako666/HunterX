@@ -8,6 +8,7 @@ import com.izako.hunterx.init.ModQuests;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -48,11 +49,11 @@ public class QuestEvents {
 					if(distance > 100) {
 						ModQuests.HUNTEREXAM03.finishQuest(p);
 	                    data.giveQuest(ModQuests.HUNTEREXAM04.getId(), 0);
-						p.sendMessage(new StringTextComponent("nice you passed exam03"));
+						p.sendMessage(new StringTextComponent("You've passed the third stage, go back to your examiner").applyTextStyle(TextFormatting.BLUE));
 					}
 					if(distance < 100) {
 						data.removeQuest(ModQuests.HUNTEREXAM03.getId());
-						p.sendMessage(new StringTextComponent("you failed exam 03"));
+						p.sendMessage(new StringTextComponent("You have failed the hunter exam").applyTextStyle(TextFormatting.BLUE));
 
 					}
 					}

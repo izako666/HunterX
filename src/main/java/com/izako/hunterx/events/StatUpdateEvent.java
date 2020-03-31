@@ -39,7 +39,7 @@ public class StatUpdateEvent {
 			IHunterData data = HunterDataCapability.get(p);
 			double attackStat = data.getAttackStat();
 
-			data.setAttackStat(attackStat + 0.05);
+			data.setAttackStat(attackStat + 0.025);
 			attackModifier = new AttributeModifier(attack_attributemodifier_uuid, "attackStatIncrease", attackStat,
 					Operation.ADDITION).setSaved(true);
 
@@ -58,7 +58,7 @@ public class StatUpdateEvent {
 			IAttributeInstance attribute = ((LivingEntity) playerIn).getAttribute(SharedMonsterAttributes.ARMOR);
 			IHunterData stats = HunterDataCapability.get(playerIn);
 			double defenseStatCap = stats.getDefenseStat();
-			stats.setDefenseStat(defenseStatCap + 0.025);
+			stats.setDefenseStat(defenseStatCap + 0.0125);
 			defenseStatCap = stats.getDefenseStat();
 			defenseModifier = new AttributeModifier(defense_attributemodifier_uuid, "defenseStatIncrease",
 					defenseStatCap * 2, Operation.ADDITION).setSaved(true);

@@ -12,12 +12,10 @@ import com.izako.hunterx.init.ModItems;
 import com.izako.hunterx.items.entities.BulletEntity;
 
 import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
@@ -40,7 +38,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -184,6 +181,9 @@ public class ThugEntity extends ZombieEntity implements IRangedAttackMob{
 		return new Random().nextInt(max + 1 - min) + min;
 	}
 
+	private boolean canBeDropped(Item item) {
+		return item != ModItems.BADGE && item != ModItems.CARD && item != ModItems.HANZO_SWORD && item != ModItems.HUNTER_LICENSE && item != ModItems.KIRIKO_EGG && item != ModItems.PISTOL && item != ModItems.THUG_EGG && item != ModItems.WING_EGG;
+	}
 	@Override
 	public void onDeath(DamageSource cause) {
 		List<Item> ITEMS = new ArrayList<Item>();
@@ -196,11 +196,11 @@ public class ThugEntity extends ZombieEntity implements IRangedAttackMob{
 		});
 		int chance = randomWithRange(0, 10);
 
-		if (chance <= 2) {
+		if (chance <= 3) {
 			int items = ITEMS.size() - 1;
 			ItemStack dropItem = new ItemStack(ITEMS.get(randomWithRange(1, items)));
 
-			if (!(dropItem.getItem() == ModItems.THUG_EGG)) {
+			if (this.canBeDropped(dropItem.getItem())) {
 				this.entityDropItem(dropItem, 1);
 			}
 		}
