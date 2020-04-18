@@ -3,8 +3,10 @@ package com.izako.hunterx;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.events.EventsHandler;
+import com.izako.hunterx.init.ModAbilities;
 import com.izako.hunterx.init.ModKeybindings;
 import com.izako.hunterx.init.ModQuests;
 import com.izako.hunterx.init.ModStructures;
@@ -29,7 +31,6 @@ public final class Main {
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 
 	public Main() {
-		LOGGER.debug("laaaaasaaaaaggggnaaaa");
 		EventsHandler.registerEvents();
 		ModidPacketHandler.registerPackets();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
@@ -44,7 +45,9 @@ public final class Main {
 	@SuppressWarnings("deprecation")
 	private  void commonSetup(FMLCommonSetupEvent event) {
 		EventsHandler.registerEvents();
+		ModAbilities.register();
 		HunterDataCapability.register();
+		AbilityDataCapability.register();
 
 		ModQuests.questRegister();
 		

@@ -24,6 +24,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
@@ -65,6 +66,10 @@ public class KirikoEntity extends ZombieEntity{
 
 	
 	
+	@Override
+    protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
+		 
+		   }
 	@Override
 	   public boolean canSpawn(IWorld worldIn, SpawnReason spawnReasonIn) {
 		

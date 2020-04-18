@@ -30,6 +30,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -60,6 +61,11 @@ public class ThugEntity extends ZombieEntity implements IRangedAttackMob{
 		;
 
 	}
+
+	@Override
+    protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
+		 
+		   }
 
 	@Override
 	protected void registerGoals() {

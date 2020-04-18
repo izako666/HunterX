@@ -36,7 +36,7 @@ public class QuestEvents {
 			}
 			
 			if(ModQuests.HUNTEREXAM03.hasQuest(p)) {
-				if(data.getProgress(ModQuests.HUNTEREXAM03.getId()) < 100) {
+				if(data.getProgress(ModQuests.HUNTEREXAM03.getId()) < 100) {					
 					if(tick % 24 == 0) {
 						data.setProgress(ModQuests.HUNTEREXAM03.getId(), data.getProgress(ModQuests.HUNTEREXAM03.getId()) + 1);
 					}

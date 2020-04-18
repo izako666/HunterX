@@ -77,6 +77,10 @@ public class HanzoEntity extends ZombieEntity{
 
 
 	@Override
+    protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
+		 
+		   }
+	@Override
 	public boolean canSpawn(IWorld worldIn, SpawnReason spawnReasonIn) {
 
 		return true;

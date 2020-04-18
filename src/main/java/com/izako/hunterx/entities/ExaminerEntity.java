@@ -90,6 +90,12 @@ public class ExaminerEntity extends CreatureEntity {
 		}
 		if (ModQuests.HUNTEREXAM02.hasQuest(p) && !ModQuests.HUNTEREXAM02.isFinished(p)) {
 			if (data.getProgress(ModQuests.HUNTEREXAM02.getId()) == 100) {
+				if (!world.isRemote) {
+					HunterWorldData worlddata = HunterWorldData.get((ServerWorld) world);
+
+					worlddata.setPos(this.getPosition());
+					System.out.println("debug");
+				}
 				if (world.isRemote) {
 					p.sendMessage(new StringTextComponent("Oh you killed it? I'm astonished!"));
 					p.sendMessage(new StringTextComponent("The next exam will be a test of speed and stamina"));
@@ -99,12 +105,7 @@ public class ExaminerEntity extends CreatureEntity {
 				}
 				ModQuests.HUNTEREXAM02.finishQuest(p);
 				data.giveQuest(ModQuests.HUNTEREXAM03.getId(), 0);
-				if (!world.isRemote) {
-					HunterWorldData worlddata = HunterWorldData.get((ServerWorld) world);
-
-					worlddata.setPos(this.getPosition());
-					System.out.println("debug");
-				}
+				
 				return true;
 			}
 
@@ -124,6 +125,7 @@ public class ExaminerEntity extends CreatureEntity {
 
 				}
 
+				bossSpawned = true;
 				return true;
 			}
 			return true;

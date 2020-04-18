@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import com.izako.hunterx.Main;
 import com.izako.hunterx.init.ModItems;
 
@@ -13,7 +15,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
@@ -43,11 +47,6 @@ public class KurapikaSwordItem extends SwordItem {
 
 		if (!worldIn.isRemote()) {
 
-			IAttributeInstance attribute = ((LivingEntity) playerIn)
-					.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-
-			AttributeModifier attr = new AttributeModifier(attackUUID, ATTACK_DAMAGE_MODIFIER.toString(), 10,
-					AttributeModifier.Operation.ADDITION);
 			ItemStack itemstack = playerIn.getHeldItem(handIn);
 			if (!itemstack.hasTag()) {
 				itemstack.setTag(new CompoundNBT());
@@ -58,18 +57,11 @@ public class KurapikaSwordItem extends SwordItem {
 				if (nbt.getBoolean("sheathed")) {
 					nbt.putBoolean("sheathed", false);
 
-					attribute.removeModifier(attackUUID);
-					attribute.applyModifier(attr);
+
 					return new ActionResult<ItemStack>(ActionResultType.SUCCESS, itemstack);
 
 				} else if (!nbt.getBoolean("sheathed")) {
 					nbt.putBoolean("sheathed", true);
-					attr = new AttributeModifier(attackUUID ,ATTACK_DAMAGE_MODIFIER.toString(), 1,
-							AttributeModifier.Operation.ADDITION);
-
-					attribute.removeModifier(attackUUID);
-					attribute.applyModifier(attr);
-					System.out.print(attribute.getModifiers().toString());
 					return new ActionResult<ItemStack>(ActionResultType.SUCCESS, itemstack);
 
 				} else {
@@ -97,8 +89,7 @@ public class KurapikaSwordItem extends SwordItem {
 	   @Override
 	   @OnlyIn(Dist.CLIENT)
 	   public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-	  
-		   if(stack.hasTag()) {
+	  		   if(stack.hasTag()) {
 		   if(!stack.getTag().getBoolean("sheathed")) {
 		   tooltip.add(new StringTextComponent("unsheathed"));
 		   } else {
@@ -107,6 +98,23 @@ public class KurapikaSwordItem extends SwordItem {
 		   
 		   }
 	 }
+
+
+	   @Override
+	   public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
+		    Multimap<String, AttributeModifier> multimap = HashMultimap.create();
+		    if(equipmentSlot == EquipmentSlotType.MAINHAND || equipmentSlot == EquipmentSlotType.OFFHAND) {
+		   if(stack.hasTag()) {
+		    	  if(!stack.getTag().getBoolean("sheathed")) {
+		    		  multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(attackUUID, "kurapika_sword_attr", 10.0d, Operation.ADDITION ));
+		    	  } else {
+		    		  multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(attackUUID, "kurapika_sword_attr", 2.0d, Operation.ADDITION ));
+
+		    	  }
+		      }
+		    }
+		return multimap; 
+		   }
 
 
 }

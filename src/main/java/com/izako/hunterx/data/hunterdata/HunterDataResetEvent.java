@@ -17,7 +17,6 @@ public class HunterDataResetEvent {
 	@SubscribeEvent
 	public static void onDeath(PlayerEvent.Clone e) {
 		
-		if(e.isWasDeath()) {
 			PlayerEntity oldP = e.getOriginal();
 			PlayerEntity p = e.getPlayer();
 			IHunterData oldData = HunterDataCapability.get(oldP);
@@ -51,7 +50,7 @@ public class HunterDataResetEvent {
 			oldData.getQuests().forEach((k, v) -> {
 				data.giveQuest(k, v);
 			});
-		}
+		
 	}
 
 	

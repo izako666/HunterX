@@ -1,16 +1,20 @@
 package com.izako.hunterx.networking.packets;
 
-import java.util.HashMap;
 import java.util.function.Supplier;
 
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
+import com.izako.hunterx.networking.ModidPacketHandler;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -49,24 +53,27 @@ public class StatsUpdatePacket {
 				IHunterData data = HunterDataCapability.get(p);
 				HunterDataCapability.INSTANCE.getStorage().readNBT(HunterDataCapability.INSTANCE,data, null, msg.data);
 				} else {
-					PlayerEntity serverP = ctx.get().getSender();
-					IHunterData serverData = HunterDataCapability.get(serverP);
 
-					PlayerEntity p = Minecraft.getInstance().player;
+					PlayerEntity p = ctx.get().getSender();
 					IHunterData data = HunterDataCapability.get(p);
-					data.setAttackStat(serverData.getAttackStat());
-					data.setHealthStat(serverData.getHealthStat());
-					data.setSpeedStat(serverData.getSpeedStat());
-					data.setDefenseStat(serverData.getDefenseStat());
-					data.setQuests(serverData.getQuests());
-
+					ModidPacketHandler.INSTANCE.sendTo(new StatsUpdatePacket(data, true), ((ServerPlayerEntity) p).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 				}
 
 			});
-		} else if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
+		} else if(ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
 			ctx.get().enqueueWork(() -> {
-
+				ClientHandler.handle(msg);
 			});
+		}
+	}
+
+	public static class ClientHandler{
+		@OnlyIn(Dist.CLIENT)
+		public static void handle(StatsUpdatePacket msg) {
+			ClientPlayerEntity p = Minecraft.getInstance().player;
+			IHunterData data = HunterDataCapability.get(p);
+			HunterDataCapability.INSTANCE.getStorage().readNBT(HunterDataCapability.INSTANCE,data, null, msg.data);
+
 		}
 	}
 }
