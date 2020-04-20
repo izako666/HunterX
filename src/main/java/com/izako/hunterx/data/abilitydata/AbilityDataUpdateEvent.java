@@ -5,6 +5,9 @@ import com.izako.hunterx.init.ModKeybindings;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.Ability.AbilityType;
 import com.izako.hunterx.izapi.ability.ChargeableAbility;
+import com.izako.hunterx.izapi.ability.PassiveAbility;
+import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.packets.AbilityChargingEndPacket;
 
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,29 +31,41 @@ public class AbilityDataUpdateEvent {
 					}
 					if (a.isCharging()) {
 						for (KeyBinding kb : ModKeybindings.ABILITYSLOTS) {
-							if (kb.getKey().getKeyCode() == ModKeybindings.getKeybindFromSlot(a.getSlot()).getKey().getKeyCode()) {
+							if (kb.getKey().getKeyCode() == ModKeybindings.getKeybindFromSlot(a.getSlot()).getKey()
+									.getKeyCode()) {
 								if (!kb.isKeyDown()) {
 									a.setCharging(false);
 									((ChargeableAbility) a).onEndCharging(p);
-								} else {
-									//	TODO make a packet that only updates certain values from IAbilityData possibly by string id
-									if (a.getChargingTimer() < a.getMaxCharging()) {
-										((ChargeableAbility) a).duringCharging(p);
-										a.setChargingTimer(a.getChargingTimer() + 1);
-									} else {
-										((ChargeableAbility) a).onEndCharging(p);
-									}
+									a.setCooldown(a.getMaxCooldown());
+									a.setChargingTimer(0);
+									ModidPacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot()));
+								} else if(a.getChargingTimer() >= a.getMaxCharging()) {
+
+									((ChargeableAbility) a).onEndCharging(p);
+									a.setCooldown(a.getMaxCooldown());
+									a.setCharging(false);
+									a.setChargingTimer(0);
+									ModidPacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot()));
+
 								}
 							}
 						}
+						if(a.getChargingTimer() < a.getMaxCharging()) {
+							a.setChargingTimer(a.getChargingTimer() + 1);
+							((ChargeableAbility) a).duringCharging(p);
+						}
 					}
 					if (a.getType() == AbilityType.PASSIVE) {
-						if (a.getPassiveTimer() > 0) {
-							a.setPassiveTimer(a.getPassiveTimer() - 1);
-						} else {
-							if (a.isInPassive()) {
-								a.setInPassive(false);
+						if (a.isInPassive()) {
+							if (a.getPassiveTimer() > 0) {
+								a.setPassiveTimer(a.getPassiveTimer() - 1);
 							}
+							if (a.getPassiveTimer() == 0) {
+								a.setInPassive(false);
+								((PassiveAbility) a).onEndPassive(p);
+
+							}
+							((PassiveAbility) a).duringPassive(p);
 						}
 					}
 				}

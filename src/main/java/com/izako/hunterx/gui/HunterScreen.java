@@ -73,7 +73,7 @@ public class HunterScreen extends Screen {
 	public void render(int p_render_1_, int p_render_2_, float p_render_3_) {
 
 		this.renderBackground();
-		AbilitySlotsEvent.renderSlots();
+		AbilitySlotsEvent.renderSlotsWithoutEffects();
 		int scaledHeight = this.getMinecraft().mainWindow.getScaledHeight();
 		int scaledWidth = this.getMinecraft().mainWindow.getScaledWidth();
 		PlayerEntity p = this.getMinecraft().player;

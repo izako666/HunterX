@@ -48,45 +48,49 @@ public abstract class Ability {
 		switch(this.getType()) {
 		
 		case CHARGING :
+			if(!this.isCharging()) {
 			((ChargeableAbility) this).onStartCharging(p);
+			}
 			this.setCharging(true);
+			break;
 		case PASSIVE :
+			if(!this.isInPassive()) {
 			((PassiveAbility) this).onStartPassive(p);
+			}
 			this.setInPassive(!this.isInPassive());
+			if(!this.isInPassive()) {
+				((PassiveAbility) this).onEndPassive(p);
+			}
 			if(!this.isInPassive()) {
 				this.setCooldown(this.getMaxCooldown());
 			}
+			break;
 		case ONUSE : 
 			this.use(p);
 			this.setCooldown(this.getMaxCooldown());
+			break;
 		}
 
 		}
 	}
-	public CompoundNBT writeData(CompoundNBT nbt, int slot) {
-		if(slot != -1) {
-		nbt.putString("slotid" + this.getId(), this.getId());
-		nbt.putInt("slotindex", slot);
-		} else {
-			nbt.putString("abilityid" + this.getId(), this.getId());
-		}
+	public CompoundNBT writeData(int slot) {
+		CompoundNBT nbt = new CompoundNBT();
 		nbt.putInt(this.getId() + "cooldown", this.getCooldown());
 		nbt.putInt(this.getId() + "chargetimer", this.getChargingTimer());
 		nbt.putBoolean(this.getId() + "isinpassive", this.isInPassive());
 		nbt.putBoolean(this.getId() + "ischarging", this.isCharging());
 		nbt.putInt(this.getId() + "passivetimer", this.getPassiveTimer());
+		nbt.putInt("slotindex", slot);
 		return nbt;
 	}
 
-	public Ability readData(CompoundNBT nbt, boolean slotAbility) {
+	public Ability readData(CompoundNBT nbt) {
 		this.setCooldown(nbt.getInt(this.getId() + "cooldown"));
 		this.setChargingTimer(nbt.getInt(this.getId() + "chargetimer"));
 		this.setInPassive(nbt.getBoolean(this.getId() + "isinpassive"));
 		this.setPassiveTimer(nbt.getInt(this.getId() + "passivetimer"));
 		this.setCharging(nbt.getBoolean(this.getId() + "ischarging"));
-		if(slotAbility) {
-			this.setSlot(nbt.getInt("slotindex"));
-		}
+		this.setSlot(nbt.getInt("slotindex"));
 		return this;
 	}
 	@Override
@@ -137,10 +141,10 @@ public abstract class Ability {
 	public void setPassiveTimer(int passiveTimer) {
 		this.passiveTimer = passiveTimer;
 	}
-	public static AbilityType getType() {
+	public  AbilityType getType() {
 		return type;
 	}
-	public static void setType(AbilityType type) {
+	public  void setType(AbilityType type) {
 		Ability.type = type;
 	}
 	public boolean isCharging() {

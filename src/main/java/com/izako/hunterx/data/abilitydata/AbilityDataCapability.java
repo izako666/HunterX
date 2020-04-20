@@ -27,12 +27,12 @@ public class AbilityDataCapability {
 				
 				for (Ability abl : instance.getAbilities()) {
 					if (abl != null) {
-						abl.writeData(props, -1);
+						props.put("abilityid" + abl.getId(), abl.writeData( -1));
 					}
 				}
 				for (int i = 0; i < instance.getSlotAbilities().length; i++) {
 					if (instance.getAbilityInSlot(i) != null) {
-						instance.getAbilityInSlot(i).writeData(props, i);
+						props.put("slotid" + instance.getAbilityInSlot(i).getId(), instance.getAbilityInSlot(i).writeData(i));
 					}
 				}
 				return props;
@@ -48,12 +48,12 @@ public class AbilityDataCapability {
 				for(String k : props.keySet()) {
 					if (k.contains("abilityid")) {
 						String newK = k.substring(9);
-							instance.giveAbility(ModAbilities.getNewInstanceFromId(newK).readData(props, false));							
+							instance.giveAbility(ModAbilities.getNewInstanceFromId(newK).readData(props.getCompound(k)));							
 						
 					}
 					if (k.contains("slotid")) {
 						String newK = k.substring(6);
-						Ability abl = ModAbilities.getNewInstanceFromId(newK).readData(props, true);
+						Ability abl = ModAbilities.getNewInstanceFromId(newK).readData(props.getCompound(k));
 						if (abl != null) {
 							if (abl.getSlot() != -1) {
 								instance.putAbilityInSlot(abl, abl.getSlot());
