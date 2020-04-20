@@ -9,7 +9,12 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 
 public abstract class Ability {
-
+/* when making a new ability set the type 
+ * in the constructor, if you set the ability type to a wrong type aka 
+* charging type for an ability that extends PassiveAbility
+* then the game will crash and I will blame you.
+*
+*/
 	private int cooldown = 0;
 	private int chargingTimer = 0;
 	private int passiveTimer = 0;
@@ -25,15 +30,23 @@ public abstract class Ability {
 		PASSIVE,
 		ONUSE
 	}
+	//the id is the identification thats used to save the data and compare the abilities to see if they are the same
+	// don't add special characters or camelcase or any spaces, smallletterandnospaces.
 	public abstract String getId();
+	//this is for rendering make it look good.
 	public abstract String getName();
+	//this method is currently nonuseful but when i update the gui it will be required.
 	public abstract void renderDesc(int x, int y);
+	//this method will always be required for every ability you make but it will only get
+	//called for an ability that extends Ability not ChargeableAbility or PassiveAbility
 	public abstract void use(PlayerEntity p);
+	//you can use this instead of touching capabilities to give an ability
 	public void give(PlayerEntity p) {
 		IAbilityData data = AbilityDataCapability.get(p);
 		data.giveAbility(this);
 	}
 	
+	//you probably don't need this, just don't.
 	public void putInSlot(PlayerEntity p, int slot) {
 		IAbilityData data = AbilityDataCapability.get(p);
 
@@ -41,6 +54,8 @@ public abstract class Ability {
 		data.putAbilityInSlot(this, slot);
 		
 	}
+	
+	//dont touch or override this .
 	@SuppressWarnings("static-access")
 	public void onUse(PlayerEntity p) {
 		
@@ -73,6 +88,8 @@ public abstract class Ability {
 
 		}
 	}
+	//if you need extra data override this and get an nbt from the super
+	// put the extra data you need from that nbt and then return the nbt
 	public CompoundNBT writeData(int slot) {
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.putInt(this.getId() + "cooldown", this.getCooldown());
@@ -84,6 +101,7 @@ public abstract class Ability {
 		return nbt;
 	}
 
+	//override this and call super before reading your data.
 	public Ability readData(CompoundNBT nbt) {
 		this.setCooldown(nbt.getInt(this.getId() + "cooldown"));
 		this.setChargingTimer(nbt.getInt(this.getId() + "chargetimer"));
@@ -153,8 +171,10 @@ public abstract class Ability {
 	public void setCharging(boolean isCharging) {
 		this.isCharging = isCharging;
 	}
+	//self explanatory
 	public  abstract int getMaxCooldown();
 	public  abstract int getMaxCharging();
 	public  abstract int getMaxPassive();
+	//icon texture
 	public abstract ResourceLocation getTexture();
 }
