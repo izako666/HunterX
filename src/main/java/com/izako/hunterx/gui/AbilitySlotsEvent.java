@@ -1,7 +1,5 @@
 package com.izako.hunterx.gui;
 
-import org.lwjgl.opengl.GL11;
-
 import com.izako.hunterx.Main;
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
@@ -10,12 +8,14 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.config.GuiUtils;
 
@@ -36,9 +36,11 @@ public class AbilitySlotsEvent {
 	}
 
 	@SubscribeEvent
-	public void renderScreen(RenderGameOverlayEvent e) {
+	public void renderScreen(RenderGameOverlayEvent.Post e) {
 
+		if(e.getType().equals(ElementType.HOTBAR)) {
 		AbilitySlotsEvent.renderSlots();
+		}
 	}
 
 	public static void renderSlots() {
@@ -60,11 +62,11 @@ public class AbilitySlotsEvent {
 		}
 		PlayerEntity p = Minecraft.getInstance().player;
 		IAbilityData abldata = AbilityDataCapability.get(p);
-			GlStateManager.pushMatrix();
-			Minecraft.getInstance().getTextureManager().bindTexture(SLOTS);
-			GlStateManager.enableBlend();
+		GlStateManager.pushMatrix();
+	         GlStateManager.enableBlend();
 			
 			for (int i = 0; i < 8; i++) {
+				Minecraft.getInstance().getTextureManager().bindTexture(SLOTS);
 				GuiUtils.drawTexturedModalRect(0, (int) (initialHeight + (32 * i )), 0, 0, 32, 32, zlevel);
 			}
 			for (int i = 0; i < 8; i++) {
@@ -89,9 +91,9 @@ public class AbilitySlotsEvent {
 					}
 				}
 			}
-			GlStateManager.disableBlend();
-			GlStateManager.popMatrix();
-		
+	         GlStateManager.disableBlend();
+	         GlStateManager.popMatrix();
+
 	}
 	private static int getCooldownTexture(int i) {
 		// TODO Auto-generated method stub

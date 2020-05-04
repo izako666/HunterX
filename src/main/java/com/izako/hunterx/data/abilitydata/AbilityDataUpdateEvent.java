@@ -12,7 +12,9 @@ import com.izako.hunterx.networking.packets.AbilityChargingEndPacket;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Main.MODID)
@@ -63,6 +65,9 @@ public class AbilityDataUpdateEvent {
 							if (a.getPassiveTimer() == 0) {
 								a.setInPassive(false);
 								((PassiveAbility) a).onEndPassive(p);
+								a.setCooldown(a.getMaxCooldown());
+								a.setPassiveTimer(a.getMaxPassive());
+								continue;
 
 							}
 							((PassiveAbility) a).duringPassive(p);
@@ -71,5 +76,6 @@ public class AbilityDataUpdateEvent {
 				}
 			}
 		}
+		e.setResult(Result.DEFAULT);
 	}
 }

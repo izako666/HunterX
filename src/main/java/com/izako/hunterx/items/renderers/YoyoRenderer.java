@@ -101,7 +101,6 @@ public class YoyoRenderer<T extends Entity> extends  SpriteRenderer<YoyoEntity> 
 		        this.bindTexture(getYoyoEntityTexture(entity));
 				  super.doRender(entity, x, y, z, entityYaw, partialTicks);
 
-
 	     }
 		  
 

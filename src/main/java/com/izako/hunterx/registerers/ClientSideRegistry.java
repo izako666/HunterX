@@ -19,17 +19,17 @@ import com.izako.hunterx.renderers.HanzoRenderer;
 import com.izako.hunterx.renderers.KirikoRenderer;
 import com.izako.hunterx.renderers.ThugRenderer;
 import com.izako.hunterx.renderers.WingRenderer;
+import com.izako.hunterx.renderers.layers.GenericOverlayLayer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.PlayerRenderer;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-@OnlyIn(Dist.CLIENT)
 @EventBusSubscriber(value = Dist.CLIENT ,modid = Main.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class ClientSideRegistry {
 
@@ -113,6 +113,9 @@ public class ClientSideRegistry {
 			
 		});
 
+		for(PlayerRenderer render : Minecraft.getInstance().getRenderManager().getSkinMap().values()) {
+			render.addLayer(new GenericOverlayLayer(render));
+		}
 
 	}
 	

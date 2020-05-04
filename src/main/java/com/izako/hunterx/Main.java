@@ -42,7 +42,6 @@ public final class Main {
 		ModKeybindings.init();
 	}
 
-	@SuppressWarnings("deprecation")
 	private  void commonSetup(FMLCommonSetupEvent event) {
 		EventsHandler.registerEvents();
 		ModAbilities.register();

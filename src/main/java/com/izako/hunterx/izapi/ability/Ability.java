@@ -9,119 +9,137 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 
 public abstract class Ability {
-/* when making a new ability set the type 
- * in the constructor, if you set the ability type to a wrong type aka 
-* charging type for an ability that extends PassiveAbility
-* then the game will crash and I will blame you.
-*
-*/
+	/*
+	 * when making a new ability set the type in the constructor, if you set the
+	 * ability type to a wrong type aka charging type for an ability that extends
+	 * PassiveAbility then the game will crash and I will blame you.
+	 *
+	 */
 	private int cooldown = 0;
 	private int chargingTimer = 0;
 	private int passiveTimer = 0;
 	private boolean isInPassive = false;
 	private boolean isCharging = false;
 	private int slot = -1;
+	private  int maxCharging = 100;
+	private  int maxPassive = -1;
+	private  int maxCooldown = 800;
 	private static AbilityType type;
 
-	
-	
-	public enum AbilityType{
-		CHARGING,
-		PASSIVE,
-		ONUSE
+	public enum AbilityType {
+		CHARGING, PASSIVE, ONUSE
 	}
-	//the id is the identification thats used to save the data and compare the abilities to see if they are the same
-	// don't add special characters or camelcase or any spaces, smallletterandnospaces.
+
+	// the id is the identification thats used to save the data and compare the
+	// abilities to see if they are the same
+	// don't add special characters or camelcase or any spaces,
+	// smallletterandnospaces.
 	public abstract String getId();
-	//this is for rendering make it look good.
+
+	// this is for rendering make it look good.
 	public abstract String getName();
-	//this method is currently nonuseful but when i update the gui it will be required.
+
+	// this method is currently nonuseful but when i update the gui it will be
+	// required.
 	public abstract void renderDesc(int x, int y);
-	//this method will always be required for every ability you make but it will only get
-	//called for an ability that extends Ability not ChargeableAbility or PassiveAbility
+
+	// this method will always be required for every ability you make but it will
+	// only get
+	// called for an ability that extends Ability not ChargeableAbility or
+	// PassiveAbility
 	public abstract void use(PlayerEntity p);
-	//you can use this instead of touching capabilities to give an ability
+
+	// you can use this instead of touching capabilities to give an ability
 	public void give(PlayerEntity p) {
 		IAbilityData data = AbilityDataCapability.get(p);
 		data.giveAbility(this);
 	}
-	
-	//you probably don't need this, just don't.
+
+	// you probably don't need this, just don't.
 	public void putInSlot(PlayerEntity p, int slot) {
 		IAbilityData data = AbilityDataCapability.get(p);
 
-		
 		data.putAbilityInSlot(this, slot);
-		
+
 	}
-	
-	//dont touch or override this .
+
+	// dont touch or override this .
 	@SuppressWarnings("static-access")
 	public void onUse(PlayerEntity p) {
-		
-		if(this.getCooldown() <= 0) {
-		switch(this.getType()) {
-		
-		case CHARGING :
-			if(!this.isCharging()) {
-			((ChargeableAbility) this).onStartCharging(p);
-			}
-			this.setCharging(true);
-			break;
-		case PASSIVE :
-			if(!this.isInPassive()) {
-			((PassiveAbility) this).onStartPassive(p);
-			}
-			this.setInPassive(!this.isInPassive());
-			if(!this.isInPassive()) {
-				((PassiveAbility) this).onEndPassive(p);
-			}
-			if(!this.isInPassive()) {
+
+		if (this.getCooldown() <= 0) {
+			switch (this.getType()) {
+
+			case CHARGING:
+				if (!this.isCharging()) {
+					((ChargeableAbility) this).onStartCharging(p);
+				}
+				this.setCharging(true);
+				break;
+			case PASSIVE:
+				if (!this.isInPassive()) {
+					((PassiveAbility) this).onStartPassive(p);
+				}
+				this.setInPassive(!this.isInPassive());
+				if (!this.isInPassive()) {
+					((PassiveAbility) this).onEndPassive(p);
+				}
+				if (!this.isInPassive()) {
+					this.setCooldown(this.getMaxCooldown());
+				}
+				break;
+			case ONUSE:
+				this.use(p);
 				this.setCooldown(this.getMaxCooldown());
+				break;
 			}
-			break;
-		case ONUSE : 
-			this.use(p);
-			this.setCooldown(this.getMaxCooldown());
-			break;
-		}
 
 		}
 	}
-	//if you need extra data override this and get an nbt from the super
+
+	// if you need extra data override this and get an nbt from the super
 	// put the extra data you need from that nbt and then return the nbt
 	public CompoundNBT writeData(int slot) {
 		CompoundNBT nbt = new CompoundNBT();
-		nbt.putInt(this.getId() + "cooldown", this.getCooldown());
-		nbt.putInt(this.getId() + "chargetimer", this.getChargingTimer());
-		nbt.putBoolean(this.getId() + "isinpassive", this.isInPassive());
-		nbt.putBoolean(this.getId() + "ischarging", this.isCharging());
-		nbt.putInt(this.getId() + "passivetimer", this.getPassiveTimer());
+		nbt.putInt("cooldown", this.getCooldown());
+		nbt.putInt("chargetimer", this.getChargingTimer());
+		nbt.putBoolean("isinpassive", this.isInPassive());
+		nbt.putBoolean("ischarging", this.isCharging());
+		nbt.putInt("passivetimer", this.getPassiveTimer());
+		nbt.putInt("maxcharging", this.getMaxCharging());
+		nbt.putInt("maxcooldown", this.getMaxCooldown());
+		nbt.putInt("maxpassive", this.getMaxPassive());
 		nbt.putInt("slotindex", slot);
 		return nbt;
 	}
 
-	//override this and call super before reading your data.
+	// override this and call super before reading your data.
 	public Ability readData(CompoundNBT nbt) {
-		this.setCooldown(nbt.getInt(this.getId() + "cooldown"));
-		this.setChargingTimer(nbt.getInt(this.getId() + "chargetimer"));
-		this.setInPassive(nbt.getBoolean(this.getId() + "isinpassive"));
-		this.setPassiveTimer(nbt.getInt(this.getId() + "passivetimer"));
-		this.setCharging(nbt.getBoolean(this.getId() + "ischarging"));
+		this.setCooldown(nbt.getInt("cooldown"));
+		this.setChargingTimer(nbt.getInt("chargetimer"));
+		this.setInPassive(nbt.getBoolean("isinpassive"));
+		this.setPassiveTimer(nbt.getInt("passivetimer"));
+		this.setCharging(nbt.getBoolean("ischarging"));
+		this.setMaxCharging(nbt.getInt("maxcharging"));
+		this.setMaxPassive(nbt.getInt("maxpassive"));
+		this.setMaxCooldown(nbt.getInt("maxcooldown"));
+
 		this.setSlot(nbt.getInt("slotindex"));
 		return this;
 	}
+
 	@Override
 	public boolean equals(Object o) {
-		if(o instanceof Ability) {
+		if (o instanceof Ability) {
 			Ability a = (Ability) o;
-			if(this.getId().equalsIgnoreCase(a.getId())) {
+			if (this.getId().equalsIgnoreCase(a.getId())) {
 				return true;
 			}
 		}
 		return false;
 	}
-	//setters and getters
+
+	// setters and getters
 	public int getCooldown() {
 		return cooldown;
 	}
@@ -153,28 +171,55 @@ public abstract class Ability {
 	public void setSlot(int slot) {
 		this.slot = slot;
 	}
+
 	public int getPassiveTimer() {
 		return passiveTimer;
 	}
+
 	public void setPassiveTimer(int passiveTimer) {
 		this.passiveTimer = passiveTimer;
 	}
-	public  AbilityType getType() {
+
+	public AbilityType getType() {
 		return type;
 	}
-	public  void setType(AbilityType type) {
+
+	public void setType(AbilityType type) {
 		Ability.type = type;
 	}
+
 	public boolean isCharging() {
 		return isCharging;
 	}
+
 	public void setCharging(boolean isCharging) {
 		this.isCharging = isCharging;
 	}
-	//self explanatory
-	public  abstract int getMaxCooldown();
-	public  abstract int getMaxCharging();
-	public  abstract int getMaxPassive();
-	//icon texture
+
+	// icon texture
 	public abstract ResourceLocation getTexture();
+
+	public  int getMaxCharging() {
+		return maxCharging;
+	}
+
+	public  int getMaxPassive() {
+		return maxPassive;
+	}
+
+	public  int getMaxCooldown() {
+		return maxCooldown;
+	}
+
+	public  void setMaxCharging(int val) {
+		maxCharging = val;
+	}
+
+	public  void setMaxPassive(int val) {
+		maxPassive = val;
+	}
+
+	public  void setMaxCooldown(int val) {
+		maxCooldown = val;
+	}
 }

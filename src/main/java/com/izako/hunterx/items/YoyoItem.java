@@ -1,8 +1,6 @@
 package com.izako.hunterx.items;
 
-import com.izako.hunterx.abilities.ExampleAbility;
-import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
-import com.izako.hunterx.data.abilitydata.IAbilityData;
+import com.izako.hunterx.abilities.basics.TenAbility;
 import com.izako.hunterx.items.entities.YoyoEntity;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -34,9 +32,8 @@ public class YoyoItem extends Item {
 
 		YoyoEntity yoyo_front = new YoyoEntity(YoyoEntity.type, playerIn, worldIn, item);
 		if (!worldIn.isRemote) {
-			IAbilityData data = AbilityDataCapability.get(playerIn);
-			ExampleAbility abl = new ExampleAbility();
-			data.giveAbility(abl);
+			TenAbility abl = new TenAbility();
+			abl.give(playerIn);
 			playerIn.getCooldownTracker().setCooldown(this, 200);
 
 			yoyo_front.setPosition(playerIn.posX + aim.x, playerIn.posY + playerIn.getEyeHeight(),
