@@ -35,7 +35,7 @@ public class GenericOverlayLayer extends LayerRenderer<AbstractClientPlayerEntit
 		for(Ability abl : abilities.getSlotAbilities()) {
 			if(abl == null)
 				continue;
-			if(abl.equals(ModAbilities.TEN_ABILITY) && abl.isInPassive()) {
+			if(abl.equals(ModAbilities.TEN_ABILITY) && abl.isInPassive() && abl.getPassiveTimer() < Integer.MAX_VALUE - 20) {
 				color = new Color(255, 255, 0);
 			} else {
 				continue;

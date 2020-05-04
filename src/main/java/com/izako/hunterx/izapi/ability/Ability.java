@@ -77,15 +77,17 @@ public abstract class Ability {
 				this.setCharging(true);
 				break;
 			case PASSIVE:
-				if (!this.isInPassive()) {
+				this.setInPassive(!this.isInPassive());
+				if (this.isInPassive()) {
 					((PassiveAbility) this).onStartPassive(p);
 				}
-				this.setInPassive(!this.isInPassive());
+
 				if (!this.isInPassive()) {
 					((PassiveAbility) this).onEndPassive(p);
 				}
 				if (!this.isInPassive()) {
 					this.setCooldown(this.getMaxCooldown());
+					this.setPassiveTimer(this.getMaxPassive());
 				}
 				break;
 			case ONUSE:

@@ -12,12 +12,14 @@ import com.izako.hunterx.init.ModQuests;
 import com.izako.hunterx.init.ModStructures;
 import com.izako.hunterx.networking.ModidPacketHandler;
 import com.izako.hunterx.registerers.ClientSideRegistry;
+import com.izako.wypi.WyRegistry;
 
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.placement.IPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -35,6 +37,9 @@ public final class Main {
 		ModidPacketHandler.registerPackets();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
+	
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        WyRegistry.PARTICLE_TYPES.register(bus);
 	}
 	
 	private void clientSetup(FMLClientSetupEvent event) {

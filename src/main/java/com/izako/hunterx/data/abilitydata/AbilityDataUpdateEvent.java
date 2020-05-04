@@ -62,7 +62,7 @@ public class AbilityDataUpdateEvent {
 							if (a.getPassiveTimer() > 0) {
 								a.setPassiveTimer(a.getPassiveTimer() - 1);
 							}
-							if (a.getPassiveTimer() == 0) {
+							if (a.getPassiveTimer() == 0 && a.getMaxPassive() != Integer.MAX_VALUE) {
 								a.setInPassive(false);
 								((PassiveAbility) a).onEndPassive(p);
 								a.setCooldown(a.getMaxCooldown());
