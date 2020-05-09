@@ -1,5 +1,6 @@
 package com.izako.hunterx.izapi.ability;
 
+import com.izako.hunterx.Main;
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
 
@@ -21,14 +22,14 @@ public abstract class Ability {
 	private boolean isInPassive = false;
 	private boolean isCharging = false;
 	private int slot = -1;
-	private  int maxCharging = 100;
-	private  int maxPassive = -1;
-	private  int maxCooldown = 800;
-	private static AbilityType type;
-
+    public Ability.Properties props;
 	public enum AbilityType {
 		CHARGING, PASSIVE, ONUSE
 	}
+	public enum AuraConsumptionType {
+		PERCENTAGE, VALUE, NONE
+	}
+
 
 	// the id is the identification thats used to save the data and compare the
 	// abilities to see if they are the same
@@ -41,13 +42,15 @@ public abstract class Ability {
 
 	// this method is currently nonuseful but when i update the gui it will be
 	// required.
-	public abstract void renderDesc(int x, int y);
+	public  void renderDesc(int x, int y) {
+	}
 
 	// this method will always be required for every ability you make but it will
 	// only get
 	// called for an ability that extends Ability not ChargeableAbility or
 	// PassiveAbility
-	public abstract void use(PlayerEntity p);
+	public  void use(PlayerEntity p) {
+	}
 
 	// you can use this instead of touching capabilities to give an ability
 	public void give(PlayerEntity p) {
@@ -63,12 +66,13 @@ public abstract class Ability {
 
 	}
 
+
 	// dont touch or override this .
 	@SuppressWarnings("static-access")
 	public void onUse(PlayerEntity p) {
 
 		if (this.getCooldown() <= 0) {
-			switch (this.getType()) {
+			switch (this.props.type) {
 
 			case CHARGING:
 				if (!this.isCharging()) {
@@ -86,31 +90,46 @@ public abstract class Ability {
 					((PassiveAbility) this).onEndPassive(p);
 				}
 				if (!this.isInPassive()) {
-					this.setCooldown(this.getMaxCooldown());
-					this.setPassiveTimer(this.getMaxPassive());
+					this.setCooldown(this.props.maxCooldown);
+					this.setPassiveTimer(this.props.maxPassive);
 				}
 				break;
 			case ONUSE:
 				this.use(p);
-				this.setCooldown(this.getMaxCooldown());
+				this.setCooldown(this.props.maxCooldown);
+				this.consumeAura(p);
 				break;
 			}
 
 		}
 	}
 
+	public void endAbility(PlayerEntity p) {
+		switch(this.props.type) {
+		
+		case PASSIVE:
+			this.setInPassive(false);
+			if(this.props.maxPassive != Integer.MAX_VALUE) {
+			this.setPassiveTimer(0);
+			}
+			this.setCooldown(this.props.maxCooldown);
+		   ( (PassiveAbility) this).onEndPassive(p);
+		   break;
+		case CHARGING:
+			this.setCharging(false);
+			this.setChargingTimer(0);
+			this.setCooldown(this.props.maxCooldown);
+			break;
+		case ONUSE:
+			this.setCooldown(this.props.maxCooldown);
+			break;
+		}
+	}
 	// if you need extra data override this and get an nbt from the super
 	// put the extra data you need from that nbt and then return the nbt
 	public CompoundNBT writeData(int slot) {
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.putInt("cooldown", this.getCooldown());
-		nbt.putInt("chargetimer", this.getChargingTimer());
-		nbt.putBoolean("isinpassive", this.isInPassive());
-		nbt.putBoolean("ischarging", this.isCharging());
-		nbt.putInt("passivetimer", this.getPassiveTimer());
-		nbt.putInt("maxcharging", this.getMaxCharging());
-		nbt.putInt("maxcooldown", this.getMaxCooldown());
-		nbt.putInt("maxpassive", this.getMaxPassive());
 		nbt.putInt("slotindex", slot);
 		return nbt;
 	}
@@ -118,13 +137,6 @@ public abstract class Ability {
 	// override this and call super before reading your data.
 	public Ability readData(CompoundNBT nbt) {
 		this.setCooldown(nbt.getInt("cooldown"));
-		this.setChargingTimer(nbt.getInt("chargetimer"));
-		this.setInPassive(nbt.getBoolean("isinpassive"));
-		this.setPassiveTimer(nbt.getInt("passivetimer"));
-		this.setCharging(nbt.getBoolean("ischarging"));
-		this.setMaxCharging(nbt.getInt("maxcharging"));
-		this.setMaxPassive(nbt.getInt("maxpassive"));
-		this.setMaxCooldown(nbt.getInt("maxcooldown"));
 
 		this.setSlot(nbt.getInt("slotindex"));
 		return this;
@@ -139,6 +151,30 @@ public abstract class Ability {
 			}
 		}
 		return false;
+	}
+	public void consumeAura(PlayerEntity p) {
+		IAbilityData data = AbilityDataCapability.get(p);
+		switch(this.props.conType) {
+		
+		case PERCENTAGE:
+			if(data.getCurrentNen() - (this.props.auraCon.getAmount() * 100) / data.getNenCapacity() >= 0) {
+			data.setCurrentNen(data.getCurrentNen() - (this.props.auraCon.getAmount() * 100) / data.getNenCapacity());
+			} else {
+				data.setCurrentNen(0);
+				this.endAbility(p);
+			}
+			break;
+		case VALUE:
+			if(data.getCurrentNen() - this.props.auraCon.getAmount() >= 0) {
+			data.setCurrentNen(data.getCurrentNen() - this.props.auraCon.getAmount());
+			} else {
+				data.setCurrentNen(0);
+				this.endAbility(p);
+			}
+			break;
+		case NONE:
+			break;
+		}
 	}
 
 	// setters and getters
@@ -182,13 +218,6 @@ public abstract class Ability {
 		this.passiveTimer = passiveTimer;
 	}
 
-	public AbilityType getType() {
-		return type;
-	}
-
-	public void setType(AbilityType type) {
-		Ability.type = type;
-	}
 
 	public boolean isCharging() {
 		return isCharging;
@@ -198,30 +227,72 @@ public abstract class Ability {
 		this.isCharging = isCharging;
 	}
 
-	// icon texture
-	public abstract ResourceLocation getTexture();
 
-	public  int getMaxCharging() {
-		return maxCharging;
+	
+	public   class Properties {
+		
+		public  AbilityType type;
+		public  AuraConsumptionType conType;
+		public   int maxCharging;
+		public   int maxPassive;
+		public   int maxCooldown;
+		public Ability parent;
+		public IAuraConsumption auraCon = () -> {return 0;};
+		public ResourceLocation tex;
+
+		public Properties(Ability abl) {
+			parent = abl;
+			this.tex = new ResourceLocation(Main.MODID, "textures/abilities/" + this.parent.getId() + ".png");
+		}
+		
+		public  Properties setAbilityType(AbilityType typ) {
+			type = typ;
+			return this;
+		}
+		public  Properties setConsumptionType(AuraConsumptionType typ) {
+			conType = typ;
+			return this;
+		}
+		public  Properties setMaxCharging(int maxCharge) {
+			maxCharging = maxCharge;
+			return this;
+		}
+		public  Properties setMaxPassive(int maxPassiv) {
+			maxPassive = maxPassiv;
+			return this;
+		}
+		public  Properties setMaxCooldown(int maxcool) {
+			maxCooldown = maxcool;
+			return this;
+		}
+
+		public Properties setTexture(ResourceLocation res) {
+			this.tex = res;
+			return this;
+		}
+
+
+		public Properties setAuraConsumption(IAuraConsumption i) {
+			this.auraCon = i;
+			return this;
+		}
+	}
+	public interface IAuraConsumption {
+		int getAmount();
 	}
 
-	public  int getMaxPassive() {
-		return maxPassive;
+	public static boolean canRegenAura(PlayerEntity p) {
+		boolean canRegen = true;
+		IAbilityData data  = AbilityDataCapability.get(p);
+		for(Ability abl : data.getSlotAbilities()) {
+			if(abl != null) {
+				if(abl.isInPassive()) {
+					canRegen = false;
+				}
+			}
+		}
+		return canRegen;
 	}
 
-	public  int getMaxCooldown() {
-		return maxCooldown;
-	}
-
-	public  void setMaxCharging(int val) {
-		maxCharging = val;
-	}
-
-	public  void setMaxPassive(int val) {
-		maxPassive = val;
-	}
-
-	public  void setMaxCooldown(int val) {
-		maxCooldown = val;
-	}
 }
+

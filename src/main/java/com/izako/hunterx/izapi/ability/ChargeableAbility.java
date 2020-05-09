@@ -1,16 +1,36 @@
 package com.izako.hunterx.izapi.ability;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 
 public abstract class ChargeableAbility  extends Ability{
 
 	//extend this class for chargeable abilities
 	public ChargeableAbility() {
 		super();
-		this.setType(AbilityType.CHARGING);
 	}
 	//self explanatory methods.
 	public abstract void onStartCharging(PlayerEntity p);
 	public abstract void duringCharging(PlayerEntity p);
 	public abstract void onEndCharging(PlayerEntity p);
+	
+	@Override
+	public CompoundNBT writeData(int slot) {
+		CompoundNBT nbt = super.writeData(slot);
+		nbt.putInt("chargetimer", this.getChargingTimer());
+		nbt.putBoolean("ischarging", this.isCharging());
+
+
+		return nbt;
+
+	}
+	
+	@Override
+	public Ability readData(CompoundNBT nbt) {
+		super.readData(nbt);
+			this.setChargingTimer(nbt.getInt("chargetimer"));
+			this.setCharging(nbt.getBoolean("ischarging"));
+
+		return this;
+	}
 }

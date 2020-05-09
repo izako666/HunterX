@@ -38,13 +38,13 @@ public class AbilityDataUpdateEvent {
 								if (!kb.isKeyDown()) {
 									a.setCharging(false);
 									((ChargeableAbility) a).onEndCharging(p);
-									a.setCooldown(a.getMaxCooldown());
+									a.setCooldown(a.props.maxCooldown);
 									a.setChargingTimer(0);
 									ModidPacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot()));
-								} else if(a.getChargingTimer() >= a.getMaxCharging()) {
+								} else if(a.getChargingTimer() >= a.props.maxCharging) {
 
 									((ChargeableAbility) a).onEndCharging(p);
-									a.setCooldown(a.getMaxCooldown());
+									a.setCooldown(a.props.maxCooldown);
 									a.setCharging(false);
 									a.setChargingTimer(0);
 									ModidPacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot()));
@@ -52,29 +52,37 @@ public class AbilityDataUpdateEvent {
 								}
 							}
 						}
-						if(a.getChargingTimer() < a.getMaxCharging()) {
+						if(a.getChargingTimer() < a.props.maxCharging) {
 							a.setChargingTimer(a.getChargingTimer() + 1);
 							((ChargeableAbility) a).duringCharging(p);
+							a.consumeAura(p);
 						}
 					}
-					if (a.getType() == AbilityType.PASSIVE) {
+					if (a.props.type == AbilityType.PASSIVE) {
 						if (a.isInPassive()) {
 							if (a.getPassiveTimer() > 0) {
 								a.setPassiveTimer(a.getPassiveTimer() - 1);
 							}
-							if (a.getPassiveTimer() == 0 && a.getMaxPassive() != Integer.MAX_VALUE) {
+							if (a.getPassiveTimer() == 0 && a.props.maxPassive != Integer.MAX_VALUE) {
 								a.setInPassive(false);
 								((PassiveAbility) a).onEndPassive(p);
-								a.setCooldown(a.getMaxCooldown());
-								a.setPassiveTimer(a.getMaxPassive());
+								a.setCooldown(a.props.maxCooldown);
+								a.setPassiveTimer(a.props.maxPassive);
 								continue;
 
 							}
 							((PassiveAbility) a).duringPassive(p);
+							a.consumeAura(p);
 						}
 					}
 				}
 			}
+			if(data.getCurrentNen() < data.getNenCapacity()) {
+				if(Ability.canRegenAura(p)) {
+				data.setCurrentNen((int) (data.getCurrentNen() + Math.ceil(data.getNenCapacity() / 200.0)));
+				}
+				}
+			
 		}
 		e.setResult(Result.DEFAULT);
 	}

@@ -65,6 +65,7 @@ public class GenericOverlayLayer extends LayerRenderer<AbstractClientPlayerEntit
 	    
 
 	                    GlStateManager.enableTexture();
+	                    GlStateManager.color4f(1f, 1f, 1f, 1f);
 
 	                    GlStateManager.enableCull();
 

@@ -3,6 +3,7 @@ package com.izako.hunterx.abilities.basics;
 import java.util.UUID;
 
 import com.izako.hunterx.Main;
+import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
 import com.izako.wypi.WyHelper;
 import com.izako.wypi.particles.GenericParticleData;
@@ -18,11 +19,9 @@ public class TenAbility extends PassiveAbility{
 
 	private static final ResourceLocation loc = new ResourceLocation(Main.MODID, "textures/particles/genericaura.png");
 	public TenAbility() {
-		this.setType(AbilityType.PASSIVE);
-		this.setPassiveTimer(100);
-        this.setMaxPassive(Integer.MAX_VALUE);
-        this.setMaxCooldown(10);
-		
+
+		super();
+		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setConsumptionType(AuraConsumptionType.PERCENTAGE).setMaxCooldown(10).setMaxPassive(Integer.MAX_VALUE).setTexture(TEXTURE).setAuraConsumption(this::auraConsumptionEvent);
 	}
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Main.MODID, "textures/items/card.png");
 	public static final UUID modifierUUID = UUID.fromString("22560518-3370-4b84-a7a9-22a240cf3232");
@@ -70,22 +69,12 @@ public class TenAbility extends PassiveAbility{
 	public String getName() {
 		return "Ten";
 	}
-
-	@Override
-	public void renderDesc(int x, int y) {
-		// TODO Auto-generated method stub
-		
+	private int auraConsumptionEvent() {
+		if(this.getPassiveTimer() % 20 == 0) {
+		 return 5;
+		}
+		return 0;
 	}
 
-	@Override
-	public void use(PlayerEntity p) {
-		
-	}
-
-
-	@Override
-	public ResourceLocation getTexture() {
-		return TEXTURE;
-	}
 
 }

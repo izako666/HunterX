@@ -26,6 +26,7 @@ public class AbilityDataCloneEvent {
 		data.setNenCapacity(oldData.getNenCapacity());
 		data.setCurrentNen(oldData.getCurrentNen());
 		data.setNenType(oldData.getNenType());
+		data.setAuraColor(oldData.getAuraColor().getRGB());
 		
 		ModidPacketHandler.INSTANCE.sendTo(new AbilityUpdatePacket(data, false), ((ServerPlayerEntity) p).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
 	}

@@ -17,7 +17,7 @@ Ability ability;
 		super(widthIn, heightIn, p_i51141_3_, p_i51141_4_, text, onPress);
 		// TODO Auto-generated constructor stub
 		abilityName = abl.getName();
-		ablTexture = abl.getTexture();
+		ablTexture = abl.props.tex;
 		ability = abl;
 	}
 }

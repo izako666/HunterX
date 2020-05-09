@@ -2,6 +2,7 @@ package com.izako.hunterx.data.abilitydata;
 
 import com.izako.hunterx.init.ModAbilities;
 import com.izako.hunterx.izapi.ability.Ability;
+import com.izako.hunterx.izapi.ability.NenType;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -35,6 +36,13 @@ public class AbilityDataCapability {
 						props.put("slotid" + instance.getAbilityInSlot(i).getId(), instance.getAbilityInSlot(i).writeData(i));
 					}
 				}
+
+				props.putInt("nencap", instance.getNenCapacity());
+				props.putInt("nen", instance.getCurrentNen());
+				if(instance.getNenType() != null) {
+				     props.putInt("nentype", instance.getNenType().ordinal());
+				}
+				props.putInt("auracolor", instance.getAuraColor().getRGB());
 				return props;
 			}
 
@@ -62,8 +70,13 @@ public class AbilityDataCapability {
 					}
 				}
 
+				instance.setNenCapacity(props.getInt("nencap"));
+				instance.setCurrentNen(props.getInt("nen"));
+				instance.setNenType(NenType.getTypeFromOrdinal(props.getInt("nentype")));
+				instance.setAuraColor(props.getInt("auracolor"));
 			}
 
+			
 		}, AbilityDataBase::new);
 
 	}

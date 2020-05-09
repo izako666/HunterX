@@ -1,5 +1,6 @@
 package com.izako.hunterx.data.abilitydata;
 
+import java.awt.Color;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -28,5 +29,8 @@ public interface IAbilityData {
 	int getCurrentNen();
 	NenType getNenType();
 	void setNenType(NenType type);
+	void setAuraColor(int r, int g, int b);
+	void setAuraColor(int rgb);
+	Color getAuraColor();
 	
 }

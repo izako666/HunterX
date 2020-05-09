@@ -1,5 +1,6 @@
 package com.izako.hunterx.data.abilitydata;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class AbilityDataBase implements IAbilityData {
 	private Ability[] SLOT_ABILITIES = new Ability[8];
 	private int nenCapacity = 100;
 	private int currentNen = 0;
+	private Color aura = Color.WHITE;
 	private NenType type = null;
 	@Override
 	public List<Ability> getAbilities() {
@@ -46,7 +48,6 @@ public class AbilityDataBase implements IAbilityData {
 
 	@Override
 	public void putAbilityInSlot(Ability abl, int slot) {
-		// TODO Auto-generated method stub
 		SLOT_ABILITIES[slot] = abl;
 		if(abl != null) {
 		abl.setSlot(slot);
@@ -55,13 +56,11 @@ public class AbilityDataBase implements IAbilityData {
 
 	@Override
 	public void removeAbilityInSlot(int slot) {
-		// TODO Auto-generated method stub
 		SLOT_ABILITIES[slot] = null;
 	}
 
 	@Override
 	public Ability[] getSlotAbilities() {
-		// TODO Auto-generated method stub
 		return SLOT_ABILITIES;
 	}
 
@@ -73,13 +72,11 @@ public class AbilityDataBase implements IAbilityData {
 
 	@Override
 	public Ability getAbilityInSlot(int slot) {
-		// TODO Auto-generated method stub
 		return SLOT_ABILITIES[slot];
 	}
 
 	@Override
 	public int getSlotForAbility(Ability abl) {
-		// TODO Auto-generated method stub
 		for(int i = 0; i < SLOT_ABILITIES.length; i++) {
 			if(SLOT_ABILITIES[i] == abl) {
 				return i;
@@ -90,7 +87,6 @@ public class AbilityDataBase implements IAbilityData {
 
 	@Override
 	public void removeAbility(Ability abl) {
-		// TODO Auto-generated method stub
 		for(int i = 0; i< ABILITIES.size(); i++) {
 			if(ABILITIES.get(i).getId() == abl.getId()) {
 				ABILITIES.remove(i);
@@ -100,38 +96,48 @@ public class AbilityDataBase implements IAbilityData {
 
 	@Override
 	public int getNenCapacity() {
-		// TODO Auto-generated method stub
 		return this.nenCapacity;
 	}
 
 	@Override
 	public void setNenCapacity(int val) {
-		// TODO Auto-generated method stub
 		this.nenCapacity = val;
 	}
 
 	@Override
 	public void setCurrentNen(int val) {
-		// TODO Auto-generated method stub
 		this.currentNen = val;
 	}
 
 	@Override
 	public int getCurrentNen() {
-		// TODO Auto-generated method stub
 		return this.currentNen;
 	}
 
 	@Override
 	public NenType getNenType() {
-		// TODO Auto-generated method stub
 		return this.type;
 	}
 
 	@Override
 	public void setNenType(NenType type) {
-		// TODO Auto-generated method stub
 		this.type = type;
+	}
+
+	@Override
+	public void setAuraColor(int r, int g, int b) {
+		this.aura = new Color(r, g, b);
+	}
+
+	@Override
+	public Color getAuraColor() {
+		return this.aura;
+	}
+
+	@Override
+	public void setAuraColor(int rgb) {
+
+		this.aura = new Color(rgb);
 	}
 
 }

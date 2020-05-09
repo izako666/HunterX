@@ -40,7 +40,7 @@ public class AbilityChargingEndPacket {
 					Ability a = data.getAbilityInSlot(msg.slot);
 					a.setCharging(false);
 					((ChargeableAbility) a).onEndCharging(p);
-					a.setCooldown(a.getMaxCooldown());
+					a.setCooldown(a.props.maxCooldown);
 					a.setChargingTimer(0);
 				}
 			});
