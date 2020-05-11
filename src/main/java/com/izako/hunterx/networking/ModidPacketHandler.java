@@ -5,6 +5,7 @@ import com.izako.hunterx.networking.packets.AbilityUpdatePacket;
 import com.izako.hunterx.networking.packets.AbilityUsePacket;
 import com.izako.hunterx.networking.packets.HanzoSwordPacket;
 import com.izako.hunterx.networking.packets.ModifierUpdatePacket;
+import com.izako.hunterx.networking.packets.OpenQuestGuiPacket;
 import com.izako.hunterx.networking.packets.StatsUpdatePacket;
 
 import net.minecraft.util.ResourceLocation;
@@ -29,5 +30,6 @@ public class ModidPacketHandler {
         INSTANCE.registerMessage(packet++, AbilityUsePacket.class, AbilityUsePacket::encode, AbilityUsePacket::decode, AbilityUsePacket::handle);
         INSTANCE.registerMessage(packet++, AbilityUpdatePacket.class, AbilityUpdatePacket::encode, AbilityUpdatePacket::decode, AbilityUpdatePacket::handle);
         INSTANCE.registerMessage(packet++, AbilityChargingEndPacket.class, AbilityChargingEndPacket::encode, AbilityChargingEndPacket::decode, AbilityChargingEndPacket::handle);
+	    INSTANCE.registerMessage(packet++, OpenQuestGuiPacket.class, OpenQuestGuiPacket::encode, OpenQuestGuiPacket::decode, OpenQuestGuiPacket::handle);
 	}
 }

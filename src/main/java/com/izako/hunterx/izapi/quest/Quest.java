@@ -37,10 +37,23 @@ public abstract class Quest {
 	
 	public boolean isFinished(PlayerEntity p ) {
 		IHunterData data = HunterDataCapability.get(p);
+		if(this.hasQuest(p)) {
 		if(data.getProgress(this.getId()) > 100) {
 			return true;
 		}
+		}
 		return false;
+	}
+	
+	public boolean canFinish(PlayerEntity p) {
+		IHunterData data = HunterDataCapability.get(p);
+		if(this.hasQuest(p)) {
+		if(data.getProgress(this.getId()) == 100) {
+			return true;
+		}
+		}
+		return false;
+
 	}
 	
 

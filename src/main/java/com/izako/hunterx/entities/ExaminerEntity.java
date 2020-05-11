@@ -6,6 +6,9 @@ import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.data.world.HunterWorldData;
 import com.izako.hunterx.init.ModItems;
 import com.izako.hunterx.init.ModQuests;
+import com.izako.hunterx.izapi.NPCSpeech;
+import com.izako.hunterx.izapi.quest.IQuestGiver;
+import com.izako.hunterx.quests.speech.ExaminerSpeech;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityClassification;
@@ -20,11 +23,10 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class ExaminerEntity extends CreatureEntity {
+public class ExaminerEntity extends CreatureEntity implements IQuestGiver {
 
 	@SuppressWarnings("unchecked")
 	public static EntityType<ExaminerEntity> type = (EntityType<ExaminerEntity>) EntityType.Builder
@@ -34,7 +36,6 @@ public class ExaminerEntity extends CreatureEntity {
 
 	protected ExaminerEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -160,6 +161,7 @@ public class ExaminerEntity extends CreatureEntity {
 			}
 			return true;
 		}
+
 		return false;
 	}
 
@@ -167,4 +169,15 @@ public class ExaminerEntity extends CreatureEntity {
 	public boolean canDespawn(double d) {
 		return false;
 	}
+
+	@Override
+	public NPCSpeech getSpeech() {
+		try {
+			return ExaminerSpeech.class.getConstructor().newInstance();
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return null;
+		}	
 }

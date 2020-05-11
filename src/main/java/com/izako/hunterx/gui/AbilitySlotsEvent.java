@@ -96,6 +96,7 @@ public class AbilitySlotsEvent {
 					}
 				}
 			}
+			GlStateManager.scaled(1d, 1d, 1d);
 	         GlStateManager.disableBlend();
 	         GlStateManager.popMatrix();
 

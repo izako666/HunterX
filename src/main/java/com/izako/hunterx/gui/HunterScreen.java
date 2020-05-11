@@ -55,7 +55,6 @@ public class HunterScreen extends Screen {
 
 	public HunterScreen() {
 		super(new StringTextComponent(""));
-		// TODO Auto-generated constructor stub
 	}
 
 	public void drawIcon(ResourceLocation loc, int x, int y, int u, int v, int zLevel) {

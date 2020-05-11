@@ -1,9 +1,12 @@
 package com.izako.hunterx.quests;
 
+import com.izako.hunterx.data.hunterdata.HunterDataCapability;
+import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.izapi.quest.Quest;
 import com.izako.hunterx.izapi.quest.QuestLine;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.PlayerEntity;
 
 public class HunterExam01 extends Quest {
 
@@ -41,5 +44,29 @@ public class HunterExam01 extends Quest {
 
 	}
 
+
 	
+	@Override
+	public boolean canFinish(PlayerEntity p) {
+		IHunterData data = HunterDataCapability.get(p);
+		if(this.hasQuest(p)) {
+		if(data.getProgress(this.getId()) > 100) {
+			return true;
+		}
+		}
+		return false;
+
+	}
+
+	@Override
+	public boolean doneTask(PlayerEntity p) {
+		IHunterData data = HunterDataCapability.get(p);
+		int prog = data.getProgress(this.getId());
+		if(prog < 100) {
+			data.finishQuest(getId());
+			return true;
+		}
+		return false;
+	}
+
 }
