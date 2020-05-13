@@ -9,7 +9,7 @@ public enum NenType {
 		switch(o) {
 		
 		case 0:
-		return NenType.CONJURER;
+		return CONJURER;
 		case 1:
 		return EMITTER;
 		case 2: 

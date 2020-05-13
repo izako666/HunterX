@@ -45,5 +45,6 @@ public class AbilityChargingEndPacket {
 				}
 			});
 		}
+		ctx.get().setPacketHandled(true);
 	}
 }

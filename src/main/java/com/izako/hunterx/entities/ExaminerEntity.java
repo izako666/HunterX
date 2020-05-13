@@ -1,11 +1,6 @@
 package com.izako.hunterx.entities;
 
 import com.izako.hunterx.Main;
-import com.izako.hunterx.data.hunterdata.HunterDataCapability;
-import com.izako.hunterx.data.hunterdata.IHunterData;
-import com.izako.hunterx.data.world.HunterWorldData;
-import com.izako.hunterx.init.ModItems;
-import com.izako.hunterx.init.ModQuests;
 import com.izako.hunterx.izapi.NPCSpeech;
 import com.izako.hunterx.izapi.quest.IQuestGiver;
 import com.izako.hunterx.quests.speech.ExaminerSpeech;
@@ -20,11 +15,7 @@ import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 
 public class ExaminerEntity extends CreatureEntity implements IQuestGiver {
 
@@ -62,7 +53,7 @@ public class ExaminerEntity extends CreatureEntity implements IQuestGiver {
 	}
 	@Override
 	protected boolean processInteract(PlayerEntity p, Hand hand) {
-
+/*
 		IHunterData data = HunterDataCapability.get(p);
 		boolean bossSpawned = false;
 		HanzoEntity boss = new HanzoEntity(HanzoEntity.type, this.world);
@@ -163,6 +154,8 @@ public class ExaminerEntity extends CreatureEntity implements IQuestGiver {
 		}
 
 		return false;
+		*/
+		return true;
 	}
 
 	@Override
@@ -170,14 +163,10 @@ public class ExaminerEntity extends CreatureEntity implements IQuestGiver {
 		return false;
 	}
 
+	public static final ExaminerSpeech speech = new ExaminerSpeech();
 	@Override
 	public NPCSpeech getSpeech() {
-		try {
-			return ExaminerSpeech.class.getConstructor().newInstance();
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
-		return null;
-		}	
+	return speech;
+	}
+		
 }

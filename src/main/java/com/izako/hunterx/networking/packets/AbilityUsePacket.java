@@ -43,5 +43,6 @@ public class AbilityUsePacket {
 				}
 			});
 		}
+		ctx.get().setPacketHandled(true);
 	}
 }

@@ -21,13 +21,11 @@ public class HunterExam02 extends Quest {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "You must kill a kiriko to prove your skill.";
 	}
 
 	@Override
 	public QuestLine getQuestLine() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

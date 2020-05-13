@@ -45,9 +45,9 @@ public class HanzoSwordPacket {
 							inv.getStackInSlot(i).shrink(1);
 						}
 					}
-					System.out.println("true");
 				}
 			});
 		}
+		ctx.get().setPacketHandled(true);
 	}
 }

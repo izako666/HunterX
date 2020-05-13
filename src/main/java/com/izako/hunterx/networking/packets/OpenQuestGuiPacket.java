@@ -41,8 +41,11 @@ public class OpenQuestGuiPacket {
 	public static void handle(OpenQuestGuiPacket msg, final Supplier<NetworkEvent.Context> ctx) {
 
 		if(ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
-			ClientHandler.handle(msg);
+			ctx.get().enqueueWork(() -> {
+				ClientHandler.handle(msg);
+			});
 		}
+		 ctx.get().setPacketHandled(true);
 	}
 
 	public static class ClientHandler{

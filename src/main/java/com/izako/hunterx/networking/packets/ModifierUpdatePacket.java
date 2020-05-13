@@ -65,5 +65,6 @@ public class ModifierUpdatePacket {
 		    	}
 			});
 		}
+		ctx.get().setPacketHandled(true);
 	}
 }

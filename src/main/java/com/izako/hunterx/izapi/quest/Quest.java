@@ -2,8 +2,15 @@ package com.izako.hunterx.izapi.quest;
 
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
+import com.izako.hunterx.gui.QuestScreen;
+import com.izako.hunterx.gui.SequencedString;
+import com.izako.hunterx.izapi.NPCSpeech.QuestState;
+import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.packets.SetQuestPacket;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public abstract class Quest {
 
@@ -55,6 +62,40 @@ public abstract class Quest {
 		return false;
 
 	}
+	@OnlyIn(Dist.CLIENT)
+	public QuestScreenEndReturnType applyQuestScreenEndLogic(QuestScreen scr) {
+		QuestState state = scr.qgiver.getSpeech().getStateFromQuest(scr.currentQuest, scr.p);
+		switch(state) {
+		case NOTSTARTED:
+			return QuestScreenEndReturnType.QUEST;
+		case NOTFULFILLED:
+			return QuestScreenEndReturnType.NULL;
+		case FULFILLED:
+			this.finishQuest(scr.p);
+			ModidPacketHandler.INSTANCE.sendToServer(new SetQuestPacket(this.getId(), false));
+			return QuestScreenEndReturnType.NULL;
+		}
+		return QuestScreenEndReturnType.NULL;
+		
+	}
 	
+	public void removeQuest(PlayerEntity p) {
 
+		IHunterData data = HunterDataCapability.get(p);
+		data.removeQuest(this.getId());
+	}
+
+	public void giveQuest(PlayerEntity p) {
+		IHunterData data = HunterDataCapability.get(p);
+		data.giveQuest(getId(), 0);
+	}
+	
+	public SequencedString[] getAdditionalMessage(QuestScreen scr) {
+		return null;
+	}
+
+	
+	public enum QuestScreenEndReturnType {
+		NULL,QUEST,MESSAGE
+	}
 }

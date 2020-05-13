@@ -57,7 +57,7 @@ public class SequencedString {
 		this.ticksExisted++;
 	}
 
-	public int calculateTicksNeeded(int index)
+	private int calculateTicksNeeded(int index)
 	{
 		int oldRange = this.string.length();
 		int newRange = this.maxTicks;
@@ -73,5 +73,12 @@ public class SequencedString {
 	
 	public interface IRenderEndEvent {
 		void onEnd();
+	}
+	
+	public SequencedString setTicksFromLength(boolean bool) {
+		if(bool) {
+			this.maxTicks = this.string.length() * 5;
+		}
+		return this;
 	}
 }

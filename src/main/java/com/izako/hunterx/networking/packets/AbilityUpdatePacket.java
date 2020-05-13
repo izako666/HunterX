@@ -61,6 +61,7 @@ INBT data;
 			ctx.get().enqueueWork(() -> {
 				ClientHandler.handle(msg);
 			});
+			ctx.get().setPacketHandled(true);
 		}
 	}
 

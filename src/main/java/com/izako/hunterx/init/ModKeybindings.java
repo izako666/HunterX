@@ -64,7 +64,7 @@ public class ModKeybindings {
 			for(KeyBinding kb : Minecraft.getInstance().gameSettings.keyBindsHotbar) {
 				kb.bind(InputMappings.getInputByCode(GLFW.GLFW_KEY_UNKNOWN, 0));
 			}
-		} else {
+		} if(event.getKey() == ModKeybindings.ACTIVATE.getKey().getKeyCode() && event.getAction() == 2) {
 			for(KeyBinding kb : Minecraft.getInstance().gameSettings.keyBindsHotbar) {
 				kb.bind(kb.getDefault());
 			}

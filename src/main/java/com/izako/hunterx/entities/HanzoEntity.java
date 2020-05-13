@@ -3,6 +3,8 @@ package com.izako.hunterx.entities;
 import javax.annotation.Nullable;
 
 import com.izako.hunterx.Main;
+import com.izako.hunterx.data.hunterdata.HunterDataCapability;
+import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.init.ModItems;
 import com.izako.hunterx.init.ModQuests;
 
@@ -15,16 +17,10 @@ import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.ai.goal.MoveThroughVillageGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.ai.goal.ZombieAttackGoal;
-import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.ZombieEntity;
-import net.minecraft.entity.monster.ZombiePigmanEntity;
-import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.passive.TurtleEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -42,7 +38,6 @@ public class HanzoEntity extends ZombieEntity{
 
 	public HanzoEntity(EntityType<? extends ZombieEntity> type, World worldIn) {
 		super(type, worldIn);
-		// TODO Auto-generated constructor stub
 	}
 
 
@@ -161,10 +156,14 @@ public class HanzoEntity extends ZombieEntity{
 	public void onDeath(DamageSource cause) {
 	
 		if(cause.getTrueSource() instanceof PlayerEntity) {
+			
 			PlayerEntity p = (PlayerEntity) cause.getTrueSource();
+			IHunterData data = HunterDataCapability.get(p);
 		if(ModQuests.HUNTEREXAM04.hasQuest(p) && !ModQuests.HUNTEREXAM04.isFinished(p)) {
-			ModQuests.HUNTEREXAM04.finishQuest(p);
-		this.entityDropItem(new ItemStack(ModItems.BADGE));
+
+			data.setProgress(ModQuests.HUNTEREXAM04.getId(), 100);
+			
+			this.entityDropItem(new ItemStack(ModItems.BADGE));
 		}
 		}
 	}

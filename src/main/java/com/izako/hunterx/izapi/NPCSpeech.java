@@ -8,7 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 public abstract class NPCSpeech {
 
 	public abstract Quest[] getQuests(PlayerEntity p);
-	public static QuestState getStateFromQuest(Quest q, PlayerEntity p) {
+	public  QuestState getStateFromQuest(Quest q, PlayerEntity p) {
 		if(q.hasQuest(p)) {
 			 if(q.canFinish(p) || q.isFinished(p)) {
 				return QuestState.FULFILLED;
@@ -20,9 +20,10 @@ public abstract class NPCSpeech {
 	}
 	public abstract SequencedString[][] getSequencedStringFromQuest(int questIndex);
 	public SequencedString[] getSpeechFromState(PlayerEntity p) {
+		if(IZAHelper.getCurrentQuest(this.getQuests(p), p) != -1) {
 		SequencedString[][] sqstrs = this.getSequencedStringFromQuest(IZAHelper.getCurrentQuest(this.getQuests(p), p));
 		Quest q = this.getQuests(p)[IZAHelper.getCurrentQuest(this.getQuests(p), p)];
-		switch(NPCSpeech.getStateFromQuest(q, p)) {
+		switch(this.getStateFromQuest(q, p)) {
 		
 		case NOTSTARTED:
 			return sqstrs[0];
@@ -35,7 +36,8 @@ public abstract class NPCSpeech {
 			
 		
 		}
-		
+		} 
+		return null;
 	}
 	
 	public enum QuestState {

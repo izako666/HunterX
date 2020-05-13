@@ -1,6 +1,8 @@
 package com.izako.hunterx.data.abilitydata;
 
 import com.izako.hunterx.Main;
+import com.izako.hunterx.data.hunterdata.HunterDataCapability;
+import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.init.ModKeybindings;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.Ability.AbilityType;
@@ -12,9 +14,8 @@ import com.izako.hunterx.networking.packets.AbilityChargingEndPacket;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Main.MODID)
@@ -24,6 +25,7 @@ public class AbilityDataUpdateEvent {
 	public static void livingUpdate(LivingUpdateEvent e) {
 		if (e.getEntityLiving() instanceof PlayerEntity) {
 			PlayerEntity p = (PlayerEntity) e.getEntityLiving();
+			IHunterData datas = HunterDataCapability.get(p);
 			IAbilityData data = AbilityDataCapability.get(p);
 			for (int i = 0; i < 8; i++) {
 				Ability a = data.getAbilityInSlot(i);

@@ -1,5 +1,7 @@
 package com.izako.hunterx.data.hunterdata;
 
+import com.izako.hunterx.init.ModQuests;
+
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
@@ -45,6 +47,7 @@ public class HunterDataCapability {
 				props.keySet().forEach((k) -> {
 					if (k.contains("quest")) {
 						String newK = k.substring(5, k.length());
+						instance.removeQuest(newK);
 						instance.giveQuest(newK, props.getInt(k));
 					}
 				});

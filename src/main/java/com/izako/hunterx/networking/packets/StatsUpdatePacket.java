@@ -65,6 +65,7 @@ public class StatsUpdatePacket {
 				ClientHandler.handle(msg);
 			});
 		}
+		ctx.get().setPacketHandled(true);
 	}
 
 	public static class ClientHandler{
