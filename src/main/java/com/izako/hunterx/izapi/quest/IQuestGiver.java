@@ -2,9 +2,12 @@ package com.izako.hunterx.izapi.quest;
 
 import com.izako.hunterx.izapi.NPCSpeech;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+import net.minecraftforge.api.distmarker.Dist;
 
 public interface IQuestGiver {
 
-	NPCSpeech getSpeech();
+	@OnlyIn(Dist.CLIENT)
+	public NPCSpeech getSpeech();
 }

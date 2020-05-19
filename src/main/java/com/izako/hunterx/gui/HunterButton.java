@@ -12,7 +12,6 @@ public class HunterButton extends Button {
 	public HunterButton(int widthIn, int heightIn, int p_i51141_3_, int p_i51141_4_, String text, boolean isQuest,
 			IPressable onPress) {
 		super(widthIn, heightIn, p_i51141_3_, p_i51141_4_, text, onPress);
-		// TODO Auto-generated constructor stub
 		if (isQuest == true) {
 			this.questID = text;
 			this.name = ModQuests.getInstance(this.questID).getName();

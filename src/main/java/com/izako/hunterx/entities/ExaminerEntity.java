@@ -16,6 +16,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ExaminerEntity extends CreatureEntity implements IQuestGiver {
 
@@ -163,10 +165,11 @@ public class ExaminerEntity extends CreatureEntity implements IQuestGiver {
 		return false;
 	}
 
-	public static final ExaminerSpeech speech = new ExaminerSpeech();
+	@OnlyIn(Dist.CLIENT)
 	@Override
 	public NPCSpeech getSpeech() {
-	return speech;
+		return new ExaminerSpeech();
 	}
+
 		
 }

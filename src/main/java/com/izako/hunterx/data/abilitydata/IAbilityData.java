@@ -12,7 +12,7 @@ public interface IAbilityData {
 
 	List<Ability> getAbilities();
 	void setAbilities(List<Ability> list);
-	Ability getAbility(@Nullable Ability abl);
+	Ability getAbility(Ability abl);
 	void giveAbility(Ability abl);
 	void putAbilityInSlot(Ability abl,int slot);
 	void removeAbilityInSlot(int slot);
@@ -20,6 +20,7 @@ public interface IAbilityData {
 	void setSlotAbilities(Ability[] abll);
 	Ability getAbilityInSlot(int slot);
 	int getSlotForAbility(Ability abl);
+	Ability getSlotAbility(Ability abl);
 	void removeAbility(Ability abl);
 	
 	//general nen data

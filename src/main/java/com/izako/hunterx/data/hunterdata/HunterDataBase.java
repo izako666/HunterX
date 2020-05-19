@@ -12,17 +12,16 @@ public class HunterDataBase implements IHunterData {
 	double attackStat = 0;
 	double defenseStat = 0;
 	boolean isHunter = false;
+	boolean isCharMade = false;
 	HashMap<String, Integer> quests = new HashMap<>();
 
 	@Override
 	public double getHealthStat() {
-		// TODO Auto-generated method stub
 		return this.healthStat;
 	}
 
 	@Override
 	public void setHealthStat(double stat) {
-		// TODO Auto-generated method stub
 		if (stat <= 10) {
 			this.healthStat = stat;
 		} else {
@@ -32,13 +31,11 @@ public class HunterDataBase implements IHunterData {
 
 	@Override
 	public double getSpeedStat() {
-		// TODO Auto-generated method stub
 		return this.speedStat;
 	}
 
 	@Override
 	public void setSpeedStat(double stat) {
-		// TODO Auto-generated method stub
 		if (stat <= 10) {
 			this.speedStat = stat;
 		} else {
@@ -48,13 +45,11 @@ public class HunterDataBase implements IHunterData {
 
 	@Override
 	public double getAttackStat() {
-		// TODO Auto-generated method stub
 		return this.attackStat;
 	}
 
 	@Override
 	public void setAttackStat(double stat) {
-		// TODO Auto-generated method stub
 		if (stat <= 10) {
 			this.attackStat = stat;
 		} else {
@@ -64,13 +59,11 @@ public class HunterDataBase implements IHunterData {
 
 	@Override
 	public double getDefenseStat() {
-		// TODO Auto-generated method stub
 		return this.defenseStat;
 	}
 
 	@Override
 	public void setDefenseStat(double stat) {
-		// TODO Auto-generated method stub
 		if (stat <= 10) {
 			this.defenseStat = stat;
 		} else {
@@ -80,13 +73,11 @@ public class HunterDataBase implements IHunterData {
 
 	@Override
 	public HashMap<String, Integer> getQuests() {
-		// TODO Auto-generated method stub
 		return quests;
 	}
 
 	@Override
 	public void giveQuest(String str, Integer value) {
-		// TODO Auto-generated method stub
 		if (!quests.containsKey(str)) {
 			quests.put(str, value);
 		}
@@ -94,7 +85,6 @@ public class HunterDataBase implements IHunterData {
 
 	@Override
 	public void finishQuest(String str) {
-		// TODO Auto-generated method stub
 
 		if (quests.containsKey(str)) {
 			this.setProgress(str, 101);
@@ -103,13 +93,11 @@ public class HunterDataBase implements IHunterData {
 
 	@Override
 	public Integer getProgress(String str) {
-		// TODO Auto-generated method stub
 		return quests.get(str);
 	}
 
 	@Override
 	public void setProgress(String str, Integer value) {
-		// TODO Auto-generated method stub
 		if (value < 0) {
 			System.out.println("false value");
 			return;
@@ -122,13 +110,11 @@ public class HunterDataBase implements IHunterData {
 
 	@Override
 	public void setQuests(HashMap<String, Integer> quests) {
-		// TODO Auto-generated method stub
 		this.quests = quests;
 	}
 
 	@Override
 	public void removeQuest(String str) {
-		// TODO Auto-generated method stub
 		
 		if(this.quests.containsKey(str)) {
 			this.quests.remove(str);
@@ -137,14 +123,22 @@ public class HunterDataBase implements IHunterData {
 
 	@Override
 	public boolean isHunter() {
-		// TODO Auto-generated method stub
 		return this.isHunter;
 	}
 
 	@Override
 	public void setIsHunter(boolean val) {
-		// TODO Auto-generated method stub
 		this.isHunter = val;
+	}
+
+	@Override
+	public boolean isCharacterMade() {
+		return isCharMade;
+	}
+
+	@Override
+	public void setIsCharacterMade(boolean val) {
+		isCharMade = val;
 	}
 
 

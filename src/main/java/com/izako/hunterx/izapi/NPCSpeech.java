@@ -4,7 +4,10 @@ import com.izako.hunterx.gui.SequencedString;
 import com.izako.hunterx.izapi.quest.Quest;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public abstract class NPCSpeech {
 
 	public abstract Quest[] getQuests(PlayerEntity p);

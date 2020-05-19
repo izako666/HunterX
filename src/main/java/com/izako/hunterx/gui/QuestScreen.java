@@ -1,12 +1,12 @@
 package com.izako.hunterx.gui;
 
 import java.awt.Color;
-import java.util.Arrays;
 
 import com.izako.hunterx.Main;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.izapi.IZAHelper;
+import com.izako.hunterx.izapi.NPCSpeech;
 import com.izako.hunterx.izapi.quest.IQuestGiver;
 import com.izako.hunterx.izapi.quest.Quest;
 import com.izako.hunterx.izapi.quest.Quest.QuestScreenEndReturnType;
@@ -20,8 +20,11 @@ import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.config.GuiUtils;
 
+@OnlyIn(Dist.CLIENT)
 public class QuestScreen extends Screen {
 
 	public static final ResourceLocation CHATBOX = new ResourceLocation(Main.MODID, "textures/gui/chatprompt.png");
@@ -37,11 +40,13 @@ public class QuestScreen extends Screen {
 	public boolean hasFinalStringEnded = false;
 	public boolean renderQuestAcceptanceScreen = false;
 	public static final int defaultChatboxStringLength = 240;
+	public NPCSpeech speech;
 
 	public QuestScreen(IQuestGiver qgiver) {
 		super(new StringTextComponent(""));
 		this.qgiver = qgiver;
 		this.minecraft = Minecraft.getInstance();
+		this.speech = qgiver.getSpeech();
 
 	}
 
@@ -67,10 +72,10 @@ public class QuestScreen extends Screen {
 		width = mc.mainWindow.getScaledWidth();
 		p = mc.player;
 		if(currentQuest == null) {
-		currentQuest = qgiver.getSpeech().getQuests(p)[IZAHelper.getCurrentQuest(qgiver.getSpeech().getQuests(p), p)];
+		currentQuest = this.speech.getQuests(p)[IZAHelper.getCurrentQuest(this.speech.getQuests(p), p)];
 		}
 		if (sequencedStrings == null) {
-			sequencedStrings = qgiver.getSpeech().getSpeechFromState(p);
+			sequencedStrings = this.speech.getSpeechFromState(p);
 		}
 
 		if (currentString == null && sequencedStrings != null && sequencedStrings[this.stringIndex] != null) {
@@ -150,4 +155,17 @@ public class QuestScreen extends Screen {
 	private void declineQuest(Button but) {
 		this.onClose();
 	}
-}
+
+	@Override
+	public boolean mouseClicked(double x, double y, int p_mouseClicked_5_) {
+		if(this.currentString != null && !this.renderQuestAcceptanceScreen) {
+		if(this.currentString.ticksExisted >= this.currentString.maxTicks) {
+			this.currentString.ticksExisted = this.currentString.maxTicks + this.currentString.delayTicks;
+		} else {
+			this.currentString.ticksExisted = this.currentString.maxTicks;
+		}
+		}
+		return super.mouseClicked(x, y, p_mouseClicked_5_);
+	}
+	
+	}

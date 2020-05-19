@@ -26,7 +26,7 @@ public class ModQuests {
 	}
 
 	public static Quest getInstance(String id) {
-		for (int i = 0; i <= (QUESTS.size() - 1); i++) {
+		for (int i = 0; i < (QUESTS.size()); i++) {
 			if (QUESTS.get(i).getId().contains(id)) {
 				return QUESTS.get(i);
 			}

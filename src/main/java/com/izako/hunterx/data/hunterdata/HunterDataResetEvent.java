@@ -27,7 +27,7 @@ public class HunterDataResetEvent {
 			data.setAttackStat(oldData.getAttackStat());
 			data.setDefenseStat(oldData.getDefenseStat());
 			data.setIsHunter(oldData.isHunter());
-			
+			data.setIsCharacterMade(oldData.isCharacterMade());
 			IAttributeInstance attributeH = p.getAttribute(SharedMonsterAttributes.MAX_HEALTH);
 			IAttributeInstance attributeS = p.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
 			IAttributeInstance attributeA = p.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);

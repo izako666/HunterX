@@ -12,12 +12,10 @@ public class EventsHandler {
 		HanzoSwordEvent hanzoSwordEvent = new HanzoSwordEvent();
 		HunterDataEvent hunterDataEvent = new HunterDataEvent();
 		RegisterAbilityDataEvent abldataEvent = new RegisterAbilityDataEvent();
-		AbilitySlotsEvent slotsevent = new AbilitySlotsEvent();
 		
 		MinecraftForge.EVENT_BUS.register(hanzoSwordEvent);
 		MinecraftForge.EVENT_BUS.register(hunterDataEvent);
 		MinecraftForge.EVENT_BUS.register(abldataEvent);
-		MinecraftForge.EVENT_BUS.register(slotsevent);
 
 	}
 }

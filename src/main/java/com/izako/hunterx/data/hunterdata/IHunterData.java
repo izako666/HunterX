@@ -21,6 +21,9 @@ public interface IHunterData {
 	boolean isHunter();
 	void setIsHunter(boolean val);
 	
+	boolean isCharacterMade();
+	void setIsCharacterMade(boolean val);
+	
 	//quest API
 	HashMap<String, Integer> getQuests();
 	void setQuests(HashMap<String, Integer> quests);

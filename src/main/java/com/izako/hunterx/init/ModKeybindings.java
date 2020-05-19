@@ -7,6 +7,7 @@ import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
+import com.izako.hunterx.gui.CharacterCreatorScreen;
 import com.izako.hunterx.gui.HunterScreen;
 import com.izako.hunterx.networking.ModidPacketHandler;
 import com.izako.hunterx.networking.packets.AbilityUpdatePacket;
@@ -85,9 +86,13 @@ public class ModKeybindings {
 		if(event.getKey() == HUNTER_KEYBINDING.getKey().getKeyCode()) {
 		    IHunterData data = HunterDataCapability.get(Minecraft.getInstance().player);
 		    IAbilityData abilitydata = AbilityDataCapability.get(Minecraft.getInstance().player);
+		    if(!data.isCharacterMade()) {
+		    	Minecraft.getInstance().displayGuiScreen(new CharacterCreatorScreen());
+		    } else {
 		    ModidPacketHandler.INSTANCE.sendToServer(new AbilityUpdatePacket(abilitydata, true));
 			ModidPacketHandler.INSTANCE.sendToServer(new StatsUpdatePacket(data, true));
 			Minecraft.getInstance().displayGuiScreen(new HunterScreen());
+		    }
 		}
 		}
 	

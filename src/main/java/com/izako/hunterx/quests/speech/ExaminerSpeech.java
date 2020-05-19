@@ -9,7 +9,10 @@ import com.izako.hunterx.izapi.NPCSpeech;
 import com.izako.hunterx.izapi.quest.Quest;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class ExaminerSpeech extends NPCSpeech {
 	public static SequencedString SQSTR01 = new SequencedString("Oh are you here for the hunter exam?", QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
 	public static SequencedString SQSTR02 = new SequencedString("well You're just in time!", QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);

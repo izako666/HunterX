@@ -6,7 +6,10 @@ import java.util.List;
 import com.izako.wypi.WyHelper;
 
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class SequencedString {
 
 	public String string;

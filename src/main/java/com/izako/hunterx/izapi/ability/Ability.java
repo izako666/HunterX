@@ -82,6 +82,7 @@ public abstract class Ability {
 				break;
 			case PASSIVE:
 				this.setInPassive(!this.isInPassive());
+				this.setPassiveTimer(this.props.maxPassive);
 				if (this.isInPassive()) {
 					((PassiveAbility) this).onStartPassive(p);
 				}
@@ -91,7 +92,6 @@ public abstract class Ability {
 				}
 				if (!this.isInPassive()) {
 					this.setCooldown(this.props.maxCooldown);
-					this.setPassiveTimer(this.props.maxPassive);
 				}
 				break;
 			case ONUSE:
@@ -109,9 +109,7 @@ public abstract class Ability {
 		
 		case PASSIVE:
 			this.setInPassive(false);
-			if(this.props.maxPassive != Integer.MAX_VALUE) {
-			this.setPassiveTimer(0);
-			}
+			this.setPassiveTimer(this.props.maxPassive);
 			this.setCooldown(this.props.maxCooldown);
 		   ( (PassiveAbility) this).onEndPassive(p);
 		   break;

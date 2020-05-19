@@ -36,7 +36,7 @@ public class GenericOverlayLayer extends LayerRenderer<AbstractClientPlayerEntit
 			if(abl == null)
 				continue;
 			if(abl.equals(ModAbilities.TEN_ABILITY) && abl.isInPassive() && abl.getPassiveTimer() < Integer.MAX_VALUE - 20) {
-				color = new Color(255, 255, 0);
+				color = abilities.getAuraColor();
 			} else {
 				continue;
 			}
@@ -56,7 +56,7 @@ public class GenericOverlayLayer extends LayerRenderer<AbstractClientPlayerEntit
 
 	    
 
-	                    GlStateManager.color4f(color.getRed(), color.getGreen(), color.getBlue(), 0.3f);
+	                    GlStateManager.color4f(color.getRed() / 255, color.getGreen() / 255, color.getBlue() / 255, 0.3f);
 
 	                   GlStateManager.scaled(1.05, 1.04, 1.05);
 

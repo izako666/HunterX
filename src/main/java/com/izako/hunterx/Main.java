@@ -3,6 +3,8 @@ package com.izako.hunterx;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.izako.hunterx.commands.AbilityArgument;
+import com.izako.hunterx.commands.HunterXCommand;
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.events.EventsHandler;
@@ -19,10 +21,12 @@ import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.placement.IPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -37,6 +41,7 @@ public final class Main {
 		ModidPacketHandler.registerPackets();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
+        MinecraftForge.EVENT_BUS.addListener(this::serverStart);
 	
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         WyRegistry.PARTICLE_TYPES.register(bus);
@@ -50,6 +55,7 @@ public final class Main {
 	private  void commonSetup(FMLCommonSetupEvent event) {
 		EventsHandler.registerEvents();
 		ModAbilities.register();
+		AbilityArgument.register();
 		HunterDataCapability.register();
 		AbilityDataCapability.register();
 
@@ -67,4 +73,7 @@ public final class Main {
 	}
 
 
+	private void serverStart(FMLServerStartingEvent event) {
+		HunterXCommand.register(event.getCommandDispatcher());
+	}
 }

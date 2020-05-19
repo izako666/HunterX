@@ -16,16 +16,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class HunterExam04 extends Quest{
 
-	public static final SequencedString[] ADDITIONAL_MESSAGE = new SequencedString[] {
-			new SequencedString("You must get his badge", QuestScreen.defaultChatboxStringLength, 0).setTicksFromLength(true)
-	};
-	
-	public static final SequencedString[] ADDITIONAL_MESSAGE_2 = new SequencedString[] {
-			new SequencedString("Congratulations on passing the Hunter Exam!", QuestScreen.defaultChatboxStringLength, 0).setTicksFromLength(true)
-			};
+	public static final String failMessage = "You must get his badge";
+	public static final String passMessage = "Congratulations on passing the Hunter Exam!";
 	@Override
 	public String getId() {
 		return "hunterexam04";
@@ -77,14 +74,14 @@ public class HunterExam04 extends Quest{
 			return QuestScreenEndReturnType.NULL;
 		case FULFILLED:
 			if(scr.p.inventory.hasItemStack(new ItemStack(ModItems.BADGE))) {
-				if(scr.sequencedStrings != HunterExam04.ADDITIONAL_MESSAGE_2) {
+				if(scr.sequencedStrings[0].string != HunterExam04.passMessage ) {
 					this.finishQuest(scr.p);
 					ModidPacketHandler.INSTANCE.sendToServer(new SetQuestPacket(this.getId(), false));
 				return QuestScreenEndReturnType.MESSAGE;
 				}
 				return QuestScreenEndReturnType.NULL;
 			} 
-			if(scr.sequencedStrings != HunterExam04.ADDITIONAL_MESSAGE) {
+			if(scr.sequencedStrings[0].string != HunterExam04.failMessage) {
 			return QuestScreenEndReturnType.MESSAGE;
 			}
 			return QuestScreenEndReturnType.NULL;
@@ -93,11 +90,12 @@ public class HunterExam04 extends Quest{
 		
 	}
 	@Override
+	@OnlyIn(Dist.CLIENT)
 	public SequencedString[] getAdditionalMessage(QuestScreen scr) {
 		if(scr.p.inventory.hasItemStack(new ItemStack(ModItems.BADGE))) {
-		return HunterExam04.ADDITIONAL_MESSAGE_2;
+		return new SequencedString[] {new SequencedString("Congratulations on passing the Hunter Exam!", QuestScreen.defaultChatboxStringLength, 0).setTicksFromLength(true)};
 		}
-		return HunterExam04.ADDITIONAL_MESSAGE;
+		return new SequencedString[] {new SequencedString("You must get his badge", QuestScreen.defaultChatboxStringLength, 0).setTicksFromLength(true)};
 	}
 
 	@Override

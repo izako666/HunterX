@@ -28,7 +28,7 @@ public class AbilityDataBase implements IAbilityData {
 	}
 
 	@Override
-	public Ability getAbility(@Nullable Ability abl) {
+	public Ability getAbility(Ability abl) {
 		if(abl != null) {
 		for(int i = 0; i < ABILITIES.size(); i++) {
 			if(ABILITIES.get(i).getId() == abl.getId()) {
@@ -138,6 +138,16 @@ public class AbilityDataBase implements IAbilityData {
 	public void setAuraColor(int rgb) {
 
 		this.aura = new Color(rgb);
+	}
+
+	@Override
+	public Ability getSlotAbility(Ability abl) {
+		for(Ability abil : this.ABILITIES) {
+			if(abil.equals(abl)) {
+				return abil;
+			}
+		}
+		return null;
 	}
 
 }

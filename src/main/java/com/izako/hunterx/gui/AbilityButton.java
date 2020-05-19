@@ -15,7 +15,6 @@ Ability ability;
 	public AbilityButton(int widthIn, int heightIn, int p_i51141_3_, int p_i51141_4_, String text, 
 			IPressable onPress, Ability abl) {
 		super(widthIn, heightIn, p_i51141_3_, p_i51141_4_, text, onPress);
-		// TODO Auto-generated constructor stub
 		abilityName = abl.getName();
 		ablTexture = abl.props.tex;
 		ability = abl;

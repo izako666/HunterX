@@ -1,7 +1,5 @@
 package com.izako.hunterx.gui;
 
-import java.awt.Color;
-
 import com.izako.hunterx.Main;
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
@@ -10,7 +8,6 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -20,13 +17,15 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.config.GuiUtils;
+import net.minecraftforge.fml.common.Mod;
 
-@OnlyIn(Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Main.MODID, value = Dist.CLIENT)
 public class AbilitySlotsEvent {
 
 
 	public static final ResourceLocation NENBAR = new ResourceLocation(Main.MODID, "textures/gui/nenbar.png");
 	public static final ResourceLocation SLOTS = new ResourceLocation(Main.MODID, "textures/gui/sloticons.png");
+	@OnlyIn(Dist.CLIENT)
 	public static void drawIcon(ResourceLocation loc, int x, int y, int u, int v, int zLevel) {
 		Minecraft.getInstance().getTextureManager().bindTexture(loc);
 		BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();
@@ -39,13 +38,14 @@ public class AbilitySlotsEvent {
 	}
 
 	@SubscribeEvent
-	public void renderScreen(RenderGameOverlayEvent.Post e) {
+	public static void renderScreen(RenderGameOverlayEvent.Post e) {
 
 		if(e.getType().equals(ElementType.HOTBAR)) {
 		AbilitySlotsEvent.renderSlots();
 		}
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	public static void renderSlots() {
 		int zlevel = 0;
 		if(Minecraft.getInstance().currentScreen != null) {
@@ -101,8 +101,8 @@ public class AbilitySlotsEvent {
 	         GlStateManager.popMatrix();
 
 	}
+	@OnlyIn(Dist.CLIENT)
 	private static int getCooldownTexture(int i) {
-		// TODO Auto-generated method stub
 
 		if(i > 75) {
 			return 64;
@@ -115,6 +115,7 @@ public class AbilitySlotsEvent {
 		}
 		return 0;
 	}
+	@OnlyIn(Dist.CLIENT)
 	public static void renderNenBar(double width, double height, Minecraft mc, int zlevel, IAbilityData data) {
 		
 		mc.getTextureManager().bindTexture(NENBAR);
@@ -128,6 +129,7 @@ public class AbilitySlotsEvent {
 	    GlStateManager.popMatrix();
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	public static void renderSlotsWithoutEffects() {
 		double height = Minecraft.getInstance().mainWindow.getScaledHeight();
 		double width = Minecraft.getInstance().mainWindow.getScaledWidth();

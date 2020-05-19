@@ -19,6 +19,7 @@ public abstract class Quest {
 	public abstract String getName();
 	public abstract String getDescription();
 	public abstract QuestLine getQuestLine();
+	@OnlyIn(Dist.CLIENT)
 	public abstract void renderDesc(int x, int y);
 	
 	public boolean doneTask(PlayerEntity p) {
@@ -90,6 +91,7 @@ public abstract class Quest {
 		data.giveQuest(getId(), 0);
 	}
 	
+	@OnlyIn(Dist.CLIENT)
 	public SequencedString[] getAdditionalMessage(QuestScreen scr) {
 		return null;
 	}
