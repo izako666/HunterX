@@ -20,6 +20,7 @@ import com.izako.hunterx.renderers.KirikoRenderer;
 import com.izako.hunterx.renderers.ThugRenderer;
 import com.izako.hunterx.renderers.WingRenderer;
 import com.izako.hunterx.renderers.layers.GenericOverlayLayer;
+import com.izako.hunterx.renderers.layers.HandOverlayLayer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -90,7 +91,6 @@ public class ClientSideRegistry {
 
 			@Override
 			public BulletRenderer<BulletEntity> createRenderFor(EntityRendererManager manager) {
-				// TODO Auto-generated method stub
 				return new BulletRenderer<BulletEntity>(manager, new BulletModel());
 			}});
 			
@@ -98,7 +98,6 @@ public class ClientSideRegistry {
 
 			@Override
 			public WingRenderer createRenderFor(EntityRendererManager manager) {
-				// TODO Auto-generated method stub
 				return new WingRenderer(manager);
 			}
 			
@@ -107,7 +106,6 @@ public class ClientSideRegistry {
 
 			@Override
 			public HanzoRenderer createRenderFor(EntityRendererManager manager) {
-				// TODO Auto-generated method stub
 				return new HanzoRenderer(manager);
 			}
 			
@@ -115,6 +113,7 @@ public class ClientSideRegistry {
 
 		for(PlayerRenderer render : Minecraft.getInstance().getRenderManager().getSkinMap().values()) {
 			render.addLayer(new GenericOverlayLayer(render));
+			render.addLayer(new HandOverlayLayer(render));
 		}
 
 	}

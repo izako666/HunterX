@@ -43,6 +43,7 @@ public class AbilityDataCapability {
 				     props.putInt("nentype", instance.getNenType().ordinal());
 				}
 				props.putInt("auracolor", instance.getAuraColor().getRGB());
+				props.putBoolean("isnenuser", instance.isNenUser());
 				return props;
 			}
 
@@ -74,6 +75,7 @@ public class AbilityDataCapability {
 				instance.setCurrentNen(props.getInt("nen"));
 				instance.setNenType(NenType.getTypeFromOrdinal(props.getInt("nentype")));
 				instance.setAuraColor(props.getInt("auracolor"));
+				instance.setIsNenUser(props.getBoolean("isnenuser"));
 			}
 
 			

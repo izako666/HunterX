@@ -8,13 +8,13 @@ import com.izako.hunterx.init.ModAbilities;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.mojang.blaze3d.platform.GlStateManager;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.Vec3d;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class GenericOverlayLayer extends LayerRenderer<AbstractClientPlayerEntity,PlayerModel<AbstractClientPlayerEntity>>{
@@ -32,12 +32,16 @@ public class GenericOverlayLayer extends LayerRenderer<AbstractClientPlayerEntit
 		
 		
 		IAbilityData abilities = AbilityDataCapability.get(entity);
+		IAbilityData clientData = AbilityDataCapability.get(Minecraft.getInstance().player);
 		for(Ability abl : abilities.getSlotAbilities()) {
 			if(abl == null)
 				continue;
-			if(abl.equals(ModAbilities.TEN_ABILITY) && abl.isInPassive() && abl.getPassiveTimer() < Integer.MAX_VALUE - 20) {
+			if(abl.equals(ModAbilities.TEN_ABILITY) && abl.isInPassive()) {
 				color = abilities.getAuraColor();
-			} else {
+				
+			} else if(abl.equals(ModAbilities.ZETSU_ABILITY) && abl.isInPassive() && entity.getUniqueID() == Minecraft.getInstance().player.getUniqueID()){
+				color = Color.BLACK;
+			}else {
 				continue;
 			}
 	    GlStateManager.pushMatrix();
@@ -54,9 +58,7 @@ public class GenericOverlayLayer extends LayerRenderer<AbstractClientPlayerEntit
 
 	                    GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 
-	    
-
-	                    GlStateManager.color4f(color.getRed() / 255, color.getGreen() / 255, color.getBlue() / 255, 0.3f);
+	                    GlStateManager.color4f((float)(color.getRed()) / 255, (float)(color.getGreen()) / 255 , ((float)color.getBlue()) / 255, 0.2f);
 
 	                   GlStateManager.scaled(1.05, 1.04, 1.05);
 
@@ -77,6 +79,7 @@ public class GenericOverlayLayer extends LayerRenderer<AbstractClientPlayerEntit
 
 	                GlStateManager.popMatrix();
 		}
+		
 	}
 
 	@Override

@@ -10,9 +10,9 @@ public abstract class ChargeableAbility  extends Ability{
 		super();
 	}
 	//self explanatory methods.
-	public abstract void onStartCharging(PlayerEntity p);
-	public abstract void duringCharging(PlayerEntity p);
-	public abstract void onEndCharging(PlayerEntity p);
+	public  void onStartCharging(PlayerEntity p) {};
+	public  void duringCharging(PlayerEntity p) {};
+	public  void onEndCharging(PlayerEntity p) {};
 	
 	@Override
 	public CompoundNBT writeData(int slot) {

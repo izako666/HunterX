@@ -121,7 +121,6 @@ public class YoyoEntity extends ProjectileItemEntity implements IEntityAdditiona
 
 	@Override
 	protected Item func_213885_i() {
-		// TODO Auto-generated method stub
 		return ModItems.YOYO;
 	}
 

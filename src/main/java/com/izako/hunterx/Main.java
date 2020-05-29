@@ -58,7 +58,6 @@ public final class Main {
 		AbilityArgument.register();
 		HunterDataCapability.register();
 		AbilityDataCapability.register();
-
 		ModQuests.questRegister();
 		
         ForgeRegistries.BIOMES.getValues().stream().forEach((biome -> {

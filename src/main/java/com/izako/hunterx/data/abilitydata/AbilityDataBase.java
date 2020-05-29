@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.izako.hunterx.izapi.ability.Ability;
+import com.izako.hunterx.izapi.ability.Ability.AbilityType;
 import com.izako.hunterx.izapi.ability.NenType;
 
 public class AbilityDataBase implements IAbilityData {
@@ -17,6 +18,7 @@ public class AbilityDataBase implements IAbilityData {
 	private int currentNen = 0;
 	private Color aura = Color.WHITE;
 	private NenType type = null;
+	private boolean isNenUser = true;
 	@Override
 	public List<Ability> getAbilities() {
 		return ABILITIES;
@@ -142,12 +144,38 @@ public class AbilityDataBase implements IAbilityData {
 
 	@Override
 	public Ability getSlotAbility(Ability abl) {
-		for(Ability abil : this.ABILITIES) {
+		for(Ability abil : this.SLOT_ABILITIES) {
+			if(abil != null && abl != null) {
 			if(abil.equals(abl)) {
 				return abil;
 			}
+			}
 		}
 		return null;
+	}
+
+	@Override
+	public boolean isNenUser() {
+		return this.isNenUser;
+	}
+
+	@Override
+	public void setIsNenUser(boolean val) {
+
+		this.isNenUser = val;
+		
+	}
+
+	@Override
+	public List<Ability> getAbilitiesOfType(AbilityType type) {
+		List<Ability> abilities = new ArrayList<>();
+		
+		for(int i = 0; i < this.SLOT_ABILITIES.length; i++) {
+			if(this.SLOT_ABILITIES[i] != null && this.SLOT_ABILITIES[i].props.type == type) {
+				abilities.add(this.SLOT_ABILITIES[i]);
+			}
+		}
+		return abilities;
 	}
 
 }

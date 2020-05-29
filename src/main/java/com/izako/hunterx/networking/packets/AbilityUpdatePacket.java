@@ -57,7 +57,8 @@ INBT data;
 					ModidPacketHandler.INSTANCE.sendTo(new AbilityUpdatePacket(data, true), ((ServerPlayerEntity) p).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 				}
 			});
-		} else if(ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
+		} 
+		else if(ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
 			ctx.get().enqueueWork(() -> {
 				ClientHandler.handle(msg);
 			});
@@ -73,6 +74,7 @@ INBT data;
 			IAbilityData data = AbilityDataCapability.get(p);
 			AbilityDataCapability.INSTANCE.getStorage().readNBT(AbilityDataCapability.INSTANCE,data, null, msg.data);
 
+			System.out.println("stuff");
 		}
 	}
 }

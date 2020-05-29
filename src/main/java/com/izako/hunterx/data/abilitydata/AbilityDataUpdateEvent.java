@@ -3,6 +3,7 @@ package com.izako.hunterx.data.abilitydata;
 import com.izako.hunterx.Main;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
+import com.izako.hunterx.init.ModAbilities;
 import com.izako.hunterx.init.ModKeybindings;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.Ability.AbilityType;
@@ -81,7 +82,9 @@ public class AbilityDataUpdateEvent {
 			}
 			if(data.getCurrentNen() < data.getNenCapacity()) {
 				if(Ability.canRegenAura(p)) {
-				data.setCurrentNen((int) (data.getCurrentNen() + Math.ceil(data.getNenCapacity() / 200.0)));
+				if(p.ticksExisted % 100 == 0) {
+				data.setCurrentNen((int) (data.getCurrentNen() + (Math.ceil(data.getNenCapacity() / 200.0))));
+				}
 				}
 				}
 			

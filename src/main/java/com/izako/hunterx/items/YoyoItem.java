@@ -1,6 +1,5 @@
 package com.izako.hunterx.items;
 
-import com.izako.hunterx.abilities.basics.TenAbility;
 import com.izako.hunterx.items.entities.YoyoEntity;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,7 +20,6 @@ public class YoyoItem extends Item {
 
 	public YoyoItem(Properties properties) {
 		super(properties);
-		// TODO Auto-generated constructor stub
 		this.addPropertyOverride(new ResourceLocation("cast"), this.castProperty);
 	}
 
@@ -32,15 +30,12 @@ public class YoyoItem extends Item {
 
 		YoyoEntity yoyo_front = new YoyoEntity(YoyoEntity.type, playerIn, worldIn, item);
 		if (!worldIn.isRemote) {
-			TenAbility abl = new TenAbility();
-			abl.give(playerIn);
 			playerIn.getCooldownTracker().setCooldown(this, 200);
 
 			yoyo_front.setPosition(playerIn.posX + aim.x, playerIn.posY + playerIn.getEyeHeight(),
 					playerIn.posZ + aim.z);
 			yoyo_front.setMotion(aim.x * 2, aim.y * 2, aim.z * 2);
 			playerIn.world.addEntity(yoyo_front);
-			System.out.println("shouldspawn");
 
 		}
 

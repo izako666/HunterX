@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.izako.hunterx.izapi.ability.Ability;
+import com.izako.hunterx.izapi.ability.Ability.AbilityType;
 import com.izako.hunterx.izapi.ability.NenType;
 
 public interface IAbilityData {
@@ -22,6 +23,7 @@ public interface IAbilityData {
 	int getSlotForAbility(Ability abl);
 	Ability getSlotAbility(Ability abl);
 	void removeAbility(Ability abl);
+	List<Ability> getAbilitiesOfType(AbilityType type);
 	
 	//general nen data
 	int getNenCapacity();
@@ -34,4 +36,6 @@ public interface IAbilityData {
 	void setAuraColor(int rgb);
 	Color getAuraColor();
 	
+	boolean isNenUser();
+	void setIsNenUser(boolean val);
 }

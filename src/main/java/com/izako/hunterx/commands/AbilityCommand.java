@@ -21,10 +21,10 @@ public class AbilityCommand {
 				.then(Commands.literal("give")
 				  .then(Commands.argument("targets", EntityArgument.players())
 				    .then(Commands.argument("ability", new AbilityArgument())
-				    		.executes(context -> {
-				    			return addAbility(context, AbilityArgument.getAbility(context, "ability"), 
-				    					EntityArgument.getPlayers(context, "targets"));
-				    		}))));
+				    		.executes(context -> 
+				    			 addAbility(context, AbilityArgument.getAbility(context, "ability"), 
+				    					EntityArgument.getPlayers(context, "targets"))
+				    		))));
 	}
 
 	private static int addAbility(CommandContext<CommandSource> context, Ability ability,

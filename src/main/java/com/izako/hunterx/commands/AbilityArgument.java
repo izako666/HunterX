@@ -31,7 +31,9 @@ public class AbilityArgument implements ArgumentType<Ability>{
 	@Override
 	public Ability parse(StringReader reader) throws CommandSyntaxException
 	{
-		Ability abl = ModAbilities.getNewInstanceFromId(reader.getRead());
+		ResourceLocation loc = ResourceLocation.read(reader);
+		
+		Ability abl = ModAbilities.getNewInstanceFromId(loc.getPath());
 		if(abl != null) {
 			return abl;
 		}

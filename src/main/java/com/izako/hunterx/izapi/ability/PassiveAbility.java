@@ -12,11 +12,11 @@ public abstract class PassiveAbility extends Ability {
 	}
 
 	// self explanatory methods
-	public abstract void onStartPassive(PlayerEntity p);
+	public  void onStartPassive(PlayerEntity p) {};
 
-	public abstract void duringPassive(PlayerEntity p);
+	public  void duringPassive(PlayerEntity p) {};
 
-	public abstract void onEndPassive(PlayerEntity p);
+	public  void onEndPassive(PlayerEntity p) {};
 
 	@Override
 	public CompoundNBT writeData(int slot) {

@@ -1,16 +1,18 @@
 package com.izako.hunterx.izapi.ability;
 
+import java.util.List;
+
 import com.izako.hunterx.Main;
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
+import com.izako.hunterx.init.ModAbilities;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 
 public abstract class Ability {
-	/*
+	/*	
 	 * when making a new ability set the type in the constructor, if you set the
 	 * ability type to a wrong type aka charging type for an ability that extends
 	 * PassiveAbility then the game will crash and I will blame you.
@@ -22,7 +24,7 @@ public abstract class Ability {
 	private boolean isInPassive = false;
 	private boolean isCharging = false;
 	private int slot = -1;
-    public Ability.Properties props;
+    public Ability.Properties props = new Ability.Properties(this);
 	public enum AbilityType {
 		CHARGING, PASSIVE, ONUSE
 	}
@@ -68,9 +70,11 @@ public abstract class Ability {
 
 
 	// dont touch or override this .
-	@SuppressWarnings("static-access")
 	public void onUse(PlayerEntity p) {
 
+		IAbilityData data = AbilityDataCapability.get(p);
+		List<Ability> tempAbilities = data.getAbilitiesOfType(AbilityType.PASSIVE);
+	    tempAbilities.removeIf(this::ifInPassivePredicate);
 		if (this.getCooldown() <= 0) {
 			switch (this.props.type) {
 
@@ -85,14 +89,19 @@ public abstract class Ability {
 				this.setPassiveTimer(this.props.maxPassive);
 				if (this.isInPassive()) {
 					((PassiveAbility) this).onStartPassive(p);
+					tempAbilities.forEach((a) -> {
+						if(!a.equals(this)) {
+						a.endAbility(p);
+						}
+					});
+					
 				}
 
 				if (!this.isInPassive()) {
 					((PassiveAbility) this).onEndPassive(p);
-				}
-				if (!this.isInPassive()) {
 					this.setCooldown(this.props.maxCooldown);
 				}
+				
 				break;
 			case ONUSE:
 				this.use(p);
@@ -102,6 +111,12 @@ public abstract class Ability {
 			}
 
 		}
+	}
+	private boolean ifInPassivePredicate(Ability a) {
+		if(!a.isInPassive()) {
+			return true;
+		}
+		return false;
 	}
 
 	public void endAbility(PlayerEntity p) {
@@ -135,7 +150,6 @@ public abstract class Ability {
 	// override this and call super before reading your data.
 	public Ability readData(CompoundNBT nbt) {
 		this.setCooldown(nbt.getInt("cooldown"));
-
 		this.setSlot(nbt.getInt("slotindex"));
 		return this;
 	}
@@ -152,19 +166,20 @@ public abstract class Ability {
 	}
 	public void consumeAura(PlayerEntity p) {
 		IAbilityData data = AbilityDataCapability.get(p);
+		int amount = this.props.auraCon.getAmount();
 		switch(this.props.conType) {
 		
 		case PERCENTAGE:
-			if(data.getCurrentNen() - (this.props.auraCon.getAmount() * 100) / data.getNenCapacity() >= 0) {
-			data.setCurrentNen(data.getCurrentNen() - (this.props.auraCon.getAmount() * 100) / data.getNenCapacity());
+			if(data.getCurrentNen() - (amount * 100) / data.getNenCapacity() >= 0) {
+			data.setCurrentNen(data.getCurrentNen() - (amount * 100) / data.getNenCapacity());
 			} else {
 				data.setCurrentNen(0);
 				this.endAbility(p);
 			}
 			break;
 		case VALUE:
-			if(data.getCurrentNen() - this.props.auraCon.getAmount() >= 0) {
-			data.setCurrentNen(data.getCurrentNen() - this.props.auraCon.getAmount());
+			if(data.getCurrentNen() - amount >= 0) {
+			data.setCurrentNen(data.getCurrentNen() - amount);
 			} else {
 				data.setCurrentNen(0);
 				this.endAbility(p);
@@ -227,14 +242,14 @@ public abstract class Ability {
 
 
 	
-	public   class Properties {
+	public class Properties {
 		
-		public  AbilityType type;
-		public  AuraConsumptionType conType;
-		public   int maxCharging;
-		public   int maxPassive;
-		public   int maxCooldown;
-		public Ability parent;
+		public AbilityType type;
+		public AuraConsumptionType conType = AuraConsumptionType.NONE;
+		public int maxCharging = 10;
+		public int maxPassive = 10;
+		public int maxCooldown = 10;
+		public final Ability parent;
 		public IAuraConsumption auraCon = () -> {return 0;};
 		public ResourceLocation tex;
 
@@ -284,7 +299,7 @@ public abstract class Ability {
 		IAbilityData data  = AbilityDataCapability.get(p);
 		for(Ability abl : data.getSlotAbilities()) {
 			if(abl != null) {
-				if(abl.isInPassive()) {
+				if(abl.isInPassive() && !abl.equals(ModAbilities.ZETSU_ABILITY)) {
 					canRegen = false;
 				}
 			}
