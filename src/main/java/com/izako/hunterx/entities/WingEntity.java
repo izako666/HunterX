@@ -6,6 +6,9 @@ import com.izako.hunterx.Main;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.init.ModQuests;
+import com.izako.hunterx.izapi.NPCSpeech;
+import com.izako.hunterx.izapi.quest.IQuestGiver;
+import com.izako.hunterx.quests.speech.WingSpeech;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityClassification;
@@ -23,8 +26,10 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class WingEntity extends CreatureEntity {
+public class WingEntity extends CreatureEntity implements IQuestGiver{
 
 	@SuppressWarnings("unchecked")
 	public static EntityType<WingEntity> type = (EntityType<WingEntity>) EntityType.Builder
@@ -34,7 +39,6 @@ public class WingEntity extends CreatureEntity {
 
 	protected WingEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -61,27 +65,15 @@ public class WingEntity extends CreatureEntity {
 	  }
 	  return true;
    }
-   @Override
-   protected boolean processInteract(PlayerEntity player, Hand hand) {
-	      if(!ModQuests.HUNTEREXAM01.hasQuest(player)) {
-	    	  if(world.isRemote) {
-	    	  player.sendMessage(new StringTextComponent("Oh hello young traveler"));
-	    	  player.sendMessage(new StringTextComponent("You seem pretty strong, maybe you'd want to"));
-	    	  player.sendMessage(new StringTextComponent("apply for the hunter exam."));
-	    	  player.sendMessage(new StringTextComponent("too bad its registration will be over in 2 days..."));
-	    	  player.sendMessage(new StringTextComponent("Get to the hunter exam in 40 minutes.").applyTextStyle(TextFormatting.BLUE));
-	    	  }
-	    	  IHunterData data = HunterDataCapability.get(player);
-	    	  data.giveQuest(ModQuests.HUNTEREXAM01.getId(), 0);
-	    	  return true;
-
-
-	      }
-	      return false;
-	   }
 
 	@Override
 	public boolean canDespawn(double d) {
 		return true;
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	@Override
+	public NPCSpeech getSpeech() {
+		return new WingSpeech();
 	}
 }
