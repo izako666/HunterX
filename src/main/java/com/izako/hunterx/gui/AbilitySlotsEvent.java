@@ -120,11 +120,11 @@ public class AbilitySlotsEvent {
 		
 		mc.getTextureManager().bindTexture(NENBAR);
 		GlStateManager.pushMatrix();
-		GuiUtils.drawTexturedModalRect(32, (int) (height - 38), 10, 44, 146, 38, 0);
+		GuiUtils.drawTexturedModalRect(32, (int) (height - 48), 10, 44, 146, 46, 0);
 		if(data.getAuraColor() != null) {
-		GlStateManager.color3f(data.getAuraColor().getRed(), data.getAuraColor().getGreen(), data.getAuraColor().getBlue());
+		GlStateManager.color3f(data.getAuraColor().getRed() / 255.0f, data.getAuraColor().getGreen() / 255.0f, data.getAuraColor().getBlue() / 255.0f);
 		}
-		GuiUtils.drawTexturedModalRect(54, (int) (height + 5 - 38), 32, 6, (data.getCurrentNen() * 114) / data.getNenCapacity(), 38, 0);
+		GuiUtils.drawTexturedModalRect(54, (int) (height + 5 - 44), 32, 6, (data.getCurrentNen() * 114) / data.getNenCapacity(), 38, 0);
 	    GlStateManager.color3f(1f, 1f, 1f);
 	    GlStateManager.popMatrix();
 	}

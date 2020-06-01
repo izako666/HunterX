@@ -91,7 +91,7 @@ public abstract class Ability {
 					((PassiveAbility) this).onStartPassive(p);
 					tempAbilities.forEach((a) -> {
 						if(!a.equals(this)) {
-						a.endAbility(p);
+						a.stopAbility();
 						}
 					});
 					
@@ -106,7 +106,9 @@ public abstract class Ability {
 			case ONUSE:
 				this.use(p);
 				this.setCooldown(this.props.maxCooldown);
-				this.consumeAura(p);
+				if(!this.consumeAura(p)) {
+					this.stopAbility();
+				}
 				break;
 			}
 
@@ -132,6 +134,7 @@ public abstract class Ability {
 			this.setCharging(false);
 			this.setChargingTimer(0);
 			this.setCooldown(this.props.maxCooldown);
+			((ChargeableAbility) this).onEndCharging(p);
 			break;
 		case ONUSE:
 			this.setCooldown(this.props.maxCooldown);
@@ -164,7 +167,7 @@ public abstract class Ability {
 		}
 		return false;
 	}
-	public void consumeAura(PlayerEntity p) {
+	public boolean consumeAura(PlayerEntity p) {
 		IAbilityData data = AbilityDataCapability.get(p);
 		int amount = this.props.auraCon.getAmount();
 		switch(this.props.conType) {
@@ -172,24 +175,63 @@ public abstract class Ability {
 		case PERCENTAGE:
 			if(data.getCurrentNen() - (amount * 100) / data.getNenCapacity() >= 0) {
 			data.setCurrentNen(data.getCurrentNen() - (amount * 100) / data.getNenCapacity());
+			 return true;
 			} else {
-				data.setCurrentNen(0);
-				this.endAbility(p);
+             return false;
 			}
-			break;
 		case VALUE:
 			if(data.getCurrentNen() - amount >= 0) {
 			data.setCurrentNen(data.getCurrentNen() - amount);
+			return true;
 			} else {
-				data.setCurrentNen(0);
-				this.endAbility(p);
+				return false;
 			}
-			break;
 		case NONE:
-			break;
+			return true;
 		}
+		return true;
 	}
 
+	//this halts the ability completely without calling any of the onEnd 
+	//logic, used for when you haven't enough aura
+	public void stopAbility() {
+		switch(this.props.type) {
+		
+		case PASSIVE:
+			this.setInPassive(false);
+			this.setPassiveTimer(this.props.maxPassive);
+			this.setCooldown(this.props.maxCooldown);
+		   break;
+		case CHARGING:
+			this.setCharging(false);
+			this.setChargingTimer(0);
+			this.setCooldown(this.props.maxCooldown);
+			break;
+		case ONUSE:
+			this.setCooldown(this.props.maxCooldown);
+			break;
+		}
+
+		
+	}
+	
+	//used for rendering syncing atm
+	public void initiateAbility() {
+		switch(this.props.type) {
+		
+		case PASSIVE:
+			this.setInPassive(true);
+			this.setPassiveTimer(this.props.maxPassive);
+		   break;
+		case CHARGING:
+			this.setCharging(true);
+			break;
+		case ONUSE:
+			break;
+		}
+
+
+	}
 	// setters and getters
 	public int getCooldown() {
 		return cooldown;
@@ -305,6 +347,20 @@ public abstract class Ability {
 			}
 		}
 		return canRegen;
+	}
+
+	public boolean isActive() {
+		switch(this.props.type) {
+		
+		case PASSIVE:
+		   return this.isInPassive();
+		case CHARGING:
+			return this.isCharging();
+		case ONUSE:
+         return false;
+		}
+
+		return false;
 	}
 
 }

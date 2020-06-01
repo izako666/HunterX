@@ -5,18 +5,24 @@ import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.IHandOverlay;
 import com.izako.hunterx.izapi.ability.PunchAbility;
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
 
-import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraftforge.fml.network.PacketDistributor;
 
-public class KoAbility extends PunchAbility implements IHandOverlay{
+public class KoAbility extends PunchAbility implements IHandOverlay {
 
 	private boolean queuedAuraConsumption = false;
+	private boolean isInitialAuraConsumption = false;
+
 	public KoAbility() {
-		this.props = new Ability.Properties(this).setConsumptionType(AuraConsumptionType.PERCENTAGE).setAuraConsumption(this::consumeAura).setAbilityType(AbilityType.PASSIVE).setMaxPassive(Integer.MAX_VALUE);
+		this.props = new Ability.Properties(this).setConsumptionType(AuraConsumptionType.PERCENTAGE)
+				.setAuraConsumption(this::consumeAura).setAbilityType(AbilityType.PASSIVE)
+				.setMaxPassive(Integer.MAX_VALUE);
 	}
+
 	@Override
 	public String getId() {
 		return "ko";
@@ -28,16 +34,38 @@ public class KoAbility extends PunchAbility implements IHandOverlay{
 	}
 
 	@Override
+	public void onStartPassive(PlayerEntity p) {
+		this.queuedAuraConsumption = true;
+		this.isInitialAuraConsumption = true;
+		if(!p.world.isRemote()) {
+		ModidPacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), true));
+		}
+		}
+
+	@Override
 	public float onPunch(PlayerEntity p, LivingEntity target) {
 		IAbilityData data = AbilityDataCapability.get(p);
 		this.queuedAuraConsumption = true;
 		return (data.getNenCapacity() * 0.5f) / 5;
 	}
 
+	@Override
+	public void onEndPassive(PlayerEntity p) {
+		if(!p.world.isRemote()) {
+
+		ModidPacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), false));
+		}
+		}
 	private int consumeAura() {
-		if(queuedAuraConsumption) {
+		if (queuedAuraConsumption) {
 			queuedAuraConsumption = false;
+			if (isInitialAuraConsumption) {
+				isInitialAuraConsumption = false;
+				return 10;
+			} else {
 			return 5;
+			}
+
 		}
 		return 0;
 	}

@@ -4,18 +4,18 @@ import java.util.UUID;
 
 import com.izako.hunterx.Main;
 import com.izako.hunterx.izapi.ability.Ability;
+import com.izako.hunterx.izapi.ability.IOnPlayerRender;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
-import com.izako.wypi.WyHelper;
-import com.izako.wypi.particles.GenericParticleData;
+import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
 
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.server.ServerWorld;
 
-public class TenAbility extends PassiveAbility{
+public class TenAbility extends PassiveAbility implements IOnPlayerRender{
 
 	public TenAbility() {
 
@@ -30,7 +30,10 @@ public class TenAbility extends PassiveAbility{
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(modifierUUID) == null) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(mod);
 		}
-	}
+		if(!p.world.isRemote()) {
+		ModidPacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), true));
+		}
+		}
 
 	@Override
 	public void duringPassive(PlayerEntity p) {
@@ -44,6 +47,9 @@ public class TenAbility extends PassiveAbility{
 	@Override
 	public void onEndPassive(PlayerEntity p) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).removeModifier(modifierUUID);
+		if(!p.world.isRemote()) {
+		ModidPacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), false));
+		}
 	}
 
 	@Override

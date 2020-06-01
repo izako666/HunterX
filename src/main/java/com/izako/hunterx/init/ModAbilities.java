@@ -33,4 +33,13 @@ public class ModAbilities {
 		}
 		return tempAbl;
 	}
+	
+	public static Ability getAbilityOfId(String id) {
+		for(Ability abl : ABILITY_INSTANCES) {
+			if(abl.getId().equalsIgnoreCase(id)) {
+				return abl;
+			}
+		}
+		return null;
+	}
 }

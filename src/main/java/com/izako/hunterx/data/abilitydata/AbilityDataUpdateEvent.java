@@ -26,7 +26,6 @@ public class AbilityDataUpdateEvent {
 	public static void livingUpdate(LivingUpdateEvent e) {
 		if (e.getEntityLiving() instanceof PlayerEntity) {
 			PlayerEntity p = (PlayerEntity) e.getEntityLiving();
-			IHunterData datas = HunterDataCapability.get(p);
 			IAbilityData data = AbilityDataCapability.get(p);
 			for (int i = 0; i < 8; i++) {
 				Ability a = data.getAbilityInSlot(i);
@@ -44,21 +43,29 @@ public class AbilityDataUpdateEvent {
 									a.setCooldown(a.props.maxCooldown);
 									a.setChargingTimer(0);
 									ModidPacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot()));
-								} else if(a.getChargingTimer() >= a.props.maxCharging) {
+								} else if (a.getChargingTimer() >= a.props.maxCharging) {
 
-									((ChargeableAbility) a).onEndCharging(p);
-									a.setCooldown(a.props.maxCooldown);
-									a.setCharging(false);
-									a.setChargingTimer(0);
+									if (a.consumeAura(p)) {
+										((ChargeableAbility) a).onEndCharging(p);
+										a.setCooldown(a.props.maxCooldown);
+										a.setCharging(false);
+										a.setChargingTimer(0);
+									} else {
+										a.stopAbility();
+									}
+
 									ModidPacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot()));
 
 								}
 							}
 						}
-						if(a.getChargingTimer() < a.props.maxCharging) {
-							a.setChargingTimer(a.getChargingTimer() + 1);
-							((ChargeableAbility) a).duringCharging(p);
-							a.consumeAura(p);
+						if (a.getChargingTimer() < a.props.maxCharging) {
+							if (a.consumeAura(p)) {
+								a.setChargingTimer(a.getChargingTimer() + 1);
+								((ChargeableAbility) a).duringCharging(p);
+							} else {
+								a.stopAbility();
+							}
 						}
 					}
 					if (a.props.type == AbilityType.PASSIVE) {
@@ -74,20 +81,23 @@ public class AbilityDataUpdateEvent {
 								continue;
 
 							}
-							((PassiveAbility) a).duringPassive(p);
-							a.consumeAura(p);
+							if (a.consumeAura(p)) {
+								((PassiveAbility) a).duringPassive(p);
+							} else {
+								a.stopAbility();
+							}
 						}
 					}
 				}
 			}
-			if(data.getCurrentNen() < data.getNenCapacity()) {
-				if(Ability.canRegenAura(p)) {
-				if(p.ticksExisted % 100 == 0) {
-				data.setCurrentNen((int) (data.getCurrentNen() + (Math.ceil(data.getNenCapacity() / 200.0))));
+			if (data.getCurrentNen() < data.getNenCapacity()) {
+				if (Ability.canRegenAura(p)) {
+					if (p.ticksExisted % 100 == 0) {
+						data.setCurrentNen((int) (data.getCurrentNen() + (Math.ceil(data.getNenCapacity() / 200.0))));
+					}
 				}
-				}
-				}
-			
+			}
+
 		}
 		e.setResult(Result.DEFAULT);
 	}
