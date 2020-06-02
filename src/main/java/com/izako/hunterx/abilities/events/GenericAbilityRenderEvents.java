@@ -1,37 +1,11 @@
 package com.izako.hunterx.abilities.events;
 
-import java.lang.reflect.Method;
-
-import com.izako.hunterx.Main;
-import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
-import com.izako.hunterx.data.abilitydata.IAbilityData;
-import com.izako.hunterx.izapi.ability.IHandOverlay;
-import com.mojang.blaze3d.platform.GlStateManager;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.PlayerRenderer;
-import net.minecraft.client.renderer.entity.model.PlayerModel;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.HandSide;
-import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderSpecificHandEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-
-@OnlyIn(Dist.CLIENT)
-@Mod.EventBusSubscriber(modid = Main.MODID)
 public class GenericAbilityRenderEvents {
-
+/*
 	@SubscribeEvent
 	public static void renderFirstPersonHand(RenderSpecificHandEvent evt) {
 		//Yeah maybe fucking later idfk kill myself please
-/*
+
 		Minecraft mc = Minecraft.getInstance();
 		AbstractClientPlayerEntity clientPlayer = mc.player;
 		IAbilityData data = AbilityDataCapability.get(clientPlayer);
@@ -43,7 +17,7 @@ public class GenericAbilityRenderEvents {
 				}
 			}
 		}
-		*/
+		
 	}
 
 	private static void renderOverlay(RenderSpecificHandEvent evt, IAbilityData data, AbstractClientPlayerEntity clientPlayer) {
@@ -110,6 +84,6 @@ public class GenericAbilityRenderEvents {
 		      playermodel.bipedRightArm.render(0.0625F);
 		      playermodel.bipedRightArmwear.rotateAngleX = 0.0F;
 		      playermodel.bipedRightArmwear.render(0.0625F);
-		   }
+		   }*/
 
 }

@@ -2,16 +2,15 @@ package com.izako.hunterx.quests;
 
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
-import com.izako.hunterx.data.world.HunterWorldData;
+import com.izako.hunterx.izapi.quest.IAdditionalQuestData;
 import com.izako.hunterx.izapi.quest.Quest;
 import com.izako.hunterx.izapi.quest.QuestLine;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.nbt.CompoundNBT;
 
-public class HunterExam03 extends Quest{
+public class HunterExam03 extends Quest implements IAdditionalQuestData{
 
 	@Override
 	public String getId() {
@@ -69,11 +68,11 @@ public class HunterExam03 extends Quest{
 	public void giveQuest(PlayerEntity p) {
 		IHunterData data = HunterDataCapability.get(p);
 		data.giveQuest(this.getId(), 0);
-		if(!p.world.isRemote) {
-			HunterWorldData worlddata = HunterWorldData.get((ServerWorld) p.world);
-			worlddata.setPos(new BlockPos(p));
-		}
+		CompoundNBT questData = data.getOrCreateExtraQuestData(this);
+		questData.putDouble("posx", p.posX);
+		questData.putDouble("posy", p.posY);
+		questData.putDouble("posz", p.posZ);
+		
 	}
-
 
 }

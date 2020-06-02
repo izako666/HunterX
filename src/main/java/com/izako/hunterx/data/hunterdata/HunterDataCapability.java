@@ -1,6 +1,8 @@
 package com.izako.hunterx.data.hunterdata;
 
 import com.izako.hunterx.init.ModQuests;
+import com.izako.hunterx.izapi.quest.IAdditionalQuestData;
+import com.izako.hunterx.izapi.quest.Quest;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -32,7 +34,9 @@ public class HunterDataCapability {
 					instance.getQuests().forEach((k, v) -> {
 						props.putInt("quest" + k, v);
 					});
-				
+				instance.getExtraQuestData().forEach((k,v) -> {
+					props.put("extradata" + k, v);
+				});
 				return props;
 			}
 
@@ -51,6 +55,13 @@ public class HunterDataCapability {
 						String newK = k.substring(5, k.length());
 						instance.removeQuest(newK);
 						instance.giveQuest(newK, props.getInt(k));
+					}
+				});
+				
+				props.keySet().forEach((k) -> {
+					if(k.contains("extradata")) {
+						String newK = k.substring(9);
+						instance.getExtraQuestData().put(newK, props.getCompound(k));
 					}
 				});
 			}

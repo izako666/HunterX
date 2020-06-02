@@ -20,7 +20,7 @@ public class KoAbility extends PunchAbility implements IHandOverlay {
 	public KoAbility() {
 		this.props = new Ability.Properties(this).setConsumptionType(AuraConsumptionType.PERCENTAGE)
 				.setAuraConsumption(this::consumeAura).setAbilityType(AbilityType.PASSIVE)
-				.setMaxPassive(Integer.MAX_VALUE);
+				.setMaxPassive(Integer.MAX_VALUE).setMaxCooldown(20 * 8);
 	}
 
 	@Override
@@ -46,7 +46,8 @@ public class KoAbility extends PunchAbility implements IHandOverlay {
 	public float onPunch(PlayerEntity p, LivingEntity target) {
 		IAbilityData data = AbilityDataCapability.get(p);
 		this.queuedAuraConsumption = true;
-		return (data.getNenCapacity() * 0.5f) / 5;
+		float amount = (data.getNenCapacity() * 0.5f) / 5;
+		return amount;
 	}
 
 	@Override

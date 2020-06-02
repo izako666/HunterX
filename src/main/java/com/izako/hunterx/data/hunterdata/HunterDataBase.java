@@ -2,8 +2,9 @@ package com.izako.hunterx.data.hunterdata;
 
 import java.util.HashMap;
 
-import com.izako.hunterx.init.ModQuests;
 import com.izako.hunterx.izapi.quest.Quest;
+
+import net.minecraft.nbt.CompoundNBT;
 
 public class HunterDataBase implements IHunterData {
 
@@ -14,6 +15,7 @@ public class HunterDataBase implements IHunterData {
 	boolean isHunter = false;
 	boolean isCharMade = false;
 	HashMap<String, Integer> quests = new HashMap<>();
+	HashMap<String, CompoundNBT> EXTRAQUESTDATA = new HashMap<>();
 
 	@Override
 	public double getHealthStat() {
@@ -139,6 +141,41 @@ public class HunterDataBase implements IHunterData {
 	@Override
 	public void setIsCharacterMade(boolean val) {
 		isCharMade = val;
+	}
+
+	@Override
+	public CompoundNBT getExtraQuestData(String id) {
+		return EXTRAQUESTDATA.get(id);
+	}
+
+	@Override
+	public CompoundNBT getExtraQuestData(Quest quest) {
+		return EXTRAQUESTDATA.get(quest.getId());
+	}
+
+	@Override
+	public HashMap<String, CompoundNBT> getExtraQuestData() {
+		return EXTRAQUESTDATA;
+	}
+
+	@Override
+	public CompoundNBT getOrCreateExtraQuestData(Quest quest) {
+		CompoundNBT nbt = this.getExtraQuestData(quest);
+		if(nbt == null) {
+			this.EXTRAQUESTDATA.put(quest.getId(), new CompoundNBT());
+			nbt = this.getExtraQuestData(quest);
+		}
+		return nbt;
+	}
+
+	@Override
+	public CompoundNBT getOrCreateExtraQuestData(String id) {
+		CompoundNBT nbt = this.getExtraQuestData(id);
+		if(nbt == null) {
+			this.EXTRAQUESTDATA.put(id, new CompoundNBT());
+			nbt = this.getExtraQuestData(id);
+		}
+		return nbt;
 	}
 
 

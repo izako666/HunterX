@@ -15,7 +15,6 @@ public class HunterButton extends Button {
 		if (isQuest == true) {
 			this.questID = text;
 			this.name = ModQuests.getInstance(this.questID).getName();
-
 		} else {
 			this.name = text;
 		}

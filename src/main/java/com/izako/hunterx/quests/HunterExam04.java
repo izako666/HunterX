@@ -1,5 +1,11 @@
 package com.izako.hunterx.quests;
 
+import com.izako.hunterx.abilities.basics.KoAbility;
+import com.izako.hunterx.abilities.basics.RenAbility;
+import com.izako.hunterx.abilities.basics.TenAbility;
+import com.izako.hunterx.abilities.basics.ZetsuAbility;
+import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
+import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.entities.HanzoEntity;
@@ -101,12 +107,17 @@ public class HunterExam04 extends Quest{
 	@Override
 	public void finishQuest(PlayerEntity p) {
 		IHunterData data = HunterDataCapability.get(p);
+		IAbilityData abilityData = AbilityDataCapability.get(p);
 		data.finishQuest(this.getId());
 		ItemStack stack = new ItemStack(ModItems.HUNTER_LICENSE);
 		stack.setDisplayName(new StringTextComponent(p.getDisplayName().getFormattedText() + "'s License"));
 		if(!p.addItemStackToInventory(stack)) {
 			p.entityDropItem(stack);
 		}
+		abilityData.giveAbility(new TenAbility());
+		abilityData.giveAbility(new ZetsuAbility());
+		abilityData.giveAbility(new KoAbility());
+		abilityData.giveAbility(new RenAbility());
 	}
 
 }

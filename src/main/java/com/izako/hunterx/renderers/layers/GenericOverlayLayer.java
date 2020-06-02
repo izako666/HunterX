@@ -33,6 +33,7 @@ public class GenericOverlayLayer extends LayerRenderer<AbstractClientPlayerEntit
 		
 		IAbilityData abilities = AbilityDataCapability.get(entity);
 		IAbilityData clientData = AbilityDataCapability.get(Minecraft.getInstance().player);
+		float layerScale = 1.05f;
 		for(Ability abl : abilities.getSlotAbilities()) {
 			if(abl == null)
 				continue;
@@ -41,7 +42,10 @@ public class GenericOverlayLayer extends LayerRenderer<AbstractClientPlayerEntit
 				
 			} else if(abl.equals(ModAbilities.ZETSU_ABILITY) && abl.isInPassive() && entity.getUniqueID() == Minecraft.getInstance().player.getUniqueID()){
 				color = Color.BLACK;
-			}else {
+			}else if(abl.equals(ModAbilities.REN_ABILITY) && abl.isInPassive()) {
+				color = abilities.getAuraColor();
+				layerScale = 1.1f;
+			} else {
 				continue;
 			}
 	    GlStateManager.pushMatrix();
@@ -60,7 +64,7 @@ public class GenericOverlayLayer extends LayerRenderer<AbstractClientPlayerEntit
 
 	                    GlStateManager.color4f((float)(color.getRed()) / 255, (float)(color.getGreen()) / 255 , ((float)color.getBlue()) / 255, 0.2f);
 
-	                   GlStateManager.scaled(1.05, 1.04, 1.05);
+	                   GlStateManager.scaled(layerScale, layerScale - 0.01f, layerScale);
 
 	                    renderer.getEntityModel().render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 

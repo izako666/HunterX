@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import com.izako.hunterx.izapi.quest.Quest;
 
+import net.minecraft.nbt.CompoundNBT;
+
 public interface IHunterData {
 
 	double getHealthStat();
@@ -32,6 +34,12 @@ public interface IHunterData {
 	void removeQuest(String str);
 	Integer getProgress(String str);
 	void setProgress(String str, Integer value);
+	CompoundNBT getExtraQuestData(String id);
+	CompoundNBT getExtraQuestData(Quest quest);
+	HashMap<String, CompoundNBT> getExtraQuestData();
+	CompoundNBT getOrCreateExtraQuestData(Quest quest);
+	CompoundNBT getOrCreateExtraQuestData(String id);
+
 	
 	
 

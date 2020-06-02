@@ -5,13 +5,17 @@ import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.PunchAbility;
+import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.packets.PunchAbilityPacket;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.network.NetworkDirection;
 
 @Mod.EventBusSubscriber(modid = Main.MODID)
 public class GenericAbilityLogicEvents {
@@ -34,7 +38,7 @@ public class GenericAbilityLogicEvents {
 				if (ability instanceof PunchAbility && ability.isInPassive() && heldItem.isEmpty())
 				{
 					float damage = ((PunchAbility) ability).onPunch(player, target);
-					
+					ModidPacketHandler.INSTANCE.sendTo(new PunchAbilityPacket(ability.getId(),target), ((ServerPlayerEntity)player).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
 					if(damage < 0)
 						event.setCanceled(true);
 					

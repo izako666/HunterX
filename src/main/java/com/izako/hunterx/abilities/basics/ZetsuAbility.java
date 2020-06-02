@@ -15,7 +15,7 @@ public class ZetsuAbility extends PassiveAbility implements IOnPlayerRender{
 	public ZetsuAbility() {
 
 		super();
-		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxCooldown(10).setMaxPassive(Integer.MAX_VALUE);
+		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxCooldown(10).setMaxPassive(Integer.MAX_VALUE).setMaxCooldown(0);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class ZetsuAbility extends PassiveAbility implements IOnPlayerRender{
 	@Override
 	public void duringPassive(PlayerEntity p) {
 		IAbilityData data = AbilityDataCapability.get(p);
-		data.setCurrentNen(data.getCurrentNen() - data.getNenCapacity() / 100);
+		data.setCurrentNen(data.getCurrentNen() + data.getNenCapacity() / 100);
 	}
 	
 	@Override

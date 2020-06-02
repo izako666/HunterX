@@ -328,7 +328,6 @@ public class HunterScreen extends Screen {
 
 								@Override
 								public void onPress(Button but) {
-									// TODO Auto-generated method stub
 									screen.currentQuest = ModQuests.getInstance(((HunterButton) but).questID);
 
 								}

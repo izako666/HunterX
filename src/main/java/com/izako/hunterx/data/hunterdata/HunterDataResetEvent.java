@@ -54,6 +54,9 @@ public class HunterDataResetEvent {
 			oldData.getQuests().forEach((k, v) -> {
 				data.giveQuest(k, v);
 			});
+			oldData.getExtraQuestData().forEach((k, v) -> {
+				data.getExtraQuestData().put(k, v);
+			});
 		
 	}
 

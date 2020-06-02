@@ -3,16 +3,15 @@ package com.izako.hunterx.events;
 import com.izako.hunterx.Main;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
-import com.izako.hunterx.data.world.HunterWorldData;
-import com.izako.hunterx.init.ModItems;
 import com.izako.hunterx.init.ModQuests;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -46,10 +45,10 @@ public class QuestEvents {
 				}
 				if (data.getProgress(ModQuests.HUNTEREXAM03.getId()) == 100) {
 					if (e.getEntityLiving().world instanceof ServerWorld) {
-						HunterWorldData worlddata = HunterWorldData.get((ServerWorld) e.getEntityLiving().world);
-						int distance = (int) e.getEntityLiving().getDistanceSq(worlddata.getPos().getX(),
-								worlddata.getPos().getY(), worlddata.getPos().getZ());
+						CompoundNBT nbt = data.getOrCreateExtraQuestData(ModQuests.HUNTEREXAM03);
+						BlockPos sourcePos = new BlockPos(nbt.getDouble("posx"), nbt.getDouble("posy"), nbt.getDouble("posz"));
 
+						double distance = Math.sqrt(sourcePos.distanceSq(p.getPosition()));
 						if (distance > 100) {
 							ModQuests.HUNTEREXAM03.finishQuest(p);
 							p.sendMessage(

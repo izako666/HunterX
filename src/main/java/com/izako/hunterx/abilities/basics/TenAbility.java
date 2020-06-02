@@ -20,7 +20,7 @@ public class TenAbility extends PassiveAbility implements IOnPlayerRender{
 	public TenAbility() {
 
 		super();
-		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setConsumptionType(AuraConsumptionType.PERCENTAGE).setMaxCooldown(10).setMaxPassive(Integer.MAX_VALUE).setAuraConsumption(this::auraConsumptionEvent);
+		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setConsumptionType(AuraConsumptionType.PERCENTAGE).setMaxCooldown(10).setMaxPassive(Integer.MAX_VALUE).setAuraConsumption(this::auraConsumptionEvent).setMaxCooldown(20 * 4);
 	}
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Main.MODID, "textures/items/card.png");
 	public static final UUID modifierUUID = UUID.fromString("22560518-3370-4b84-a7a9-22a240cf3232");

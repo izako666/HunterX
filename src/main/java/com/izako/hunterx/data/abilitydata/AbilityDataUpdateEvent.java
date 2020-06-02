@@ -92,7 +92,7 @@ public class AbilityDataUpdateEvent {
 			}
 			if (data.getCurrentNen() < data.getNenCapacity()) {
 				if (Ability.canRegenAura(p)) {
-					if (p.ticksExisted % 100 == 0) {
+					if (p.ticksExisted % 20 == 0) {
 						data.setCurrentNen((int) (data.getCurrentNen() + (Math.ceil(data.getNenCapacity() / 200.0))));
 					}
 				}
