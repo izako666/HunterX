@@ -16,7 +16,6 @@ public class HanzoRenderer extends BipedRenderer<HanzoEntity, BipedModel<HanzoEn
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Main.MODID, "textures/entity/hanzo.png");
 	public HanzoRenderer(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new BipedModel<HanzoEntity>(1f, 0.0f, 64, 64), 0.5f);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

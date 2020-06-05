@@ -118,6 +118,7 @@ public class HunterExam04 extends Quest{
 		abilityData.giveAbility(new ZetsuAbility());
 		abilityData.giveAbility(new KoAbility());
 		abilityData.giveAbility(new RenAbility());
+		abilityData.setIsNenUser(true);
 	}
 
 }

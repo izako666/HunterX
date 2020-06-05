@@ -26,7 +26,7 @@ public class TenAbility extends PassiveAbility implements IOnPlayerRender{
 	public static final UUID modifierUUID = UUID.fromString("22560518-3370-4b84-a7a9-22a240cf3232");
 	@Override
 	public void onStartPassive(PlayerEntity p) {
-		AttributeModifier mod = new AttributeModifier(modifierUUID, "tenmodifier", 8, Operation.ADDITION);
+		AttributeModifier mod = new AttributeModifier(modifierUUID, "tenmodifier", 15, Operation.ADDITION);
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(modifierUUID) == null) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(mod);
 		}
@@ -38,7 +38,7 @@ public class TenAbility extends PassiveAbility implements IOnPlayerRender{
 	@Override
 	public void duringPassive(PlayerEntity p) {
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(modifierUUID) == null) {
-			AttributeModifier mod = new AttributeModifier(modifierUUID, "tenmodifier", 8, Operation.ADDITION);
+			AttributeModifier mod = new AttributeModifier(modifierUUID, "tenmodifier", 15, Operation.ADDITION);
 			p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(mod);
 
 		}

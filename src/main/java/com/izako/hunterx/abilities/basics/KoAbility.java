@@ -46,8 +46,7 @@ public class KoAbility extends PunchAbility implements IHandOverlay {
 	public float onPunch(PlayerEntity p, LivingEntity target) {
 		IAbilityData data = AbilityDataCapability.get(p);
 		this.queuedAuraConsumption = true;
-		float amount = (data.getNenCapacity() * 0.5f) / 5;
-		return amount;
+		return 30;
 	}
 
 	@Override

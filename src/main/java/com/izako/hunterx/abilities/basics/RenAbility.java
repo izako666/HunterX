@@ -42,8 +42,8 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender {
 	
 
 	public void onStartPassive(PlayerEntity p) {
-		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", 15, Operation.ADDITION);
-		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack", 10, Operation.ADDITION);
+		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", 25, Operation.ADDITION);
+		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack", 20, Operation.ADDITION);
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(defenseModifierID) == null) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(defenseMod);
 		}
@@ -57,8 +57,8 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender {
 
 	@Override
 	public void duringPassive(PlayerEntity p) {
-		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", 15, Operation.ADDITION);
-		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack", 10, Operation.ADDITION);
+		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", 25, Operation.ADDITION);
+		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack", 20, Operation.ADDITION);
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(defenseModifierID) == null) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(defenseMod);
 		}
@@ -95,7 +95,7 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender {
 	
 	private int auraConsumptionEvent() {
 		if(this.getPassiveTimer() % 100 == 0) {
-			return 1;
+			return 10;
 		}
 		return 0;
 	}

@@ -63,6 +63,8 @@ public class SyncAbilityRenderingPacket {
 			PlayerEntity p = Minecraft.getInstance().player;
 			PlayerEntity abilityUser = p.world.getPlayerByUuid(msg.player);
 			IAbilityData data = AbilityDataCapability.get(abilityUser);
+			IAbilityData clientData = AbilityDataCapability.get(p);
+			if(clientData.isNenUser()) {
             Ability abl = data.getSlotAbility(ModAbilities.getAbilityOfId(msg.id));
             try {
 			if(msg.turnOn) {
@@ -78,7 +80,7 @@ public class SyncAbilityRenderingPacket {
             		abl.stopAbility();
             	}
             }
-			
+			}
 		}
 	}
 

@@ -41,6 +41,7 @@ public class QuestScreen extends Screen {
 	public boolean renderQuestAcceptanceScreen = false;
 	public static final int defaultChatboxStringLength = 240;
 	public NPCSpeech speech;
+	public FlickeringString skipString = null;
 
 	public QuestScreen(IQuestGiver qgiver) {
 		super(new StringTextComponent(""));
@@ -59,6 +60,7 @@ public class QuestScreen extends Screen {
 		GuiUtils.drawTexturedModalRect(width / 2 - 128, height - 50, 0, 200, 256, 80, 0);
 		if (this.currentString != null) {
 			this.currentString.render(width / 2 + 10 - 128, height - 30);
+			this.skipString.render(width / 2 + 30 , height - 10);
 		}
 		} else {
 			this.renderQuestAcceptScreen(mouseX,mouseY,p_render_3_);
@@ -81,6 +83,10 @@ public class QuestScreen extends Screen {
 		if (currentString == null && sequencedStrings != null && sequencedStrings[this.stringIndex] != null) {
 			currentString = IZAHelper.getNewSqStringInstance(sequencedStrings[this.stringIndex]);
 			currentString.event = this::onStringEnd;
+		}
+		if(skipString == null) {
+			skipString = new FlickeringString("click anywhere to skip", 140).setScale(0.7f);
+
 		}
 	}
 

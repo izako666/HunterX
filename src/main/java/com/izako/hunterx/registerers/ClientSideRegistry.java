@@ -47,14 +47,12 @@ public class ClientSideRegistry {
 
 			@Override
 			public SpriteRenderer<CardEntity> createRenderFor(EntityRendererManager manager) {
-				// TODO Auto-generated method stub
 				return new SpriteRenderer<CardEntity>(manager, Minecraft.getInstance().getItemRenderer());
 			}});
 		RenderingRegistry.registerEntityRenderingHandler(NeedleEntity.class, new IRenderFactory<NeedleEntity>() {
 
 			@Override
 			public SpriteRenderer<NeedleEntity> createRenderFor(EntityRendererManager manager) {
-				// TODO Auto-generated method stub
 				return new SpriteRenderer<NeedleEntity>(manager, Minecraft.getInstance().getItemRenderer());
 			}});
 		
@@ -62,7 +60,6 @@ public class ClientSideRegistry {
 
 			@Override
 			public ThugRenderer createRenderFor(EntityRendererManager manager) {
-				// TODO Auto-generated method stub
 				return new ThugRenderer(manager);
 			}
 			
@@ -71,7 +68,6 @@ public class ClientSideRegistry {
 
 			@Override
 			public ExaminerRenderer createRenderFor(EntityRendererManager manager) {
-				// TODO Auto-generated method stub
 				return new ExaminerRenderer(manager);
 			}
 			
@@ -81,7 +77,6 @@ public class ClientSideRegistry {
 
 			@Override
 			public KirikoRenderer<KirikoEntity, KirikoModel<KirikoEntity>> createRenderFor(EntityRendererManager manager) {
-				// TODO Auto-generated method stub
 				return new KirikoRenderer<KirikoEntity, KirikoModel<KirikoEntity>>(manager, new KirikoModel<KirikoEntity>());
 			}
 			
