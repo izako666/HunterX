@@ -12,10 +12,12 @@ import com.izako.hunterx.init.ModAbilities;
 import com.izako.hunterx.init.ModKeybindings;
 import com.izako.hunterx.init.ModQuests;
 import com.izako.hunterx.init.ModStructures;
-import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.registerers.ClientSideRegistry;
 import com.izako.wypi.WyRegistry;
 
+import net.minecraft.command.arguments.ArgumentSerializer;
+import net.minecraft.command.arguments.ArgumentTypes;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.IFeatureConfig;
@@ -38,7 +40,7 @@ public final class Main {
 
 	public Main() {
 		EventsHandler.registerEvents();
-		ModidPacketHandler.registerPackets();
+		PacketHandler.registerPackets();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
         MinecraftForge.EVENT_BUS.addListener(this::serverStart);
@@ -55,11 +57,12 @@ public final class Main {
 	private  void commonSetup(FMLCommonSetupEvent event) {
 		EventsHandler.registerEvents();
 		ModAbilities.register();
-		AbilityArgument.register();
 		HunterDataCapability.register();
 		AbilityDataCapability.register();
 		ModQuests.questRegister();
-		
+		ArgumentTypes.register("hxhability", AbilityArgument.class, new ArgumentSerializer<>(AbilityArgument::ability));
+		AbilityArgument.register();
+
         ForgeRegistries.BIOMES.getValues().stream().forEach((biome -> {
             if (biome.getCategory() == Biome.Category.FOREST || biome.getCategory() == Biome.Category.PLAINS) {
                 biome.addStructure(ModStructures.BLIMP, IFeatureConfig.NO_FEATURE_CONFIG);

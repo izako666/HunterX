@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
-import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.PacketHandler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -54,7 +54,7 @@ INBT data;
 				} else {
 					PlayerEntity p = ctx.get().getSender();
 					IAbilityData data = AbilityDataCapability.get(p);
-					ModidPacketHandler.INSTANCE.sendTo(new AbilityUpdatePacket(data, true), ((ServerPlayerEntity) p).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+					PacketHandler.INSTANCE.sendTo(new AbilityUpdatePacket(data, true), ((ServerPlayerEntity) p).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 				}
 			});
 		} 

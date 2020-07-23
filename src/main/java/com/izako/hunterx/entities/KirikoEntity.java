@@ -23,6 +23,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
@@ -69,11 +70,6 @@ public class KirikoEntity extends ZombieEntity{
 	@Override
     protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
 		 
-		   }
-	@Override
-	   public boolean canSpawn(IWorld worldIn, SpawnReason spawnReasonIn) {
-		
-		      return this.world.getLightValue(this.getPosition()) == 0 && this.world.getDifficulty() != Difficulty.PEACEFUL;
 		   }
 
 	@Override

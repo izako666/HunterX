@@ -31,7 +31,7 @@ public class ExaminerSpeech extends NPCSpeech {
 	public static SequencedString SQSTR15 = new SequencedString("This years hunter exam hasn't started yet.", QuestScreen.defaultChatboxStringLength,20 * 20).setTicksFromLength(true);
 
 	public static SequencedString[] SQSTRS01 = new SequencedString[] {  SQSTR03, SQSTR04, SQSTR05 };
-	public static SequencedString[] SQSTRS02 = new SequencedString[] { SQSTR07, SQSTR08, SQSTR09, SQSTR10 };
+	public static SequencedString[] SQSTRS02 = new SequencedString[] {  SQSTR08, SQSTR09, SQSTR10 };
 	public static SequencedString[] SQSTRS03 = new SequencedString[] { SQSTR11, SQSTR12, SQSTR13 };
 
 	@Override

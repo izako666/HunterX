@@ -7,7 +7,7 @@ import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
-import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.CharacterInitPacket;
 import com.izako.wypi.WyHelper;
 
@@ -138,7 +138,7 @@ public class CharacterCreatorScreen extends Screen {
 		IAbilityData ablData = AbilityDataCapability.get(this.getMinecraft().player);
 	    data.setIsCharacterMade(true);
 	    ablData.setAuraColor(currentRed,currentGreen,currentBlue);
-	    ModidPacketHandler.INSTANCE.sendToServer(new CharacterInitPacket(data, ablData));
+	    PacketHandler.INSTANCE.sendToServer(new CharacterInitPacket(data, ablData));
 	    this.onClose();
 	}
 }

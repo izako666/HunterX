@@ -25,14 +25,16 @@ public class SetQuestPacket {
 	}
 	
 	public void encode(PacketBuffer buf) {
-
+		buf.writeInt(ID.length());
 		buf.writeString(ID);
 		buf.writeBoolean(give);
 	}
 	
 	public static SetQuestPacket decode(PacketBuffer buf) {
 		SetQuestPacket msg = new SetQuestPacket();
-		msg.ID = buf.readString();
+		int length = buf.readInt();
+		msg.ID = buf.readString(length);
+		
 		msg.give = buf.readBoolean();
 		return msg;
 	}

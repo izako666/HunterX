@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
-import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.PacketHandler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -56,7 +56,7 @@ public class StatsUpdatePacket {
 
 					PlayerEntity p = ctx.get().getSender();
 					IHunterData data = HunterDataCapability.get(p);
-					ModidPacketHandler.INSTANCE.sendTo(new StatsUpdatePacket(data, true), ((ServerPlayerEntity) p).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+					PacketHandler.INSTANCE.sendTo(new StatsUpdatePacket(data, true), ((ServerPlayerEntity) p).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 				}
 
 			});

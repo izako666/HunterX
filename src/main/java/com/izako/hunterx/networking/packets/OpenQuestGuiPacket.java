@@ -3,6 +3,7 @@ package com.izako.hunterx.networking.packets;
 import java.util.function.Supplier;
 
 import com.izako.hunterx.gui.QuestScreen;
+import com.izako.hunterx.gui.SequencedString;
 import com.izako.hunterx.izapi.quest.IQuestGiver;
 
 import net.minecraft.client.Minecraft;
@@ -55,7 +56,10 @@ public class OpenQuestGuiPacket {
 
 			Entity e = Minecraft.getInstance().world.getEntityByID(msg.entity);
 			IQuestGiver qgiver = (IQuestGiver) e;
+			SequencedString[] speech = qgiver.getSpeech().getSpeechFromState(p);
+			if(speech != null) {
 			Minecraft.getInstance().displayGuiScreen(new QuestScreen(qgiver));
+			}
 		}
 	}
 }

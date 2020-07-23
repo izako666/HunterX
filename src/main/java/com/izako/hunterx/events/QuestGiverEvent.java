@@ -5,7 +5,7 @@ import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.gui.SequencedString;
 import com.izako.hunterx.izapi.quest.IQuestGiver;
-import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.OpenQuestGuiPacket;
 import com.izako.hunterx.networking.packets.StatsUpdatePacket;
 
@@ -27,11 +27,9 @@ public class QuestGiverEvent {
 			if(!e.getPlayer().world.isRemote) {
 			IHunterData data = HunterDataCapability.get(e.getPlayer());
 			IQuestGiver giver = (IQuestGiver) e.getTarget();
-			ModidPacketHandler.INSTANCE.sendTo(new StatsUpdatePacket(data,false), ((ServerPlayerEntity) e.getPlayer()).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
-			SequencedString[] speech = giver.getSpeech().getSpeechFromState(e.getPlayer());
-			if(speech != null) {
-			ModidPacketHandler.INSTANCE.sendTo(new OpenQuestGuiPacket(e.getTarget()), ((ServerPlayerEntity) e.getPlayer()).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
-			}
+			PacketHandler.INSTANCE.sendTo(new StatsUpdatePacket(data,false), ((ServerPlayerEntity) e.getPlayer()).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+			PacketHandler.INSTANCE.sendTo(new OpenQuestGuiPacket(e.getTarget()), ((ServerPlayerEntity) e.getPlayer()).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+			
 			}
 		}
 	}

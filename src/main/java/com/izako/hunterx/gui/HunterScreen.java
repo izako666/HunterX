@@ -13,7 +13,7 @@ import com.izako.hunterx.init.ModItems;
 import com.izako.hunterx.init.ModQuests;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.quest.Quest;
-import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.AbilityUpdatePacket;
 
 import net.minecraft.client.Minecraft;
@@ -440,7 +440,7 @@ public class HunterScreen extends Screen {
 					 }
 					 if(flag == true) {
 				 data.putAbilityInSlot(this.currentAbility, i - 1);
-				 ModidPacketHandler.INSTANCE.sendToServer(new AbilityUpdatePacket(data, false));
+				 PacketHandler.INSTANCE.sendToServer(new AbilityUpdatePacket(data, false));
 					 }
 				 this.currentAbility = null;
 				 } else {
@@ -449,7 +449,7 @@ public class HunterScreen extends Screen {
 			 } else {
 				 if(data.getAbilityInSlot(i - 1) != null) {
 					 data.putAbilityInSlot(null, i - 1);
-					 ModidPacketHandler.INSTANCE.sendToServer(new AbilityUpdatePacket(data, false));
+					 PacketHandler.INSTANCE.sendToServer(new AbilityUpdatePacket(data, false));
 				 }
 			 }
 			 

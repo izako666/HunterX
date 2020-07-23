@@ -30,6 +30,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -65,15 +66,20 @@ public class HanzoEntity extends ZombieEntity{
 	protected void registerAttributes() {
 		super.registerAttributes();
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(80.0D);
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3D);
 		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(10.0D);
-		this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(20.0D);
+		this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(10.0D);
 	}
 
 
 	@Override
     protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
-		 
+		 if(difficulty.getAdditionalDifficulty() == Difficulty.HARD.getId()) {
+			 this.setItemStackToSlot(EquipmentSlotType.CHEST, new ItemStack(ModItems.HANZO_CHESTPLATE));
+			 this.setItemStackToSlot(EquipmentSlotType.FEET, new ItemStack(ModItems.HANZO_BOOTS));
+			 this.setItemStackToSlot(EquipmentSlotType.LEGS, new ItemStack(ModItems.HANZO_LEGGINGS));
+
+		 }
 		   }
 	@Override
 	public boolean canSpawn(IWorld worldIn, SpawnReason spawnReasonIn) {

@@ -5,7 +5,7 @@ import java.util.UUID;
 import com.izako.hunterx.Main;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
-import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.ModifierUpdatePacket;
 import com.izako.hunterx.networking.packets.StatsUpdatePacket;
 
@@ -78,8 +78,8 @@ public class StatUpdateEvent {
 
 			IHunterData data = HunterDataCapability.get(p);
 			data.setHealthStat(data.getHealthStat() + 0.1);
-			ModidPacketHandler.INSTANCE.sendToServer(new StatsUpdatePacket(data, true));
-			ModidPacketHandler.INSTANCE.sendToServer(new ModifierUpdatePacket(data.getHealthStat(), 1));
+			PacketHandler.INSTANCE.sendToServer(new StatsUpdatePacket(data, true));
+			PacketHandler.INSTANCE.sendToServer(new ModifierUpdatePacket(data.getHealthStat(), 1));
 			e.setResult(Result.DEFAULT);
 		}
 	}

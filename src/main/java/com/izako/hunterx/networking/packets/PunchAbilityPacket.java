@@ -29,19 +29,21 @@ String id;
 int entityid;
 	public PunchAbilityPacket(String id, Entity target) {
 
+		
 		this.id = id;
 		this.entityid = target.getEntityId();
 	}
 
 	public void encode(PacketBuffer buf) {
-
+		buf.writeInt(id.length());
 		buf.writeString(id);
 		buf.writeInt(entityid);
 	}
 
 	public static PunchAbilityPacket decode(PacketBuffer buf) {
 		PunchAbilityPacket msg = new PunchAbilityPacket();
-		msg.id = buf.readString();
+		int length = buf.readInt();
+		msg.id = buf.readString(length);
 		msg.entityid = buf.readInt();
 		return msg;
 	}

@@ -84,9 +84,9 @@ public class ThugEntity extends ZombieEntity implements IRangedAttackMob{
 	@Override
 	protected void registerAttributes() {
 		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(30.0D);
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.4D);
-		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0D);
+		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(25.0D);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3D);
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(5.0D);
 		this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(0.0D);
 	}
 

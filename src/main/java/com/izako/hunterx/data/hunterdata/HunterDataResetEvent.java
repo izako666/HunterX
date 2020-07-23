@@ -2,7 +2,7 @@ package com.izako.hunterx.data.hunterdata;
 
 import com.izako.hunterx.Main;
 import com.izako.hunterx.events.StatUpdateEvent;
-import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.StatsUpdatePacket;
 
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -65,7 +65,7 @@ public class HunterDataResetEvent {
 		PlayerEntity p = e.getPlayer();
 		if(!p.world.isRemote) {
 			IHunterData data = HunterDataCapability.get(p);
-		ModidPacketHandler.INSTANCE.sendTo(new StatsUpdatePacket(data, false), ((ServerPlayerEntity) p).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+		PacketHandler.INSTANCE.sendTo(new StatsUpdatePacket(data, false), ((ServerPlayerEntity) p).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
 		}
 	}
 	
@@ -74,7 +74,7 @@ public class HunterDataResetEvent {
 		PlayerEntity p = evt.getPlayer();
 		if(!p.world.isRemote) {
 			IHunterData data = HunterDataCapability.get(p);
-		ModidPacketHandler.INSTANCE.sendTo(new StatsUpdatePacket(data, false), ((ServerPlayerEntity) p).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+		PacketHandler.INSTANCE.sendTo(new StatsUpdatePacket(data, false), ((ServerPlayerEntity) p).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
 		}
 	}
 

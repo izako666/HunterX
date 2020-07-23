@@ -41,7 +41,10 @@ public class AbilitySlotsEvent {
 	public static void renderScreen(RenderGameOverlayEvent.Post e) {
 
 		if(e.getType().equals(ElementType.HOTBAR)) {
+		IAbilityData data = AbilityDataCapability.get(Minecraft.getInstance().player);
+		if(data.isNenUser()) {
 		AbilitySlotsEvent.renderSlots();
+		}
 		}
 	}
 
@@ -120,13 +123,22 @@ public class AbilitySlotsEvent {
 		
 		mc.getTextureManager().bindTexture(NENBAR);
 		GlStateManager.pushMatrix();
-		GuiUtils.drawTexturedModalRect(32, (int) (height - 48), 10, 44, 146, 46, 0);
+		GlStateManager.translatef(32, (float) (height - 42), 0);
+		GlStateManager.scalef(0.9f, 0.9f, 1);
+		GuiUtils.drawTexturedModalRect(0, 0, 10, 44, 115, 46, 0);
+		GlStateManager.scaled(1d, 1d, 1d);
 		if(data.getAuraColor() != null) {
 		GlStateManager.color3f(data.getAuraColor().getRed() / 255.0f, data.getAuraColor().getGreen() / 255.0f, data.getAuraColor().getBlue() / 255.0f);
 		}
-		GuiUtils.drawTexturedModalRect(54, (int) (height + 5 - 44), 32, 6, (data.getCurrentNen() * 114) / data.getNenCapacity(), 38, 0);
+		GlStateManager.popMatrix();
+		GlStateManager.pushMatrix();
+		GlStateManager.translatef(51.8f, (float) (height + 5 - 38.9f), 0);
+		GlStateManager.scalef(0.9f, 0.9f, 1); 
+		GuiUtils.drawTexturedModalRect(0, 0, 32, 6, (data.getCurrentNen() * 92) / data.getNenCapacity(), 38, 0);
 	    GlStateManager.color3f(1f, 1f, 1f);
+	    GlStateManager.scaled(1d, 1d, 1d);
 	    GlStateManager.popMatrix();
+	    
 	}
 
 	@OnlyIn(Dist.CLIENT)

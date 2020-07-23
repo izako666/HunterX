@@ -15,7 +15,7 @@ import com.izako.hunterx.init.ModItems;
 import com.izako.hunterx.izapi.NPCSpeech.QuestState;
 import com.izako.hunterx.izapi.quest.Quest;
 import com.izako.hunterx.izapi.quest.QuestLine;
-import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.SetQuestPacket;
 
 import net.minecraft.client.Minecraft;
@@ -82,7 +82,7 @@ public class HunterExam04 extends Quest{
 			if(scr.p.inventory.hasItemStack(new ItemStack(ModItems.BADGE))) {
 				if(scr.sequencedStrings[0].string != HunterExam04.passMessage ) {
 					this.finishQuest(scr.p);
-					ModidPacketHandler.INSTANCE.sendToServer(new SetQuestPacket(this.getId(), false));
+					PacketHandler.INSTANCE.sendToServer(new SetQuestPacket(this.getId(), false));
 				return QuestScreenEndReturnType.MESSAGE;
 				}
 				return QuestScreenEndReturnType.NULL;

@@ -18,7 +18,7 @@ public class AbilityDataBase implements IAbilityData {
 	private int currentNen = 0;
 	private Color aura = Color.WHITE;
 	private NenType type = null;
-	private boolean isNenUser = true;
+	private boolean isNenUser = false;
 	@Override
 	public List<Ability> getAbilities() {
 		return ABILITIES;
@@ -108,6 +108,9 @@ public class AbilityDataBase implements IAbilityData {
 
 	@Override
 	public void setCurrentNen(int val) {
+		if(val > this.nenCapacity) {
+			this.currentNen = nenCapacity;
+		}
 		this.currentNen = val;
 	}
 

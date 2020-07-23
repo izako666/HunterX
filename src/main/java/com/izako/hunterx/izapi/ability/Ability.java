@@ -47,7 +47,6 @@ public abstract class Ability {
 	public  void renderDesc(int x, int y) {
 	}
 
-	// this method will always be required for every ability you make but it will
 	// only get
 	// called for an ability that extends Ability not ChargeableAbility or
 	// PassiveAbility
@@ -115,10 +114,7 @@ public abstract class Ability {
 		}
 	}
 	private boolean ifInPassivePredicate(Ability a) {
-		if(!a.isInPassive()) {
-			return true;
-		}
-		return false;
+		return !a.isInPassive();
 	}
 
 	public void endAbility(PlayerEntity p) {

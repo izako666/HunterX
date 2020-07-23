@@ -5,7 +5,7 @@ import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.PunchAbility;
-import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.PunchAbilityPacket;
 
 import net.minecraft.entity.LivingEntity;
@@ -38,7 +38,7 @@ public class GenericAbilityLogicEvents {
 				if (ability instanceof PunchAbility && ability.isInPassive() && heldItem.isEmpty())
 				{
 					float damage = ((PunchAbility) ability).onPunch(player, target);
-					ModidPacketHandler.INSTANCE.sendTo(new PunchAbilityPacket(ability.getId(),target), ((ServerPlayerEntity)player).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+					PacketHandler.INSTANCE.sendTo(new PunchAbilityPacket(ability.getId(),target), ((ServerPlayerEntity)player).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
 					if(damage < 0)
 						event.setCanceled(true);
 					

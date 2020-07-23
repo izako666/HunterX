@@ -36,6 +36,7 @@ public class SyncAbilityRenderingPacket {
 	
 	public void encode(PacketBuffer buf) {
 
+		buf.writeInt(id.length());
 		buf.writeString(id);
 		buf.writeUniqueId(player);
 		buf.writeBoolean(turnOn);
@@ -43,7 +44,8 @@ public class SyncAbilityRenderingPacket {
 	
 	public static SyncAbilityRenderingPacket decode(PacketBuffer buf) {
 		SyncAbilityRenderingPacket msg = new SyncAbilityRenderingPacket();
-		msg.id = buf.readString();
+		int length = buf.readInt();
+		msg.id = buf.readString(length);
 		msg.player = buf.readUniqueId();
 		msg.turnOn = buf.readBoolean();
 		return msg;
@@ -73,7 +75,7 @@ public class SyncAbilityRenderingPacket {
 				abl.stopAbility();
 			}
             } catch(NullPointerException e) {
-            	abl = IZAHelper.addSlotAbility(ModAbilities.getNewInstanceFromId(msg.id), p);
+            	abl = IZAHelper.addSlotAbility(ModAbilities.getNewInstanceFromId(msg.id), abilityUser);
             	if(msg.turnOn) {
             		abl.initiateAbility();
             	} else {

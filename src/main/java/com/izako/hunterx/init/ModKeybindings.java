@@ -9,7 +9,7 @@ import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.gui.CharacterCreatorScreen;
 import com.izako.hunterx.gui.HunterScreen;
-import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.AbilityUpdatePacket;
 import com.izako.hunterx.networking.packets.AbilityUsePacket;
 import com.izako.hunterx.networking.packets.StatsUpdatePacket;
@@ -77,7 +77,7 @@ public class ModKeybindings {
 				IAbilityData abldata = AbilityDataCapability.get(Minecraft.getInstance().player);
 				if(abldata.getAbilityInSlot(ModKeybindings.getSlotFromBinding(kb)) != null) {
 					abldata.getAbilityInSlot(ModKeybindings.getSlotFromBinding(kb)).onUse(p);
-					ModidPacketHandler.INSTANCE.sendToServer(new AbilityUsePacket(ModKeybindings.getSlotFromBinding(kb)));
+					PacketHandler.INSTANCE.sendToServer(new AbilityUsePacket(ModKeybindings.getSlotFromBinding(kb)));
 				}
 			}
 		}
@@ -89,8 +89,8 @@ public class ModKeybindings {
 		    if(!data.isCharacterMade()) {
 		    	Minecraft.getInstance().displayGuiScreen(new CharacterCreatorScreen());
 		    } else {
-		    ModidPacketHandler.INSTANCE.sendToServer(new AbilityUpdatePacket(abilitydata, true));
-			ModidPacketHandler.INSTANCE.sendToServer(new StatsUpdatePacket(data, true));
+		    PacketHandler.INSTANCE.sendToServer(new AbilityUpdatePacket(abilitydata, true));
+			PacketHandler.INSTANCE.sendToServer(new StatsUpdatePacket(data, true));
 			Minecraft.getInstance().displayGuiScreen(new HunterScreen());
 		    }
 		}

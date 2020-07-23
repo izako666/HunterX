@@ -5,7 +5,7 @@ import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.gui.QuestScreen;
 import com.izako.hunterx.gui.SequencedString;
 import com.izako.hunterx.izapi.NPCSpeech.QuestState;
-import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.SetQuestPacket;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -73,7 +73,7 @@ public abstract class Quest {
 			return QuestScreenEndReturnType.NULL;
 		case FULFILLED:
 			this.finishQuest(scr.p);
-			ModidPacketHandler.INSTANCE.sendToServer(new SetQuestPacket(this.getId(), false));
+			PacketHandler.INSTANCE.sendToServer(new SetQuestPacket(this.getId(), false));
 			return QuestScreenEndReturnType.NULL;
 		}
 		return QuestScreenEndReturnType.NULL;

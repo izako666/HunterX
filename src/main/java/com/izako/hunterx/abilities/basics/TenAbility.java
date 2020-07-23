@@ -6,7 +6,7 @@ import com.izako.hunterx.Main;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.IOnPlayerRender;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
-import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
 
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -31,7 +31,7 @@ public class TenAbility extends PassiveAbility implements IOnPlayerRender{
 		p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(mod);
 		}
 		if(!p.world.isRemote()) {
-		ModidPacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), true));
+		PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), true));
 		}
 		}
 
@@ -48,7 +48,7 @@ public class TenAbility extends PassiveAbility implements IOnPlayerRender{
 	public void onEndPassive(PlayerEntity p) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).removeModifier(modifierUUID);
 		if(!p.world.isRemote()) {
-		ModidPacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), false));
+		PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), false));
 		}
 	}
 

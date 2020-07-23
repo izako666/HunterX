@@ -5,7 +5,7 @@ import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.IOnPlayerRender;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
-import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -31,7 +31,7 @@ public class ZetsuAbility extends PassiveAbility implements IOnPlayerRender{
 	@Override
 	public void onStartPassive(PlayerEntity p) {
 		if(!p.world.isRemote()) {
-		ModidPacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), true));
+		PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), true));
 		}
 	}
 
@@ -44,7 +44,7 @@ public class ZetsuAbility extends PassiveAbility implements IOnPlayerRender{
 	@Override
 	public void onEndPassive(PlayerEntity p) {
 		if(!p.world.isRemote()) {
-		ModidPacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), false));
+		PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), false));
 	}
 	}
 

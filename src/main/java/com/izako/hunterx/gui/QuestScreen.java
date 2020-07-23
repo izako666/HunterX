@@ -10,7 +10,7 @@ import com.izako.hunterx.izapi.NPCSpeech;
 import com.izako.hunterx.izapi.quest.IQuestGiver;
 import com.izako.hunterx.izapi.quest.Quest;
 import com.izako.hunterx.izapi.quest.Quest.QuestScreenEndReturnType;
-import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.SetQuestPacket;
 import com.izako.hunterx.networking.packets.StatsUpdatePacket;
 
@@ -124,7 +124,7 @@ public class QuestScreen extends Screen {
 	@Override
 	public void onClose() {
 		IHunterData data = HunterDataCapability.get(this.minecraft.player);
-		ModidPacketHandler.INSTANCE.sendToServer(new StatsUpdatePacket(data,false));
+		PacketHandler.INSTANCE.sendToServer(new StatsUpdatePacket(data,false));
 	      this.minecraft.displayGuiScreen((Screen)null);
 
 	}
@@ -154,7 +154,7 @@ public class QuestScreen extends Screen {
 	private void acceptQuest(Button but) {
 		if(this.currentQuest != null) {
 		this.currentQuest.giveQuest(p);
-		ModidPacketHandler.INSTANCE.sendToServer(new SetQuestPacket(this.currentQuest.getId(), true));
+		PacketHandler.INSTANCE.sendToServer(new SetQuestPacket(this.currentQuest.getId(), true));
 		this.onClose();
 		}
 	}

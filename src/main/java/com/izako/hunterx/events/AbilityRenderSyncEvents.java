@@ -5,7 +5,7 @@ import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.IOnPlayerRender;
-import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,7 +28,7 @@ public class AbilityRenderSyncEvents {
 		IAbilityData data = AbilityDataCapability.get(tracked);
 		 for(Ability abl : data.getSlotAbilities()) {
 			 if(abl instanceof IOnPlayerRender) {
-				 ModidPacketHandler.INSTANCE.sendTo(new SyncAbilityRenderingPacket(abl.getId(), tracked.getUniqueID(), abl.isActive()), ((ServerPlayerEntity)tracker).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+				 PacketHandler.INSTANCE.sendTo(new SyncAbilityRenderingPacket(abl.getId(), tracked.getUniqueID(), abl.isActive()), ((ServerPlayerEntity)tracker).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
 			 }
 		 }
 		}

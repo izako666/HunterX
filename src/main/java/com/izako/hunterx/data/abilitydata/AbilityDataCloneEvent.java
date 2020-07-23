@@ -3,7 +3,7 @@ package com.izako.hunterx.data.abilitydata;
 import com.izako.hunterx.Main;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
-import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.AbilityUpdatePacket;
 import com.izako.hunterx.networking.packets.StatsUpdatePacket;
 
@@ -41,8 +41,8 @@ public class AbilityDataCloneEvent {
 		IAbilityData data = AbilityDataCapability.get(p);
 		IHunterData hData = HunterDataCapability.get(p);
 		if(!p.world.isRemote) {
-			ModidPacketHandler.INSTANCE.sendTo(new AbilityUpdatePacket(data, false), ((ServerPlayerEntity) p).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
-			ModidPacketHandler.INSTANCE.sendTo(new StatsUpdatePacket(hData, false), ((ServerPlayerEntity) p).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+			PacketHandler.INSTANCE.sendTo(new AbilityUpdatePacket(data, false), ((ServerPlayerEntity) p).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+			PacketHandler.INSTANCE.sendTo(new StatsUpdatePacket(hData, false), ((ServerPlayerEntity) p).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
 		}
 	}
 	@SubscribeEvent
@@ -50,7 +50,7 @@ public class AbilityDataCloneEvent {
 		PlayerEntity p = e.getPlayer();
 		if(!p.world.isRemote) {
 			IAbilityData data = AbilityDataCapability.get(p);
-		ModidPacketHandler.INSTANCE.sendTo(new AbilityUpdatePacket(data, false), ((ServerPlayerEntity) p).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+		PacketHandler.INSTANCE.sendTo(new AbilityUpdatePacket(data, false), ((ServerPlayerEntity) p).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
 		}
 	}
 	
@@ -59,7 +59,7 @@ public class AbilityDataCloneEvent {
 		PlayerEntity p = evt.getPlayer();
 		if(!p.world.isRemote) {
 			IAbilityData data = AbilityDataCapability.get(p);
-		ModidPacketHandler.INSTANCE.sendTo(new AbilityUpdatePacket(data, false), ((ServerPlayerEntity) p).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+		PacketHandler.INSTANCE.sendTo(new AbilityUpdatePacket(data, false), ((ServerPlayerEntity) p).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
 		}
 	}
 }

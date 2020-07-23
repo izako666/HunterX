@@ -1,7 +1,7 @@
 package com.izako.hunterx.events;
 
 import com.izako.hunterx.init.ModItems;
-import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.HanzoSwordPacket;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -34,11 +34,11 @@ public class HanzoSwordEvent {
 
 					if (!p.inventory.hasItemStack(sword) && p.getHeldItem(Hand.MAIN_HAND).isEmpty()) {
 
-						ModidPacketHandler.INSTANCE.sendToServer(new HanzoSwordPacket(false));
+						PacketHandler.INSTANCE.sendToServer(new HanzoSwordPacket(false));
 
 					} else if (p.inventory.hasItemStack(sword)) {
 
-						ModidPacketHandler.INSTANCE.sendToServer(new HanzoSwordPacket(true));
+						PacketHandler.INSTANCE.sendToServer(new HanzoSwordPacket(true));
 
 					} else {
 						event.setResult(Result.DEFAULT);

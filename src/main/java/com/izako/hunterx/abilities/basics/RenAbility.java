@@ -8,7 +8,7 @@ import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.IOnPlayerRender;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
-import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
 import com.izako.wypi.WyHelper;
 import com.izako.wypi.particles.GenericParticleData;
@@ -51,7 +51,7 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender {
 	   p.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).applyModifier(attackMod);
 		}
 		if(!p.world.isRemote()) {
-		ModidPacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), true));
+		PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), true));
 		}
 		}
 
@@ -89,7 +89,7 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).removeModifier(defenseModifierID);
 		p.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).removeModifier(attackModifierID);
 		if(!p.world.isRemote()) {
-		ModidPacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), false));
+		PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), false));
 		}
 	}
 	

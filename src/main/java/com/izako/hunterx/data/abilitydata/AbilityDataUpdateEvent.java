@@ -9,7 +9,7 @@ import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.Ability.AbilityType;
 import com.izako.hunterx.izapi.ability.ChargeableAbility;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
-import com.izako.hunterx.networking.ModidPacketHandler;
+import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.AbilityChargingEndPacket;
 
 import net.minecraft.client.settings.KeyBinding;
@@ -42,7 +42,7 @@ public class AbilityDataUpdateEvent {
 									((ChargeableAbility) a).onEndCharging(p);
 									a.setCooldown(a.props.maxCooldown);
 									a.setChargingTimer(0);
-									ModidPacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot()));
+									PacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot()));
 								} else if (a.getChargingTimer() >= a.props.maxCharging) {
 
 									if (a.consumeAura(p)) {
@@ -54,7 +54,7 @@ public class AbilityDataUpdateEvent {
 										a.stopAbility();
 									}
 
-									ModidPacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot()));
+									PacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot()));
 
 								}
 							}

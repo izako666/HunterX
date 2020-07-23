@@ -7,6 +7,7 @@ import com.izako.hunterx.networking.packets.CharacterInitPacket;
 import com.izako.hunterx.networking.packets.HanzoSwordPacket;
 import com.izako.hunterx.networking.packets.ModifierUpdatePacket;
 import com.izako.hunterx.networking.packets.OpenQuestGuiPacket;
+import com.izako.hunterx.networking.packets.PunchAbilityPacket;
 import com.izako.hunterx.networking.packets.SetQuestPacket;
 import com.izako.hunterx.networking.packets.StatsUpdatePacket;
 import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
@@ -17,7 +18,7 @@ import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
-public class ModidPacketHandler {
+public class PacketHandler {
 
 	private static final String PROTOCOL_VERSION = "1";
 	public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
@@ -39,9 +40,10 @@ public class ModidPacketHandler {
         INSTANCE.registerMessage(packet++, SetQuestPacket.class, SetQuestPacket::encode, SetQuestPacket::decode, SetQuestPacket::handle);
         INSTANCE.registerMessage(packet++, CharacterInitPacket.class, CharacterInitPacket::encode, CharacterInitPacket::decode, CharacterInitPacket::handle);
         INSTANCE.registerMessage(packet++, SyncAbilityRenderingPacket.class, SyncAbilityRenderingPacket::encode, SyncAbilityRenderingPacket::decode, SyncAbilityRenderingPacket::handle);
+	    INSTANCE.registerMessage(packet++, PunchAbilityPacket.class, PunchAbilityPacket::encode, PunchAbilityPacket::decode, PunchAbilityPacket::handle);
 	}
 	
 	public static <MSG>  void sendToTracking(PlayerEntity tracked, MSG message) {
-		 ModidPacketHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY.with(() -> tracked), message);
+		 PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY.with(() -> tracked), message);
 	}
 }
