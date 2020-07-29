@@ -1,0 +1,15 @@
+{
+    "parent": "item/handheld_rod",
+    "textures": 
+    {
+        "layer0": "hntrx:items/gons_fishing_rod"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "cast": 1
+            },
+            "model": "hntrx:item/gons_fishing_rod_cast"
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "hntrx:items/yoyo"
+	},
+	"overrides":
+	[
+		{
+			"predicate": 
+			{
+				"cast": 1
+			},
+			"model": "hntrx:item/yoyo_cast"
+		}
+	]
+}
