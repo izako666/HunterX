@@ -2,6 +2,8 @@ package com.izako.hunterx.networking.packets;
 
 import java.util.function.Supplier;
 
+import com.izako.hunterx.data.hunterdata.HunterDataCapability;
+import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.init.ModQuests;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -42,10 +44,11 @@ public class SetQuestPacket {
 		if(ctx.get().getDirection() == NetworkDirection.PLAY_TO_SERVER) {
 			ctx.get().enqueueWork(() -> {
 				PlayerEntity p = ctx.get().getSender();
+				IHunterData data = HunterDataCapability.get(p);
 				if(msg.give) {
-				ModQuests.getInstance(msg.ID).giveQuest(p);
+				ModQuests.newInstance(msg.ID).giveQuest(p);
 				} else {
-					ModQuests.getInstance(msg.ID).finishQuest(p);
+					data.getQuest(ModQuests.getInstance(msg.ID)).finishQuest(p);
 				}
 			});
 		}

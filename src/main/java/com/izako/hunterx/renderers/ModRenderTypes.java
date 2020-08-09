@@ -11,11 +11,14 @@ public abstract class ModRenderTypes extends RenderType{
 		super(nameIn, formatIn, drawModeIn, bufferSizeIn, useDelegateIn, needsSortingIn, setupTaskIn, clearTaskIn);
 	}
 
-		    private static final  RenderType.State rendertype$state = RenderType.State.getBuilder().texture(NO_TEXTURE).transparency(RenderType.TRANSLUCENT_TRANSPARENCY).diffuseLighting(DIFFUSE_LIGHTING_ENABLED).alpha(DEFAULT_ALPHA).cull(CULL_DISABLED).lightmap(LIGHTMAP_ENABLED).overlay(OVERLAY_ENABLED).build(true);
-		    private static final   RenderType TRANSLUCENT_ENTITY_NOTEX =  RenderType.makeType("entity_translucent_notexture", DefaultVertexFormats.ENTITY, 7, 256, true, true, rendertype$state);
-		   
+		 //   private static final  RenderType.State rendertype$state = RenderType.State.getBuilder().texture(NO_TEXTURE).cull(CULL_DISABLED).lightmap(LIGHTMAP_ENABLED).build(true);
+		   // private static final   RenderType TRANSLUCENT_ENTITY_NOTEX =  RenderType.makeType("entity_translucent_notexture", DefaultVertexFormats.ENTITY, 7, 256, true, true, rendertype$state);
+   private static final	RenderType.State TRANSLUCENT_ENTITY_STATE = RenderType.State.getBuilder().transparency(TRANSLUCENT_TRANSPARENCY).texture(NO_TEXTURE).cull(CULL_ENABLED).lightmap(LIGHTMAP_DISABLED).build(true);
+	private static final    RenderType TRANSLUCENT_ENTITY_NOTEX =  RenderType.makeType("entity_translucent_notexture", DefaultVertexFormats.ENTITY, 7, 256, true, true, TRANSLUCENT_ENTITY_STATE);
+
 		    public static RenderType getTranslucentEntity() {
-		    	return TRANSLUCENT_ENTITY_NOTEX;
+			   return TRANSLUCENT_ENTITY_NOTEX;
+
 		    }
 
 }

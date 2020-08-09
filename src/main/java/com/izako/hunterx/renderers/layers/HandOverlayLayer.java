@@ -7,6 +7,7 @@ import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.Ability.AbilityType;
+import com.izako.hunterx.renderers.ModRenderTypes;
 import com.izako.hunterx.izapi.ability.IHandOverlay;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -97,7 +98,7 @@ public class HandOverlayLayer
 				matrixStackIn.push();
 
 				matrixStackIn.scale(1.1f, 1.1f, 1.1f);
-				IVertexBuilder vertexBuilder = bufferIn.getBuffer(RenderType.getTranslucent());
+				IVertexBuilder vertexBuilder = bufferIn.getBuffer(ModRenderTypes.getTranslucentEntity());
 				this.getEntityModel().bipedRightArm.render(matrixStackIn, vertexBuilder, packedLightIn, 1,
 						(float) (color.getRed()) / 255, (float) (color.getGreen()) / 255,
 						((float) color.getBlue()) / 255, 0.2f);

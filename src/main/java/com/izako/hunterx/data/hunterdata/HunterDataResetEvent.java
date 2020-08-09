@@ -51,12 +51,8 @@ public class HunterDataResetEvent {
 			if(modifierD != null)
 				attributeD.applyModifier(modifierD);
 
-			oldData.getQuests().forEach((k, v) -> {
-				data.giveQuest(k, v);
-			});
-			oldData.getExtraQuestData().forEach((k, v) -> {
-				data.getExtraQuestData().put(k, v);
-			});
+			data.setQuests(oldData.getQuests());
+
 		
 	}
 

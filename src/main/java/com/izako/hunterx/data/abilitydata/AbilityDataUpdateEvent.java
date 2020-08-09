@@ -8,6 +8,7 @@ import com.izako.hunterx.init.ModKeybindings;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.Ability.AbilityType;
 import com.izako.hunterx.izapi.ability.ChargeableAbility;
+import com.izako.hunterx.izapi.ability.ITrainable;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
 import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.AbilityChargingEndPacket;
@@ -41,6 +42,12 @@ public class AbilityDataUpdateEvent {
 									a.setCharging(false);
 									((ChargeableAbility) a).onEndCharging(p);
 									a.setCooldown(a.props.maxCooldown);
+									if(a instanceof ITrainable) {
+										 ITrainable trainable = (ITrainable) a;
+										 double scale = (a.getChargingTimer() / a.props.maxCharging) + 0.5;
+										 a.setXp(a.getXp() + ((trainable.getXPOnUsage() + (a.rand.nextDouble() - 0.5))* scale), p);
+										}
+
 									a.setChargingTimer(0);
 									PacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot()));
 								} else if (a.getChargingTimer() >= a.props.maxCharging) {
@@ -50,6 +57,12 @@ public class AbilityDataUpdateEvent {
 										a.setCooldown(a.props.maxCooldown);
 										a.setCharging(false);
 										a.setChargingTimer(0);
+										if(a instanceof ITrainable) {
+											 ITrainable trainable = (ITrainable) a;
+											 double scale = (a.getChargingTimer() / a.props.maxCharging) + 0.5;
+											 a.setXp(a.getXp() + ((trainable.getXPOnUsage() + (a.rand.nextDouble() - 0.5))* scale), p);
+											}
+
 									} else {
 										a.stopAbility();
 									}
@@ -83,6 +96,16 @@ public class AbilityDataUpdateEvent {
 							}
 							if (a.consumeAura(p)) {
 								((PassiveAbility) a).duringPassive(p);
+								if(a instanceof ITrainable) {
+									 ITrainable trainable = (ITrainable) a;
+										if(p.ticksExisted % 100 == 0) {
+											if(a.rand.nextDouble() > 0.9) {
+												 a.setXp(a.getXp() + trainable.getXPOnUsage() + (a.rand.nextDouble() - 0.5), p);
+											}
+										}
+
+									}
+
 							} else {
 								a.stopAbility();
 							}

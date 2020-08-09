@@ -15,6 +15,7 @@ import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.quest.Quest;
 import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.AbilityUpdatePacket;
+import com.izako.wypi.WyHelper;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
@@ -41,7 +42,7 @@ public class HunterScreen extends Screen {
 	public int guiState = 0;
 	public int questPage = 0;
 	public int abilityPage = 0;
-	public List<String> quests;
+	public List<Quest> quests;
 	public Ability currentAbility;
 	public boolean isLicenseBG = false;
 	public Quest currentQuest = null;
@@ -184,6 +185,7 @@ public class HunterScreen extends Screen {
 					this.drawIcon(QUEST_BACKWARD, hb.x, hb.y, 16, 16, 0);
 
 				} else {
+				    
 					this.drawIcon(GENERAL_BUTTON, hb.x, hb.y, 96, 32, 0);
 					this.drawString(font, hb.name, hb.x + 5, hb.y + 5, 16777215);
 				}
@@ -193,17 +195,20 @@ public class HunterScreen extends Screen {
 		});
 
 		if (this.currentQuest != null) {
-			this.currentQuest.renderDesc((int) ((scaledWidth * 0.5) - 10), (int) (70));
-
+			String desc = this.currentQuest.getDescription();
+			List<String> descs = WyHelper.splitString(font, desc, (int) ((scaledWidth*0.5)-10), 0, 148);
+			for(int i = 0; i < descs.size(); i++) {
+				this.drawString(font, descs.get(i), (int) ((scaledWidth*0.5)-30), 70  + 20 * i, 16777215);
+			}
 			PlayerEntity p = this.getMinecraft().player;
 			IHunterData data = HunterDataCapability.get(p);
-			if (data.getProgress(this.currentQuest.getId()) > 100) {
+			if (data.getQuest(this.currentQuest).getProgress() > 100) {
 				this.drawString(font, "progress:", (int) ((scaledWidth * 0.5) - 15), (int) (200), 16777215);
 				this.drawString(font, "FINISHED", (int) ((scaledWidth * 0.5) + 45), (int) (200), Color.red.getRGB());
 
 			} else {
 				this.drawString(font, "progress:", (int) ((scaledWidth * 0.5) - 15), (int) (200), 16777215);
-				this.drawString(font, data.getProgress(this.currentQuest.getId()).toString(),
+				this.drawString(font, String.valueOf(data.getQuest(this.currentQuest).getProgress()),
 						(int) ((scaledWidth * 0.5) + 45), (int) (200), 16777215);
 			}
 
@@ -326,12 +331,13 @@ public class HunterScreen extends Screen {
 
 			PlayerEntity p = this.getMinecraft().player;
 			IHunterData data = HunterDataCapability.get(p);
-			this.quests = new ArrayList<String>(data.getQuests().keySet());
-			for (int i = 4 * questPage; i <= 4 * (questPage + 1); i++) {
+			this.quests = data.getQuests();
+			for (int i = 4 * questPage; i < 4 * (questPage + 1); i++) {
 				if ((this.quests.size() - 1) >= i) {
+					int relativePos =  i - (questPage * 4);
 					HunterScreen screen = ((HunterScreen) Minecraft.getInstance().currentScreen);
-					this.addButton(new HunterButton((int) ((width * 0.5) - 125), (int) (30 + 50 * i), 96, 32,
-							this.quests.get(i), true, new Button.IPressable() {
+					this.addButton(new HunterButton((int) ((width * 0.5) - 125), (int) (30 + 50 * relativePos), 96, 32,
+							this.quests.get(i).getId(), true, new Button.IPressable() {
 
 								@Override
 								public void onPress(Button but) {
@@ -349,7 +355,6 @@ public class HunterScreen extends Screen {
 
 					@Override
 					public void onPress(Button p_onPress_1_) {
-						// TODO Auto-generated method stub
 						PlayerEntity p = Minecraft.getInstance().player;
 
 						if (p.inventory.hasItemStack(new ItemStack(ModItems.HUNTER_LICENSE))) {

@@ -1,6 +1,7 @@
 package com.izako.hunterx.izapi.ability;
 
 import java.util.List;
+import java.util.Random;
 
 import com.izako.hunterx.Main;
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
@@ -21,6 +22,7 @@ public abstract class Ability {
 	private int cooldown = 0;
 	private int chargingTimer = 0;
 	private int passiveTimer = 0;
+	private double xp = 0;
 	private boolean isInPassive = false;
 	private boolean isCharging = false;
 	private int slot = -1;
@@ -31,7 +33,7 @@ public abstract class Ability {
 	public enum AuraConsumptionType {
 		PERCENTAGE, VALUE, NONE
 	}
-
+    public Random rand = new Random();
 
 	// the id is the identification thats used to save the data and compare the
 	// abilities to see if they are the same
@@ -103,8 +105,13 @@ public abstract class Ability {
 				
 				break;
 			case ONUSE:
+				
 				this.use(p);
 				this.setCooldown(this.props.maxCooldown);
+				if(this instanceof ITrainable) {
+				 ITrainable trainable = (ITrainable) this;
+				 this.setXp(this.getXp() + trainable.getXPOnUsage() + (rand.nextDouble() - 0.5), p);
+				}
 				if(!this.consumeAura(p)) {
 					this.stopAbility();
 				}
@@ -143,6 +150,11 @@ public abstract class Ability {
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.putInt("cooldown", this.getCooldown());
 		nbt.putInt("slotindex", slot);
+		if(this instanceof ITrainable) {
+			nbt.putDouble("xp", this.getXp());
+			nbt.putInt("maxcooldown", this.props.maxCooldown);
+			
+		}
 		return nbt;
 	}
 
@@ -150,6 +162,11 @@ public abstract class Ability {
 	public Ability readData(CompoundNBT nbt) {
 		this.setCooldown(nbt.getInt("cooldown"));
 		this.setSlot(nbt.getInt("slotindex"));
+		if(this instanceof ITrainable) {
+			this.setXp(nbt.getDouble("xp"));
+			this.props.setMaxCooldown(nbt.getInt("maxcooldown"));
+		}
+
 		return this;
 	}
 
@@ -357,6 +374,46 @@ public abstract class Ability {
 		}
 
 		return false;
+	}
+
+
+
+	public double getXp() {
+		return xp;
+	}
+
+	public void setXp(double xp, PlayerEntity p) {
+		if(this.rand.nextInt(1000) > 998 && this.xp < xp) {
+			IAbilityData data = AbilityDataCapability.get(p);
+			data.setNenCapacity(data.getNenCapacity() + 1);
+		}
+		this.xp = xp;
+		this.props.setMaxCooldown((int) (this.props.maxCooldown * this.getCooldownScale()));
+	}
+
+	public void setXp(double xp) {
+		this.xp = xp;
+		this.props.setMaxCooldown((int) (this.props.maxCooldown * this.getCooldownScale()));
+
+	}
+	
+	public  double getCurrentPowerScale() {
+	
+		ITrainable trainable = (ITrainable) this;
+		double currentScale = (this.xp * trainable.getPowerScale()) / (trainable.getMaxXP());
+		return currentScale;
+	}
+	public  double getCurrentAuraConScale() {
+		
+		ITrainable trainable = (ITrainable) this;
+		double currentScale = (this.xp * trainable.getAuraConsumptionScale()) / (trainable.getMaxXP());
+		return currentScale;
+	}
+	public  double getCooldownScale() {
+		
+		ITrainable trainable = (ITrainable) this;
+		double currentScale = (this.xp * trainable.getCooldownScale()) / (trainable.getMaxXP());
+		return currentScale;
 	}
 
 }

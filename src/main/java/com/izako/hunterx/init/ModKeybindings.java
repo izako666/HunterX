@@ -65,10 +65,17 @@ public class ModKeybindings {
 			for(KeyBinding kb : Minecraft.getInstance().gameSettings.keyBindsHotbar) {
 				kb.bind(InputMappings.getInputByCode(GLFW.GLFW_KEY_UNKNOWN, 0));
 			}
-		} if(event.getKey() == ModKeybindings.ACTIVATE.getKey().getKeyCode() && event.getAction() == 2) {
-			for(KeyBinding kb : Minecraft.getInstance().gameSettings.keyBindsHotbar) {
+			for(KeyBinding kb : ModKeybindings.ABILITYSLOTS) {
 				kb.bind(kb.getDefault());
 			}
+		} if(event.getKey() == ModKeybindings.ACTIVATE.getKey().getKeyCode() && event.getAction() == GLFW.GLFW_RELEASE) {
+ 			for(KeyBinding kb : Minecraft.getInstance().gameSettings.keyBindsHotbar) {
+				kb.bind(kb.getDefault());
+				
+			}
+ 			for(KeyBinding kb : ModKeybindings.ABILITYSLOTS) {
+ 				kb.bind(InputMappings.getInputByCode(GLFW.GLFW_KEY_UNKNOWN, 0));
+ 			}
 		}
 		
 		for(KeyBinding kb : ModKeybindings.ABILITYSLOTS) {

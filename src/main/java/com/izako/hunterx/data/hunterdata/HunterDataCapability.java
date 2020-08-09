@@ -31,12 +31,9 @@ public class HunterDataCapability {
 				props.putDouble("attack_stat", instance.getAttackStat());
 			    props.putBoolean("ishunter", instance.isHunter());
 			    props.putBoolean("ischarmade", instance.isCharacterMade());
-					instance.getQuests().forEach((k, v) -> {
-						props.putInt("quest" + k, v);
+					instance.getQuests().forEach(q -> {
+						props.put("questid" + q.getId(), q.writeData());
 					});
-				instance.getExtraQuestData().forEach((k,v) -> {
-					props.put("extradata" + k, v);
-				});
 				return props;
 			}
 
@@ -51,17 +48,11 @@ public class HunterDataCapability {
                 instance.setIsHunter(props.getBoolean("ishunter"));
                 instance.setIsCharacterMade(props.getBoolean("ischarmade"));
 				props.keySet().forEach((k) -> {
-					if (k.contains("quest")) {
-						String newK = k.substring(5, k.length());
-						instance.removeQuest(newK);
-						instance.giveQuest(newK, props.getInt(k));
-					}
-				});
-				
-				props.keySet().forEach((k) -> {
-					if(k.contains("extradata")) {
-						String newK = k.substring(9);
-						instance.getExtraQuestData().put(newK, props.getCompound(k));
+					if (k.contains("questid")) {
+						String newK = k.substring(7, k.length());
+						Quest q = ModQuests.newInstance(newK);
+						q.readData((CompoundNBT) props.get(k));
+						instance.giveQuest(q);
 					}
 				});
 			}

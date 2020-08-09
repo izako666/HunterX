@@ -5,6 +5,7 @@ import java.util.UUID;
 import com.izako.hunterx.Main;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.IOnPlayerRender;
+import com.izako.hunterx.izapi.ability.ITrainable;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
 import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
@@ -15,7 +16,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 
-public class TenAbility extends PassiveAbility implements IOnPlayerRender{
+public class TenAbility extends PassiveAbility implements IOnPlayerRender , ITrainable{
 
 	public TenAbility() {
 
@@ -26,7 +27,7 @@ public class TenAbility extends PassiveAbility implements IOnPlayerRender{
 	public static final UUID modifierUUID = UUID.fromString("22560518-3370-4b84-a7a9-22a240cf3232");
 	@Override
 	public void onStartPassive(PlayerEntity p) {
-		AttributeModifier mod = new AttributeModifier(modifierUUID, "tenmodifier", 15, Operation.ADDITION);
+		AttributeModifier mod = new AttributeModifier(modifierUUID, "tenmodifier", 15 * this.getPowerScale(), Operation.ADDITION);
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(modifierUUID) == null) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(mod);
 		}
@@ -38,7 +39,7 @@ public class TenAbility extends PassiveAbility implements IOnPlayerRender{
 	@Override
 	public void duringPassive(PlayerEntity p) {
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(modifierUUID) == null) {
-			AttributeModifier mod = new AttributeModifier(modifierUUID, "tenmodifier", 15, Operation.ADDITION);
+			AttributeModifier mod = new AttributeModifier(modifierUUID, "tenmodifier", 15 * this.getPowerScale(), Operation.ADDITION);
 			p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(mod);
 
 		}
@@ -63,7 +64,7 @@ public class TenAbility extends PassiveAbility implements IOnPlayerRender{
 	}
 	private int auraConsumptionEvent() {
 		if(this.getPassiveTimer() % 20 == 0) {
-		 return 5;
+		 return (int) (5 * this.getAuraConsumptionScale());
 		}
 		return 0;
 	}

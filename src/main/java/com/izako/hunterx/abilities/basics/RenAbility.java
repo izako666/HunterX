@@ -2,25 +2,19 @@ package com.izako.hunterx.abilities.basics;
 
 import java.util.UUID;
 
-import com.izako.hunterx.Main;
-import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
-import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.IOnPlayerRender;
+import com.izako.hunterx.izapi.ability.ITrainable;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
 import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
-import com.izako.wypi.WyHelper;
-import com.izako.wypi.particles.GenericParticleData;
 
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.server.ServerWorld;
 
-public class RenAbility extends PassiveAbility implements IOnPlayerRender {
+public class RenAbility extends PassiveAbility implements IOnPlayerRender , ITrainable{
 
 	public static final UUID attackModifierID = UUID.fromString("c199f71b-5e2b-447a-baca-c453bb287a0e");
 	public static final UUID defenseModifierID = UUID.fromString("10abb734-49e0-4865-9383-19005b1bd92a");
@@ -42,8 +36,8 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender {
 	
 
 	public void onStartPassive(PlayerEntity p) {
-		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", 25, Operation.ADDITION);
-		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack", 20, Operation.ADDITION);
+		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", 25 * this.getPowerScale(), Operation.ADDITION);
+		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack", 20 * this.getPowerScale(), Operation.ADDITION);
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(defenseModifierID) == null) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(defenseMod);
 		}
@@ -57,8 +51,8 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender {
 
 	@Override
 	public void duringPassive(PlayerEntity p) {
-		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", 25, Operation.ADDITION);
-		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack", 20, Operation.ADDITION);
+		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", 25 * this.getPowerScale(), Operation.ADDITION);
+		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack", 20 * this.getPowerScale(), Operation.ADDITION);
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(defenseModifierID) == null) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(defenseMod);
 		}
@@ -94,8 +88,8 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender {
 	}
 	
 	private int auraConsumptionEvent() {
-		if(this.getPassiveTimer() % 100 == 0) {
-			return 10;
+		if(this.getPassiveTimer() % 20 == 0) {
+			return (int) (6 * this.getCooldownScale());
 		}
 		return 0;
 	}

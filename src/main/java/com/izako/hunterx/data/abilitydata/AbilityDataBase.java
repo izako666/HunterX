@@ -110,8 +110,9 @@ public class AbilityDataBase implements IAbilityData {
 	public void setCurrentNen(int val) {
 		if(val > this.nenCapacity) {
 			this.currentNen = nenCapacity;
-		}
+		} else {
 		this.currentNen = val;
+		}
 	}
 
 	@Override

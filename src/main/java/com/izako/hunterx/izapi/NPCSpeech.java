@@ -1,5 +1,7 @@
 package com.izako.hunterx.izapi;
 
+import com.izako.hunterx.data.hunterdata.HunterDataCapability;
+import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.gui.SequencedString;
 import com.izako.hunterx.izapi.quest.Quest;
 
@@ -12,8 +14,9 @@ public abstract class NPCSpeech {
 
 	public abstract Quest[] getQuests(PlayerEntity p);
 	public  QuestState getStateFromQuest(Quest q, PlayerEntity p) {
-		if(q.hasQuest(p)) {
-			 if(q.canFinish(p) || q.isFinished(p)) {
+		IHunterData data = HunterDataCapability.get(p);
+		if(data.hasQuest(q)) {
+			 if(q.canFinish() || q.isFinished()) {
 				return QuestState.FULFILLED;
 			}
 	       
@@ -23,10 +26,11 @@ public abstract class NPCSpeech {
 	}
 	public abstract SequencedString[][] getSequencedStringFromQuest(int questIndex);
 	public SequencedString[] getSpeechFromState(PlayerEntity p) {
+		IHunterData data = HunterDataCapability.get(p);
 		if(IZAHelper.getCurrentQuest(this.getQuests(p), p) != -1) {
 		SequencedString[][] sqstrs = this.getSequencedStringFromQuest(IZAHelper.getCurrentQuest(this.getQuests(p), p));
-		Quest q = this.getQuests(p)[IZAHelper.getCurrentQuest(this.getQuests(p), p)];
-		switch(this.getStateFromQuest(q, p)) {
+		Quest q = data.getQuest(getQuests(p)[IZAHelper.getCurrentQuest(this.getQuests(p), p)]);
+		switch(this.getStateFromQuest(data.getQuest(q), p)) {
 		
 		case NOTSTARTED:
 			return sqstrs[0];

@@ -127,7 +127,7 @@ public class GenericOverlayLayer extends LayerRenderer<AbstractClientPlayerEntit
 
 	                   matrixStackIn.scale(layerScale, layerScale - 0.01f, layerScale);
 	                   IVertexBuilder vertexBuilder = bufferIn.getBuffer(ModRenderTypes.getTranslucentEntity());
-	                  renderer.getEntityModel().render(matrixStackIn, vertexBuilder, packedLightIn, 1, (float)(color.getRed()) , (float)(color.getGreen()) , ((float)color.getBlue()), 0.2f);
+	                  renderer.getEntityModel().render(matrixStackIn, vertexBuilder, packedLightIn, 1, (float)(color.getRed()) / 255, (float)(color.getGreen()) / 255 , ((float)color.getBlue()) / 255, 0.2f);
 	    	                
 	                matrixStackIn.pop();
 		}

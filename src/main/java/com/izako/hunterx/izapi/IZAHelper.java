@@ -4,6 +4,8 @@ import java.util.function.Function;
 
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
+import com.izako.hunterx.data.hunterdata.HunterDataCapability;
+import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.gui.SequencedString;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.quest.Quest;
@@ -19,8 +21,9 @@ public class IZAHelper {
 
 	public static int getCurrentQuest(Quest[] q, PlayerEntity p) {
 	      
+		IHunterData data = HunterDataCapability.get(p);
 		for(int i = 0; i < q.length; i++) {
-			if(!q[i].hasQuest(p) || !q[i].isFinished(p)) {
+			if(!data.hasQuest(q[i]) || !data.getQuest(q[i]).isFinished()) {
 				return i;
 			}
 		}

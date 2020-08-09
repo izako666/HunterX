@@ -107,8 +107,8 @@ public class KirikoEntity extends ZombieEntity{
 		if(cause.getTrueSource() instanceof PlayerEntity) {
 			PlayerEntity p = (PlayerEntity) cause.getTrueSource();
 			IHunterData data = HunterDataCapability.get(p);
-			if(ModQuests.HUNTEREXAM02.hasQuest(p) && !ModQuests.HUNTEREXAM02.isFinished(p)) {
-				data.setProgress(ModQuests.HUNTEREXAM02.getId(), 100);
+			if(data.hasQuest(ModQuests.HUNTEREXAM02) && !data.getQuest(ModQuests.HUNTEREXAM02).isFinished()) {
+				data.getQuest(ModQuests.HUNTEREXAM02).setProgress(100);
 			}
 		}
 	}

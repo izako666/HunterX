@@ -153,7 +153,6 @@ public class HanzoEntity extends ZombieEntity{
 
 	@Override
 	public void swingArm(Hand hand) {
-		// TODO Auto-generated method stub
 
 		super.swingArm(hand);
 	}
@@ -165,9 +164,9 @@ public class HanzoEntity extends ZombieEntity{
 			
 			PlayerEntity p = (PlayerEntity) cause.getTrueSource();
 			IHunterData data = HunterDataCapability.get(p);
-		if(ModQuests.HUNTEREXAM04.hasQuest(p) && !ModQuests.HUNTEREXAM04.isFinished(p)) {
+		if(data.hasQuest(ModQuests.HUNTEREXAM04) && !data.getQuest(ModQuests.HUNTEREXAM04).isFinished()) {
 
-			data.setProgress(ModQuests.HUNTEREXAM04.getId(), 100);
+			data.getQuest(ModQuests.HUNTEREXAM04).setProgress(100);
 			
 			this.entityDropItem(new ItemStack(ModItems.BADGE));
 		}

@@ -1,10 +1,12 @@
 package com.izako.hunterx.gui;
 
 import java.awt.Color;
+import java.util.List;
 
 import com.izako.hunterx.Main;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
+import com.izako.hunterx.init.ModQuests;
 import com.izako.hunterx.izapi.IZAHelper;
 import com.izako.hunterx.izapi.NPCSpeech;
 import com.izako.hunterx.izapi.quest.IQuestGiver;
@@ -13,6 +15,7 @@ import com.izako.hunterx.izapi.quest.Quest.QuestScreenEndReturnType;
 import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.SetQuestPacket;
 import com.izako.hunterx.networking.packets.StatsUpdatePacket;
+import com.izako.wypi.WyHelper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
@@ -73,6 +76,7 @@ public class QuestScreen extends Screen {
 		height = mc.getMainWindow().getScaledHeight();
 		width = mc.getMainWindow().getScaledWidth();
 		p = mc.player;
+		IHunterData data = HunterDataCapability.get(p);
 		if(currentQuest == null) {
 		currentQuest = this.speech.getQuests(p)[IZAHelper.getCurrentQuest(this.speech.getQuests(p), p)];
 		}
@@ -88,6 +92,7 @@ public class QuestScreen extends Screen {
 			skipString = new FlickeringString("click anywhere to skip", 140).setScale(0.7f);
 
 		}
+		this.font = Minecraft.getInstance().fontRenderer;
 	}
 
 	public void onStringEnd() {
@@ -109,17 +114,20 @@ public class QuestScreen extends Screen {
 
 	}
 	public void onFinalStringEnd() {
-		QuestScreenEndReturnType returnType = currentQuest.applyQuestScreenEndLogic(this);
+		IHunterData data = HunterDataCapability.get(p);
+		if(!data.hasQuest(this.currentQuest)) {
+		this.renderQuestAcceptanceScreen = true;
+		this.addQuestButtons();
+   } else {
+		QuestScreenEndReturnType returnType = data.getQuest(this.currentQuest).finishedTalkingEvent(this);
 		if(returnType == QuestScreenEndReturnType.NULL) {
 			this.onClose();
-		} else if(returnType == QuestScreenEndReturnType.QUEST) {
-			this.renderQuestAcceptanceScreen = true;
-			this.addQuestButtons();
-		} else {
+		}  else {
 			sequencedStrings = currentQuest.getAdditionalMessage(this);
 			this.hasFinalStringEnded = false;
 			this.stringIndex = 0;
 		}
+   }
 	}
 	@Override
 	public void onClose() {
@@ -145,7 +153,12 @@ public class QuestScreen extends Screen {
 		});
 		if(this.currentQuest != null) {
 	this.drawString(this.getMinecraft().fontRenderer, this.currentQuest.getName(), baseX + 22, baseY + 15, Color.WHITE.getRGB());
-	this.currentQuest.renderDesc(baseX + 22, baseY + 80);
+	String desc = this.currentQuest.getDescription();
+	List<String> descs = WyHelper.splitString(font, desc, baseX + 22, 0, 228);
+	for(int i = 0; i < descs.size(); i++) {
+		this.drawString(font, descs.get(i), (baseX + 22), baseY + 80  + 20 * i, 16777215);
+	}
+
 	this.drawString(this.getMinecraft().fontRenderer, "Will you take this quest?", baseX + 22, baseY + 215, Color.WHITE.getRGB());
 		}
 	
@@ -153,7 +166,7 @@ public class QuestScreen extends Screen {
 	
 	private void acceptQuest(Button but) {
 		if(this.currentQuest != null) {
-		this.currentQuest.giveQuest(p);
+		ModQuests.newInstance(this.currentQuest.getId()).giveQuest(p);
 		PacketHandler.INSTANCE.sendToServer(new SetQuestPacket(this.currentQuest.getId(), true));
 		this.onClose();
 		}

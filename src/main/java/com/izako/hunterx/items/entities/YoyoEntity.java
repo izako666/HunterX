@@ -130,7 +130,6 @@ public class YoyoEntity extends ProjectileItemEntity implements IEntityAdditiona
 
 	@Override
 	public void writeSpawnData(PacketBuffer buffer) {
-		// TODO Auto-generated method stub
 		if(this.getOwner() != null) {
 		buffer.writeInt(this.getOwner().getEntityId());
 
@@ -139,7 +138,6 @@ public class YoyoEntity extends ProjectileItemEntity implements IEntityAdditiona
 
 	@Override
 	public void readSpawnData(PacketBuffer additionalData) {
-		// TODO Auto-generated method stub
 
 		this.entityId = additionalData.readInt();
 	}

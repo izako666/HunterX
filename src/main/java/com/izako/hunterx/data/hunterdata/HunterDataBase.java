@@ -1,10 +1,9 @@
 package com.izako.hunterx.data.hunterdata;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.izako.hunterx.izapi.quest.Quest;
-
-import net.minecraft.nbt.CompoundNBT;
 
 public class HunterDataBase implements IHunterData {
 
@@ -14,8 +13,7 @@ public class HunterDataBase implements IHunterData {
 	double defenseStat = 0;
 	boolean isHunter = false;
 	boolean isCharMade = false;
-	HashMap<String, Integer> quests = new HashMap<>();
-	HashMap<String, CompoundNBT> EXTRAQUESTDATA = new HashMap<>();
+	List<Quest> quests = new ArrayList<>();
 
 	@Override
 	public double getHealthStat() {
@@ -74,53 +72,19 @@ public class HunterDataBase implements IHunterData {
 	}
 
 	@Override
-	public HashMap<String, Integer> getQuests() {
-		return quests;
+	public void giveQuest(Quest q) {
+
+		quests.remove(q);
+		quests.add(q);
+
 	}
 
-	@Override
-	public void giveQuest(String str, Integer value) {
-		if (!quests.containsKey(str)) {
-			quests.put(str, value);
-		}
-	}
+
 
 	@Override
-	public void finishQuest(String str) {
+	public void removeQuest(Quest q) {
 
-		if (quests.containsKey(str)) {
-			this.setProgress(str, 101);
-		}
-	}
-
-	@Override
-	public Integer getProgress(String str) {
-		return quests.get(str);
-	}
-
-	@Override
-	public void setProgress(String str, Integer value) {
-		if (value < 0) {
-			System.out.println("false value");
-			return;
-		}
-		if (quests.containsKey(str)) {
-				quests.replace(str, quests.get(str), value);
-			
-		}
-	}
-
-	@Override
-	public void setQuests(HashMap<String, Integer> quests) {
-		this.quests = quests;
-	}
-
-	@Override
-	public void removeQuest(String str) {
-		
-		if(this.quests.containsKey(str)) {
-			this.quests.remove(str);
-		}
+		this.quests.remove(q);
 	}
 
 	@Override
@@ -144,40 +108,32 @@ public class HunterDataBase implements IHunterData {
 	}
 
 	@Override
-	public CompoundNBT getExtraQuestData(String id) {
-		return EXTRAQUESTDATA.get(id);
+	public List<Quest> getQuests() {
+		return this.quests;
 	}
 
 	@Override
-	public CompoundNBT getExtraQuestData(Quest quest) {
-		return EXTRAQUESTDATA.get(quest.getId());
+	public void setQuests(List<Quest> quests) {
+		this.quests = quests;
+
+
+
 	}
 
 	@Override
-	public HashMap<String, CompoundNBT> getExtraQuestData() {
-		return EXTRAQUESTDATA;
+	public boolean hasQuest(Quest q) {
+		return this.quests.contains(q);
 	}
 
 	@Override
-	public CompoundNBT getOrCreateExtraQuestData(Quest quest) {
-		CompoundNBT nbt = this.getExtraQuestData(quest);
-		if(nbt == null) {
-			this.EXTRAQUESTDATA.put(quest.getId(), new CompoundNBT());
-			nbt = this.getExtraQuestData(quest);
+	public Quest getQuest(Quest q) {
+		if(this.quests.contains(q)) {
+			for(int i = 0; i < this.quests.size(); i++) {
+				if(this.quests.get(i).equals(q)) {
+					return this.quests.get(i);
+				}
+			}
 		}
-		return nbt;
+		return null;
 	}
-
-	@Override
-	public CompoundNBT getOrCreateExtraQuestData(String id) {
-		CompoundNBT nbt = this.getExtraQuestData(id);
-		if(nbt == null) {
-			this.EXTRAQUESTDATA.put(id, new CompoundNBT());
-			nbt = this.getExtraQuestData(id);
-		}
-		return nbt;
-	}
-
-
-
 }

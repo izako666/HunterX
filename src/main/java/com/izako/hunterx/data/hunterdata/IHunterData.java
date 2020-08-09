@@ -1,6 +1,7 @@
 package com.izako.hunterx.data.hunterdata;
 
 import java.util.HashMap;
+import java.util.List;
 
 import com.izako.hunterx.izapi.quest.Quest;
 
@@ -27,18 +28,12 @@ public interface IHunterData {
 	void setIsCharacterMade(boolean val);
 	
 	//quest API
-	HashMap<String, Integer> getQuests();
-	void setQuests(HashMap<String, Integer> quests);
-	void giveQuest(String str, Integer value);
-	void finishQuest(String str);
-	void removeQuest(String str);
-	Integer getProgress(String str);
-	void setProgress(String str, Integer value);
-	CompoundNBT getExtraQuestData(String id);
-	CompoundNBT getExtraQuestData(Quest quest);
-	HashMap<String, CompoundNBT> getExtraQuestData();
-	CompoundNBT getOrCreateExtraQuestData(Quest quest);
-	CompoundNBT getOrCreateExtraQuestData(String id);
+	List<Quest> getQuests();
+	void setQuests(List<Quest> quests);
+	void giveQuest(Quest q);
+	void removeQuest(Quest q);
+	boolean hasQuest(Quest q);
+	Quest getQuest(Quest q);
 
 	
 	

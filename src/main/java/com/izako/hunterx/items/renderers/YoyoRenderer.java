@@ -116,7 +116,7 @@ public class YoyoRenderer<T extends Entity> extends  SpriteRenderer<YoyoEntity> 
 	   } */
 	  @Override
 	   public void render(YoyoEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
-	      PlayerEntity playerentity = entityIn.getOwner();
+	      PlayerEntity playerentity = (PlayerEntity) entityIn.world.getEntityByID(entityIn.entityId);
 	      if (playerentity != null) {
 	         matrixStackIn.push();
 	         matrixStackIn.push();
@@ -181,8 +181,9 @@ public class YoyoRenderer<T extends Entity> extends  SpriteRenderer<YoyoEntity> 
 	         }
 
 	         matrixStackIn.pop();
-	         super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 	      }
+	         super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+
 		   }
 
 	   private static float func_229105_a_(int p_229105_0_, int p_229105_1_) {

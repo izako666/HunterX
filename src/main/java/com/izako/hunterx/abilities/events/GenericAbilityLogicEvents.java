@@ -4,6 +4,7 @@ import com.izako.hunterx.Main;
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.izapi.ability.Ability;
+import com.izako.hunterx.izapi.ability.ITrainable;
 import com.izako.hunterx.izapi.ability.PunchAbility;
 import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.PunchAbilityPacket;
@@ -43,6 +44,10 @@ public class GenericAbilityLogicEvents {
 						event.setCanceled(true);
 					
 					event.setAmount(damage);
+					if(ability instanceof ITrainable) {
+						ITrainable trainable = (ITrainable) ability;
+						ability.setXp(ability.getXp() + (trainable.getXPOnUsage() + (ability.rand.nextDouble() - 0.5))/ 6, player);
+					}
 				}
 			}
 		}
