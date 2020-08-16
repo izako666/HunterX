@@ -99,9 +99,8 @@ public class AbilityDataUpdateEvent {
 								if(a instanceof ITrainable) {
 									 ITrainable trainable = (ITrainable) a;
 										if(p.ticksExisted % 100 == 0) {
-											if(a.rand.nextDouble() > 0.9) {
 												 a.setXp(a.getXp() + trainable.getXPOnUsage() + (a.rand.nextDouble() - 0.5), p);
-											}
+											
 										}
 
 									}

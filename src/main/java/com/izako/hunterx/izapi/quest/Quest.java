@@ -50,7 +50,7 @@ public abstract class Quest implements Cloneable {
 	}
 	@OnlyIn(Dist.CLIENT)
 	public QuestScreenEndReturnType finishedTalkingEvent(QuestScreen scr) {
-		QuestState state = scr.qgiver.getSpeech().getStateFromQuest(scr.currentQuest, scr.p);
+		QuestState state = scr.qgiver.getSpeech().getStateFromQuest(this, scr.p);
 		switch(state) {
 		case NOTFULFILLED:
 			return QuestScreenEndReturnType.NULL;

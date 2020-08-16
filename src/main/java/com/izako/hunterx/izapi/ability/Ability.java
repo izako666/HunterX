@@ -383,37 +383,49 @@ public abstract class Ability {
 	}
 
 	public void setXp(double xp, PlayerEntity p) {
+		ITrainable trainable = (ITrainable) this;
 		if(this.rand.nextInt(1000) > 998 && this.xp < xp) {
 			IAbilityData data = AbilityDataCapability.get(p);
 			data.setNenCapacity(data.getNenCapacity() + 1);
 		}
+		if(this.xp < trainable.getMaxXP()) {
 		this.xp = xp;
-		this.props.setMaxCooldown((int) (this.props.maxCooldown * this.getCooldownScale()));
+		} else {
+			this.xp = trainable.getMaxXP();
+		}
+		this.props.setMaxCooldown((int) (this.props.maxCooldown * this.getCurrentCooldownScale()));
 	}
 
 	public void setXp(double xp) {
 		this.xp = xp;
-		this.props.setMaxCooldown((int) (this.props.maxCooldown * this.getCooldownScale()));
+		this.props.setMaxCooldown((int) (this.props.maxCooldown * this.getCurrentCooldownScale()));
 
 	}
 	
 	public  double getCurrentPowerScale() {
-	
+		if(this instanceof ITrainable) {
+
 		ITrainable trainable = (ITrainable) this;
 		double currentScale = (this.xp * trainable.getPowerScale()) / (trainable.getMaxXP());
 		return currentScale;
+		}
+		return -1;
 	}
 	public  double getCurrentAuraConScale() {
-		
+		if(this instanceof ITrainable) {
 		ITrainable trainable = (ITrainable) this;
 		double currentScale = (this.xp * trainable.getAuraConsumptionScale()) / (trainable.getMaxXP());
 		return currentScale;
+		}
+		return -1;
 	}
-	public  double getCooldownScale() {
-		
+	public  double getCurrentCooldownScale() {
+		if(this instanceof ITrainable) {
 		ITrainable trainable = (ITrainable) this;
 		double currentScale = (this.xp * trainable.getCooldownScale()) / (trainable.getMaxXP());
 		return currentScale;
+		}
+		return -1;
 	}
 
 }

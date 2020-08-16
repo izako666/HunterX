@@ -38,11 +38,20 @@ public class WingSpeech extends NPCSpeech {
 			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
 	public static SequencedString MSG11 = new SequencedString("You have learnt Ren.",
 			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true).setColor(Color.RED.getRGB());
+	public static SequencedString MSG12 = new SequencedString("In order to learn the next principle, Zetsu. You must kill 10 mobs",
+			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
+	public static SequencedString MSG13 = new SequencedString("to learn how to truly hide yourself.",
+			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
+	public static SequencedString MSG14 = new SequencedString("Alright, I'll teach you how to learn zetsu.",
+			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
+	public static SequencedString MSG15 = new SequencedString("You have learnt Zetsu.",
+			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true).setColor(Color.RED.getRGB());
+
 
 
 	@Override
 	public Quest[] getQuests(PlayerEntity p) {
-		return new Quest[] { ModQuests.HUNTEREXAM01, ModQuests.RENQUEST};
+		return new Quest[] { ModQuests.HUNTEREXAM01, ModQuests.RENQUEST, ModQuests.ZETSUQUEST};
 	}
 
 	@Override
@@ -55,6 +64,14 @@ public class WingSpeech extends NPCSpeech {
 					MSG5,MSG6,MSG7,MSG8,MSG9
 			},null, new SequencedString[] {MSG10,MSG11}
         
+			};
+		case 2:
+			return new SequencedString[][] {
+				new SequencedString[] {
+						MSG12,MSG13
+				},null, new SequencedString[] {
+						MSG14,MSG15
+				}
 			};
 		}
 		;

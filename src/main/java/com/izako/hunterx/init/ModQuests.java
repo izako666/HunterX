@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.izako.hunterx.izapi.quest.Quest;
 import com.izako.hunterx.quests.basics.RenQuest;
+import com.izako.hunterx.quests.basics.ZetsuQuest;
 import com.izako.hunterx.quests.hunterexam.HunterExam01;
 import com.izako.hunterx.quests.hunterexam.HunterExam02;
 import com.izako.hunterx.quests.hunterexam.HunterExam03;
@@ -17,6 +18,7 @@ public class ModQuests {
 	public static final Quest HUNTEREXAM03 = new HunterExam03();
 	public static final Quest HUNTEREXAM04 = new HunterExam04();
 	public static final Quest RENQUEST = new RenQuest();
+	public static final Quest ZETSUQUEST = new ZetsuQuest();
 
 	public static List<Quest> QUESTS = new ArrayList<>();
 
@@ -26,6 +28,7 @@ public class ModQuests {
 		QUESTS.add(HUNTEREXAM03);
 		QUESTS.add(HUNTEREXAM04);
 		QUESTS.add(RENQUEST);
+		QUESTS.add(ZETSUQUEST);
 		}
 
 	public static Quest newInstance(String id) {
