@@ -27,6 +27,9 @@ public interface IHunterData {
 	boolean isCharacterMade();
 	void setIsCharacterMade(boolean val);
 	
+	boolean isSelectingAbility();
+	void setSelectingAbility(boolean val);
+	
 	//quest API
 	List<Quest> getQuests();
 	void setQuests(List<Quest> quests);

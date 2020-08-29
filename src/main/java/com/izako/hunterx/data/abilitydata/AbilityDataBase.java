@@ -13,9 +13,10 @@ import com.izako.hunterx.izapi.ability.NenType;
 public class AbilityDataBase implements IAbilityData {
 
 	private List<Ability> ABILITIES = new ArrayList<>();
-	private Ability[] SLOT_ABILITIES = new Ability[8];
+	private Ability[] SLOT_ABILITIES = new Ability[5];
 	private int nenCapacity = 100;
 	private int currentNen = 0;
+	private int activeAbility;
 	private Color aura = Color.WHITE;
 	private NenType type = null;
 	private boolean isNenUser = false;
@@ -68,7 +69,6 @@ public class AbilityDataBase implements IAbilityData {
 
 	@Override
 	public void setSlotAbilities(Ability[] abll) {
-		// TODO Auto-generated method stub
 		SLOT_ABILITIES = abll;
 	}
 
@@ -180,6 +180,16 @@ public class AbilityDataBase implements IAbilityData {
 			}
 		}
 		return abilities;
+	}
+
+	@Override
+	public int getActiveAbility() {
+		return this.activeAbility;
+	}
+
+	@Override
+	public void setActiveAbility(int slot) {
+		this.activeAbility = slot;
 	}
 
 }

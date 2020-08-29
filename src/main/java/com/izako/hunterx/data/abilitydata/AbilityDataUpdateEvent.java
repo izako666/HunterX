@@ -28,17 +28,14 @@ public class AbilityDataUpdateEvent {
 		if (e.getEntityLiving() instanceof PlayerEntity) {
 			PlayerEntity p = (PlayerEntity) e.getEntityLiving();
 			IAbilityData data = AbilityDataCapability.get(p);
-			for (int i = 0; i < 8; i++) {
+			for (int i = 0; i < data.getSlotAbilities().length; i++) {
 				Ability a = data.getAbilityInSlot(i);
 				if (a != null) {
 					if (a.getCooldown() > 0) {
 						a.setCooldown(a.getCooldown() - 1);
 					}
 					if (a.isCharging()) {
-						for (KeyBinding kb : ModKeybindings.ABILITYSLOTS) {
-							if (kb.getKey().getKeyCode() == ModKeybindings.getKeybindFromSlot(a.getSlot()).getKey()
-									.getKeyCode()) {
-								if (!kb.isKeyDown()) {
+								if (!ModKeybindings.USE_ABILITY.isKeyDown()) {
 									a.setCharging(false);
 									((ChargeableAbility) a).onEndCharging(p);
 									a.setCooldown(a.props.maxCooldown);
@@ -69,8 +66,8 @@ public class AbilityDataUpdateEvent {
 
 									PacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot()));
 
-								}
-							}
+								
+							
 						}
 						if (a.getChargingTimer() < a.props.maxCharging) {
 							if (a.consumeAura(p)) {

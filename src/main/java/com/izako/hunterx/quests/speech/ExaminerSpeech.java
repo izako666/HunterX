@@ -45,7 +45,7 @@ public class ExaminerSpeech extends NPCSpeech {
 		switch (questIndex) {
 
 		case 0:
-			return new SequencedString[][] { new SequencedString[] { SQSTR15 }, new SequencedString[] { SQSTR06 },
+			return new SequencedString[][] { null, new SequencedString[] { SQSTR06 },
 					new SequencedString[] {SQSTR01,SQSTR02} };
 		case 1:
 			return new SequencedString[][] { SQSTRS01, null, new SequencedString[] {SQSTR07} };

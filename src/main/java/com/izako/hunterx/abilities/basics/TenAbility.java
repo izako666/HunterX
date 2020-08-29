@@ -21,13 +21,13 @@ public class TenAbility extends PassiveAbility implements IOnPlayerRender , ITra
 	public TenAbility() {
 
 		super();
-		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setConsumptionType(AuraConsumptionType.PERCENTAGE).setMaxCooldown(10).setMaxPassive(Integer.MAX_VALUE).setAuraConsumption(this::auraConsumptionEvent).setMaxCooldown(20 * 4);
+		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setConsumptionType(AuraConsumptionType.NONE).setMaxCooldown(10).setMaxPassive(Integer.MAX_VALUE).setAuraConsumption(this::auraConsumptionEvent).setMaxCooldown(20 * 4);
 	}
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Main.MODID, "textures/items/card.png");
 	public static final UUID modifierUUID = UUID.fromString("22560518-3370-4b84-a7a9-22a240cf3232");
 	@Override
 	public void onStartPassive(PlayerEntity p) {
-		AttributeModifier mod = new AttributeModifier(modifierUUID, "tenmodifier", 15 * this.getPowerScale(), Operation.ADDITION);
+		AttributeModifier mod = new AttributeModifier(modifierUUID, "tenmodifier", 15 * this.getCurrentPowerScale(), Operation.ADDITION);
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(modifierUUID) == null) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(mod);
 		}
@@ -39,7 +39,7 @@ public class TenAbility extends PassiveAbility implements IOnPlayerRender , ITra
 	@Override
 	public void duringPassive(PlayerEntity p) {
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(modifierUUID) == null) {
-			AttributeModifier mod = new AttributeModifier(modifierUUID, "tenmodifier", 15 * this.getPowerScale(), Operation.ADDITION);
+			AttributeModifier mod = new AttributeModifier(modifierUUID, "tenmodifier", 15 * this.getCurrentPowerScale(), Operation.ADDITION);
 			p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(mod);
 
 		}
@@ -64,7 +64,9 @@ public class TenAbility extends PassiveAbility implements IOnPlayerRender , ITra
 	}
 	private int auraConsumptionEvent() {
 		if(this.getPassiveTimer() % 20 == 0) {
-		 return (int) (5 * this.getAuraConsumptionScale());
+		int val =  (int) (5 * (this.getCurrentAuraConScale()));
+		 System.out.println(this.getXp());
+		 return val;
 		}
 		return 0;
 	}

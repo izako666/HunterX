@@ -13,6 +13,7 @@ public class HunterDataBase implements IHunterData {
 	double defenseStat = 0;
 	boolean isHunter = false;
 	boolean isCharMade = false;
+	boolean selectingAbility = false;
 	List<Quest> quests = new ArrayList<>();
 
 	@Override
@@ -135,5 +136,16 @@ public class HunterDataBase implements IHunterData {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public boolean isSelectingAbility() {
+		return this.selectingAbility;
+	}
+
+	@Override
+	public void setSelectingAbility(boolean val) {
+
+		this.selectingAbility = val;
 	}
 }

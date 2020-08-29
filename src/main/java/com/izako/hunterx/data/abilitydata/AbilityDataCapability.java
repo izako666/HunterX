@@ -44,6 +44,7 @@ public class AbilityDataCapability {
 				}
 				props.putInt("auracolor", instance.getAuraColor().getRGB());
 				props.putBoolean("isnenuser", instance.isNenUser());
+				props.putInt("activeability", instance.getActiveAbility());
 				return props;
 			}
 
@@ -51,7 +52,7 @@ public class AbilityDataCapability {
 			public void readNBT(Capability<IAbilityData> capability, IAbilityData instance, Direction side, INBT nbt) {
 				CompoundNBT props = (CompoundNBT) nbt;
 
-				for(int i = 0; i < 8; i++) {
+				for(int i = 0; i < 5; i++) {
 					instance.putAbilityInSlot(null, i);
 				}
 				for(String k : props.keySet()) {
@@ -76,6 +77,7 @@ public class AbilityDataCapability {
 				instance.setNenType(NenType.getTypeFromOrdinal(props.getInt("nentype")));
 				instance.setAuraColor(props.getInt("auracolor"));
 				instance.setIsNenUser(props.getBoolean("isnenuser"));
+				instance.setActiveAbility(props.getInt("activeability"));
 			}
 
 			

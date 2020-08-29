@@ -398,7 +398,6 @@ public abstract class Ability {
 
 	public void setXp(double xp) {
 		this.xp = xp;
-		this.props.setMaxCooldown((int) (this.props.maxCooldown * this.getCurrentCooldownScale()));
 
 	}
 	
@@ -414,7 +413,10 @@ public abstract class Ability {
 	public  double getCurrentAuraConScale() {
 		if(this instanceof ITrainable) {
 		ITrainable trainable = (ITrainable) this;
-		double currentScale = (this.xp * trainable.getAuraConsumptionScale()) / (trainable.getMaxXP());
+		double range = 1 - trainable.getAuraConsumptionScale();
+		double percentage = this.getXp() * 100 / trainable.getMaxXP();
+		double difference = ( percentage * range )/ 100;
+		double currentScale = trainable.getAuraConsumptionScale() + difference;
 		return currentScale;
 		}
 		return -1;

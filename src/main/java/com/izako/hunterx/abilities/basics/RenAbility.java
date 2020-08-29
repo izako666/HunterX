@@ -36,8 +36,8 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender , ITra
 	
 
 	public void onStartPassive(PlayerEntity p) {
-		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", 25 * this.getPowerScale(), Operation.ADDITION);
-		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack", 20 * this.getPowerScale(), Operation.ADDITION);
+		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", 25 * this.getCurrentPowerScale(), Operation.ADDITION);
+		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack", 20 * this.getCurrentPowerScale(), Operation.ADDITION);
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(defenseModifierID) == null) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(defenseMod);
 		}
@@ -51,8 +51,8 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender , ITra
 
 	@Override
 	public void duringPassive(PlayerEntity p) {
-		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", 25 * this.getPowerScale(), Operation.ADDITION);
-		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack", 20 * this.getPowerScale(), Operation.ADDITION);
+		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", 25 * this.getCurrentPowerScale(), Operation.ADDITION);
+		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack", 20 * this.getCurrentPowerScale(), Operation.ADDITION);
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(defenseModifierID) == null) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(defenseMod);
 		}
