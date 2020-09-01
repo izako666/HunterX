@@ -9,7 +9,7 @@ public interface ITrainable {
 		return 1.1;
 	}
 	default double getAuraConsumptionScale() {
-		return 0.9;
+		return 0.5;
 	}
 	default double getXPOnUsage() {
 		return 0.4;

@@ -21,6 +21,7 @@ import com.izako.hunterx.renderers.ThugRenderer;
 import com.izako.hunterx.renderers.WingRenderer;
 import com.izako.hunterx.renderers.layers.GenericOverlayLayer;
 import com.izako.hunterx.renderers.layers.HandOverlayLayer;
+import com.izako.hunterx.renderers.layers.ShuOverlayLayer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -109,6 +110,7 @@ public class ClientSideRegistry {
 		for(PlayerRenderer render : Minecraft.getInstance().getRenderManager().getSkinMap().values()) {
 			render.addLayer(new GenericOverlayLayer(render));
 			render.addLayer(new HandOverlayLayer(render));
+			render.addLayer(new ShuOverlayLayer(render));
 		}
 
 	}

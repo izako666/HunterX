@@ -247,7 +247,6 @@ public class HunterScreen extends Screen {
 
 						@Override
 						public void onPress(Button p_onPress_1_) {
-							// TODO Auto-generated method stub
 
 							if (Minecraft.getInstance().currentScreen instanceof HunterScreen) {
 								((HunterScreen) Minecraft.getInstance().currentScreen).guiState = 1;
@@ -405,16 +404,15 @@ public class HunterScreen extends Screen {
 		PlayerEntity p = this.getMinecraft().player;
 		IAbilityData abldata = AbilityDataCapability.get(p);
 		List<Ability> list = abldata.getAbilities();
-		for (int i = 4 * abilityPage; i <= 4 * (abilityPage + 1); i++) {
+		for (int i = 4 * abilityPage; i < 4 * (abilityPage + 1); i++) {
 			if ((list.size() - 1) >= i) {
+				int index = i - (4 * abilityPage);
 				HunterScreen screen = ((HunterScreen) Minecraft.getInstance().currentScreen);
-				this.addButton(new AbilityButton((int) ((width * 0.5) - 125), (int) (30 + 50 * i), 32, 32,
+				this.addButton(new AbilityButton((int) ((width * 0.5) - 125), (int) (30 + 50 * index), 32, 32,
 						list.get(i).getId(), new Button.IPressable() {
 
 							@Override
 							public void onPress(Button but) {
-								// TODO Auto-generated method stub
-
 								screen.currentAbility = ((AbilityButton) but).ability;
 
 							}

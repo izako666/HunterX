@@ -92,7 +92,7 @@ public abstract class Ability {
 					((PassiveAbility) this).onStartPassive(p);
 					tempAbilities.forEach((a) -> {
 						if(!a.equals(this)) {
-						a.stopAbility();
+						a.stopAbility(p);
 						}
 					});
 					
@@ -113,7 +113,7 @@ public abstract class Ability {
 				 this.setXp(this.getXp() + trainable.getXPOnUsage() + (rand.nextDouble() - 0.5), p);
 				}
 				if(!this.consumeAura(p)) {
-					this.stopAbility();
+					this.stopAbility(p);
 				}
 				break;
 			}
@@ -207,13 +207,14 @@ public abstract class Ability {
 
 	//this halts the ability completely without calling any of the onEnd 
 	//logic, used for when you haven't enough aura
-	public void stopAbility() {
+	public void stopAbility(PlayerEntity p) {
 		switch(this.props.type) {
 		
 		case PASSIVE:
 			this.setInPassive(false);
 			this.setPassiveTimer(this.props.maxPassive);
 			this.setCooldown(this.props.maxCooldown);
+			((PassiveAbility)this).onEndPassive(p);
 		   break;
 		case CHARGING:
 			this.setCharging(false);
@@ -405,7 +406,10 @@ public abstract class Ability {
 		if(this instanceof ITrainable) {
 
 		ITrainable trainable = (ITrainable) this;
-		double currentScale = (this.xp * trainable.getPowerScale()) / (trainable.getMaxXP());
+		double range = trainable.getPowerScale() - 1;
+		double percentage = this.getXp() * 100 / trainable.getMaxXP();
+		double difference = ( percentage * range )/ 100;
+		double currentScale = 1 + difference;
 		return currentScale;
 		}
 		return -1;
@@ -413,10 +417,10 @@ public abstract class Ability {
 	public  double getCurrentAuraConScale() {
 		if(this instanceof ITrainable) {
 		ITrainable trainable = (ITrainable) this;
-		double range = 1 - trainable.getAuraConsumptionScale();
+		double range = trainable.getAuraConsumptionScale() - 1;
 		double percentage = this.getXp() * 100 / trainable.getMaxXP();
 		double difference = ( percentage * range )/ 100;
-		double currentScale = trainable.getAuraConsumptionScale() + difference;
+		double currentScale = 1 + difference;
 		return currentScale;
 		}
 		return -1;

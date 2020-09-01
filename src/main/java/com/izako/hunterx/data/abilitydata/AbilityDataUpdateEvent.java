@@ -61,7 +61,7 @@ public class AbilityDataUpdateEvent {
 											}
 
 									} else {
-										a.stopAbility();
+										a.stopAbility(p);
 									}
 
 									PacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot()));
@@ -74,7 +74,7 @@ public class AbilityDataUpdateEvent {
 								a.setChargingTimer(a.getChargingTimer() + 1);
 								((ChargeableAbility) a).duringCharging(p);
 							} else {
-								a.stopAbility();
+								a.stopAbility(p);
 							}
 						}
 					}
@@ -103,7 +103,7 @@ public class AbilityDataUpdateEvent {
 									}
 
 							} else {
-								a.stopAbility();
+								a.stopAbility(p);
 							}
 						}
 					}

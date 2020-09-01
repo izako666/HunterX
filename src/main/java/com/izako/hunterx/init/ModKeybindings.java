@@ -43,6 +43,8 @@ public class ModKeybindings {
 	public static void onKeyInput(KeyInputEvent event)
 	{
 
+		if(Minecraft.getInstance().currentScreen != null)
+			return;
 		if(event.getKey() == ACTIVATE_ABILITY_SCROLLER.getKey().getKeyCode() && event.getAction() == 0) {
 		    IHunterData data = HunterDataCapability.get(Minecraft.getInstance().player);
 		    IAbilityData abilitydata = AbilityDataCapability.get(Minecraft.getInstance().player);

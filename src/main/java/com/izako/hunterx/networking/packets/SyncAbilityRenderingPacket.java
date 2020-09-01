@@ -72,14 +72,14 @@ public class SyncAbilityRenderingPacket {
 			if(msg.turnOn) {
 				abl.initiateAbility();
 			} else {
-				abl.stopAbility();
+				abl.stopAbility(p);
 			}
             } catch(NullPointerException e) {
             	abl = IZAHelper.addSlotAbility(ModAbilities.getNewInstanceFromId(msg.id), abilityUser);
             	if(msg.turnOn) {
             		abl.initiateAbility();
             	} else {
-            		abl.stopAbility();
+            		abl.stopAbility(p);
             	}
             }
 			}

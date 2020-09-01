@@ -13,6 +13,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
@@ -92,6 +93,7 @@ public class HandOverlayLayer
 		for (Ability abl : abilities) {
 			if (abl == null)
 				continue;
+
 
 			if (abl.props.type == AbilityType.PASSIVE && abl.isInPassive() && abl instanceof IHandOverlay) {
 

@@ -1,5 +1,11 @@
 package com.izako.hunterx.izapi;
 
+import java.awt.Color;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 import java.util.function.Function;
 
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
@@ -9,10 +15,33 @@ import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.gui.SequencedString;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.quest.Quest;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.Atlases;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.Vector3f;
+import net.minecraft.client.renderer.entity.layers.LayerRenderer;
+import net.minecraft.client.renderer.entity.model.IHasArm;
+import net.minecraft.client.renderer.model.BakedQuad;
+import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.Direction;
+import net.minecraft.util.HandSide;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class IZAHelper {
 
@@ -64,4 +93,98 @@ public class IZAHelper {
 		}
 		return newstr;
 	}
+	
+	
+	@OnlyIn(Dist.CLIENT)
+	   public static void renderItem(ItemStack itemStackIn, ItemCameraTransforms.TransformType transformTypeIn, boolean leftHand, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn, IBakedModel modelIn, RenderType renderType, Color color) {
+		      if (!itemStackIn.isEmpty()) {
+		         matrixStackIn.push();
+		         boolean flag = transformTypeIn == ItemCameraTransforms.TransformType.GUI;
+		         boolean flag1 = flag || transformTypeIn == ItemCameraTransforms.TransformType.GROUND || transformTypeIn == ItemCameraTransforms.TransformType.FIXED;
+		         if (itemStackIn.getItem() == Items.TRIDENT && flag1) {
+		            modelIn = Minecraft.getInstance().getItemRenderer().getItemModelMesher().getModelManager().getModel(new ModelResourceLocation("minecraft:trident#inventory"));
+		         }
+
+		         modelIn = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(matrixStackIn, modelIn, transformTypeIn, leftHand);
+		         matrixStackIn.translate(-0.5D, -0.5D, -0.5D);
+		         if (!modelIn.isBuiltInRenderer() && (itemStackIn.getItem() != Items.TRIDENT || flag1)) {
+		            RenderType rendertype = renderType;
+		            RenderType rendertype1;
+		            if (flag && Objects.equals(rendertype, Atlases.getTranslucentBlockType())) {
+		               rendertype1 = Atlases.getTranslucentCullBlockType();
+		            } else {
+		               rendertype1 = rendertype;
+		            }
+
+		            IVertexBuilder ivertexbuilder = ItemRenderer.getBuffer(bufferIn, rendertype1, true, itemStackIn.hasEffect());
+		            IZAHelper.renderItemModel(modelIn, itemStackIn, combinedLightIn, combinedOverlayIn, matrixStackIn, ivertexbuilder, color);
+		         } else {
+		            itemStackIn.getItem().getItemStackTileEntityRenderer().render(itemStackIn, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
+		         }
+
+		         matrixStackIn.pop();
+		      }
+		   }
+
+	@OnlyIn(Dist.CLIENT)
+	   public static void renderItemOnPlayer(LayerRenderer render,MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, PlayerEntity entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, RenderType type, Color color) {
+		      boolean flag = entitylivingbaseIn.getPrimaryHand() == HandSide.RIGHT;
+		      ItemStack itemstack = flag ? entitylivingbaseIn.getHeldItemOffhand() : entitylivingbaseIn.getHeldItemMainhand();
+		      ItemStack itemstack1 = flag ? entitylivingbaseIn.getHeldItemMainhand() : entitylivingbaseIn.getHeldItemOffhand();
+		      if (!itemstack.isEmpty() || !itemstack1.isEmpty()) {
+		         matrixStackIn.push();
+		         if (render.getEntityModel().isChild) {
+		            float f = 0.5F;
+		            matrixStackIn.translate(0.0D, 0.75D, 0.0D);
+		            matrixStackIn.scale(0.5F, 0.5F, 0.5F);
+		         }
+
+		         IZAHelper.renderItem3d(render,entitylivingbaseIn, itemstack1, ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, HandSide.RIGHT, matrixStackIn, bufferIn, packedLightIn, type, color);
+		         IZAHelper.renderItem3d(render,entitylivingbaseIn, itemstack, ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, HandSide.LEFT, matrixStackIn, bufferIn, packedLightIn, type, color);
+		         matrixStackIn.pop();
+		      }
+		   }
+
+	@OnlyIn(Dist.CLIENT)
+		   private static void renderItem3d(LayerRenderer render,LivingEntity p_229135_1_, ItemStack itemStack, ItemCameraTransforms.TransformType p_229135_3_, HandSide p_229135_4_, MatrixStack p_229135_5_, IRenderTypeBuffer p_229135_6_, int p_229135_7_, RenderType type, Color color) {
+		      if (!itemStack.isEmpty()) {
+		         p_229135_5_.push();
+		         ((IHasArm)render.getEntityModel()).translateHand(p_229135_4_, p_229135_5_);
+		         p_229135_5_.rotate(Vector3f.XP.rotationDegrees(-90.0F));
+		         p_229135_5_.rotate(Vector3f.YP.rotationDegrees(180.0F));
+		         boolean flag = p_229135_4_ == HandSide.LEFT;
+		         p_229135_5_.translate((double)((float)(flag ? -1 : 1) / 16.0F), 0.125D, -0.625D);
+		             IBakedModel ibakedmodel = Minecraft.getInstance().getItemRenderer().getItemModelWithOverrides(itemStack, p_229135_1_.world, p_229135_1_);
+		             IZAHelper.renderItem(itemStack, p_229135_3_, p_229135_4_ == HandSide.LEFT, p_229135_5_, p_229135_6_, p_229135_7_, OverlayTexture.NO_OVERLAY, ibakedmodel, type,  color);
+		          
+		         p_229135_5_.pop();
+		      }
+		   }
+
+	   private static void renderItemModel(IBakedModel modelIn, ItemStack stack, int combinedLightIn, int combinedOverlayIn, MatrixStack matrixStackIn, IVertexBuilder bufferIn, Color color) {
+		      Random random = new Random();
+		      long i = 42L;
+
+		      for(Direction direction : Direction.values()) {
+		         random.setSeed(42L);
+		         IZAHelper.renderQuads(matrixStackIn, bufferIn, modelIn.getQuads((BlockState)null, direction, random), stack, combinedLightIn, combinedOverlayIn, color);
+		      }
+
+		      random.setSeed(42L);
+		      IZAHelper.renderQuads(matrixStackIn, bufferIn, modelIn.getQuads((BlockState)null, (Direction)null, random), stack, combinedLightIn, combinedOverlayIn, color);
+		   }
+
+	   public static void renderQuads(MatrixStack matrixStackIn, IVertexBuilder bufferIn, List<BakedQuad> quadsIn, ItemStack itemStackIn, int combinedLightIn, int combinedOverlayIn, Color color) {
+		      MatrixStack.Entry matrixstack$entry = matrixStackIn.getLast();
+
+		      for(BakedQuad bakedquad : quadsIn) {
+
+		         float f = (float)(color.getRed()) / 255;
+		         float f1 = (float)(color.getGreen()) / 255;
+		         float f2 = (float)(color.getBlue()) / 255;
+		         float f3 = (float)(color.getAlpha()) / 255;
+		         bufferIn.addVertexData(matrixstack$entry, bakedquad, f, f1, f2,f3, combinedLightIn, combinedOverlayIn);
+		      }
+	   }
+
 }

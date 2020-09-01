@@ -2,17 +2,24 @@ package com.izako.hunterx.abilities.basics;
 
 import java.util.UUID;
 
+import com.izako.hunterx.Main;
+import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
+import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.IOnPlayerRender;
 import com.izako.hunterx.izapi.ability.ITrainable;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
 import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
+import com.izako.wypi.WyHelper;
+import com.izako.wypi.particles.GenericParticleData;
 
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.server.ServerWorld;
 
 public class RenAbility extends PassiveAbility implements IOnPlayerRender , ITrainable{
 
@@ -60,21 +67,22 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender , ITra
 	   p.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).applyModifier(attackMod);
 		}
 		
-		/* if(!p.world.isRemote()) {
+		 if(!p.world.isRemote()) {
 			int chance = p.world.getRandom().nextInt(100);
 			if(chance > 97) {
 				IAbilityData abilityData = AbilityDataCapability.get(p);
-				double xRange = p.world.getRandom().nextDouble() * 2 -1;
+				double xRange = p.world.getRandom().nextDouble()  -0.5;
 				double yRange = p.world.getRandom().nextDouble();
-				double zRange = p.world.getRandom().nextDouble() * 2 - 1;
+				double zRange = p.world.getRandom().nextDouble() -0.5;
 				GenericParticleData data = new GenericParticleData();
 				data.setTexture(new ResourceLocation(Main.MODID, "textures/particles/genericaura2.png"));
-				data.setMotion(0, 0.2, 0);
+				data.setMotion(0, 0.05, 0);
 				data.setLife(20);
+				data.setSize(0.15f);
 				data.setColor(abilityData.getAuraColor().getRed() / 255.0f, abilityData.getAuraColor().getGreen() / 255.0f, abilityData.getAuraColor().getBlue() / 255.0f, 0.7f);
 			 WyHelper.spawnParticles(data, (ServerWorld) p.world, p.getPosX() + xRange, p.getPosY() + yRange, p.getPosZ() + zRange);
 			} 
-		} */
+		} 
 		
 	}
 
@@ -89,7 +97,7 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender , ITra
 	
 	private int auraConsumptionEvent() {
 		if(this.getPassiveTimer() % 20 == 0) {
-			return (int) (6 * this.getCooldownScale());
+			return (int) (6 * this.getCurrentAuraConScale());
 		}
 		return 0;
 	}
