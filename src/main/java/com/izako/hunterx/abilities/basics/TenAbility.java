@@ -10,6 +10,7 @@ import com.izako.hunterx.izapi.ability.PassiveAbility;
 import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
 
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
@@ -26,31 +27,25 @@ public class TenAbility extends PassiveAbility implements IOnPlayerRender , ITra
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Main.MODID, "textures/items/card.png");
 	public static final UUID modifierUUID = UUID.fromString("22560518-3370-4b84-a7a9-22a240cf3232");
 	@Override
-	public void onStartPassive(PlayerEntity p) {
-		AttributeModifier mod = new AttributeModifier(modifierUUID, "tenmodifier", 15 * this.getCurrentPowerScale(), Operation.ADDITION);
+	public void onStartPassive(LivingEntity p) {
+		AttributeModifier mod = new AttributeModifier(modifierUUID, "tenmodifier", 30 * this.getCurrentPowerScale(), Operation.ADDITION);
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(modifierUUID) == null) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(mod);
-		}
-		if(!p.world.isRemote()) {
-		PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), true));
 		}
 		}
 
 	@Override
-	public void duringPassive(PlayerEntity p) {
+	public void duringPassive(LivingEntity p) {
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(modifierUUID) == null) {
-			AttributeModifier mod = new AttributeModifier(modifierUUID, "tenmodifier", 15 * this.getCurrentPowerScale(), Operation.ADDITION);
+			AttributeModifier mod = new AttributeModifier(modifierUUID, "tenmodifier", 30 * this.getCurrentPowerScale(), Operation.ADDITION);
 			p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(mod);
 
 		}
 	}
 
 	@Override
-	public void onEndPassive(PlayerEntity p) {
+	public void onEndPassive(LivingEntity p) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).removeModifier(modifierUUID);
-		if(!p.world.isRemote()) {
-		PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), false));
-		}
 	}
 
 	@Override

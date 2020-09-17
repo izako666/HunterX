@@ -5,7 +5,7 @@ import net.minecraft.entity.player.PlayerEntity;
 
 public abstract class PunchAbility extends PassiveAbility{
 
-	public float onPunch(PlayerEntity p, LivingEntity target) {
+	public float onPunch(LivingEntity p, LivingEntity target) {
 		return 0;
 	}
 }

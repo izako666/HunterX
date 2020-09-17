@@ -1,6 +1,6 @@
 package com.izako.hunterx.izapi.ability;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
 
 public abstract class ChargeableAbility  extends Ability{
@@ -10,9 +10,9 @@ public abstract class ChargeableAbility  extends Ability{
 		super();
 	}
 	//self explanatory methods.
-	public  void onStartCharging(PlayerEntity p) {};
-	public  void duringCharging(PlayerEntity p) {};
-	public  void onEndCharging(PlayerEntity p) {};
+	public  void onStartCharging(LivingEntity p) {};
+	public  void duringCharging(LivingEntity p) {};
+	public  void onEndCharging(LivingEntity p) {};
 	
 	@Override
 	public CompoundNBT writeData(int slot) {

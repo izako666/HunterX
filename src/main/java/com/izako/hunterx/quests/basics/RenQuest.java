@@ -14,7 +14,8 @@ public class RenQuest extends Quest{
 	@Override
 	public void giveQuest(PlayerEntity p) {
 		IAbilityData data = AbilityDataCapability.get(p);
-		data.giveAbility(new TenAbility());
+
+		new TenAbility().give(p);
 		data.setIsNenUser(true);
 		super.giveQuest(p);
 	}
@@ -22,7 +23,7 @@ public class RenQuest extends Quest{
 	@Override
 	public void finishQuest(PlayerEntity p) {
 		IAbilityData data = AbilityDataCapability.get(p);
-		data.giveAbility(new RenAbility());
+		new RenAbility().give(p);
 		super.finishQuest(p);
 	}
 

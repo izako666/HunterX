@@ -25,6 +25,8 @@ public interface IAbilityData {
 	void removeAbility(Ability abl);
 	int getActiveAbility();
 	void setActiveAbility(int slot);
+
+	boolean hasActiveAbility(Ability abl);
 	List<Ability> getAbilitiesOfType(AbilityType type);
 	
 	//general nen data

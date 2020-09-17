@@ -84,7 +84,7 @@ public class QuestScreen extends Screen {
 			sequencedStrings = this.speech.getSpeechFromState(p);
 		}
 
-		if (currentString == null && sequencedStrings != null && sequencedStrings[this.stringIndex] != null) {
+		if (!this.renderQuestAcceptanceScreen && currentString == null && sequencedStrings != null && sequencedStrings[this.stringIndex] != null) {
 			currentString = IZAHelper.getNewSqStringInstance(sequencedStrings[this.stringIndex]);
 			currentString.event = this::onStringEnd;
 		}

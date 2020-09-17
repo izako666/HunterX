@@ -8,11 +8,12 @@ import com.izako.hunterx.networking.packets.HanzoSwordPacket;
 import com.izako.hunterx.networking.packets.ModifierUpdatePacket;
 import com.izako.hunterx.networking.packets.OpenQuestGuiPacket;
 import com.izako.hunterx.networking.packets.PunchAbilityPacket;
+import com.izako.hunterx.networking.packets.QuestProgressPacket;
 import com.izako.hunterx.networking.packets.SetQuestPacket;
 import com.izako.hunterx.networking.packets.StatsUpdatePacket;
 import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -41,9 +42,10 @@ public class PacketHandler {
         INSTANCE.registerMessage(packet++, CharacterInitPacket.class, CharacterInitPacket::encode, CharacterInitPacket::decode, CharacterInitPacket::handle);
         INSTANCE.registerMessage(packet++, SyncAbilityRenderingPacket.class, SyncAbilityRenderingPacket::encode, SyncAbilityRenderingPacket::decode, SyncAbilityRenderingPacket::handle);
 	    INSTANCE.registerMessage(packet++, PunchAbilityPacket.class, PunchAbilityPacket::encode, PunchAbilityPacket::decode, PunchAbilityPacket::handle);
+	    INSTANCE.registerMessage(packet++, QuestProgressPacket.class, QuestProgressPacket::encode, QuestProgressPacket::decode, QuestProgressPacket::handle);
 	}
 	
-	public static <MSG>  void sendToTracking(PlayerEntity tracked, MSG message) {
+	public static <MSG>  void sendToTracking(LivingEntity tracked, MSG message) {
 		 PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY.with(() -> tracked), message);
 	}
 }

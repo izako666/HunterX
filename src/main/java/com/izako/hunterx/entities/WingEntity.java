@@ -3,9 +3,12 @@ package com.izako.hunterx.entities;
 import java.util.List;
 
 import com.izako.hunterx.Main;
-import com.izako.hunterx.data.hunterdata.HunterDataCapability;
-import com.izako.hunterx.data.hunterdata.IHunterData;
-import com.izako.hunterx.init.ModQuests;
+import com.izako.hunterx.abilities.basics.InAbility;
+import com.izako.hunterx.abilities.basics.RenAbility;
+import com.izako.hunterx.abilities.basics.TenAbility;
+import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
+import com.izako.hunterx.data.abilitydata.IAbilityData;
+import com.izako.hunterx.entities.AI.UseRenGoal;
 import com.izako.hunterx.izapi.NPCSpeech;
 import com.izako.hunterx.izapi.quest.IQuestGiver;
 import com.izako.hunterx.quests.speech.WingSpeech;
@@ -13,23 +16,41 @@ import com.izako.hunterx.quests.speech.WingSpeech;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ILivingEntityData;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Hand;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class WingEntity extends CreatureEntity implements IQuestGiver{
+
+	@Override
+	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+		
+		IAbilityData data = AbilityDataCapability.get(this);
+		data.setIsNenUser(true);
+		new RenAbility().give(this);
+		new TenAbility().give(this);
+		new InAbility().give(this);
+		data.setNenCapacity(1000);
+		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+	}
 
 	@SuppressWarnings("unchecked")
 	public static EntityType<WingEntity> type = (EntityType<WingEntity>) EntityType.Builder
@@ -46,6 +67,10 @@ public class WingEntity extends CreatureEntity implements IQuestGiver{
 		this.goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(5, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, MonsterEntity.class, true));
+		this.goalSelector.addGoal(1, new HurtByTargetGoal(this));
+		this.goalSelector.addGoal(-1, new UseRenGoal(this));
 	}
 
 	@Override
@@ -53,6 +78,8 @@ public class WingEntity extends CreatureEntity implements IQuestGiver{
 		super.registerAttributes();
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0D);
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.4D);
+		this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(10);
 	}
 
    @Override
@@ -61,9 +88,9 @@ public class WingEntity extends CreatureEntity implements IQuestGiver{
 	  List<VillagerEntity> list = worldIn.getEntitiesWithinAABB(VillagerEntity.class, new AxisAlignedBB(this.getPosX() - 30, this.getPosY() - 30, this.getPosZ() - 30, this.getPosX() + 30, this.getPosY() + 30, this.getPosZ() + 30));
   
 	  if(!list.isEmpty()) {
-		  return false;
+		  return true;
 	  }
-	  return true;
+	  return false;
    }
 
 	@Override

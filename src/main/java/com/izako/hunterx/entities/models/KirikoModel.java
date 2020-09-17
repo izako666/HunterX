@@ -286,12 +286,12 @@ public class KirikoModel<KirikoEntity> extends EntityModel<Entity> {
 
 	@Override
 	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		Rleg.render(matrixStack, buffer, packedLight, packedOverlay);
-		Lleg.render(matrixStack, buffer, packedLight, packedOverlay);
-		rarm.render(matrixStack, buffer, packedLight, packedOverlay);
-		larm.render(matrixStack, buffer, packedLight, packedOverlay);
-		body.render(matrixStack, buffer, packedLight, packedOverlay);
-		head.render(matrixStack, buffer, packedLight, packedOverlay);
+		Rleg.render(matrixStack, buffer, packedLight, packedOverlay,red,green,blue,alpha);
+		Lleg.render(matrixStack, buffer, packedLight, packedOverlay,red,green,blue,alpha);
+		rarm.render(matrixStack, buffer, packedLight, packedOverlay,red,green,blue,alpha);
+		larm.render(matrixStack, buffer, packedLight, packedOverlay,red,green,blue,alpha);
+		body.render(matrixStack, buffer, packedLight, packedOverlay,red,green,blue,alpha);
+		head.render(matrixStack, buffer, packedLight, packedOverlay,red,green,blue,alpha);
 	}
 
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {

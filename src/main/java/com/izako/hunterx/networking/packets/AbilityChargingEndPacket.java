@@ -5,7 +5,9 @@ import java.util.function.Supplier;
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.izapi.ability.Ability;
+import com.izako.hunterx.izapi.ability.Ability.AbilityType;
 import com.izako.hunterx.izapi.ability.ChargeableAbility;
+import com.izako.hunterx.izapi.ability.ChargeablePassiveAbility;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
@@ -38,10 +40,18 @@ public class AbilityChargingEndPacket {
 				IAbilityData data = AbilityDataCapability.get(p);
 				if(data.getAbilityInSlot(msg.slot) != null) {
 					Ability a = data.getAbilityInSlot(msg.slot);
+					if(a.props.type == AbilityType.CHARGING) {
 					a.setCharging(false);
 					((ChargeableAbility) a).onEndCharging(p);
 					a.setCooldown(a.props.maxCooldown);
 					a.setChargingTimer(0);
+					} else {
+						a.setCharging(false);
+						((ChargeablePassiveAbility) a).onStartPassive(p);
+						a.setPassiveTimer(a.props.maxPassive);
+						a.setInPassive(true);
+
+					}
 				}
 			});
 		}

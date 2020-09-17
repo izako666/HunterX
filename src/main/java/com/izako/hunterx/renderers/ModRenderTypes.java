@@ -30,7 +30,7 @@ public abstract class ModRenderTypes extends RenderType {
 
 	}
 
-	public static RenderType genTranslucentItem(ResourceLocation loc) {
+	public static RenderType getTranslucentItem(ResourceLocation loc) {
 		final RenderType.State TRANSLUCENT_ITEM_STATE = RenderType.State.getBuilder()
 				.transparency(TransparencyState.TRANSLUCENT_TRANSPARENCY)
 				.texture(new RenderState.TextureState(loc, false, false)).texturing(RenderState.OUTLINE_TEXTURING)
@@ -40,5 +40,10 @@ public abstract class ModRenderTypes extends RenderType {
 				DefaultVertexFormats.ENTITY, 7, 256, true, true, TRANSLUCENT_ENTITY_STATE);
 		return TRANSLUCENT_ITEM_NOTEX;
 	}
+
+	   public static RenderType getCustomEyes(ResourceLocation locationIn) {
+		      RenderState.TextureState renderstate$texturestate = new RenderState.TextureState(locationIn, false, false);
+		      return makeType("hntrxeyes", DefaultVertexFormats.ENTITY, 7, 256, false, true, RenderType.State.getBuilder().texture(renderstate$texturestate).transparency(TRANSLUCENT_TRANSPARENCY).writeMask(COLOR_WRITE).fog(BLACK_FOG).build(false));
+		   }
 
 }

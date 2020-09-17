@@ -1,7 +1,6 @@
 package com.izako.hunterx.data.hunterdata;
 
 import com.izako.hunterx.init.ModQuests;
-import com.izako.hunterx.izapi.quest.IAdditionalQuestData;
 import com.izako.hunterx.izapi.quest.Quest;
 
 import net.minecraft.entity.LivingEntity;

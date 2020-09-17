@@ -14,6 +14,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 public abstract class Quest implements Cloneable {
 
@@ -115,4 +116,7 @@ public abstract class Quest implements Cloneable {
 		Quest q = (Quest) obj;
 		return this.getId().equalsIgnoreCase(q.getId());
 	}
+    public void onInteractEvent(IQuestGiver qgiver, PlayerInteractEvent.EntityInteract e) {
+    	
+    }
 }

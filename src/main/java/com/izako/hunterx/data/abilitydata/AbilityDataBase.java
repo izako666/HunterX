@@ -174,11 +174,17 @@ public class AbilityDataBase implements IAbilityData {
 	public List<Ability> getAbilitiesOfType(AbilityType type) {
 		List<Ability> abilities = new ArrayList<>();
 		
+		for(int i = 0; i < this.ABILITIES.size(); i++) {
+			if(this.ABILITIES.get(i) != null && this.ABILITIES.get(i).props.type == type) {
+				abilities.add(this.ABILITIES.get(i));
+			}
+		}
 		for(int i = 0; i < this.SLOT_ABILITIES.length; i++) {
 			if(this.SLOT_ABILITIES[i] != null && this.SLOT_ABILITIES[i].props.type == type) {
 				abilities.add(this.SLOT_ABILITIES[i]);
 			}
 		}
+
 		return abilities;
 	}
 
@@ -190,6 +196,22 @@ public class AbilityDataBase implements IAbilityData {
 	@Override
 	public void setActiveAbility(int slot) {
 		this.activeAbility = slot;
+	}
+
+	@Override
+	public boolean hasActiveAbility(Ability abl) {
+		for(int i = 0; i < this.SLOT_ABILITIES.length; i++) {
+			if(this.SLOT_ABILITIES[i] != null && this.SLOT_ABILITIES[i].isActive() && abl.getId() == this.SLOT_ABILITIES[i].getId()) {
+				return true;
+			}
+		}
+		for(int i = 0; i < this.ABILITIES.size(); i++) {
+			if(this.ABILITIES.get(i) != null && this.ABILITIES.get(i).isActive() && abl.getId() == this.ABILITIES.get(i).getId()) {
+				return true;
+			}
+		}
+		return false;
+
 	}
 
 }

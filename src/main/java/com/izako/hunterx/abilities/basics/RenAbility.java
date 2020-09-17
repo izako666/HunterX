@@ -14,6 +14,7 @@ import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
 import com.izako.wypi.WyHelper;
 import com.izako.wypi.particles.GenericParticleData;
 
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
@@ -42,24 +43,21 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender , ITra
 
 	
 
-	public void onStartPassive(PlayerEntity p) {
-		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", 25 * this.getCurrentPowerScale(), Operation.ADDITION);
-		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack", 20 * this.getCurrentPowerScale(), Operation.ADDITION);
+	public void onStartPassive(LivingEntity p) {
+		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", 8 * this.getCurrentPowerScale(), Operation.ADDITION);
+		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack", 30 * this.getCurrentPowerScale(), Operation.ADDITION);
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(defenseModifierID) == null) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(defenseMod);
 		}
 		if(p.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getModifier(attackModifierID) == null) {
 	   p.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).applyModifier(attackMod);
 		}
-		if(!p.world.isRemote()) {
-		PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), true));
-		}
 		}
 
 	@Override
-	public void duringPassive(PlayerEntity p) {
-		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", 25 * this.getCurrentPowerScale(), Operation.ADDITION);
-		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack", 20 * this.getCurrentPowerScale(), Operation.ADDITION);
+	public void duringPassive(LivingEntity p) {
+		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", 15 * this.getCurrentPowerScale(), Operation.ADDITION);
+		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack", 30 * this.getCurrentPowerScale(), Operation.ADDITION);
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(defenseModifierID) == null) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(defenseMod);
 		}
@@ -87,12 +85,10 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender , ITra
 	}
 
 	@Override
-	public void onEndPassive(PlayerEntity p) {
+	public void onEndPassive(LivingEntity p) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).removeModifier(defenseModifierID);
 		p.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).removeModifier(attackModifierID);
-		if(!p.world.isRemote()) {
-		PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), false));
-		}
+		
 	}
 	
 	private int auraConsumptionEvent() {

@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.izako.hunterx.izapi.quest.Quest;
+import com.izako.hunterx.quests.basics.GyoQuest;
+import com.izako.hunterx.quests.basics.InQuest;
+import com.izako.hunterx.quests.basics.KenQuest;
 import com.izako.hunterx.quests.basics.RenQuest;
+import com.izako.hunterx.quests.basics.RyuQuest;
+import com.izako.hunterx.quests.basics.ShuQuest;
 import com.izako.hunterx.quests.basics.ZetsuQuest;
 import com.izako.hunterx.quests.hunterexam.HunterExam01;
 import com.izako.hunterx.quests.hunterexam.HunterExam02;
@@ -19,6 +24,11 @@ public class ModQuests {
 	public static final Quest HUNTEREXAM04 = new HunterExam04();
 	public static final Quest RENQUEST = new RenQuest();
 	public static final Quest ZETSUQUEST = new ZetsuQuest();
+	public static final Quest GYOQUEST = new GyoQuest();
+	public static final Quest SHUQUEST = new ShuQuest();
+	public static final Quest INQUEST = new InQuest();
+	public static final Quest KENQUEST = new KenQuest();
+	public static final Quest RYUQUEST = new RyuQuest();
 
 	public static List<Quest> QUESTS = new ArrayList<>();
 
@@ -29,6 +39,11 @@ public class ModQuests {
 		QUESTS.add(HUNTEREXAM04);
 		QUESTS.add(RENQUEST);
 		QUESTS.add(ZETSUQUEST);
+		QUESTS.add(GYOQUEST);
+		QUESTS.add(SHUQUEST);
+		QUESTS.add(INQUEST);
+		QUESTS.add(KENQUEST);
+		QUESTS.add(RYUQUEST);
 		}
 
 	public static Quest newInstance(String id) {

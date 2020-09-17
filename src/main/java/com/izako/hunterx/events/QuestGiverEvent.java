@@ -3,8 +3,9 @@ package com.izako.hunterx.events;
 import com.izako.hunterx.Main;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
-import com.izako.hunterx.gui.SequencedString;
+import com.izako.hunterx.izapi.IZAHelper;
 import com.izako.hunterx.izapi.quest.IQuestGiver;
+import com.izako.hunterx.izapi.quest.Quest;
 import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.OpenQuestGuiPacket;
 import com.izako.hunterx.networking.packets.StatsUpdatePacket;
@@ -27,9 +28,18 @@ public class QuestGiverEvent {
 			if(!e.getPlayer().world.isRemote) {
 			IHunterData data = HunterDataCapability.get(e.getPlayer());
 			IQuestGiver giver = (IQuestGiver) e.getTarget();
+			Quest q = null;
+			try {
+			 q = giver.getSpeech().getQuests(e.getPlayer())[IZAHelper.getCurrentQuest(giver.getSpeech().getQuests(e.getPlayer()), e.getPlayer())];
+			} catch(Exception exception) {
+				//The error is an index out of bounds exception, its fine if it errors.
+			}
+			if(q != null) {
+				q.onInteractEvent(giver, e);
+			
 			PacketHandler.INSTANCE.sendTo(new StatsUpdatePacket(data,false), ((ServerPlayerEntity) e.getPlayer()).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
 			PacketHandler.INSTANCE.sendTo(new OpenQuestGuiPacket(e.getTarget()), ((ServerPlayerEntity) e.getPlayer()).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
-			
+			}
 			}
 		}
 	}

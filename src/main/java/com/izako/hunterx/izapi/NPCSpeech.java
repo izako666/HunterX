@@ -16,7 +16,7 @@ public abstract class NPCSpeech {
 	public  QuestState getStateFromQuest(Quest q, PlayerEntity p) {
 		IHunterData data = HunterDataCapability.get(p);
 		if(data.hasQuest(q)) {
-			 if(q.canFinish() || q.isFinished()) {
+			 if(data.getQuest(q).canFinish() || data.getQuest(q).isFinished()) {
 				return QuestState.FULFILLED;
 			}
 	       

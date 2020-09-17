@@ -51,7 +51,7 @@ public class ShuOverlayLayer extends  LayerRenderer<AbstractClientPlayerEntity, 
 				matrixStackIn.translate(0.04, -0.05, 0.08);
 				matrixStackIn.scale(1.1f, 1.1f, 1.1f);
 
-				IZAHelper.renderItemOnPlayer(this, matrixStackIn, bufferIn, packedLightIn, entitylivingbaseIn, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, ModRenderTypes.genTranslucentItem(AtlasTexture.LOCATION_BLOCKS_TEXTURE), color);
+				IZAHelper.renderItemOnPlayer(this, matrixStackIn, bufferIn, packedLightIn, entitylivingbaseIn, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, ModRenderTypes.getTranslucentItem(AtlasTexture.LOCATION_BLOCKS_TEXTURE), color);
 				matrixStackIn.pop();
 
 			}

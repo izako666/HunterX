@@ -59,9 +59,10 @@ public class IZAHelper {
 		return -1;
 	}
 	
-	public static Ability addSlotAbility(Ability abl, PlayerEntity p) {
+	public static Ability addSlotAbility(Ability abl, LivingEntity p) {
 		IAbilityData data = AbilityDataCapability.get(p);
 		Ability ability = null;
+		if(p instanceof PlayerEntity) {
 		for(int i = 0; i < data.getSlotAbilities().length; i++) {
 			if(data.getSlotAbilities()[i] == null) {
 				data.putAbilityInSlot(abl, i);
@@ -72,6 +73,10 @@ public class IZAHelper {
 		if(ability == null) {
 			data.putAbilityInSlot(abl, 0);
 			ability = abl;
+		}
+		} else {
+			data.giveAbility(abl);
+			ability= abl;
 		}
 		return ability;
 	}
@@ -186,5 +191,16 @@ public class IZAHelper {
 		         bufferIn.addVertexData(matrixstack$entry, bakedquad, f, f1, f2,f3, combinedLightIn, combinedOverlayIn);
 		      }
 	   }
+
+		public static boolean hasActiveAbility(IAbilityData data) {
+			
+			for(int i = 0; i < data.getAbilities().size(); i++) {
+				Ability a = data.getAbilities().get(i);
+				if(a.isActive()) {
+					return true;
+				}
+			}
+			return false;
+		}
 
 }

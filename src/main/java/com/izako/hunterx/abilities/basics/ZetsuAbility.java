@@ -8,6 +8,7 @@ import com.izako.hunterx.izapi.ability.PassiveAbility;
 import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
 
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class ZetsuAbility extends PassiveAbility implements IOnPlayerRender{
@@ -28,24 +29,12 @@ public class ZetsuAbility extends PassiveAbility implements IOnPlayerRender{
 		return "Zetsu";
 	}
 
-	@Override
-	public void onStartPassive(PlayerEntity p) {
-		if(!p.world.isRemote()) {
-		PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), true));
-		}
-	}
 
 	@Override
-	public void duringPassive(PlayerEntity p) {
+	public void duringPassive(LivingEntity p) {
 		IAbilityData data = AbilityDataCapability.get(p);
 		data.setCurrentNen(data.getCurrentNen() + data.getNenCapacity() / 100);
 	}
 	
-	@Override
-	public void onEndPassive(PlayerEntity p) {
-		if(!p.world.isRemote()) {
-		PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), false));
-	}
-	}
 
 }

@@ -10,7 +10,6 @@ import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 public class KoAbility extends PunchAbility implements IHandOverlay {
 
@@ -34,28 +33,20 @@ public class KoAbility extends PunchAbility implements IHandOverlay {
 	}
 
 	@Override
-	public void onStartPassive(PlayerEntity p) {
+	public void onStartPassive(LivingEntity p) {
 		this.queuedAuraConsumption = true;
 		this.isInitialAuraConsumption = true;
-		if(!p.world.isRemote()) {
-		PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), true));
-		}
-		}
-
-	@Override
-	public float onPunch(PlayerEntity p, LivingEntity target) {
-		IAbilityData data = AbilityDataCapability.get(p);
-		this.queuedAuraConsumption = true;
-		return 30;
 	}
 
 	@Override
-	public void onEndPassive(PlayerEntity p) {
-		if(!p.world.isRemote()) {
+	public float onPunch(LivingEntity p, LivingEntity target) {
+		IAbilityData data = AbilityDataCapability.get(p);
+		this.queuedAuraConsumption = true;
+		return 40;
+	}
 
-		PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getUniqueID(), false));
-		}
-		}
+
+
 	private int consumeAura() {
 		if (queuedAuraConsumption) {
 			queuedAuraConsumption = false;
@@ -63,7 +54,7 @@ public class KoAbility extends PunchAbility implements IHandOverlay {
 				isInitialAuraConsumption = false;
 				return 10;
 			} else {
-			return 5;
+				return 5;
 			}
 
 		}

@@ -6,11 +6,16 @@ import java.util.Random;
 import com.izako.hunterx.Main;
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
+import com.izako.hunterx.events.custom.AbilityActivateEvent;
+import com.izako.hunterx.events.custom.AbilityGiveEvent;
 import com.izako.hunterx.init.ModAbilities;
+import com.izako.hunterx.networking.PacketHandler;
+import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 
 public abstract class Ability {
 	/*	
@@ -28,41 +33,30 @@ public abstract class Ability {
 	private int slot = -1;
     public Ability.Properties props = new Ability.Properties(this);
 	public enum AbilityType {
-		CHARGING, PASSIVE, ONUSE
+		CHARGING, PASSIVE, ONUSE, CHARGING_PASSIVE
 	}
 	public enum AuraConsumptionType {
 		PERCENTAGE, VALUE, NONE
 	}
     public Random rand = new Random();
 
-	// the id is the identification thats used to save the data and compare the
-	// abilities to see if they are the same
-	// don't add special characters or camelcase or any spaces,
-	// smallletterandnospaces.
-	public abstract String getId();
+    public abstract String getId();
 
-	// this is for rendering make it look good.
 	public abstract String getName();
 
-	// this method is currently nonuseful but when i update the gui it will be
-	// required.
 	public  void renderDesc(int x, int y) {
 	}
 
-	// only get
-	// called for an ability that extends Ability not ChargeableAbility or
-	// PassiveAbility
-	public  void use(PlayerEntity p) {
+	public  void use(LivingEntity p) {
 	}
 
-	// you can use this instead of touching capabilities to give an ability
-	public void give(PlayerEntity p) {
+	public void give(LivingEntity p) {
 		IAbilityData data = AbilityDataCapability.get(p);
 		data.giveAbility(this);
+		MinecraftForge.EVENT_BUS.post(new AbilityGiveEvent(this, p));
 	}
 
-	// you probably don't need this, just don't.
-	public void putInSlot(PlayerEntity p, int slot) {
+	public void putInSlot(LivingEntity p, int slot) {
 		IAbilityData data = AbilityDataCapability.get(p);
 
 		data.putAbilityInSlot(this, slot);
@@ -70,18 +64,30 @@ public abstract class Ability {
 	}
 
 
-	// dont touch or override this .
-	public void onUse(PlayerEntity p) {
+	public void onUse(LivingEntity p) {
 
 		IAbilityData data = AbilityDataCapability.get(p);
 		List<Ability> tempAbilities = data.getAbilitiesOfType(AbilityType.PASSIVE);
 	    tempAbilities.removeIf(this::ifInPassivePredicate);
+	    for(int i = 0; i < tempAbilities.size(); i++) {
+	    	if(tempAbilities.get(i) instanceof IBlacklistPassive) {
+	    		List<Ability> blacklists = ((IBlacklistPassive)tempAbilities.get(i)).getBlackList();
+	    		if(!blacklists.contains(this)) {
+	    			tempAbilities.remove(i);
+	    		}
+	    	}
+	    }
+	    List<Ability> blacklisted = null;
+	    if(this instanceof IBlacklistPassive) {
+	    	 blacklisted = ((IBlacklistPassive)this).getBlackList();
+	    }
 		if (this.getCooldown() <= 0) {
 			switch (this.props.type) {
 
 			case CHARGING:
 				if (!this.isCharging()) {
 					((ChargeableAbility) this).onStartCharging(p);
+					MinecraftForge.EVENT_BUS.post(new AbilityActivateEvent(this, p));
 				}
 				this.setCharging(true);
 				break;
@@ -90,16 +96,41 @@ public abstract class Ability {
 				this.setPassiveTimer(this.props.maxPassive);
 				if (this.isInPassive()) {
 					((PassiveAbility) this).onStartPassive(p);
+					MinecraftForge.EVENT_BUS.post(new AbilityActivateEvent(this, p));
+					if(this instanceof IOnPlayerRender) {
+						if(!data.hasActiveAbility(ModAbilities.IN_ABILITY)) {
+						if(!p.world.isRemote()) {
+							PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getEntityId(), true));
+						}
+					}
+					}
+					if(blacklisted != null) {
+						blacklisted.forEach(a -> {
+							if(data.getSlotAbility(a) != null) {
+								data.getSlotAbility(a).stopAbility(p);
+							}
+						});
+					} else {
 					tempAbilities.forEach((a) -> {
 						if(!a.equals(this)) {
 						a.stopAbility(p);
 						}
 					});
+					}
 					
 				}
 
 				if (!this.isInPassive()) {
 					((PassiveAbility) this).onEndPassive(p);
+					if(this instanceof IOnPlayerRender) {
+					if(!data.hasActiveAbility(ModAbilities.IN_ABILITY)) {
+							
+						if(!p.world.isRemote()) {
+							PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getEntityId(), false));
+						}
+					}
+					}
+
 					this.setCooldown(this.props.maxCooldown);
 				}
 				
@@ -107,6 +138,7 @@ public abstract class Ability {
 			case ONUSE:
 				
 				this.use(p);
+				MinecraftForge.EVENT_BUS.post(new AbilityActivateEvent(this, p));
 				this.setCooldown(this.props.maxCooldown);
 				if(this instanceof ITrainable) {
 				 ITrainable trainable = (ITrainable) this;
@@ -116,15 +148,44 @@ public abstract class Ability {
 					this.stopAbility(p);
 				}
 				break;
+				
+			case CHARGING_PASSIVE:
+				if(this.isInPassive()) {
+					this.setInPassive(false);
+					((ChargeablePassiveAbility) this).onEndPassive(p);
+					if(this instanceof IOnPlayerRender) {
+					if(!data.hasActiveAbility(ModAbilities.IN_ABILITY)) {
+							
+						if(!p.world.isRemote()) {
+							PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getEntityId(), false));
+						}
+					}
+					}
+
+					this.setCooldown(this.props.maxCooldown);
+
+				} else {
+					if (!this.isCharging()) {
+						((ChargeablePassiveAbility) this).onStartCharging(p);
+						MinecraftForge.EVENT_BUS.post(new AbilityActivateEvent(this, p));
+					}
+					this.setCharging(true);
+					
+
+				}
+				break;
 			}
+			
+			
 
 		}
+		
 	}
 	private boolean ifInPassivePredicate(Ability a) {
 		return !a.isInPassive();
 	}
 
-	public void endAbility(PlayerEntity p) {
+	public void endAbility(LivingEntity p) {
 		switch(this.props.type) {
 		
 		case PASSIVE:
@@ -142,6 +203,14 @@ public abstract class Ability {
 		case ONUSE:
 			this.setCooldown(this.props.maxCooldown);
 			break;
+		case CHARGING_PASSIVE:
+			this.setInPassive(false);
+			this.setPassiveTimer(this.props.maxPassive);
+			this.setCooldown(this.props.maxCooldown);
+			this.setCharging(false);
+			this.setChargingTimer(0);
+		   ( (ChargeablePassiveAbility) this).onEndPassive(p);
+
 		}
 	}
 	// if you need extra data override this and get an nbt from the super
@@ -180,7 +249,7 @@ public abstract class Ability {
 		}
 		return false;
 	}
-	public boolean consumeAura(PlayerEntity p) {
+	public boolean consumeAura(LivingEntity p) {
 		IAbilityData data = AbilityDataCapability.get(p);
 		int amount = this.props.auraCon.getAmount();
 		switch(this.props.conType) {
@@ -207,7 +276,7 @@ public abstract class Ability {
 
 	//this halts the ability completely without calling any of the onEnd 
 	//logic, used for when you haven't enough aura
-	public void stopAbility(PlayerEntity p) {
+	public void stopAbility(LivingEntity p) {
 		switch(this.props.type) {
 		
 		case PASSIVE:
@@ -223,6 +292,14 @@ public abstract class Ability {
 			break;
 		case ONUSE:
 			this.setCooldown(this.props.maxCooldown);
+			break;
+			
+		case CHARGING_PASSIVE:
+			this.setInPassive(false);
+			this.setPassiveTimer(this.props.maxPassive);
+			this.setCooldown(this.props.maxCooldown);
+			((ChargeablePassiveAbility)this).onEndPassive(p);
+
 			break;
 		}
 
@@ -242,6 +319,10 @@ public abstract class Ability {
 			break;
 		case ONUSE:
 			break;
+		case CHARGING_PASSIVE:
+			this.setInPassive(true);
+			this.setPassiveTimer(this.props.maxPassive);
+
 		}
 
 
@@ -350,7 +431,7 @@ public abstract class Ability {
 		int getAmount();
 	}
 
-	public static boolean canRegenAura(PlayerEntity p) {
+	public static boolean canRegenAura(LivingEntity p) {
 		boolean canRegen = true;
 		IAbilityData data  = AbilityDataCapability.get(p);
 		for(Ability abl : data.getSlotAbilities()) {
@@ -372,6 +453,8 @@ public abstract class Ability {
 			return this.isCharging();
 		case ONUSE:
          return false;
+		case CHARGING_PASSIVE:
+			return this.isCharging() || this.isInPassive();
 		}
 
 		return false;
@@ -383,7 +466,7 @@ public abstract class Ability {
 		return xp;
 	}
 
-	public void setXp(double xp, PlayerEntity p) {
+	public void setXp(double xp, LivingEntity p) {
 		ITrainable trainable = (ITrainable) this;
 		if(this.rand.nextInt(1000) > 998 && this.xp < xp) {
 			IAbilityData data = AbilityDataCapability.get(p);

@@ -1,6 +1,6 @@
 package com.izako.hunterx.izapi.ability;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
 
 public abstract class PassiveAbility extends Ability {
@@ -12,11 +12,11 @@ public abstract class PassiveAbility extends Ability {
 	}
 
 	// self explanatory methods
-	public  void onStartPassive(PlayerEntity p) {};
+	public  void onStartPassive(LivingEntity p) {};
 
-	public  void duringPassive(PlayerEntity p) {};
+	public  void duringPassive(LivingEntity p) {};
 
-	public  void onEndPassive(PlayerEntity p) {};
+	public  void onEndPassive(LivingEntity p) {};
 
 	@Override
 	public CompoundNBT writeData(int slot) {

@@ -7,12 +7,11 @@ import com.izako.hunterx.izapi.ability.IOnPlayerRender;
 import com.izako.hunterx.izapi.ability.ITrainable;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShovelItem;
@@ -46,14 +45,14 @@ public class ShuAbility extends PassiveAbility implements IOnPlayerRender, ITrai
 		return 3;
 	}
 	@Override
-	public void onStartPassive(PlayerEntity p) {
+	public void onStartPassive(LivingEntity p) {
 		p.getHeldItemMainhand().addEnchantment(Enchantments.UNBREAKING, 4);
 		p.getHeldItemMainhand().addEnchantment(Enchantments.SHARPNESS, 3);
 		p.getHeldItemMainhand().getOrCreateTag().putBoolean("activeshu", true);
 		super.onStartPassive(p);
 	}
 	@Override
-	public void onEndPassive(PlayerEntity p) {
+	public void onEndPassive(LivingEntity p) {
 		if(p.getHeldItemMainhand().getOrCreateTag().getBoolean("activeshu")) {
 		ShuAbility.removeEnchantment(Enchantments.UNBREAKING, p.getHeldItemMainhand());
 		ShuAbility.removeEnchantment(Enchantments.SHARPNESS, p.getHeldItemMainhand());
