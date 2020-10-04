@@ -45,7 +45,7 @@ public class HunterXItemTier implements IItemTier{
 
 	@Override
 	public Ingredient getRepairMaterial() {
-		return null;
+		return Ingredient.EMPTY;
 	}
 
 }

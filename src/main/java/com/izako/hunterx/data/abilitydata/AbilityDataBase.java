@@ -4,11 +4,12 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nullable;
-
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.Ability.AbilityType;
 import com.izako.hunterx.izapi.ability.NenType;
+
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 
 public class AbilityDataBase implements IAbilityData {
 
@@ -212,6 +213,15 @@ public class AbilityDataBase implements IAbilityData {
 		}
 		return false;
 
+	}
+
+	@Override
+	public Ability getActiveAbility(Ability abl, LivingEntity owner) {
+		if(owner instanceof PlayerEntity) {
+		return	this.getSlotAbility(abl);
+		}  else {
+			return this.getAbility(abl);
+		}
 	}
 
 }

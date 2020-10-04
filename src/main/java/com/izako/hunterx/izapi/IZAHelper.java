@@ -1,12 +1,13 @@
 package com.izako.hunterx.izapi;
 
 import java.awt.Color;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.UUID;
 import java.util.function.Function;
+
+import org.lwjgl.opengl.GL11;
 
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
@@ -14,16 +15,20 @@ import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.gui.SequencedString;
 import com.izako.hunterx.izapi.ability.Ability;
+import com.izako.hunterx.izapi.ability.NenType;
 import com.izako.hunterx.izapi.quest.Quest;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Atlases;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.IHasArm;
@@ -32,6 +37,7 @@ import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -39,9 +45,9 @@ import net.minecraft.item.Items;
 import net.minecraft.util.Direction;
 import net.minecraft.util.HandSide;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class IZAHelper {
 
@@ -200,7 +206,86 @@ public class IZAHelper {
 					return true;
 				}
 			}
+			for(int i = 0; i < data.getSlotAbilities().length; i++) {
+				Ability a = data.getSlotAbilities()[i];
+				if(a.isActive()) {
+					return true;
+				}
+			}
+
 			return false;
 		}
 
+		/*
+		 * specialist is impossible 
+		 * 0 and 1  is enhancer
+		 * 2 and 3 is emitter
+		 * 4 and 5 is transmuter
+		 * 6 and 7 is manipulator
+		 * 8 and 9 is conjurer
+		 * 
+		 */
+		public static NenType getAffinity(UUID uuid) {
+            String[] bits = ("" + uuid.getMostSignificantBits()).split("");
+            int sum = 0;
+            for(String bit : bits)
+            {
+                if(bit.equalsIgnoreCase("-"))
+                    continue;
+                sum += Integer.parseInt(bit);
+            }
+            sum = MathHelper.clamp(sum % 9, 0, 9);
+            
+
+            switch(sum) {
+            
+            case 0:
+            	return NenType.ENHANCER;
+            case 1: 
+            	return NenType.ENHANCER;
+            case 2: 
+            	return NenType.EMITTER;
+            case 3:
+            	return NenType.EMITTER;
+            case 4:
+            	return NenType.TRANSMUTER;
+            case 5:
+            	return NenType.TRANSMUTER;
+            case 6:
+            	return NenType.MANIPULATOR;
+            case 7:
+            	return NenType.MANIPULATOR;
+            case 8:
+            	return NenType.CONJURER;
+            case 9:
+            	return NenType.CONJURER;
+            default:
+            	return NenType.UNKNOWN;
+            }
+		}
+		
+	
+		   public static void drawIMG(ResourceLocation rs,int x, int y, int u, int v, int width, int height, float zLevel, float uWidth,float uHeight)
+		    {
+		        final float uScale = 1f / 0x100;
+		        final float vScale = 1f / 0x100;
+				Minecraft.getInstance().getTextureManager().bindTexture(rs);
+		        Tessellator tessellator = Tessellator.getInstance();
+		        BufferBuilder wr = tessellator.getBuffer();
+		        wr.begin(GL11.GL_QUADS,DefaultVertexFormats.POSITION_TEX);
+		        wr.pos(x        , y + height, zLevel).tex( u          * uScale, ((v + uHeight) * vScale)).endVertex();
+		        wr.pos(x + width, y + height, zLevel).tex((u + uWidth) * uScale, ((v + uHeight) * vScale)).endVertex();
+		        wr.pos(x + width, y         , zLevel).tex((u + uWidth) * uScale, ( v           * vScale)).endVertex();
+		        wr.pos(x        , y         , zLevel).tex( u          * uScale, ( v           * vScale)).endVertex();
+		        tessellator.draw();
+		        
+		    }
+		   
+		   
+		   
+		   public static double fromRangeToRange(double oldMin,double oldMax, double min, double max,double oldValue) {
+			   
+			   double newValue = (((oldValue - oldMin) * (max - min)) / (oldMax - oldMin)) + min;
+			   return newValue;
+		   }
 }

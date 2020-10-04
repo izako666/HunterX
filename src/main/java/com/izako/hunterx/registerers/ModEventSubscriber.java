@@ -1,6 +1,7 @@
 package com.izako.hunterx.registerers;
 
 import com.izako.hunterx.Main;
+import com.izako.hunterx.entities.EnEntity;
 import com.izako.hunterx.entities.ExaminerEntity;
 import com.izako.hunterx.entities.HanzoEntity;
 import com.izako.hunterx.entities.KirikoEntity;
@@ -39,7 +40,7 @@ public final class ModEventSubscriber {
 	  @SubscribeEvent
       public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event)
       {
-		  event.getRegistry().registerAll(YoyoEntity.type, CardEntity.type,BulletEntity.type, NeedleEntity.type, ThugEntity.type, KirikoEntity.type, WingEntity.type, ExaminerEntity.type, HanzoEntity.type);
+		  event.getRegistry().registerAll(YoyoEntity.type, CardEntity.type,BulletEntity.type, NeedleEntity.type, ThugEntity.type, KirikoEntity.type, WingEntity.type, ExaminerEntity.type, HanzoEntity.type, EnEntity.TYPE);
 		  registerEntityWorldSpawn(ThugEntity.type, 2, 1, Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH, Biomes.JUNGLE);
 		  registerEntityWorldSpawn(KirikoEntity.type, 1, 1,Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH, Biomes.JUNGLE);
 		  registerEntityWorldSpawn(WingEntity.type, 6, 1,Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH, Biomes.JUNGLE);

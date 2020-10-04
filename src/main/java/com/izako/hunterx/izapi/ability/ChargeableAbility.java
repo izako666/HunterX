@@ -20,7 +20,6 @@ public abstract class ChargeableAbility  extends Ability{
 		nbt.putInt("chargetimer", this.getChargingTimer());
 		nbt.putBoolean("ischarging", this.isCharging());
 
-
 		return nbt;
 
 	}

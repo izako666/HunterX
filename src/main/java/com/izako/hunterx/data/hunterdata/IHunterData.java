@@ -1,11 +1,9 @@
 package com.izako.hunterx.data.hunterdata;
 
-import java.util.HashMap;
 import java.util.List;
 
+import com.izako.hunterx.izapi.EnumStats;
 import com.izako.hunterx.izapi.quest.Quest;
-
-import net.minecraft.nbt.CompoundNBT;
 
 public interface IHunterData {
 
@@ -38,6 +36,9 @@ public interface IHunterData {
 	boolean hasQuest(Quest q);
 	Quest getQuest(Quest q);
 
+	EnumStats getFirstMaxed();
+	EnumStats getSecondMaxed();
+	
 	
 	
 

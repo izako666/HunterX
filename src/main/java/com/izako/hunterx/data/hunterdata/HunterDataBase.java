@@ -1,8 +1,10 @@
 package com.izako.hunterx.data.hunterdata;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import com.izako.hunterx.izapi.EnumStats;
 import com.izako.hunterx.izapi.quest.Quest;
 
 public class HunterDataBase implements IHunterData {
@@ -14,6 +16,8 @@ public class HunterDataBase implements IHunterData {
 	boolean isHunter = false;
 	boolean isCharMade = false;
 	boolean selectingAbility = false;
+	EnumStats firstMaxed = null;
+	EnumStats secondMaxed = null;
 	List<Quest> quests = new ArrayList<>();
 
 	@Override
@@ -27,6 +31,8 @@ public class HunterDataBase implements IHunterData {
 			this.healthStat = stat;
 		} else {
 			this.healthStat = 10;
+			this.checkStats(EnumStats.HEALTH);
+			
 		}
 	}
 
@@ -41,6 +47,7 @@ public class HunterDataBase implements IHunterData {
 			this.speedStat = stat;
 		} else {
 			this.speedStat = 10;
+			this.checkStats(EnumStats.SPEED);
 		}
 	}
 
@@ -55,6 +62,7 @@ public class HunterDataBase implements IHunterData {
 			this.attackStat = stat;
 		} else {
 			this.attackStat = 10;
+			this.checkStats(EnumStats.ATTACK);
 		}
 	}
 
@@ -69,6 +77,7 @@ public class HunterDataBase implements IHunterData {
 			this.defenseStat = stat;
 		} else {
 			this.defenseStat = 10;
+			this.checkStats(EnumStats.DEFENSE);
 		}
 	}
 
@@ -147,5 +156,72 @@ public class HunterDataBase implements IHunterData {
 	public void setSelectingAbility(boolean val) {
 
 		this.selectingAbility = val;
+	}
+
+	@Override
+	public EnumStats getFirstMaxed() {
+		if(this.firstMaxed == null) {
+			if(this.getHealthStat() > this.getSpeedStat() && this.getHealthStat() > this.getAttackStat() && this.getHealthStat() > this.getDefenseStat()) {
+				return EnumStats.HEALTH;
+			} else if(this.getAttackStat() > this.getHealthStat() && this.getAttackStat() > this.getSpeedStat() && this.getAttackStat() > this.getDefenseStat()) {
+				return EnumStats.ATTACK;
+			} else if(this.getDefenseStat() > this.getHealthStat() && this.getDefenseStat() > this.getAttackStat() && this.getDefenseStat() > this.getSpeedStat()) {
+				return EnumStats.DEFENSE;
+			} else {
+				return EnumStats.SPEED;
+			}
+		}
+		return this.firstMaxed;
+	}
+
+	@Override
+	public EnumStats getSecondMaxed() {
+		if(this.secondMaxed == null) {
+			EnumStats firstMax = this.getFirstMaxed();
+			List<EnumStats> stats = new ArrayList<>(Arrays.asList(EnumStats.HEALTH,EnumStats.ATTACK,EnumStats.DEFENSE,EnumStats.SPEED));
+			stats.remove(firstMax);
+		
+			for(int i = 0; i < stats.size()  - 1; i++) {
+				EnumStats stat = stats.get(i);
+				EnumStats stat2 = stats.get(i + 1);
+				if(this.getStat(stat) < this.getStat(stat2)) {
+					stats.remove(stat);
+					try {
+					stats.add(i + 1, stat);
+					} catch(Exception e) {
+						stats.add(stat);
+					}
+				}
+			}
+			return stats.get(0);
+		}
+		return this.secondMaxed;
+
+	}
+	
+	
+	private void checkStats(EnumStats stat) {
+		if(this.firstMaxed == null) {
+			this.firstMaxed = stat;
+		} else if(this.secondMaxed == null) {
+			this.secondMaxed = stat;
+		}
+	}
+	
+	
+	private double getStat(EnumStats stat) {
+		switch(stat) {
+		
+		case HEALTH:
+			return this.getHealthStat();
+		case ATTACK:
+			return this.getAttackStat();
+		case DEFENSE:
+			return this.getDefenseStat();
+		case SPEED:
+			return this.getSpeedStat();
+		default:
+			return this.getHealthStat();
+		}
 	}
 }

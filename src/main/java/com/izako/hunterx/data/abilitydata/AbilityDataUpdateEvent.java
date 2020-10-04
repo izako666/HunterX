@@ -44,6 +44,7 @@ public class AbilityDataUpdateEvent {
 				}
 				if (a.isCharging() && a.props.type == AbilityType.CHARGING) {
 					if (!ModKeybindings.USE_ABILITY.isKeyDown()) {
+						PacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot(), a.getChargingTimer()));
 						a.setCharging(false);
 						((ChargeableAbility) a).onEndCharging(p);
 						a.setCooldown(a.props.maxCooldown);
@@ -54,8 +55,9 @@ public class AbilityDataUpdateEvent {
 						}
 
 						a.setChargingTimer(0);
-						PacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot()));
 					} else if (a.getChargingTimer() >= a.props.maxCharging) {
+
+						PacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot(), a.getChargingTimer()));
 
 						if (a.consumeAura(p)) {
 							((ChargeableAbility) a).onEndCharging(p);
@@ -73,7 +75,6 @@ public class AbilityDataUpdateEvent {
 							a.stopAbility(p);
 						}
 
-						PacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot()));
 
 					}
 					if (a.getChargingTimer() < a.props.maxCharging) {
@@ -117,11 +118,13 @@ public class AbilityDataUpdateEvent {
 
 				if (a.props.type == AbilityType.CHARGING_PASSIVE) {
 					if (a.isCharging()) {
-						if (!ModKeybindings.USE_ABILITY.isKeyDown()) {
+						if (!ModKeybindings.USE_ABILITY.isKeyDown() && p.world.isRemote()) {
+							PacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot(), a.getChargingTimer()));
 							a.setCharging(false);
 							((ChargeablePassiveAbility) a).onStartPassive(p);
 							a.setPassiveTimer(a.props.maxPassive);
 							a.setInPassive(true);
+							a.setCharging(false);
 							if (a instanceof ITrainable) {
 								ITrainable trainable = (ITrainable) a;
 								double scale = (a.getChargingTimer() / a.props.maxCharging) + 0.5;
@@ -129,9 +132,9 @@ public class AbilityDataUpdateEvent {
 										p);
 							}
 
-							PacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot()));
 						} else if (a.getChargingTimer() >= a.props.maxCharging) {
 
+							PacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot(), a.getChargingTimer()));
 							if (a.consumeAura(p)) {
 								((ChargeablePassiveAbility) a).onStartPassive(p);
 								a.setInPassive(true);
@@ -148,7 +151,6 @@ public class AbilityDataUpdateEvent {
 								a.stopAbility(p);
 							}
 
-							PacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot()));
 
 						}
 						if (a.getChargingTimer() < a.props.maxCharging) {

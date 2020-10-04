@@ -153,6 +153,7 @@ public abstract class Ability {
 				if(this.isInPassive()) {
 					this.setInPassive(false);
 					((ChargeablePassiveAbility) this).onEndPassive(p);
+					this.setChargingTimer(0);
 					if(this instanceof IOnPlayerRender) {
 					if(!data.hasActiveAbility(ModAbilities.IN_ABILITY)) {
 							

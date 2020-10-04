@@ -3,6 +3,8 @@ package com.izako.hunterx.init;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.izako.hunterx.abilities.basic_hatsus.StatBoostAbility;
+import com.izako.hunterx.abilities.basics.EnAbility;
 import com.izako.hunterx.abilities.basics.GyoAbility;
 import com.izako.hunterx.abilities.basics.InAbility;
 import com.izako.hunterx.abilities.basics.KenAbility;
@@ -27,6 +29,8 @@ public class ModAbilities {
 	public static final Ability KEN_ABILITY = new KenAbility();
 	public static final Ability RYU_OFFENSE_ABILITY = new RyuOffenseAbility();
 	public static final Ability RYU_DEFENSE_ABILITY = new RyuDefenseAbility();
+	public static final Ability EN_ABILITY = new EnAbility();
+	public static final Ability STAT_BOOST_ABILITY = new StatBoostAbility();
 	public static List<Ability> ABILITY_INSTANCES = new ArrayList<>();
  public	static void register(){
 	 ABILITY_INSTANCES.add(TEN_ABILITY);
@@ -39,6 +43,8 @@ public class ModAbilities {
      ABILITY_INSTANCES.add(KEN_ABILITY);
      ABILITY_INSTANCES.add(RYU_OFFENSE_ABILITY);
      ABILITY_INSTANCES.add(RYU_DEFENSE_ABILITY);
+     ABILITY_INSTANCES.add(EN_ABILITY);
+     ABILITY_INSTANCES.add(STAT_BOOST_ABILITY);
 
 	}
 	public static Ability getNewInstanceFromId(String id) {

@@ -10,6 +10,7 @@ import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.gui.CharacterCreatorScreen;
 import com.izako.hunterx.gui.HunterScreen;
 import com.izako.hunterx.izapi.ability.Ability;
+import com.izako.hunterx.izapi.ability.Ability.AbilityType;
 import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.AbilityUpdatePacket;
 import com.izako.hunterx.networking.packets.AbilityUsePacket;
@@ -52,14 +53,21 @@ public class ModKeybindings {
 			data.setSelectingAbility(!data.isSelectingAbility());
 		}
  
-		if(event.getKey() == USE_ABILITY.getKey().getKeyCode() && event.getAction() == 0) {
+		if(event.getKey() == USE_ABILITY.getKey().getKeyCode()) {
 		    IHunterData data = HunterDataCapability.get(Minecraft.getInstance().player);
 		    IAbilityData abilitydata = AbilityDataCapability.get(Minecraft.getInstance().player);
 			Ability abl = abilitydata.getSlotAbilities()[abilitydata.getActiveAbility()];
 			if(abl != null) {
+				if(abl.props.type == AbilityType.CHARGING || abl.props.type  == AbilityType.CHARGING_PASSIVE) {
+					if(event.getAction() == 1) {
+						abl.onUse(Minecraft.getInstance().player);
+						PacketHandler.INSTANCE.sendToServer(new AbilityUsePacket(abilitydata.getActiveAbility()));
+					}
+				} else if(event.getAction() == 0) {
 				abl.onUse(Minecraft.getInstance().player);
 				PacketHandler.INSTANCE.sendToServer(new AbilityUsePacket(abilitydata.getActiveAbility()));
-			}
+				}
+				}
 		}
 		if(Minecraft.getInstance().currentScreen == null) {
 		if(event.getKey() == HUNTER_KEYBINDING.getKey().getKeyCode()) {

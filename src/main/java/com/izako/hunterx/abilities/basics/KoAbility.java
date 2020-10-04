@@ -2,6 +2,7 @@ package com.izako.hunterx.abilities.basics;
 
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
+import com.izako.hunterx.init.ModAbilities;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.IHandOverlay;
 import com.izako.hunterx.izapi.ability.PunchAbility;
@@ -41,6 +42,7 @@ public class KoAbility extends PunchAbility implements IHandOverlay {
 	@Override
 	public float onPunch(LivingEntity p, LivingEntity target) {
 		IAbilityData data = AbilityDataCapability.get(p);
+		
 		this.queuedAuraConsumption = true;
 		return 40;
 	}

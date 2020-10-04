@@ -4,11 +4,13 @@ import com.izako.hunterx.networking.packets.AbilityChargingEndPacket;
 import com.izako.hunterx.networking.packets.AbilityUpdatePacket;
 import com.izako.hunterx.networking.packets.AbilityUsePacket;
 import com.izako.hunterx.networking.packets.CharacterInitPacket;
+import com.izako.hunterx.networking.packets.EnUpdatePacket;
 import com.izako.hunterx.networking.packets.HanzoSwordPacket;
 import com.izako.hunterx.networking.packets.ModifierUpdatePacket;
 import com.izako.hunterx.networking.packets.OpenQuestGuiPacket;
 import com.izako.hunterx.networking.packets.PunchAbilityPacket;
 import com.izako.hunterx.networking.packets.QuestProgressPacket;
+import com.izako.hunterx.networking.packets.QuestUpdatePacket;
 import com.izako.hunterx.networking.packets.SetQuestPacket;
 import com.izako.hunterx.networking.packets.StatsUpdatePacket;
 import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
@@ -43,6 +45,8 @@ public class PacketHandler {
         INSTANCE.registerMessage(packet++, SyncAbilityRenderingPacket.class, SyncAbilityRenderingPacket::encode, SyncAbilityRenderingPacket::decode, SyncAbilityRenderingPacket::handle);
 	    INSTANCE.registerMessage(packet++, PunchAbilityPacket.class, PunchAbilityPacket::encode, PunchAbilityPacket::decode, PunchAbilityPacket::handle);
 	    INSTANCE.registerMessage(packet++, QuestProgressPacket.class, QuestProgressPacket::encode, QuestProgressPacket::decode, QuestProgressPacket::handle);
+	    INSTANCE.registerMessage(packet++, EnUpdatePacket.class, EnUpdatePacket::encode, EnUpdatePacket::decode, EnUpdatePacket::handle);
+	    INSTANCE.registerMessage(packet++, QuestUpdatePacket.class, QuestUpdatePacket::encode, QuestUpdatePacket::decode, QuestUpdatePacket::handle);
 	}
 	
 	public static <MSG>  void sendToTracking(LivingEntity tracked, MSG message) {

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.izako.hunterx.izapi.quest.Quest;
+import com.izako.hunterx.quests.basic_hatsus.BasicHatsuQuests;
+import com.izako.hunterx.quests.basic_hatsus.BasicHatsusQuest;
+import com.izako.hunterx.quests.basics.EnQuest;
 import com.izako.hunterx.quests.basics.GyoQuest;
 import com.izako.hunterx.quests.basics.InQuest;
 import com.izako.hunterx.quests.basics.KenQuest;
@@ -29,6 +32,13 @@ public class ModQuests {
 	public static final Quest INQUEST = new InQuest();
 	public static final Quest KENQUEST = new KenQuest();
 	public static final Quest RYUQUEST = new RyuQuest();
+	public static final Quest ENQUEST = new EnQuest();
+    public static final Quest BASIC_HATSU_QUEST = new BasicHatsusQuest();
+    public static final Quest BASIC_ENHANCER = new BasicHatsuQuests.Enhancer();
+    public static final Quest BASIC_EMITTER = new BasicHatsuQuests.Emitter();
+    public static final Quest BASIC_MANIPULATOR = new BasicHatsuQuests.Manipulator();
+    public static final Quest BASIC_TRANSMUTER = new BasicHatsuQuests.Transmuter();
+    public static final Quest BASIC_CONJURER = new BasicHatsuQuests.Conjurer();
 
 	public static List<Quest> QUESTS = new ArrayList<>();
 
@@ -44,11 +54,18 @@ public class ModQuests {
 		QUESTS.add(INQUEST);
 		QUESTS.add(KENQUEST);
 		QUESTS.add(RYUQUEST);
+		QUESTS.add(ENQUEST);
+		QUESTS.add(BASIC_HATSU_QUEST);
+		QUESTS.add(BASIC_ENHANCER);
+		QUESTS.add(BASIC_EMITTER);
+		QUESTS.add(BASIC_MANIPULATOR);
+		QUESTS.add(BASIC_CONJURER);
+		QUESTS.add(BASIC_TRANSMUTER);
 		}
 
 	public static Quest newInstance(String id) {
 		for (int i = 0; i < (QUESTS.size()); i++) {
-			if (QUESTS.get(i).getId().contains(id)) {
+			if (QUESTS.get(i).getId().equals(id)) {
 				try {
 					return QUESTS.get(i).getClass().newInstance();
 				} catch (Exception e) {

@@ -3,6 +3,7 @@ package com.izako.hunterx.abilities.basics;
 import java.util.UUID;
 
 import com.izako.hunterx.Main;
+import com.izako.hunterx.izapi.IZAHelper;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.IOnPlayerRender;
 import com.izako.hunterx.izapi.ability.ITrainable;
@@ -60,7 +61,6 @@ public class TenAbility extends PassiveAbility implements IOnPlayerRender , ITra
 	private int auraConsumptionEvent() {
 		if(this.getPassiveTimer() % 20 == 0) {
 		int val =  (int) (5 * (this.getCurrentAuraConScale()));
-		 System.out.println(this.getXp());
 		 return val;
 		}
 		return 0;

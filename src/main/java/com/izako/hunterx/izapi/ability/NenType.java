@@ -2,25 +2,28 @@ package com.izako.hunterx.izapi.ability;
 
 public enum NenType {
 
-	CONJURER, EMITTER, ENHANCER, MANIPULATOR,TRANSMUTER, SPECIALIST;
+	UNKNOWN, CONJURER, EMITTER, ENHANCER, MANIPULATOR,TRANSMUTER, SPECIALIST;
 	
 	public static NenType getTypeFromOrdinal(int o) {
 		
 		switch(o) {
 		
 		case 0:
-		return CONJURER;
+		return UNKNOWN;
 		case 1:
-		return EMITTER;
+		return CONJURER;
 		case 2: 
-		return ENHANCER;
+		return EMITTER;
 		case 3: 
-		return MANIPULATOR;
+		return ENHANCER;
 		case 4: 
-		return TRANSMUTER;
+		return MANIPULATOR;
 		case 5:
-		return SPECIALIST;
+		return TRANSMUTER;
+		case 6:
+	    return SPECIALIST;
+	    default:
+	    return UNKNOWN;
 		}
-		return null;
 	}
 }

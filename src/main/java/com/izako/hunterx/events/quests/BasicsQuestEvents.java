@@ -11,12 +11,15 @@ import com.izako.hunterx.init.ModQuests;
 import com.izako.hunterx.izapi.IZAHelper;
 import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.QuestProgressPacket;
+import com.izako.hunterx.networking.packets.QuestUpdatePacket;
+import com.izako.hunterx.quests.basics.EnQuest;
 import com.izako.hunterx.quests.basics.RyuQuest;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.util.text.StringTextComponent;
@@ -42,7 +45,8 @@ public class BasicsQuestEvents {
 				IAbilityData ablData = AbilityDataCapability.get(p);
 				if (data.hasQuest(ModQuests.RENQUEST) && !data.getQuest(ModQuests.RENQUEST).canFinish()
 						&& ablData.getSlotAbility(ModAbilities.TEN_ABILITY) != null
-						&& ablData.getSlotAbility(ModAbilities.TEN_ABILITY).isInPassive()) {
+						&& ablData.getSlotAbility(ModAbilities.TEN_ABILITY).isInPassive()
+						&& !data.getQuest(ModQuests.RENQUEST).isFinished()) {
 					data.getQuest(ModQuests.RENQUEST).setProgress(data.getQuest(ModQuests.RENQUEST).getProgress() + 1);
 				}
 			}
@@ -190,6 +194,40 @@ public class BasicsQuestEvents {
 				
 			}
 		}
+		
+		
+		@SubscribeEvent
+		public static void trackEn(RenderLivingEvent.Post<LivingEntity, EntityModel<LivingEntity>> e) {
+		
+			
+			
+			if(!(e.getEntity().ticksExisted % 20 == 0))
+				return;
+			    PlayerEntity p = Minecraft.getInstance().player;
+			
+				IAbilityData pData = AbilityDataCapability.get(p);
+				IAbilityData tData = AbilityDataCapability.get(e.getEntity());
+			
+				IHunterData hData = HunterDataCapability.get(p);
+				if(!(e.getEntity() instanceof MonsterEntity))
+					return;
+				if(!hData.hasQuest(ModQuests.ENQUEST))
+					return;
+				if(!hData.getQuest(ModQuests.ENQUEST).isFinished() && pData.hasActiveAbility(ModAbilities.GYO_ABILITY) ) {
+					
+					EnQuest quest = (EnQuest) hData.getQuest(ModQuests.ENQUEST);
+
+					if(!quest.MONSTERS_DISCOVERED.contains(e.getEntity().getType().getRegistryName()) && quest.MONSTERS_DISCOVERED.size() < 20) {
+						quest.MONSTERS_DISCOVERED.add(e.getEntity().getType().getRegistryName());
+						quest.setProgress(quest.MONSTERS_DISCOVERED.size() * 5);
+						PacketHandler.INSTANCE.sendToServer(new QuestUpdatePacket(quest));
+
+					}
+			
+				
+			}
+		}
+
 
 	}
 }

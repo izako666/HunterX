@@ -9,6 +9,7 @@ import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.events.EventsHandler;
 import com.izako.hunterx.init.ModAbilities;
+import com.izako.hunterx.init.ModBlocks;
 import com.izako.hunterx.init.ModKeybindings;
 import com.izako.hunterx.init.ModQuests;
 import com.izako.hunterx.init.ModStructures;
@@ -16,6 +17,8 @@ import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.registerers.ClientSideRegistry;
 import com.izako.wypi.WyRegistry;
 
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.command.arguments.ArgumentSerializer;
 import net.minecraft.command.arguments.ArgumentTypes;
 import net.minecraft.world.biome.Biome;
@@ -53,6 +56,7 @@ public final class Main {
 	private void clientSetup(FMLClientSetupEvent event) {
 		ClientSideRegistry.RegisterEntityRenderers();
 		ModKeybindings.init();
+		RenderTypeLookup.setRenderLayer(ModBlocks.CUP, RenderType.getTranslucent());
 	}
 
 	private  void commonSetup(FMLCommonSetupEvent event) {

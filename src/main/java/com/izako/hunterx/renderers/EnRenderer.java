@@ -29,9 +29,14 @@ public class EnRenderer<T extends EnEntity> extends EntityRenderer<T>{
 	@Override
 	public void render(T entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
 			IRenderTypeBuffer bufferIn, int packedLightIn) {
-		matrixStackIn.scale((float)entityIn.renderScale, (float)entityIn.renderScale, (float)entityIn.renderScale);
+		//matrixStackIn.translate(entityIn.getPosX(), entityIn.getPosY(), entityIn.getPosZ());
+		matrixStackIn.push();
+		matrixStackIn.scale((float)entityIn.renderScale * 2.0f, (float)entityIn.renderScale * 2.0f  , (float)entityIn.renderScale * 2.0f);
+
+		matrixStackIn.translate(0, -1, 0);
 		IVertexBuilder builder = bufferIn.getBuffer(RenderType.getEntityTranslucent(this.getEntityTexture(entityIn)));
 		this.model.render(matrixStackIn, builder, packedLightIn, packedLightIn, 1.0f, 1.0f, 1.0f, 0.2f);
+		matrixStackIn.pop();
 		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 	}
 

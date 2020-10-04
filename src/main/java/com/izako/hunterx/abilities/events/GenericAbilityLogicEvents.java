@@ -43,7 +43,7 @@ public class GenericAbilityLogicEvents {
 					if(damage < 0)
 						event.setCanceled(true);
 					
-					event.setAmount(damage);
+					event.setAmount(event.getAmount() + damage);
 					if(ability instanceof ITrainable) {
 						ITrainable trainable = (ITrainable) ability;
 						ability.setXp(ability.getXp() + (trainable.getXPOnUsage() + (ability.rand.nextDouble() - 0.5))/ 6, player);

@@ -53,7 +53,7 @@ public class EnSphereModel extends EntityModel<Entity> {
 
 	@Override
 	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		bone.render(matrixStack, buffer, packedLight, packedOverlay);
+		bone.render(matrixStack, buffer, packedLight, packedOverlay,red,green,blue,alpha);
 	}
 
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {

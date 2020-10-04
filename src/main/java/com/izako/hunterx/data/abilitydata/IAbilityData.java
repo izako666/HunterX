@@ -3,11 +3,11 @@ package com.izako.hunterx.data.abilitydata;
 import java.awt.Color;
 import java.util.List;
 
-import javax.annotation.Nullable;
-
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.Ability.AbilityType;
 import com.izako.hunterx.izapi.ability.NenType;
+
+import net.minecraft.entity.LivingEntity;
 
 public interface IAbilityData {
 
@@ -25,6 +25,7 @@ public interface IAbilityData {
 	void removeAbility(Ability abl);
 	int getActiveAbility();
 	void setActiveAbility(int slot);
+	Ability getActiveAbility(Ability abl, LivingEntity owner);
 
 	boolean hasActiveAbility(Ability abl);
 	List<Ability> getAbilitiesOfType(AbilityType type);
