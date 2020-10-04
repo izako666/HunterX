@@ -474,9 +474,9 @@ public abstract class Ability {
 			data.setNenCapacity(data.getNenCapacity() + 1);
 		}
 		if(this.xp < trainable.getMaxXP()) {
-		this.xp = xp;
+		this.setXp(xp);
 		} else {
-			this.xp = trainable.getMaxXP();
+			this.setXp(trainable.getMaxXP());
 		}
 		this.props.setMaxCooldown((int) (this.props.maxCooldown * this.getCurrentCooldownScale()));
 	}
@@ -511,9 +511,12 @@ public abstract class Ability {
 	}
 	public  double getCurrentCooldownScale() {
 		if(this instanceof ITrainable) {
-		ITrainable trainable = (ITrainable) this;
-		double currentScale = (this.xp * trainable.getCooldownScale()) / (trainable.getMaxXP());
-		return currentScale;
+			ITrainable trainable = (ITrainable) this;
+			double range = trainable.getCooldownScale() - 1;
+			double percentage = this.getXp() * 100 / trainable.getMaxXP();
+			double difference = ( percentage * range )/ 100;
+			double currentScale = 1 + difference;
+			return currentScale;
 		}
 		return -1;
 	}

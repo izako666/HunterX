@@ -6,7 +6,7 @@ public interface ITrainable {
 		return 0.9;
 	}
 	default double getPowerScale() {
-		return 1.1;
+		return 1.4;
 	}
 	default double getAuraConsumptionScale() {
 		return 0.5;
