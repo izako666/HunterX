@@ -10,13 +10,14 @@ import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.gui.AnimatedButton.SpriteTemplate;
 import com.izako.hunterx.gui.ListSlider.Entry;
 import com.izako.hunterx.init.ModQuests;
-import com.izako.hunterx.izapi.IZAHelper;
+import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.NPCSpeech;
 import com.izako.hunterx.izapi.quest.IMultipleChoiceQuest;
 import com.izako.hunterx.izapi.quest.IQuestGiver;
 import com.izako.hunterx.izapi.quest.Quest;
 import com.izako.hunterx.izapi.quest.Quest.QuestScreenEndReturnType;
 import com.izako.hunterx.networking.PacketHandler;
+import com.izako.hunterx.networking.packets.ChoiceQuestActivateEntryPacket;
 import com.izako.hunterx.networking.packets.SetQuestPacket;
 import com.izako.hunterx.networking.packets.StatsUpdatePacket;
 import com.izako.wypi.WyHelper;
@@ -92,8 +93,8 @@ public class QuestScreen extends Screen {
 		RenderSystem.pushMatrix();
 		RenderSystem.translated(-(this.width * 0.1), -(this.height * 0.1), 0);
 		RenderSystem.scaled(1.2d, 1.2d, 1d);
-		IZAHelper.drawIMG(MULTIPLE_CHOICE, width / 2 - 160, 40, 0, 0, MathHelper.floor(47 * 1.5),MathHelper.floor( 124 * 1.5), 1, 47, 124);
-		IZAHelper.drawIMG(MULTIPLE_CHOICE, width / 2 - 80, 40, 48, 0, MathHelper.floor(120 * 1.5),MathHelper.floor( 108 * 1.5), 1, 120, 108);
+		Helper.drawIMG(MULTIPLE_CHOICE, width / 2 - 160, 40, 0, 0, MathHelper.floor(47 * 1.5),MathHelper.floor( 124 * 1.5), 0, 47, 124);
+		Helper.drawIMG(MULTIPLE_CHOICE, width / 2 - 80, 40, 48, 0, MathHelper.floor(120 * 1.5),MathHelper.floor( 108 * 1.5), 0, 120, 108);
 		RenderSystem.scaled(1d, 1d, 1d);
 		RenderSystem.popMatrix();
 
@@ -102,7 +103,6 @@ public class QuestScreen extends Screen {
 			b.renderButton(mouseX, mouseY, p_render_3_);
 			if(b instanceof ListSlider) {
 				ListSlider slider = (ListSlider) b;
-				if(slider.selectedEntry != Entry.EMPTY) {
 					
 					font.drawString(slider.selectedEntry.name, width / 2 - 90, 42, Color.BLACK.getRGB());
 				
@@ -111,7 +111,7 @@ public class QuestScreen extends Screen {
 					for(int i = 0; i < strings.size(); i++) {
 						String str = strings.get(i);
 						font.drawString( str, width/2-90, 76 + (20 * i), Color.black.getRGB());
-					}
+					
 				
 				}
 			}
@@ -126,7 +126,7 @@ public class QuestScreen extends Screen {
 		p = mc.player;
 		IHunterData data = HunterDataCapability.get(p);
 		if (currentQuest == null) {
-			currentQuest = this.speech.getQuests(p)[IZAHelper.getCurrentQuest(this.speech.getQuests(p), p)];
+			currentQuest = this.speech.getQuests(p)[Helper.getCurrentQuest(this.speech.getQuests(p), p)];
 		}
 		if (sequencedStrings == null) {
 			sequencedStrings = this.speech.getSpeechFromState(p);
@@ -134,7 +134,7 @@ public class QuestScreen extends Screen {
 
 		if (this.guiState == 0 && currentString == null && sequencedStrings != null
 				&& sequencedStrings[this.stringIndex] != null) {
-			currentString = IZAHelper.getNewSqStringInstance(sequencedStrings[this.stringIndex]);
+			currentString = Helper.getNewSqStringInstance(sequencedStrings[this.stringIndex]);
 			currentString.event = this::onStringEnd;
 		}
 		if (skipString == null) {
@@ -166,7 +166,7 @@ public class QuestScreen extends Screen {
 	public void tick() {
 		if (currentString == null && sequencedStrings != null) {
 			if (sequencedStrings.length > this.stringIndex && sequencedStrings[this.stringIndex] != null) {
-				currentString = IZAHelper.getNewSqStringInstance(sequencedStrings[this.stringIndex]);
+				currentString = Helper.getNewSqStringInstance(sequencedStrings[this.stringIndex]);
 				currentString.event = this::onStringEnd;
 			}
 			if (sequencedStrings.length == this.stringIndex && !hasFinalStringEnded) {
@@ -181,7 +181,7 @@ public class QuestScreen extends Screen {
 		IHunterData data = HunterDataCapability.get(p);
 		if (data.hasQuest(this.currentQuest) && this.currentQuest instanceof IMultipleChoiceQuest) {
 			this.guiState = 2;
-			this.addChoicesButtons((IMultipleChoiceQuest) this.currentQuest);
+			this.addChoicesButtons((IMultipleChoiceQuest) data.getQuest(this.currentQuest));
 		} else if (!data.hasQuest(this.currentQuest)) {
 			this.guiState = 1;
 			this.addQuestButtons();
@@ -228,8 +228,10 @@ public class QuestScreen extends Screen {
 		    	}
 		    }
 			ListSlider slider =new ListSlider(width / 2 - 186, 31, 10, 100, 0, choices.size() * 10, Entry.fromQuests(choices));
+		
 			slider.setOnActivateEntry((e,s) -> {
-				ModQuests.newInstance(e.id).giveQuest(p);
+				q.onActivateEntry(e, s,p);
+				PacketHandler.INSTANCE.sendToServer(new ChoiceQuestActivateEntryPacket(((Quest)q).getId(), e.id));
 				Minecraft.getInstance().currentScreen.onClose();
 			});
 			this.addButton(slider);
@@ -245,8 +247,8 @@ public class QuestScreen extends Screen {
 					QuestScreen scr = (QuestScreen) Minecraft.getInstance().currentScreen;
 				     if(scr.currentQuest != null) {
 				    	 IHunterData data = HunterDataCapability.get(scr.p);
-				    /*	 if(data.hasQuest(scr.currentQuest))
-				 		 data.getQuest(scr.currentQuest).setProgress(101);*/
+				    	 if(data.hasQuest(scr.currentQuest))
+				 		 data.getQuest(scr.currentQuest).setProgress(101);
 				    	 scr.onClose();
  				     }
 				}

@@ -7,7 +7,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.izako.hunterx.Main;
-import com.izako.hunterx.entities.AI.GunAI;
+import com.izako.hunterx.entities.goals.GunAI;
 import com.izako.hunterx.init.ModItems;
 import com.izako.hunterx.items.entities.BulletEntity;
 
@@ -49,7 +49,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ThugEntity extends ZombieEntity implements IRangedAttackMob{
 
 	@SuppressWarnings("unchecked")
-	public static EntityType<ThugEntity> type = (EntityType<ThugEntity>) EntityType.Builder
+	public static EntityType<ThugEntity> TYPE = (EntityType<ThugEntity>) EntityType.Builder
 			.<ThugEntity>create(ThugEntity::new, EntityClassification.MONSTER).setTrackingRange(128)
 			.setShouldReceiveVelocityUpdates(true).size(1f, 2f).setUpdateInterval(1).build("thug")
 			.setRegistryName(Main.MODID, "thug");
@@ -217,7 +217,7 @@ public class ThugEntity extends ZombieEntity implements IRangedAttackMob{
 	public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
 		// TODO Auto-generated method stub
 		
-		BulletEntity bullet = new BulletEntity(BulletEntity.type, this, world);
+		BulletEntity bullet = new BulletEntity(BulletEntity.TYPE, this, world);
        
         double d0 = target.getPosX() - this.getPosX();
         double d1 = target.getBoundingBox().minY + (double)(target.getHeight() / 3.0F) - bullet.getPosY();

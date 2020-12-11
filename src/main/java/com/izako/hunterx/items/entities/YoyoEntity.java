@@ -35,7 +35,7 @@ public class YoyoEntity extends ProjectileItemEntity implements IEntityAdditiona
 	private ItemStack itemStack;
 
 	@SuppressWarnings("unchecked")
-	public static EntityType<YoyoEntity> type = (EntityType<YoyoEntity>) EntityType.Builder
+	public static EntityType<YoyoEntity> TYPE = (EntityType<YoyoEntity>) EntityType.Builder
 			.<YoyoEntity>create(YoyoEntity::new, EntityClassification.MISC).setTrackingRange(128)
 			.setShouldReceiveVelocityUpdates(true).size(1, 1).setUpdateInterval(1)
 			.setCustomClientFactory(YoyoEntity::new).build("yoyo").setRegistryName(Main.MODID, "yoyo");
@@ -74,7 +74,7 @@ public class YoyoEntity extends ProjectileItemEntity implements IEntityAdditiona
 
 
 	public YoyoEntity(FMLPlayMessages.SpawnEntity packet, World worldIn) {
-		super(type, worldIn);
+		super(TYPE, worldIn);
 	}
 
 	@Override

@@ -59,7 +59,7 @@ public class BlimpStructure extends Structure<NoFeatureConfig> {
 			nbt.putInt("TPY", blockpos.getY());
 			nbt.putInt("TPZ", blockpos.getZ());
 
-			IWorld world = ObfuscationReflectionHelper.getPrivateValue(ChunkGenerator.class, generator, "world");
+			IWorld world = ObfuscationReflectionHelper.getPrivateValue(ChunkGenerator.class, generator, "field_222540_a");
 			if(world instanceof ServerWorld) {
 				ModWorldData data = ModWorldData.get((ServerWorld) world);
 			   if(!data.isBlimpSpawned()) {

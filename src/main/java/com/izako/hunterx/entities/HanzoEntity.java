@@ -43,7 +43,7 @@ public class HanzoEntity extends ZombieEntity{
 
 
 	@SuppressWarnings("unchecked")
-	public static EntityType<HanzoEntity> type = (EntityType<HanzoEntity>) EntityType.Builder
+	public static EntityType<HanzoEntity> TYPE = (EntityType<HanzoEntity>) EntityType.Builder
 			.<HanzoEntity>create(HanzoEntity::new, EntityClassification.MONSTER).setTrackingRange(128)
 			.setShouldReceiveVelocityUpdates(true).size(1f, 2f).setUpdateInterval(1).build("hanzo")
 			.setRegistryName(Main.MODID, "hanzo");

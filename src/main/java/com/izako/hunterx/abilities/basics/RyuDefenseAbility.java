@@ -2,7 +2,9 @@ package com.izako.hunterx.abilities.basics;
 
 import java.util.UUID;
 
+import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
+import com.izako.hunterx.izapi.ability.NenType;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
 
 import net.minecraft.entity.LivingEntity;
@@ -19,7 +21,7 @@ public class RyuDefenseAbility extends PassiveAbility {
 		super();
 		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE)
 				.setConsumptionType(AuraConsumptionType.PERCENTAGE).setAuraConsumption(this::auraConsumptionEvent)
-				.setMaxPassive(Integer.MAX_VALUE).setMaxCooldown(20 * 15);
+				.setMaxPassive(Integer.MAX_VALUE).setMaxCooldown(20 * 15).setNenType(NenType.UNKNOWN);
 	}
 
 	@Override
@@ -32,11 +34,15 @@ public class RyuDefenseAbility extends PassiveAbility {
 		return "Ryu: Defense";
 	}
 
+	@Override
+	public String getDesc() {
+		return "Ryu: Defense, a variant of Ryu, focuses most of your aura into defense and the rest into attack.";
+	}
 	public void onStartPassive(LivingEntity p) {
 		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "ryudefensemod",
-				40 * this.getCurrentPowerScale(), Operation.ADDITION);
+				Helper.getTrueValue(40, this, p), Operation.ADDITION);
 		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "ryudefensemodattack",
-				20 * this.getCurrentPowerScale(), Operation.ADDITION);
+				Helper.getTrueValue(20, this, p), Operation.ADDITION);
 		if (p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(defenseModifierID) == null) {
 			p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(defenseMod);
 		}
@@ -48,9 +54,9 @@ public class RyuDefenseAbility extends PassiveAbility {
 	@Override
 	public void duringPassive(LivingEntity p) {
 		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "ryudefensemod",
-				40 * this.getCurrentPowerScale(), Operation.ADDITION);
+				Helper.getTrueValue(40, this, p), Operation.ADDITION);
 		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "ryudefensemodattack",
-				20 * this.getCurrentPowerScale(), Operation.ADDITION);
+				Helper.getTrueValue(20, this, p), Operation.ADDITION);
 		if (p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(defenseModifierID) == null) {
 			p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(defenseMod);
 		}

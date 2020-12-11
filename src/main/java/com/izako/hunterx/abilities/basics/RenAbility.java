@@ -5,9 +5,11 @@ import java.util.UUID;
 import com.izako.hunterx.Main;
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
+import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.IOnPlayerRender;
 import com.izako.hunterx.izapi.ability.ITrainable;
+import com.izako.hunterx.izapi.ability.NenType;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
 import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
@@ -29,7 +31,7 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender , ITra
 
 	public RenAbility() {
 		super();
-		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setConsumptionType(AuraConsumptionType.PERCENTAGE).setAuraConsumption(this::auraConsumptionEvent).setMaxPassive(Integer.MAX_VALUE).setMaxCooldown(20 * 15); 
+		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setConsumptionType(AuraConsumptionType.PERCENTAGE).setAuraConsumption(this::auraConsumptionEvent).setMaxPassive(Integer.MAX_VALUE).setMaxCooldown(20 * 15).setNenType(NenType.UNKNOWN); 
 	}
 	@Override
 	public String getId() {
@@ -42,10 +44,13 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender , ITra
 	}
 
 	
-
+	@Override
+	public String getDesc() {
+		return "Ren explodes your aura output for attack and defense.";
+	}
 	public void onStartPassive(LivingEntity p) {
-		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", 8 * this.getCurrentPowerScale(), Operation.ADDITION);
-		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack", 30 * this.getCurrentPowerScale(), Operation.ADDITION);
+		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", Helper.getTrueValue(15, this, p), Operation.ADDITION);
+		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack", Helper.getTrueValue(30, this, p), Operation.ADDITION);
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(defenseModifierID) == null) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(defenseMod);
 		}
@@ -56,8 +61,8 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender , ITra
 
 	@Override
 	public void duringPassive(LivingEntity p) {
-		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", 15 * this.getCurrentPowerScale(), Operation.ADDITION);
-		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack", 30 * this.getCurrentPowerScale(), Operation.ADDITION);
+		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", Helper.getTrueValue(15, this, p), Operation.ADDITION);
+		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack",Helper.getTrueValue(30, this, p), Operation.ADDITION);
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(defenseModifierID) == null) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(defenseMod);
 		}

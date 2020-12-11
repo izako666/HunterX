@@ -28,7 +28,7 @@ public class YoyoItem extends Item {
 		ItemStack item = playerIn.getHeldItem(handIn);
 		Vec3d aim = playerIn.getLookVec();
 
-		YoyoEntity yoyo_front = new YoyoEntity(YoyoEntity.type, playerIn, worldIn, item);
+		YoyoEntity yoyo_front = new YoyoEntity(YoyoEntity.TYPE, playerIn, worldIn, item);
 		if (!worldIn.isRemote) {
 			playerIn.getCooldownTracker().setCooldown(this, 200);
 

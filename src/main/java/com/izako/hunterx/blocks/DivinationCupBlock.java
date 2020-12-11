@@ -11,7 +11,7 @@ import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.init.ModAbilities;
 import com.izako.hunterx.izapi.EnumStats;
-import com.izako.hunterx.izapi.IZAHelper;
+import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.NenType;
 
 import net.minecraft.block.Block;
@@ -99,7 +99,7 @@ public class DivinationCupBlock extends Block {
 			if(data.getNenType() != NenType.UNKNOWN)
 				return ActionResultType.FAIL;
 			List<NenType> rolls = new ArrayList<>();
-			NenType affinity = IZAHelper.getAffinity(player.getUniqueID());
+			NenType affinity = Helper.getAffinity(player.getUniqueID());
 			rolls.addAll(Arrays.asList(affinity,affinity,affinity));
 			NenType random = NenType.getTypeFromOrdinal(worldIn.getRandom().nextInt(NenType.values().length - 2) + 1);
 			rolls.addAll(Arrays.asList(random,random));

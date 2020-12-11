@@ -24,7 +24,7 @@ public class GenericAbilityLogicEvents {
 	@SubscribeEvent
 	public static void onLivingDamage(LivingDamageEvent event)
 	{
-		if (event.getSource().getTrueSource() instanceof PlayerEntity)
+		if (event.getSource().getTrueSource() instanceof PlayerEntity && event.getSource().getTrueSource() == event.getSource().getImmediateSource())
 		{
 			PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
 			IAbilityData props = AbilityDataCapability.get(player);

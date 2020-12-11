@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.init.ModAbilities;
-import com.izako.hunterx.izapi.IZAHelper;
+import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
 
 import net.minecraft.client.Minecraft;
@@ -80,7 +80,7 @@ public class SyncAbilityRenderingPacket {
 				abl.stopAbility(p);
 			}
             } catch(NullPointerException e) {
-            	abl = IZAHelper.addSlotAbility(ModAbilities.getNewInstanceFromId(msg.id), abilityUser);
+            	abl = Helper.addSlotAbility(ModAbilities.getNewInstanceFromId(msg.id), abilityUser);
             	if(msg.turnOn) {
             		abl.initiateAbility();
             	} else {

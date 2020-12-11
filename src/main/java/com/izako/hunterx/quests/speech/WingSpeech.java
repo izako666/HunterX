@@ -7,10 +7,11 @@ import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.gui.QuestScreen;
 import com.izako.hunterx.gui.SequencedString;
 import com.izako.hunterx.init.ModQuests;
-import com.izako.hunterx.izapi.IZAHelper;
+import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.NPCSpeech;
 import com.izako.hunterx.izapi.quest.Quest;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class WingSpeech extends NPCSpeech {
@@ -153,12 +154,16 @@ public class WingSpeech extends NPCSpeech {
 			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
 	public static SequencedString MSG67 = new SequencedString("What would you like to learn?",QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
 
-	
+	public static SequencedString MSG68 = new SequencedString("Congratulations on mastering this hatsu ability.",
+			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
+	public static SequencedString MSG69 = new SequencedString("Congratulations you mastered all basic hatsu abilities.",
+			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
+
 
 	
 	@Override
 	public Quest[] getQuests(PlayerEntity p) {
-		return new Quest[] { ModQuests.HUNTEREXAM01, ModQuests.RENQUEST, ModQuests.ZETSUQUEST, ModQuests.GYOQUEST, ModQuests.SHUQUEST ,ModQuests.INQUEST,ModQuests.KENQUEST,ModQuests.RYUQUEST, ModQuests.ENQUEST,ModQuests.BASIC_HATSU_QUEST};
+		return new Quest[] { ModQuests.HUNTEREXAM01, ModQuests.RENQUEST, ModQuests.ZETSUQUEST, ModQuests.GYOQUEST, ModQuests.SHUQUEST ,ModQuests.INQUEST,ModQuests.KENQUEST,ModQuests.RYUQUEST, ModQuests.ENQUEST,ModQuests.BASIC_HATSU_QUEST, ModQuests.BASIC_CONJURER,ModQuests.BASIC_EMITTER,ModQuests.BASIC_ENHANCER,ModQuests.BASIC_MANIPULATOR,ModQuests.BASIC_TRANSMUTER};
 	}
 
 	@Override
@@ -205,11 +210,62 @@ public class WingSpeech extends NPCSpeech {
 	@Override
 	public SequencedString[] getSpeechFromState(PlayerEntity p) {
 		IHunterData data = HunterDataCapability.get(p);
-		if (IZAHelper.getCurrentQuest(this.getQuests(p), p) != -1) {
+		if (Helper.getCurrentQuest(this.getQuests(p), p) != -1) {
 			SequencedString[][] sqstrs = this
-					.getSequencedStringFromQuest(IZAHelper.getCurrentQuest(this.getQuests(p), p));
-			Quest q = this.getQuests(p)[IZAHelper.getCurrentQuest(this.getQuests(p), p)];
+					.getSequencedStringFromQuest(Helper.getCurrentQuest(this.getQuests(p), p));
+			Quest q = this.getQuests(p)[Helper.getCurrentQuest(this.getQuests(p), p)];
 
+			if(q.equals(ModQuests.BASIC_HATSU_QUEST)) {
+				Quest rq = data.getQuest(q);
+				if(q.isFinished()) {
+					
+				} else {
+					Quest[] quests = new Quest[] { ModQuests.BASIC_CONJURER,ModQuests.BASIC_EMITTER,ModQuests.BASIC_ENHANCER,ModQuests.BASIC_MANIPULATOR,ModQuests.BASIC_TRANSMUTER};
+					for(int i = 0; i < 5; i++) {
+						Quest hq = data.getQuest(quests[i]);
+						if(hq != null && hq.canFinish()) {
+							hq.finishQuest(p);
+							SequencedString sq =Helper.getNewSqStringInstance(MSG68);
+							sq.event = () -> {if(Minecraft.getInstance().currentScreen instanceof QuestScreen) {
+								Minecraft.getInstance().currentScreen = null;
+							}};
+							return new SequencedString[] {sq};
+						}
+					}
+					for(int i = 0; i< 5; i++) {
+						Quest hq = data.getQuest(quests[i]);
+						boolean allFin = true;
+						if(hq != null && !hq.isFinished()) {
+							return null;
+						}
+						if(hq == null) {
+							allFin = false;
+						}
+						
+						if(i == 4) {
+							if(allFin) {
+								data.getQuest(ModQuests.BASIC_HATSU_QUEST).finishQuest(p);
+								return new SequencedString[] {MSG69};
+							}
+						}
+					} 
+					
+					
+
+					for(int i = 0; i < 5; i++) {
+						Quest hq = data.getQuest(quests[i]);
+						Quest hatsuQuest = data.getQuest(ModQuests.BASIC_HATSU_QUEST);
+						if(hq == null) {
+							if(hatsuQuest == null) {
+							return new SequencedString[] {MSG62,MSG63,MSG64,MSG65,MSG66};
+							} else if(!hatsuQuest.isFinished()) {
+								return new SequencedString[] {MSG67};
+							}
+							}
+					}
+
+				}
+			}
 			if (q.equals(ModQuests.RENQUEST) && !data.isHunter()) {
 				return null;
 			}

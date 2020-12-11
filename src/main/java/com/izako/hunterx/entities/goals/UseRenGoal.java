@@ -1,4 +1,4 @@
-package com.izako.hunterx.entities.AI;
+package com.izako.hunterx.entities.goals;
 
 import com.izako.hunterx.abilities.basics.RenAbility;
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;

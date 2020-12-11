@@ -31,6 +31,7 @@ public abstract class Ability {
 	private boolean isInPassive = false;
 	private boolean isCharging = false;
 	private int slot = -1;
+	private float strengthMul = 1f;
     public Ability.Properties props = new Ability.Properties(this);
 	public enum AbilityType {
 		CHARGING, PASSIVE, ONUSE, CHARGING_PASSIVE
@@ -44,8 +45,7 @@ public abstract class Ability {
 
 	public abstract String getName();
 
-	public  void renderDesc(int x, int y) {
-	}
+	public abstract String getDesc();
 
 	public  void use(LivingEntity p) {
 	}
@@ -199,7 +199,6 @@ public abstract class Ability {
 			this.setCharging(false);
 			this.setChargingTimer(0);
 			this.setCooldown(this.props.maxCooldown);
-			((ChargeableAbility) this).onEndCharging(p);
 			break;
 		case ONUSE:
 			this.setCooldown(this.props.maxCooldown);
@@ -220,6 +219,7 @@ public abstract class Ability {
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.putInt("cooldown", this.getCooldown());
 		nbt.putInt("slotindex", slot);
+		nbt.putFloat("strengthMul", this.strengthMul);
 		if(this instanceof ITrainable) {
 			nbt.putDouble("xp", this.getXp());
 			nbt.putInt("maxcooldown", this.props.maxCooldown);
@@ -232,6 +232,7 @@ public abstract class Ability {
 	public Ability readData(CompoundNBT nbt) {
 		this.setCooldown(nbt.getInt("cooldown"));
 		this.setSlot(nbt.getInt("slotindex"));
+		this.setStrength(nbt.getFloat("strengthMul"));
 		if(this instanceof ITrainable) {
 			this.setXp(nbt.getDouble("xp"));
 			this.props.setMaxCooldown(nbt.getInt("maxcooldown"));
@@ -388,6 +389,7 @@ public abstract class Ability {
 		public int maxPassive = 10;
 		public int maxCooldown = 10;
 		public final Ability parent;
+		public NenType nenType;
 		public IAuraConsumption auraCon = () -> {return 0;};
 		public ResourceLocation tex;
 
@@ -402,6 +404,10 @@ public abstract class Ability {
 		}
 		public  Properties setConsumptionType(AuraConsumptionType typ) {
 			conType = typ;
+			return this;
+		}
+		public Properties setNenType(NenType type) {
+			this.nenType = type;
 			return this;
 		}
 		public  Properties setMaxCharging(int maxCharge) {
@@ -471,10 +477,12 @@ public abstract class Ability {
 		ITrainable trainable = (ITrainable) this;
 		if(this.rand.nextInt(1000) > 998 && this.xp < xp) {
 			IAbilityData data = AbilityDataCapability.get(p);
+			if(data.getNenCapacity() < 300) {
 			data.setNenCapacity(data.getNenCapacity() + 1);
+			}
 		}
 		if(this.xp < trainable.getMaxXP()) {
-		this.setXp(xp);
+		this.setXp(xp); 
 		} else {
 			this.setXp(trainable.getMaxXP());
 		}
@@ -519,6 +527,14 @@ public abstract class Ability {
 			return currentScale;
 		}
 		return -1;
+	}
+
+	public float getStrength() {
+		return strengthMul;
+	}
+
+	public void setStrength(float strengthMul) {
+		this.strengthMul = strengthMul;
 	}
 
 }

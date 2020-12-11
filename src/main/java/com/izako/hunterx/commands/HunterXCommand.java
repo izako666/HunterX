@@ -8,8 +8,10 @@ import net.minecraft.command.CommandSource;
 public class HunterXCommand {
 
 	public static void register(CommandDispatcher<CommandSource> dispatcher) {
-		dispatcher.register(LiteralArgumentBuilder.<CommandSource>literal("hntrx").then(DebugCommand.register())
+		dispatcher.register(LiteralArgumentBuilder.<CommandSource>literal("hntrx")
+				.then(DebugCommand.register())
 				.then(AbilityCommand.register())
+				.then(QuestCommand.register())
 
 		);
 	}

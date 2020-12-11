@@ -32,7 +32,7 @@ public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity play
 
 
         if(!worldIn.isRemote) {
-        	BulletEntity bullet = new BulletEntity(BulletEntity.type, playerIn, worldIn);
+        	BulletEntity bullet = new BulletEntity(BulletEntity.TYPE, playerIn, worldIn);
         	playerIn.getCooldownTracker().setCooldown(this, 20);
         
             bullet.setPosition(playerIn.getPosX() + aim.x, playerIn.getPosY() + playerIn.getEyeHeight(), playerIn.getPosZ() + aim.z);

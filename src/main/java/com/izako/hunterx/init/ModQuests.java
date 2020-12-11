@@ -76,11 +76,15 @@ public class ModQuests {
 		return null;
 	}
 	
+	//TODO can't find quest on server, debug this method.
 	public static Quest getInstance(String id) {
+	
 		for(int i = 0; i < QUESTS.size(); i++) {
+			List<Quest> quests = QUESTS;
 			if(QUESTS.get(i).getId().equalsIgnoreCase(id)) {
 				return QUESTS.get(i);
 			}
+			
 		}
 		return null;
 	}

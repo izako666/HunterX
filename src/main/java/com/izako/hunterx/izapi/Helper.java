@@ -1,6 +1,8 @@
 package com.izako.hunterx.izapi;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -15,10 +17,10 @@ import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.gui.SequencedString;
 import com.izako.hunterx.izapi.ability.Ability;
+import com.izako.hunterx.izapi.ability.ITrainable;
 import com.izako.hunterx.izapi.ability.NenType;
 import com.izako.hunterx.izapi.quest.Quest;
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.block.BlockState;
@@ -49,10 +51,16 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class IZAHelper {
+public class Helper {
 
 	public static final Function<ResourceLocation, RenderType> entityModelFunc = s -> {
 		return RenderType.getEntityCutoutNoCull(s);};
+
+	public static final List<NenType> ENHANCER = new ArrayList<>(Arrays.asList(NenType.EMITTER, NenType.TRANSMUTER, NenType.MANIPULATOR, NenType.CONJURER, NenType.SPECIALIST));
+	public static final List<NenType> EMITTER = new ArrayList<>(Arrays.asList(NenType.ENHANCER,NenType.MANIPULATOR,NenType.SPECIALIST,NenType.TRANSMUTER, NenType.CONJURER));
+	public static final List<NenType> TRANSMUTER = new ArrayList<>(Arrays.asList(NenType.ENHANCER,NenType.CONJURER,NenType.EMITTER,NenType.SPECIALIST,NenType.MANIPULATOR));
+	public static final List<NenType> MANIPULATOR = new ArrayList<>(Arrays.asList(NenType.EMITTER,NenType.SPECIALIST,NenType.ENHANCER,NenType.CONJURER,NenType.TRANSMUTER));
+	public static final List<NenType> CONJURER = new ArrayList<>(Arrays.asList(NenType.SPECIALIST,NenType.TRANSMUTER,NenType.MANIPULATOR,NenType.ENHANCER,NenType.EMITTER));
 
 	public static int getCurrentQuest(Quest[] q, PlayerEntity p) {
 	      
@@ -128,7 +136,7 @@ public class IZAHelper {
 		            }
 
 		            IVertexBuilder ivertexbuilder = ItemRenderer.getBuffer(bufferIn, rendertype1, true, itemStackIn.hasEffect());
-		            IZAHelper.renderItemModel(modelIn, itemStackIn, combinedLightIn, combinedOverlayIn, matrixStackIn, ivertexbuilder, color);
+		            Helper.renderItemModel(modelIn, itemStackIn, combinedLightIn, combinedOverlayIn, matrixStackIn, ivertexbuilder, color);
 		         } else {
 		            itemStackIn.getItem().getItemStackTileEntityRenderer().render(itemStackIn, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
 		         }
@@ -150,8 +158,8 @@ public class IZAHelper {
 		            matrixStackIn.scale(0.5F, 0.5F, 0.5F);
 		         }
 
-		         IZAHelper.renderItem3d(render,entitylivingbaseIn, itemstack1, ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, HandSide.RIGHT, matrixStackIn, bufferIn, packedLightIn, type, color);
-		         IZAHelper.renderItem3d(render,entitylivingbaseIn, itemstack, ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, HandSide.LEFT, matrixStackIn, bufferIn, packedLightIn, type, color);
+		         Helper.renderItem3d(render,entitylivingbaseIn, itemstack1, ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, HandSide.RIGHT, matrixStackIn, bufferIn, packedLightIn, type, color);
+		         Helper.renderItem3d(render,entitylivingbaseIn, itemstack, ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, HandSide.LEFT, matrixStackIn, bufferIn, packedLightIn, type, color);
 		         matrixStackIn.pop();
 		      }
 		   }
@@ -166,7 +174,7 @@ public class IZAHelper {
 		         boolean flag = p_229135_4_ == HandSide.LEFT;
 		         p_229135_5_.translate((double)((float)(flag ? -1 : 1) / 16.0F), 0.125D, -0.625D);
 		             IBakedModel ibakedmodel = Minecraft.getInstance().getItemRenderer().getItemModelWithOverrides(itemStack, p_229135_1_.world, p_229135_1_);
-		             IZAHelper.renderItem(itemStack, p_229135_3_, p_229135_4_ == HandSide.LEFT, p_229135_5_, p_229135_6_, p_229135_7_, OverlayTexture.NO_OVERLAY, ibakedmodel, type,  color);
+		             Helper.renderItem(itemStack, p_229135_3_, p_229135_4_ == HandSide.LEFT, p_229135_5_, p_229135_6_, p_229135_7_, OverlayTexture.NO_OVERLAY, ibakedmodel, type,  color);
 		          
 		         p_229135_5_.pop();
 		      }
@@ -178,11 +186,11 @@ public class IZAHelper {
 
 		      for(Direction direction : Direction.values()) {
 		         random.setSeed(42L);
-		         IZAHelper.renderQuads(matrixStackIn, bufferIn, modelIn.getQuads((BlockState)null, direction, random), stack, combinedLightIn, combinedOverlayIn, color);
+		         Helper.renderQuads(matrixStackIn, bufferIn, modelIn.getQuads((BlockState)null, direction, random), stack, combinedLightIn, combinedOverlayIn, color);
 		      }
 
 		      random.setSeed(42L);
-		      IZAHelper.renderQuads(matrixStackIn, bufferIn, modelIn.getQuads((BlockState)null, (Direction)null, random), stack, combinedLightIn, combinedOverlayIn, color);
+		      Helper.renderQuads(matrixStackIn, bufferIn, modelIn.getQuads((BlockState)null, (Direction)null, random), stack, combinedLightIn, combinedOverlayIn, color);
 		   }
 
 	   public static void renderQuads(MatrixStack matrixStackIn, IVertexBuilder bufferIn, List<BakedQuad> quadsIn, ItemStack itemStackIn, int combinedLightIn, int combinedOverlayIn, Color color) {
@@ -281,11 +289,83 @@ public class IZAHelper {
 		        
 		    }
 		   
-		   
+			public static void drawAbilityIMG(ResourceLocation rs, int x, int y, int width, int height,float uMin, float vMin,float uMax,float vMax)
+			{
+				Minecraft.getInstance().getTextureManager().bindTexture(rs);
+				BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();
+				bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+				bufferbuilder.pos(x, y + height, 1).tex(uMin, vMax).endVertex();
+				bufferbuilder.pos(x + width, y + height, 1).tex(uMax, vMax).endVertex();
+				bufferbuilder.pos(x + width, y, 1).tex(uMax, vMin).endVertex();
+				bufferbuilder.pos(x, y, 1).tex(uMin, vMin).endVertex();
+				Tessellator.getInstance().draw();
+			}
+
 		   
 		   public static double fromRangeToRange(double oldMin,double oldMax, double min, double max,double oldValue) {
 			   
 			   double newValue = (((oldValue - oldMin) * (max - min)) / (oldMax - oldMin)) + min;
 			   return newValue;
+		   }
+		   
+		   public static float getTrueValue(float value, Ability abl, LivingEntity p) {
+			   double trainablePowerScale = 1f;
+			   if(abl instanceof ITrainable) {
+				   trainablePowerScale = abl.getCurrentPowerScale();
+			   }
+			   IAbilityData data = AbilityDataCapability.get(p);
+			  float percentage = Helper.getPercentageBetweenTypes(data.getNenType(), abl.props.nenType) / 100;
+			   
+			   float trueValue = (float) (value * abl.getStrength() * trainablePowerScale * percentage);
+			   return trueValue;
+		   } 
+		   
+		   public static int getPercentageBetweenTypes(NenType type1, NenType type2) {
+			   List<NenType> reference = new ArrayList<>();
+			   if(type1 == NenType.ENHANCER) {
+				   reference = ENHANCER;
+			   } else if(type1 == NenType.EMITTER) {
+				   reference = EMITTER;
+			   }else if(type1 == NenType.TRANSMUTER) {
+				   reference = TRANSMUTER;
+			   }else if(type1 == NenType.CONJURER) {
+				   reference = CONJURER;
+			   }else if(type1 == NenType.MANIPULATOR) {
+				   reference = MANIPULATOR;
+			   } else {
+				   return 100;
+			   }
+			   
+			   int index = reference.indexOf(type2);
+			   
+			   if(type2 == NenType.UNKNOWN) {
+				   return 100;
+			   }
+			   if(type1 == type2) {
+				   return 100;
+			   } 
+			   if(index < 2) {
+				   return 80;
+			   } else if(index < 4) {
+				   return 60;
+			   } else {
+				   return 40;
+			   }
+			   
+		   }
+		   
+		   public static float getRotatedX(float radius, float yaw) {
+			   return (float) (radius*(Math.cos(Math.toRadians(yaw))));
+		   }
+		   public static float getRotatedZ(float radius, float yaw) {
+			   return (float) (radius*(Math.sin(Math.toRadians(yaw))));
+		   }
+		   
+		   public static float toCtrClockwise(float val) {
+			   float trueVal = val;
+			   if(val < 0) {
+				   trueVal = 360 - val;
+			   }
+			   return trueVal + 180;
 		   }
 }

@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.izako.hunterx.commands.AbilityArgument;
 import com.izako.hunterx.commands.HunterXCommand;
+import com.izako.hunterx.commands.QuestArgument;
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.events.EventsHandler;
@@ -23,11 +24,7 @@ import net.minecraft.command.arguments.ArgumentSerializer;
 import net.minecraft.command.arguments.ArgumentTypes;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.IFeatureConfig;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.placement.IPlacementConfig;
-import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -67,6 +64,8 @@ public final class Main {
 		ModQuests.questRegister();
 		ArgumentTypes.register("hxhability", AbilityArgument.class, new ArgumentSerializer<>(AbilityArgument::ability));
 		AbilityArgument.register();
+		QuestArgument.register();
+		ArgumentTypes.register("hxhquest", QuestArgument.class, new ArgumentSerializer<>(QuestArgument::quest));
 
         ForgeRegistries.BIOMES.getValues().stream().forEach((biome -> {
             if (biome.getCategory() == Biome.Category.FOREST || biome.getCategory() == Biome.Category.PLAINS || biome.getCategory() == Biome.Category.DESERT) {

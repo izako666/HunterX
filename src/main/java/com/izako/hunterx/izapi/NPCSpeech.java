@@ -27,9 +27,9 @@ public abstract class NPCSpeech {
 	public abstract SequencedString[][] getSequencedStringFromQuest(int questIndex);
 	public SequencedString[] getSpeechFromState(PlayerEntity p) {
 		IHunterData data = HunterDataCapability.get(p);
-		if(IZAHelper.getCurrentQuest(this.getQuests(p), p) != -1) {
-		SequencedString[][] sqstrs = this.getSequencedStringFromQuest(IZAHelper.getCurrentQuest(this.getQuests(p), p));
-		Quest q = data.getQuest(getQuests(p)[IZAHelper.getCurrentQuest(this.getQuests(p), p)]);
+		if(Helper.getCurrentQuest(this.getQuests(p), p) != -1) {
+		SequencedString[][] sqstrs = this.getSequencedStringFromQuest(Helper.getCurrentQuest(this.getQuests(p), p));
+		Quest q = data.getQuest(getQuests(p)[Helper.getCurrentQuest(this.getQuests(p), p)]);
 		switch(this.getStateFromQuest(data.getQuest(q), p)) {
 		
 		case NOTSTARTED:

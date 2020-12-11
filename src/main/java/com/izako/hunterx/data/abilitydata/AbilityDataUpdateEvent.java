@@ -43,7 +43,7 @@ public class AbilityDataUpdateEvent {
 					a.setCooldown(a.getCooldown() - 1);
 				}
 				if (a.isCharging() && a.props.type == AbilityType.CHARGING) {
-					if (!ModKeybindings.USE_ABILITY.isKeyDown()) {
+					if (!ModKeybindings.USE_ABILITY.isKeyDown() && p.world.isRemote()) {
 						PacketHandler.INSTANCE.sendToServer(new AbilityChargingEndPacket(a.getSlot(), a.getChargingTimer()));
 						a.setCharging(false);
 						((ChargeableAbility) a).onEndCharging(p);

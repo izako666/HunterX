@@ -1,4 +1,4 @@
-package com.izako.hunterx.entities.AI;
+package com.izako.hunterx.entities.goals;
 
 import java.util.EnumSet;
 

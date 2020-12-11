@@ -1,7 +1,6 @@
 package com.izako.hunterx.gui;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.izako.hunterx.Main;
@@ -9,6 +8,7 @@ import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
+import com.izako.hunterx.init.ModAbilities;
 import com.izako.hunterx.init.ModItems;
 import com.izako.hunterx.init.ModQuests;
 import com.izako.hunterx.izapi.ability.Ability;
@@ -113,9 +113,9 @@ public class HunterScreen extends Screen {
 		if (Minecraft.getInstance().getMainWindow().getGuiScaleFactor() == 4) {
 			initialHeight = 0;
 		} else if (Minecraft.getInstance().getMainWindow().getGuiScaleFactor() == 3) {
-			initialHeight = (int) (height / 8);
+			initialHeight = 0;
 		} else {
-			initialHeight = (int) (height / 4);
+			initialHeight = 0;
 		}
 		this.buttons.forEach((b) -> {
 			if (b instanceof HunterButton) {
@@ -128,16 +128,26 @@ public class HunterScreen extends Screen {
 					RenderSystem.disableBlend();
 
 				}
-			}
+			} else 
 			if (b instanceof AbilityButton) {
 				AbilityButton ab = (AbilityButton) b;
 				this.drawIcon(ab.ablTexture, ab.x, ab.y, 32, 32, 0);
+			} else {
+				b.renderButton(0, 0, 0);
 			}
 		});
 		if (this.currentAbility != null) {
 			for (int i = 0; i < 8; i++) {
 				this.drawString(this.font, String.valueOf(i + 1), 20, (int) (initialHeight + 6 + (32 * i + 1)),
 						16777215);
+			}
+			
+			this.drawString(this.font, this.currentAbility.getName(),  scaledWidth /2 - 50, initialHeight + 30, 16777215);
+		
+			List<String> list = WyHelper.splitString(this.font, this.currentAbility.getDesc(), width/2 - 100, initialHeight + 40, 160);
+			
+			for(int i = 0; i< list.size(); i++) {
+			this.drawString(this.font, list.get(i),  scaledWidth /2 - 50, initialHeight + 50 + (15 * i), 16777215);
 			}
 		}
 	}
@@ -191,7 +201,11 @@ public class HunterScreen extends Screen {
 				}
 				RenderSystem.disableBlend();
 
+			} else {
+				b.renderButton(0, 0, 0);
 			}
+			
+			
 		});
 
 		if (this.currentQuest != null) {
@@ -239,6 +253,7 @@ public class HunterScreen extends Screen {
 		int width = this.getMinecraft().getMainWindow().getScaledWidth();
 		int height = this.getMinecraft().getMainWindow().getScaledHeight();
 
+		
 		this.buttons.clear();
 		this.children.clear();
 		if (this.guiState == 0) {
@@ -295,57 +310,16 @@ public class HunterScreen extends Screen {
 					}));
 
 		} else if (guiState == 2) {
-
-			this.addButton(new HunterButton((int) ((width * 0.5) - 70), (int) (210), 16, 16, "pagebuttonforward", false,
-					new Button.IPressable() {
-
-	@Override
-						public void onPress(Button p_onPress_1_) {
-							// TODO Auto-generated method stub
-							if (Minecraft.getInstance().currentScreen instanceof HunterScreen) {
-								((HunterScreen) Minecraft.getInstance().currentScreen).questPage++;
-								((HunterScreen) Minecraft.getInstance().currentScreen).currentQuest = null;
-								((HunterScreen) Minecraft.getInstance().currentScreen).init();
-
-							}
-						}
-					}));
-			this.addButton(new HunterButton((int) ((width * 0.5) - 90), (int) (210), 16, 16, "pagebuttonbackward",
-					false, new Button.IPressable() {
-
-						@Override
-						public void onPress(Button p_onPress_1_) {
-							// TODO Auto-generated method stub
-							if (Minecraft.getInstance().currentScreen instanceof HunterScreen) {
-								int page = ((HunterScreen) Minecraft.getInstance().currentScreen).questPage;
-								if (!(page <= 0)) {
-									((HunterScreen) Minecraft.getInstance().currentScreen).questPage--;
-									((HunterScreen) Minecraft.getInstance().currentScreen).currentQuest = null;
-									((HunterScreen) Minecraft.getInstance().currentScreen).init();
-
-								}
-							}
-						}
-					}));
-
 			PlayerEntity p = this.getMinecraft().player;
 			IHunterData data = HunterDataCapability.get(p);
 			this.quests = data.getQuests();
-			for (int i = 4 * questPage; i < 4 * (questPage + 1); i++) {
-				if ((this.quests.size() - 1) >= i) {
-					int relativePos =  i - (questPage * 4);
-					HunterScreen screen = ((HunterScreen) Minecraft.getInstance().currentScreen);
-					this.addButton(new HunterButton((int) ((width * 0.5) - 125), (int) (30 + 50 * relativePos), 96, 32,
-							this.quests.get(i).getId(), true, new Button.IPressable() {
-
-								@Override
-								public void onPress(Button but) {
-									screen.currentQuest = ModQuests.getInstance(((HunterButton) but).questID);
-
-								}
-							}));
-				}
-			}
+			ListSlider questsSlider = new ListSlider(width / 2 - 122, 20, 10, 200, 0, quests.size() * 10, ListSlider.Entry.fromQuests(quests));
+		
+			questsSlider.setOnInitClickEntry((e,l) -> {
+				this.currentQuest = data.getQuest(ModQuests.getInstance(e.id));
+			});
+			this.addButton(questsSlider);
+		
 		}else if(guiState==3&&!this.isLicenseBG)
 
 	{
@@ -369,56 +343,18 @@ public class HunterScreen extends Screen {
 				}));
 	}else if(guiState==4)
 	{
-		this.addButton(new HunterButton((int) ((width * 0.5) - 70), (int) (210), 16, 16, "abilitybuttonforward", false,
-				new Button.IPressable() {
-
-					@Override
-					public void onPress(Button p_onPress_1_) {
-						// TODO Auto-generated method stub
-						if (Minecraft.getInstance().currentScreen instanceof HunterScreen) {
-							((HunterScreen) Minecraft.getInstance().currentScreen).abilityPage++;
-							((HunterScreen) Minecraft.getInstance().currentScreen).currentAbility = null;
-							((HunterScreen) Minecraft.getInstance().currentScreen).init();
-
-						}
-					}
-				}));
-		this.addButton(new HunterButton((int) ((width * 0.5) - 90), (int) (210), 16, 16, "abilitybuttonbackward", false,
-				new Button.IPressable() {
-
-					@Override
-					public void onPress(Button p_onPress_1_) {
-						// TODO Auto-generated method stub
-						if (Minecraft.getInstance().currentScreen instanceof HunterScreen) {
-							int page = ((HunterScreen) Minecraft.getInstance().currentScreen).abilityPage;
-							if (!(page <= 0)) {
-								((HunterScreen) Minecraft.getInstance().currentScreen).abilityPage--;
-								((HunterScreen) Minecraft.getInstance().currentScreen).currentAbility = null;
-								((HunterScreen) Minecraft.getInstance().currentScreen).init();
-
-							}
-						}
-					}
-				}));
 
 		PlayerEntity p = this.getMinecraft().player;
 		IAbilityData abldata = AbilityDataCapability.get(p);
 		List<Ability> list = abldata.getAbilities();
-		for (int i = 4 * abilityPage; i < 4 * (abilityPage + 1); i++) {
-			if ((list.size() - 1) >= i) {
-				int index = i - (4 * abilityPage);
-				HunterScreen screen = ((HunterScreen) Minecraft.getInstance().currentScreen);
-				this.addButton(new AbilityButton((int) ((width * 0.5) - 125), (int) (30 + 50 * index), 32, 32,
-						list.get(i).getId(), new Button.IPressable() {
+		AbilitiesListSlider abilitiesSlider = new AbilitiesListSlider(width / 2 - 122, 20, 10, 200, 0, list.size() * 10, ListSlider.Entry.fromAbilities(list));
+		
+		abilitiesSlider.setOnInitClickEntry((e,l) ->{
+			this.currentAbility = abldata.getAbility(ModAbilities.getAbilityOfId(e.id));
+			System.out.println(this.currentAbility);
+		});
+		this.addButton(abilitiesSlider);
 
-							@Override
-							public void onPress(Button but) {
-								screen.currentAbility = ((AbilityButton) but).ability;
-
-							}
-						}, list.get(i)));
-			}
-		}
 	}
 
 	}

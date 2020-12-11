@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
+import com.izako.hunterx.entities.models.SharpOutlineModel;
 import com.izako.hunterx.init.ModAbilities;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.renderers.ModRenderTypes;
@@ -34,61 +35,6 @@ public class GenericOverlayLayer<T extends LivingEntity, M extends EntityModel<T
 
 	}
 
-	/*
-	 * @Override public void render(AbstractClientPlayerEntity entity, float
-	 * limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float
-	 * netHeadYaw, float headPitch, float scale) {
-	 * 
-	 * 
-	 * IAbilityData abilities = AbilityDataCapability.get(entity); IAbilityData
-	 * clientData = AbilityDataCapability.get(Minecraft.getInstance().player); float
-	 * layerScale = 1.05f; for(Ability abl : abilities.getSlotAbilities()) { if(abl
-	 * == null) continue; if(abl.equals(ModAbilities.TEN_ABILITY) &&
-	 * abl.isInPassive()) { color = abilities.getAuraColor();
-	 * 
-	 * } else if(abl.equals(ModAbilities.ZETSU_ABILITY) && abl.isInPassive() &&
-	 * entity.getUniqueID() == Minecraft.getInstance().player.getUniqueID()){ color
-	 * = Color.BLACK; }else if(abl.equals(ModAbilities.REN_ABILITY) &&
-	 * abl.isInPassive()) { color = abilities.getAuraColor(); layerScale = 1.1f; }
-	 * else { continue; } GlStateManager.pushMatrix();
-	 * 
-	 * {
-	 * 
-	 * GlStateManager.disableTexture();
-	 * 
-	 * GlStateManager.enableBlend();
-	 * 
-	 * GlStateManager.disableLighting();
-	 * 
-	 * GlStateManager.disableCull();
-	 * 
-	 * GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA,
-	 * GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-	 * 
-	 * GlStateManager.color4f((float)(color.getRed()) / 255,
-	 * (float)(color.getGreen()) / 255 , ((float)color.getBlue()) / 255, 0.2f);
-	 * 
-	 * GlStateManager.scaled(layerScale, layerScale - 0.01f, layerScale);
-	 * 
-	 * renderer.getEntityModel().render(entity, limbSwing, limbSwingAmount,
-	 * ageInTicks, netHeadYaw, headPitch, scale);
-	 * 
-	 * 
-	 * 
-	 * GlStateManager.enableTexture(); GlStateManager.color4f(1f, 1f, 1f, 1f);
-	 * 
-	 * GlStateManager.enableCull();
-	 * 
-	 * GlStateManager.enableLighting();
-	 * 
-	 * GlStateManager.disableBlend();
-	 * 
-	 * }
-	 * 
-	 * GlStateManager.popMatrix(); }
-	 * 
-	 * }
-	 */
 
 	@Override
 	public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, T entitylivingbaseIn,
@@ -101,38 +47,59 @@ public class GenericOverlayLayer<T extends LivingEntity, M extends EntityModel<T
 		float transparency = 0.2f;
 		boolean inActive = abilities.hasActiveAbility(ModAbilities.IN_ABILITY);
 		if (entitylivingbaseIn instanceof PlayerEntity) {
+			EntityModel<LivingEntity> m = null;
 			for (Ability abl : abilities.getSlotAbilities()) {
 				if (abl == null)
 					continue;
+				
+				 if(abl.equals(ModAbilities.SHARPEN_AURA_ABILITY) && abl.isInPassive()) {
+					m = new SharpOutlineModel();
+					renderer.getEntityModel().copyModelAttributesTo(m);
+					m.setRotationAngles((LivingEntity)entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+					m.setLivingAnimations(entitylivingbaseIn, limbSwing, limbSwingAmount, 1f);
+					color = abilities.getAuraColor();
+				} else 
 				if (abl.equals(ModAbilities.TEN_ABILITY) && abl.isInPassive() && !inActive) {
 					color = abilities.getAuraColor();
 					doGyoRendering = false;
 
+					m = renderer.getEntityModel();
 				} else if (abl.equals(ModAbilities.ZETSU_ABILITY) && abl.isInPassive()
 						&& entitylivingbaseIn.getUniqueID() == Minecraft.getInstance().player.getUniqueID()) {
 					color = Color.BLACK;
 					doGyoRendering = false;
+					m = renderer.getEntityModel();
 
 				} else if (abl.equals(ModAbilities.REN_ABILITY) && abl.isInPassive() && !inActive) {
 					color = abilities.getAuraColor();
 					doGyoRendering = false;
+					m = renderer.getEntityModel();
 				} else if (abl.equals(ModAbilities.IN_ABILITY) && abl.isInPassive()
 						&& entitylivingbaseIn.getUniqueID() == Minecraft.getInstance().player.getUniqueID()) {
 					color = Color.WHITE;
 					doGyoRendering = false;
 					transparency = 0.1f;
+					m = renderer.getEntityModel();
 				} else if (abl.equals(ModAbilities.KEN_ABILITY) && abl.isInPassive()) {
 					color = abilities.getAuraColor();
 					doGyoRendering = false;
 					layerScale = 1.1f;
+					m = renderer.getEntityModel();
+				} else if(abl.equals(ModAbilities.SHARPEN_AURA_ABILITY) && abl.isInPassive()) {
+					m = new SharpOutlineModel();
+					renderer.getEntityModel().copyModelAttributesTo(m);
+					m.setRotationAngles((LivingEntity)entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+					m.setLivingAnimations(entitylivingbaseIn, limbSwing, limbSwingAmount, 1f);
+					color = abilities.getAuraColor();
 				} else {
+					
 					continue;
 				}
 				matrixStackIn.push();
 
 				matrixStackIn.scale(layerScale, layerScale - 0.01f, layerScale);
 				IVertexBuilder vertexBuilder = bufferIn.getBuffer(ModRenderTypes.getTranslucentEntity());
-				renderer.getEntityModel().render(matrixStackIn, vertexBuilder, packedLightIn, 1,
+				m.render(matrixStackIn, vertexBuilder, packedLightIn, 1,
 						(float) (color.getRed()) / 255, (float) (color.getGreen()) / 255,
 						((float) color.getBlue()) / 255, transparency);
 

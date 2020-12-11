@@ -3,7 +3,7 @@ package com.izako.hunterx.renderers;
 import com.izako.hunterx.Main;
 import com.izako.hunterx.entities.HanzoEntity;
 import com.izako.hunterx.entities.WingEntity;
-import com.izako.hunterx.izapi.IZAHelper;
+import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.renderers.layers.GenericOverlayLayer;
 
 import net.minecraft.client.renderer.entity.BipedRenderer;
@@ -18,7 +18,7 @@ public class HanzoRenderer extends BipedRenderer<HanzoEntity, BipedModel<HanzoEn
 
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Main.MODID, "textures/entity/hanzo.png");
 	public HanzoRenderer(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new BipedModel<HanzoEntity>(IZAHelper.entityModelFunc,1f, 0.0f, 64, 64), 0.5f);
+		super(renderManagerIn, new BipedModel<HanzoEntity>(Helper.entityModelFunc,1f, 0.0f, 64, 64), 0.5f);
 		this.addLayer(new GenericOverlayLayer((IEntityRenderer) this));
 
 	}

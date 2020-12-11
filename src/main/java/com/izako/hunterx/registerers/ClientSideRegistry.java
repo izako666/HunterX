@@ -1,5 +1,6 @@
 package com.izako.hunterx.registerers;
 
+import java.awt.Color;
 import java.lang.reflect.InvocationTargetException;
 
 import com.izako.hunterx.Main;
@@ -10,6 +11,7 @@ import com.izako.hunterx.entities.KirikoEntity;
 import com.izako.hunterx.entities.ThugEntity;
 import com.izako.hunterx.entities.WingEntity;
 import com.izako.hunterx.entities.models.KirikoModel;
+import com.izako.hunterx.entities.projectiles.AuraBlastProjectileEntity;
 import com.izako.hunterx.items.entities.BulletEntity;
 import com.izako.hunterx.items.entities.CardEntity;
 import com.izako.hunterx.items.entities.NeedleEntity;
@@ -21,6 +23,7 @@ import com.izako.hunterx.renderers.EnRenderer;
 import com.izako.hunterx.renderers.ExaminerRenderer;
 import com.izako.hunterx.renderers.HanzoRenderer;
 import com.izako.hunterx.renderers.KirikoRenderer;
+import com.izako.hunterx.renderers.ProjectileRenderer;
 import com.izako.hunterx.renderers.ThugRenderer;
 import com.izako.hunterx.renderers.WingRenderer;
 import com.izako.hunterx.renderers.layers.GenericOverlayLayer;
@@ -41,6 +44,7 @@ import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -51,27 +55,27 @@ public class ClientSideRegistry {
 
 	
 	public static void RegisterEntityRenderers() {
-		RenderingRegistry.registerEntityRenderingHandler(YoyoEntity.type, new IRenderFactory<YoyoEntity>() {
+		RenderingRegistry.registerEntityRenderingHandler(YoyoEntity.TYPE, new IRenderFactory<YoyoEntity>() {
 			@Override
 			public YoyoRenderer<YoyoEntity> createRenderFor(EntityRendererManager manager) {
 
 				return new YoyoRenderer<YoyoEntity>(manager);
 			}
 		});
-		RenderingRegistry.registerEntityRenderingHandler(CardEntity.type, new IRenderFactory<CardEntity>() {
+		RenderingRegistry.registerEntityRenderingHandler(CardEntity.TYPE, new IRenderFactory<CardEntity>() {
 
 			@Override
 			public SpriteRenderer<CardEntity> createRenderFor(EntityRendererManager manager) {
 				return new SpriteRenderer<CardEntity>(manager, Minecraft.getInstance().getItemRenderer());
 			}});
-		RenderingRegistry.registerEntityRenderingHandler(NeedleEntity.type, new IRenderFactory<NeedleEntity>() {
+		RenderingRegistry.registerEntityRenderingHandler(NeedleEntity.TYPE, new IRenderFactory<NeedleEntity>() {
 
 			@Override
 			public SpriteRenderer<NeedleEntity> createRenderFor(EntityRendererManager manager) {
 				return new SpriteRenderer<NeedleEntity>(manager, Minecraft.getInstance().getItemRenderer());
 			}});
 		
-		RenderingRegistry.registerEntityRenderingHandler(ThugEntity.type, new IRenderFactory<ThugEntity>() {
+		RenderingRegistry.registerEntityRenderingHandler(ThugEntity.TYPE, new IRenderFactory<ThugEntity>() {
 
 			@Override
 			public ThugRenderer createRenderFor(EntityRendererManager manager) {
@@ -79,7 +83,7 @@ public class ClientSideRegistry {
 			}
 			
 		});
-		RenderingRegistry.registerEntityRenderingHandler(ExaminerEntity.type, new IRenderFactory<ExaminerEntity>() {
+		RenderingRegistry.registerEntityRenderingHandler(ExaminerEntity.TYPE, new IRenderFactory<ExaminerEntity>() {
 
 			@Override
 			public ExaminerRenderer createRenderFor(EntityRendererManager manager) {
@@ -88,7 +92,7 @@ public class ClientSideRegistry {
 			
 		});
 
-		RenderingRegistry.registerEntityRenderingHandler(KirikoEntity.type, new IRenderFactory<KirikoEntity>() {
+		RenderingRegistry.registerEntityRenderingHandler(KirikoEntity.TYPE, new IRenderFactory<KirikoEntity>() {
 
 			@Override
 			public KirikoRenderer createRenderFor(EntityRendererManager manager) {
@@ -97,14 +101,14 @@ public class ClientSideRegistry {
 			
 		});
 
-		RenderingRegistry.registerEntityRenderingHandler(BulletEntity.type, new IRenderFactory<BulletEntity>() {
+		RenderingRegistry.registerEntityRenderingHandler(BulletEntity.TYPE, new IRenderFactory<BulletEntity>() {
 
 			@Override
 			public BulletRenderer<BulletEntity> createRenderFor(EntityRendererManager manager) {
 				return new BulletRenderer<BulletEntity>(manager, new BulletModel());
 			}});
 			
-		RenderingRegistry.registerEntityRenderingHandler(WingEntity.type, new IRenderFactory<WingEntity>() {
+		RenderingRegistry.registerEntityRenderingHandler(WingEntity.TYPE, new IRenderFactory<WingEntity>() {
 
 			@Override
 			public WingRenderer createRenderFor(EntityRendererManager manager) {
@@ -112,7 +116,7 @@ public class ClientSideRegistry {
 			}
 			
 		});
-		RenderingRegistry.registerEntityRenderingHandler(HanzoEntity.type, new IRenderFactory<HanzoEntity>() {
+		RenderingRegistry.registerEntityRenderingHandler(HanzoEntity.TYPE, new IRenderFactory<HanzoEntity>() {
 
 			@Override
 			public HanzoRenderer createRenderFor(EntityRendererManager manager) {
@@ -122,6 +126,7 @@ public class ClientSideRegistry {
 		});
 
 		RenderingRegistry.registerEntityRenderingHandler(EnEntity.TYPE, ClientSideRegistry.factory(EnRenderer.class));
+		RenderingRegistry.registerEntityRenderingHandler(AuraBlastProjectileEntity.TYPE, new ProjectileRenderer.Factory<AuraBlastProjectileEntity>().setTex(new ResourceLocation(Main.MODID, "textures/models/aura_blast.png")).setCustomScale(true).setPersonalAuraColor(true).setColor(new Color(0,0,0,0.2f)));
 		for(PlayerRenderer render : Minecraft.getInstance().getRenderManager().getSkinMap().values()) {
 			render.addLayer(new GenericOverlayLayer(render));
 			render.addLayer(new HandOverlayLayer(render));
@@ -129,6 +134,7 @@ public class ClientSideRegistry {
 			render.addLayer(new GyoEyesLayer(render));
 			render.addLayer(new RyuOverlayLayer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>>(render));
 		}
+		
 		for(EntityRenderer render : Minecraft.getInstance().getRenderManager().renderers.values()) {
 			if(render instanceof LivingRenderer) {
 				((LivingRenderer) render).addLayer(new GenericOverlayLayer((IEntityRenderer) render));
@@ -139,6 +145,7 @@ public class ClientSideRegistry {
 			}
 		}
 
+		
 	}
 	
 	

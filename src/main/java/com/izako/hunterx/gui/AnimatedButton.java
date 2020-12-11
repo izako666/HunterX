@@ -1,7 +1,7 @@
 package com.izako.hunterx.gui;
 
 import com.izako.hunterx.Main;
-import com.izako.hunterx.izapi.IZAHelper;
+import com.izako.hunterx.izapi.Helper;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.gui.widget.button.Button;
@@ -86,7 +86,7 @@ public class AnimatedButton extends Button {
 		}
 
 		void draw() {
-			IZAHelper.drawIMG(rs, x, y, u, v, width, height, zLevel, uWidth, uHeight);
+			Helper.drawIMG(rs, x, y, u, v, width, height, zLevel, uWidth, uHeight);
 		}
 	}
 }

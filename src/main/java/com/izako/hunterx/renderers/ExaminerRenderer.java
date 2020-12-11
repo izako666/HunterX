@@ -2,7 +2,7 @@ package com.izako.hunterx.renderers;
 
 import com.izako.hunterx.Main;
 import com.izako.hunterx.entities.ExaminerEntity;
-import com.izako.hunterx.izapi.IZAHelper;
+import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.renderers.layers.GenericOverlayLayer;
 
 import net.minecraft.client.renderer.entity.BipedRenderer;
@@ -19,7 +19,7 @@ public class ExaminerRenderer extends BipedRenderer<ExaminerEntity, BipedModel<E
 
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Main.MODID, "textures/entity/examiner.png");
 	public ExaminerRenderer(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new BipedModel<ExaminerEntity>(IZAHelper.entityModelFunc,1f, 0f, 64, 64) , 0.5f);
+		super(renderManagerIn, new BipedModel<ExaminerEntity>(Helper.entityModelFunc,1f, 0f, 64, 64) , 0.5f);
 		this.addLayer(new GenericOverlayLayer((IEntityRenderer) this));
 
 	}

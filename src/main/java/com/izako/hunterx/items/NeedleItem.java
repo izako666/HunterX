@@ -36,7 +36,7 @@ public class NeedleItem extends Item{
 
 
 	        if(!worldIn.isRemote) {
-	        	NeedleEntity entityneedle = new NeedleEntity(NeedleEntity.type, playerIn, worldIn);
+	        	NeedleEntity entityneedle = new NeedleEntity(NeedleEntity.TYPE, playerIn, worldIn);
 	        
 	            entityneedle.setPosition(playerIn.getPosX() + aim.x, playerIn.getPosY() + playerIn.getEyeHeight(), playerIn.getPosZ() + aim.z);
 	    		entityneedle.setMotion(aim.x *2, aim.y *2, aim.z *2);

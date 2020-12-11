@@ -2,9 +2,11 @@ package com.izako.hunterx.abilities.basics;
 
 import java.util.UUID;
 
+import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.IOnPlayerRender;
 import com.izako.hunterx.izapi.ability.ITrainable;
+import com.izako.hunterx.izapi.ability.NenType;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
 
 import net.minecraft.block.BlockState;
@@ -24,7 +26,7 @@ public class ShuAbility extends PassiveAbility implements IOnPlayerRender, ITrai
 	public static final UUID SHU_UUID = UUID.fromString("b2bb389e-a2a9-4c42-85d2-0010c09901fc");
 
 	public ShuAbility() {
-		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxPassive(Integer.MAX_VALUE);
+		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxPassive(Integer.MAX_VALUE).setNenType(NenType.UNKNOWN);
 	}
 	@Override
 	public String getId() {
@@ -34,6 +36,11 @@ public class ShuAbility extends PassiveAbility implements IOnPlayerRender, ITrai
 	@Override
 	public String getName() {
 		return "Shu";
+	}
+	
+	@Override
+	public String getDesc() {
+		return "Shu clads the item you're using for increased efficiency.";
 	}
 
 	public double getEfficiencyModifier() {
@@ -46,8 +53,8 @@ public class ShuAbility extends PassiveAbility implements IOnPlayerRender, ITrai
 	}
 	@Override
 	public void onStartPassive(LivingEntity p) {
-		p.getHeldItemMainhand().addEnchantment(Enchantments.UNBREAKING, 4);
-		p.getHeldItemMainhand().addEnchantment(Enchantments.SHARPNESS, 3);
+		p.getHeldItemMainhand().addEnchantment(Enchantments.UNBREAKING, (int) (Helper.getTrueValue(4, this, p)));
+		p.getHeldItemMainhand().addEnchantment(Enchantments.SHARPNESS, (int) (Helper.getTrueValue(3, this, p)));
 		p.getHeldItemMainhand().getOrCreateTag().putBoolean("activeshu", true);
 		super.onStartPassive(p);
 	}

@@ -5,8 +5,10 @@ import com.izako.hunterx.entities.EnEntity;
 import com.izako.hunterx.entities.ExaminerEntity;
 import com.izako.hunterx.entities.HanzoEntity;
 import com.izako.hunterx.entities.KirikoEntity;
+import com.izako.hunterx.entities.ProjectileEntity;
 import com.izako.hunterx.entities.ThugEntity;
 import com.izako.hunterx.entities.WingEntity;
+import com.izako.hunterx.entities.projectiles.AuraBlastProjectileEntity;
 import com.izako.hunterx.init.ModStructures;
 import com.izako.hunterx.items.entities.BulletEntity;
 import com.izako.hunterx.items.entities.CardEntity;
@@ -40,10 +42,10 @@ public final class ModEventSubscriber {
 	  @SubscribeEvent
       public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event)
       {
-		  event.getRegistry().registerAll(YoyoEntity.type, CardEntity.type,BulletEntity.type, NeedleEntity.type, ThugEntity.type, KirikoEntity.type, WingEntity.type, ExaminerEntity.type, HanzoEntity.type, EnEntity.TYPE);
-		  registerEntityWorldSpawn(ThugEntity.type, 2, 1, Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH, Biomes.JUNGLE);
-		  registerEntityWorldSpawn(KirikoEntity.type, 1, 1,Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH, Biomes.JUNGLE);
-		  registerEntityWorldSpawn(WingEntity.type, 6, 1,Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH, Biomes.JUNGLE);
+		  event.getRegistry().registerAll(YoyoEntity.TYPE, CardEntity.TYPE,BulletEntity.TYPE, NeedleEntity.TYPE, ThugEntity.TYPE, KirikoEntity.TYPE, WingEntity.TYPE, ExaminerEntity.TYPE, HanzoEntity.TYPE, EnEntity.TYPE, ProjectileEntity.TYPE,AuraBlastProjectileEntity.TYPE);
+		  registerEntityWorldSpawn(ThugEntity.TYPE, 2, 1, Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH, Biomes.JUNGLE);
+		  registerEntityWorldSpawn(KirikoEntity.TYPE, 1, 1,Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH, Biomes.JUNGLE);
+		  registerEntityWorldSpawn(WingEntity.TYPE, 6, 1,Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH, Biomes.JUNGLE);
 
       }
 	  

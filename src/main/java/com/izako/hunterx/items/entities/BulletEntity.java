@@ -20,7 +20,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class BulletEntity extends ProjectileItemEntity{
 
 	@SuppressWarnings("unchecked")
-	public static EntityType<BulletEntity> type = (EntityType<BulletEntity>) EntityType.Builder
+	public static EntityType<BulletEntity> TYPE = (EntityType<BulletEntity>) EntityType.Builder
 			.<BulletEntity>create(BulletEntity::new, EntityClassification.MISC).setTrackingRange(128)
 			.setShouldReceiveVelocityUpdates(true).size(1, 1).setUpdateInterval(1)
 			.setCustomClientFactory(BulletEntity::new).build("bullet").setRegistryName(Main.MODID, "bullet");
@@ -41,7 +41,7 @@ public class BulletEntity extends ProjectileItemEntity{
 	}
 	
 	public BulletEntity(FMLPlayMessages.SpawnEntity packet, World worldIn) {
-		super(type, worldIn);
+		super(TYPE, worldIn);
 	}
 
 

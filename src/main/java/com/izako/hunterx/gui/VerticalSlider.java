@@ -1,7 +1,7 @@
 package com.izako.hunterx.gui;
 
 import com.izako.hunterx.Main;
-import com.izako.hunterx.izapi.IZAHelper;
+import com.izako.hunterx.izapi.Helper;
 
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.ResourceLocation;
@@ -25,7 +25,7 @@ public class VerticalSlider extends Button {
 	@Override
 	protected void onDrag(double mX, double mY, double p_onDrag_5_, double p_onDrag_7_) {
 		
-		if(mY >= this.y && mY <= (this.y + this.getHeight())) {
+		if(mY >= this.y && mY <= (this.y + this.getHeight()) && mX >= this.x && mX <= this.x + this.width) {
 			this.value = this.posToValue(mY);
 		} else {
 			this.onRelease(mX, mY);
@@ -41,7 +41,7 @@ public class VerticalSlider extends Button {
 	
 	private double valueToPos() {
 	//	double pos = (((this.value - this.minValue) * (double)((this.height))) / (double)(((this.maxValue) - this.minValue))) + this.y;
-		double pos = IZAHelper.fromRangeToRange(minValue, maxValue, this.y + inSliderLength + 1, (this.y
+		double pos = Helper.fromRangeToRange(minValue, maxValue, this.y + inSliderLength + 1, (this.y
 				+ height) + 2,this.value);
 		
 		return pos;
@@ -49,13 +49,13 @@ public class VerticalSlider extends Button {
 	}
 	@Override
 	public void renderButton(int mX, int mY, float idfk) {
-		IZAHelper.drawIMG(SLIDER_ICONS, this.x, this.y, 0, 0, 8, 2, 1, 8, 2);
-		IZAHelper.drawIMG(SLIDER_ICONS, this.x, this.y + 2, 0, 2, 8, this.height, 1, 8, 11);
-		IZAHelper.drawIMG(SLIDER_ICONS, this.x, this.y + 2 + this.height, 0, 13, 8, 2, 1, 8, 2);
+		Helper.drawIMG(SLIDER_ICONS, this.x, this.y, 0, 0, 8, 2, 1, 8, 2);
+		Helper.drawIMG(SLIDER_ICONS, this.x, this.y + 2, 0, 2, 8, this.height, 1, 8, 11);
+		Helper.drawIMG(SLIDER_ICONS, this.x, this.y + 2 + this.height, 0, 13, 8, 2, 1, 8, 2);
 
-		IZAHelper.drawIMG(SLIDER_ICONS, this.x + 1, (int) ((int) this.valueToPos() -(inSliderLength)), 0, 16, 6, 1, 2, 6, 1);
-		IZAHelper.drawIMG(SLIDER_ICONS, this.x + 1, (int) ((int) (this.valueToPos() - inSliderLength + 1)), 0, 17, 6, (int) inSliderLength, 2, 6, 3);
-	    IZAHelper.drawIMG(SLIDER_ICONS, this.x + 1, (int) ((int) this.valueToPos() + 1), 0, 20, 6, 1, 2, 6, 1);
+		Helper.drawIMG(SLIDER_ICONS, this.x + 1, (int) ((int) this.valueToPos() -(inSliderLength)), 0, 16, 6, 1, 2, 6, 1);
+		Helper.drawIMG(SLIDER_ICONS, this.x + 1, (int) ((int) (this.valueToPos() - inSliderLength + 1)), 0, 17, 6, (int) inSliderLength, 2, 6, 3);
+	    Helper.drawIMG(SLIDER_ICONS, this.x + 1, (int) ((int) this.valueToPos() + 1), 0, 20, 6, 1, 2, 6, 1);
 
 	}
 

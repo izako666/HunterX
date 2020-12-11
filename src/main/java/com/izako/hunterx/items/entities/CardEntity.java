@@ -19,7 +19,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class CardEntity extends ProjectileItemEntity {
 	@SuppressWarnings("unchecked")
-	public static EntityType<CardEntity> type = (EntityType<CardEntity>) EntityType.Builder
+	public static EntityType<CardEntity> TYPE = (EntityType<CardEntity>) EntityType.Builder
 			.<CardEntity>create(CardEntity::new, EntityClassification.MISC).setTrackingRange(128)
 			.setShouldReceiveVelocityUpdates(true).size(1, 1).setUpdateInterval(1)
 			.setCustomClientFactory(CardEntity::new).build("card").setRegistryName(Main.MODID, "card");
@@ -40,7 +40,7 @@ public class CardEntity extends ProjectileItemEntity {
 	}
 	
 	public CardEntity(FMLPlayMessages.SpawnEntity packet, World worldIn) {
-		super(type, worldIn);
+		super(TYPE, worldIn);
 	}
 
 

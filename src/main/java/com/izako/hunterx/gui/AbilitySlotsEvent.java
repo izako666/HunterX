@@ -97,6 +97,8 @@ public class AbilitySlotsEvent {
 					GuiUtils.drawTexturedModalRect(slotsPosX, slotsPosY, 0, 32, 32, 32, zlevel);
 				} else if (abldata.getAbilityInSlot(i).getCooldown() > 0) {
 					int oldValue = abldata.getAbilityInSlot(i).getCooldown();
+					if(oldValue < 1)
+						oldValue = 1;
 					int oldMax = abldata.getAbilityInSlot(i).props.maxCooldown;
 					GuiUtils.drawTexturedModalRect(slotsPosX, slotsPosY, 0,
 							AbilitySlotsEvent.getCooldownTexture((int) (((oldValue * 100) / oldMax))), 32, 32, zlevel);

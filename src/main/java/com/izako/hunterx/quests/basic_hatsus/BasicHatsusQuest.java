@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.izako.hunterx.data.hunterdata.HunterDataCapability;
+import com.izako.hunterx.data.hunterdata.IHunterData;
+import com.izako.hunterx.gui.ListSlider;
+import com.izako.hunterx.gui.ListSlider.Entry;
 import com.izako.hunterx.init.ModQuests;
 import com.izako.hunterx.izapi.quest.IMultipleChoiceQuest;
 import com.izako.hunterx.izapi.quest.Quest;
@@ -22,6 +26,14 @@ public class BasicHatsusQuest extends Quest implements IMultipleChoiceQuest {
 		return "Learn all the basic hatsus";
 	}
 
+	@Override
+	public void onActivateEntry(Entry entry, ListSlider slider,PlayerEntity p) {
+		Quest q = ModQuests.getInstance(entry.id);
+		q.giveQuest(p);
+		
+	}
+
+	
 	@Override
 	public String getDescription() {
 		return "Go talk to wing and get another basic hatsu quest until you master all of them or until you've had enough.";

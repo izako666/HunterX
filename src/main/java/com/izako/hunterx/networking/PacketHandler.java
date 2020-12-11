@@ -4,6 +4,7 @@ import com.izako.hunterx.networking.packets.AbilityChargingEndPacket;
 import com.izako.hunterx.networking.packets.AbilityUpdatePacket;
 import com.izako.hunterx.networking.packets.AbilityUsePacket;
 import com.izako.hunterx.networking.packets.CharacterInitPacket;
+import com.izako.hunterx.networking.packets.ChoiceQuestActivateEntryPacket;
 import com.izako.hunterx.networking.packets.EnUpdatePacket;
 import com.izako.hunterx.networking.packets.HanzoSwordPacket;
 import com.izako.hunterx.networking.packets.ModifierUpdatePacket;
@@ -47,6 +48,7 @@ public class PacketHandler {
 	    INSTANCE.registerMessage(packet++, QuestProgressPacket.class, QuestProgressPacket::encode, QuestProgressPacket::decode, QuestProgressPacket::handle);
 	    INSTANCE.registerMessage(packet++, EnUpdatePacket.class, EnUpdatePacket::encode, EnUpdatePacket::decode, EnUpdatePacket::handle);
 	    INSTANCE.registerMessage(packet++, QuestUpdatePacket.class, QuestUpdatePacket::encode, QuestUpdatePacket::decode, QuestUpdatePacket::handle);
+	    INSTANCE.registerMessage(packet++, ChoiceQuestActivateEntryPacket.class, ChoiceQuestActivateEntryPacket::encode, ChoiceQuestActivateEntryPacket::decode, ChoiceQuestActivateEntryPacket::handle);
 	}
 	
 	public static <MSG>  void sendToTracking(LivingEntity tracked, MSG message) {

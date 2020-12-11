@@ -33,7 +33,7 @@ public class KirikoEntity extends ZombieEntity{
 
 
 	@SuppressWarnings("unchecked")
-	public static EntityType<KirikoEntity> type = (EntityType<KirikoEntity>) EntityType.Builder
+	public static EntityType<KirikoEntity> TYPE = (EntityType<KirikoEntity>) EntityType.Builder
 			.<KirikoEntity>create(KirikoEntity::new, EntityClassification.MONSTER).setTrackingRange(128)
 			.setShouldReceiveVelocityUpdates(true).size(1.2f, 2.4f).setUpdateInterval(1).build("kiriko")
 			.setRegistryName(Main.MODID, "kiriko");

@@ -2,6 +2,7 @@ package com.izako.hunterx.abilities.basics;
 
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.IOnPlayerRender;
+import com.izako.hunterx.izapi.ability.NenType;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
 
 import net.minecraft.entity.LivingEntity;
@@ -11,7 +12,7 @@ import net.minecraft.potion.Effects;
 public class GyoAbility extends PassiveAbility implements IOnPlayerRender{
 
 	public GyoAbility() {
-		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxPassive(40 * 20);
+		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxPassive(40 * 20).setNenType(NenType.UNKNOWN);
 	}
 	@Override
 	public String getId() {
@@ -27,6 +28,11 @@ public class GyoAbility extends PassiveAbility implements IOnPlayerRender{
 	@Override
 	public String getName() {
 		return "Gyo";
+	}
+	
+	@Override
+	public String getDesc() {
+		return "Gyo lets you see everyones nen and its strength.";
 	}
 
 }

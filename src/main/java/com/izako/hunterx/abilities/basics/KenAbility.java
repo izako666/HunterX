@@ -2,9 +2,11 @@ package com.izako.hunterx.abilities.basics;
 
 import java.util.UUID;
 
+import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.IOnPlayerRender;
 import com.izako.hunterx.izapi.ability.ITrainable;
+import com.izako.hunterx.izapi.ability.NenType;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
 
 import net.minecraft.entity.LivingEntity;
@@ -20,7 +22,7 @@ public class KenAbility extends PassiveAbility implements IOnPlayerRender,ITrain
 		super();
 		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE)
 				.setConsumptionType(AuraConsumptionType.PERCENTAGE).setAuraConsumption(this::auraConsumptionEvent)
-				.setMaxPassive(Integer.MAX_VALUE).setMaxCooldown(20 * 15);
+				.setMaxPassive(Integer.MAX_VALUE).setMaxCooldown(20 * 15).setNenType(NenType.UNKNOWN);
 	}
 
 	@Override
@@ -33,11 +35,15 @@ public class KenAbility extends PassiveAbility implements IOnPlayerRender,ITrain
 		return "Ken";
 	}
 
+	@Override
+	public String getDesc() {
+		return "Ken keeps your aura close to you which strengthens your attack and defense.";
+	}
 	public void onStartPassive(LivingEntity p) {
 		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "kenmodifier",
-				30 * this.getCurrentPowerScale(), Operation.ADDITION);
+				Helper.getTrueValue(30, this, p), Operation.ADDITION);
 		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "kenmodifierattack",
-				30 * this.getCurrentPowerScale(), Operation.ADDITION);
+				Helper.getTrueValue(30, this, p), Operation.ADDITION);
 		if (p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(defenseModifierID) == null) {
 			p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(defenseMod);
 		}
@@ -49,9 +55,9 @@ public class KenAbility extends PassiveAbility implements IOnPlayerRender,ITrain
 	@Override
 	public void duringPassive(LivingEntity p) {
 		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "kenmodifier",
-				30 * this.getCurrentPowerScale(), Operation.ADDITION);
+				Helper.getTrueValue(30, this, p), Operation.ADDITION);
 		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "kenmodifierattack",
-				30 * this.getCurrentPowerScale(), Operation.ADDITION);
+				Helper.getTrueValue(30, this, p), Operation.ADDITION);
 		if (p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(defenseModifierID) == null) {
 			p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(defenseMod);
 		}

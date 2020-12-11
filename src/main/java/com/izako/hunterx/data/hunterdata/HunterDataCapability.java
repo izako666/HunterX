@@ -1,5 +1,7 @@
 package com.izako.hunterx.data.hunterdata;
 
+import java.util.ArrayList;
+
 import com.izako.hunterx.init.ModQuests;
 import com.izako.hunterx.izapi.quest.Quest;
 
@@ -46,6 +48,7 @@ public class HunterDataCapability {
 				instance.setAttackStat(props.getDouble("attack_stat"));
                 instance.setIsHunter(props.getBoolean("ishunter"));
                 instance.setIsCharacterMade(props.getBoolean("ischarmade"));
+                instance.setQuests(new ArrayList<Quest>());
 				props.keySet().forEach((k) -> {
 					if (k.contains("questid")) {
 						String newK = k.substring(7, k.length());

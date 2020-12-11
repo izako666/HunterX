@@ -20,7 +20,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class NeedleEntity extends ProjectileItemEntity{
 
 	@SuppressWarnings("unchecked")
-	public static EntityType<NeedleEntity> type = (EntityType<NeedleEntity>) EntityType.Builder
+	public static EntityType<NeedleEntity> TYPE = (EntityType<NeedleEntity>) EntityType.Builder
 			.<NeedleEntity>create(NeedleEntity::new, EntityClassification.MISC).setTrackingRange(128)
 			.setShouldReceiveVelocityUpdates(true).size(1, 1).setUpdateInterval(1)
 			.setCustomClientFactory(NeedleEntity::new).build("needle").setRegistryName(Main.MODID, "needle");
@@ -41,7 +41,7 @@ public class NeedleEntity extends ProjectileItemEntity{
 	}
 	
 	public NeedleEntity(FMLPlayMessages.SpawnEntity packet, World worldIn) {
-		super(type, worldIn);
+		super(TYPE, worldIn);
 	}
 
 

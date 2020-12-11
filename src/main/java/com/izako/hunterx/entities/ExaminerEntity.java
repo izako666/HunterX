@@ -22,7 +22,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ExaminerEntity extends CreatureEntity implements IQuestGiver {
 
 	@SuppressWarnings("unchecked")
-	public static EntityType<ExaminerEntity> type = (EntityType<ExaminerEntity>) EntityType.Builder
+	public static EntityType<ExaminerEntity> TYPE = (EntityType<ExaminerEntity>) EntityType.Builder
 			.<ExaminerEntity>create(ExaminerEntity::new, EntityClassification.CREATURE).setTrackingRange(128)
 			.setShouldReceiveVelocityUpdates(true).size(1f, 2f).setUpdateInterval(1).build("examiner")
 			.setRegistryName(Main.MODID, "examiner");

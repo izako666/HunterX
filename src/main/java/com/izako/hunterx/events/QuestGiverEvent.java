@@ -3,7 +3,7 @@ package com.izako.hunterx.events;
 import com.izako.hunterx.Main;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
-import com.izako.hunterx.izapi.IZAHelper;
+import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.quest.IQuestGiver;
 import com.izako.hunterx.izapi.quest.Quest;
 import com.izako.hunterx.networking.PacketHandler;
@@ -30,7 +30,7 @@ public class QuestGiverEvent {
 			IQuestGiver giver = (IQuestGiver) e.getTarget();
 			Quest q = null;
 			try {
-			 q = giver.getSpeech().getQuests(e.getPlayer())[IZAHelper.getCurrentQuest(giver.getSpeech().getQuests(e.getPlayer()), e.getPlayer())];
+			 q = giver.getSpeech().getQuests(e.getPlayer())[Helper.getCurrentQuest(giver.getSpeech().getQuests(e.getPlayer()), e.getPlayer())];
 			} catch(Exception exception) {
 				//The error is an index out of bounds exception, its fine if it errors.
 			}

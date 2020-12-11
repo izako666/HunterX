@@ -8,7 +8,7 @@ import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.events.custom.AbilityActivateEvent;
 import com.izako.hunterx.init.ModAbilities;
 import com.izako.hunterx.init.ModQuests;
-import com.izako.hunterx.izapi.IZAHelper;
+import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.QuestProgressPacket;
 import com.izako.hunterx.networking.packets.QuestUpdatePacket;
@@ -186,7 +186,7 @@ public class BasicsQuestEvents {
 				IHunterData hData = HunterDataCapability.get(p);
 				if(!hData.hasQuest(ModQuests.GYOQUEST))
 					return;
-				if(!hData.getQuest(ModQuests.GYOQUEST).isFinished() && pData.getSlotAbility(ModAbilities.REN_ABILITY) != null && pData.getSlotAbility(ModAbilities.REN_ABILITY).isInPassive() && IZAHelper.hasActiveAbility(tData)) {
+				if(!hData.getQuest(ModQuests.GYOQUEST).isFinished() && pData.getSlotAbility(ModAbilities.REN_ABILITY) != null && pData.getSlotAbility(ModAbilities.REN_ABILITY).isInPassive() && Helper.hasActiveAbility(tData)) {
 					
 
 					PacketHandler.INSTANCE.sendToServer(new QuestProgressPacket(ModQuests.GYOQUEST.getId(), 100));

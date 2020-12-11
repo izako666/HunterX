@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.izako.hunterx.Main;
-import com.izako.hunterx.izapi.IZAHelper;
+import com.izako.hunterx.gui.AbilitiesListSlider.onActivateEntry;
+import com.izako.hunterx.gui.AbilitiesListSlider.onInitialClickEntry;
+import com.izako.hunterx.gui.ListSlider.Entry;
+import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.quest.Quest;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -18,7 +21,9 @@ public class ListSlider extends VerticalSlider {
 
 	public static final ResourceLocation LIST_SLIDER_ICONS = new ResourceLocation(Main.MODID, "textures/gui/list_slider.png");
 
-	private onActivateEntry onActivate;
+	private onActivateEntry onActivate = (e,s) -> {};
+	private onInitialClickEntry onInitClick = (e,s) -> {};
+
 	List<Entry> entries = new ArrayList<>();
 	public Entry selectedEntry = Entry.EMPTY;
 	public ListSlider(int x, int y, int width, int height, double min, double max, List<Entry> entries) {
@@ -32,14 +37,18 @@ public class ListSlider extends VerticalSlider {
 		}
 	}
 
-	
+
+	public void  setOnInitClickEntry(onInitialClickEntry click) {
+		this.onInitClick = click;
+	}
+
 
 	public void  setOnActivateEntry(onActivateEntry activate) {
 		this.onActivate = activate;
 	}
 
 
-	 static class Entry {
+	 public static class Entry {
 		
 		public String id;
 		public String name = "";
@@ -61,10 +70,10 @@ public class ListSlider extends VerticalSlider {
 		}
 		
 		public Entry(Quest q) {
-			this("quest:"+q.getId(), q.getName(),q.getDescription());
+			this(q.getId(), q.getName(),q.getDescription());
 		}
 		public Entry(Ability abl) {
-			this("ability:" + abl.getId(), abl.getName(), "");
+			this(abl.getId(), abl.getName(), abl.getDesc());
 		}
 		
 		public static List<Entry> fromQuests(List<Quest> quests) {
@@ -77,6 +86,19 @@ public class ListSlider extends VerticalSlider {
 			
 			return entries;
 		}
+		
+		
+		public static List<Entry> fromAbilities(List<Ability> abilities) {
+			List<Entry> entries = new ArrayList<>();
+			for(int i = 0; i< abilities.size(); i++) {
+				Ability a= abilities.get(i);
+				Entry entry = new Entry(a.getId(),a.getName(),a.getDesc());
+				entries.add(entry);
+			}
+			
+			return entries;
+		}
+
 	}
 	
 	@Override
@@ -88,25 +110,25 @@ public class ListSlider extends VerticalSlider {
 			Entry entry = this.entries.get(i);
 			if(entry.posY >= this.y && entry.posY <= this.y + this.height) {
 				if(entry == this.selectedEntry) {
-					IZAHelper.drawIMG(LIST_SLIDER_ICONS, entry.posX + 4, entry.posY, 0, 14, 54, 13, 2, 54, 13);
+					Helper.drawIMG(LIST_SLIDER_ICONS, entry.posX + 4, entry.posY, 0, 14, 54, 13, 2, 54, 13);
 				} else {
-				IZAHelper.drawIMG(LIST_SLIDER_ICONS, entry.posX, entry.posY, 0, 0, 51, 13, 2, 51, 13);
+				Helper.drawIMG(LIST_SLIDER_ICONS, entry.posX, entry.posY, 0, 0, 51, 13, 2, 51, 13);
 				}
 			} else if(entry.posY < this.y && entry.posY > this.y - 13) {
 				int remainingPixels = this.y - entry.posY;
 				if(entry == this.selectedEntry) {
-					IZAHelper.drawIMG(LIST_SLIDER_ICONS, entry.posX + 4, entry.posY + remainingPixels, 0, 14 + remainingPixels, 51,13 - remainingPixels, 2, 51,13 -  remainingPixels);
+					Helper.drawIMG(LIST_SLIDER_ICONS, entry.posX + 4, entry.posY + remainingPixels, 0, 14 + remainingPixels, 51,13 - remainingPixels, 2, 51,13 -  remainingPixels);
 
 				} else {
-				IZAHelper.drawIMG(LIST_SLIDER_ICONS, entry.posX, entry.posY + remainingPixels, 0, remainingPixels, 51,13 - remainingPixels, 2, 51,13 -  remainingPixels);
+				Helper.drawIMG(LIST_SLIDER_ICONS, entry.posX, entry.posY + remainingPixels, 0, remainingPixels, 51,13 - remainingPixels, 2, 51,13 -  remainingPixels);
 				}
 			} else if(entry.posY > this.y + this.height && entry.posY < this.y + this.height + 13) {
 				int remainingPixels = 13 -( entry.posY - (this.y + this.height));
 				if(entry == this.selectedEntry) {
-					IZAHelper.drawIMG(LIST_SLIDER_ICONS, entry.posX + 4, entry.posY, 0, 14, 51, remainingPixels, 2, 51,remainingPixels);
+					Helper.drawIMG(LIST_SLIDER_ICONS, entry.posX + 4, entry.posY, 0, 14, 51, remainingPixels, 2, 51,remainingPixels);
 
 				} else {
-				IZAHelper.drawIMG(LIST_SLIDER_ICONS, entry.posX, entry.posY, 0, 0, 51, remainingPixels, 2, 51,remainingPixels);
+				Helper.drawIMG(LIST_SLIDER_ICONS, entry.posX, entry.posY, 0, 0, 51, remainingPixels, 2, 51,remainingPixels);
 
 				}
 			}
@@ -116,10 +138,10 @@ public class ListSlider extends VerticalSlider {
 			if(this.isInRange(this.y - 2, this.y + this.height + 4, entry.posY)) {
 			RenderSystem.pushMatrix();
 			if(entry == this.selectedEntry) {
-				   RenderSystem.translated(entry.posX + 8, entry.posY + 4, 0);
+				   RenderSystem.translated(entry.posX + 8, entry.posY + 4, 3);
 
 			} else {
-			   RenderSystem.translated(entry.posX + 2, entry.posY + 4, 0);
+			   RenderSystem.translated(entry.posX + 2, entry.posY + 4, 3);
 			}
 			   RenderSystem.scaled(0.4d, 0.4d, 1d);
 				this.drawString(Minecraft.getInstance().fontRenderer, entry.name, 0, 0, Color.red.getRGB());
@@ -145,6 +167,7 @@ public class ListSlider extends VerticalSlider {
 				}else {
 					
 				this.selectedEntry = entry;
+				this.onClickEntry(entry);
 				}
 			
 			} else if(entry.posY < this.y && entry.posY > this.y - 13 && this.isInRange(entry.posX, entry.posX + 51, mX)) {
@@ -155,6 +178,8 @@ public class ListSlider extends VerticalSlider {
 					}else {
 						
 					this.selectedEntry = entry;
+					this.onClickEntry(entry);
+
 					}
 				}
 			} else if(entry.posY > this.y + this.height && entry.posY < this.y + this.height + 13 && this.isInRange(entry.posX, entry.posX + 51, mX)) {
@@ -166,6 +191,8 @@ public class ListSlider extends VerticalSlider {
 					}else {
 						
 					this.selectedEntry = entry;
+					this.onClickEntry(entry);
+
 					}
 				}
 
@@ -176,7 +203,7 @@ public class ListSlider extends VerticalSlider {
 		
 	}
 
-	private void onActivateEntry(Entry entry) {
+	protected void onActivateEntry(Entry entry) {
 
 		this.onActivate.onActivate(entry, this);
 	}
@@ -186,7 +213,7 @@ public class ListSlider extends VerticalSlider {
 		super.onDrag(mX, mY, p_onDrag_5_, p_onDrag_7_);
 		for(int i = 0; i < this.entries.size(); i++) {
 			Entry entry = this.entries.get(i);
-			double originIndex = IZAHelper.fromRangeToRange(this.minValue, this.maxValue, 0, this.entries.size() - 1, (int)this.value);
+			double originIndex = Helper.fromRangeToRange(this.minValue, this.maxValue, 0, this.entries.size() - 1, (int)this.value);
 		
 		
 			double difference = i - originIndex;
@@ -195,16 +222,27 @@ public class ListSlider extends VerticalSlider {
 		}
 	}
 
-	private boolean isInRange(double min,double max,double val) {
+	public boolean isInRange(double min,double max,double val) {
 		if(val <= max && val >= min) {
 			return true;
 		}
 		return false;
 	}
 	
+	public void onClickEntry(Entry entry) {
+
+		this.selectedEntry = entry;
+		this.onInitClick.onInitClick(entry, this);
+	}
+
 
 	interface onActivateEntry {
 		
 		void onActivate(Entry entry,ListSlider slider);
+	}
+
+	interface onInitialClickEntry {
+		
+		void onInitClick(Entry entry,ListSlider slider);
 	}
 }

@@ -3,8 +3,10 @@ package com.izako.hunterx.abilities.basics;
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.init.ModAbilities;
+import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.IHandOverlay;
+import com.izako.hunterx.izapi.ability.NenType;
 import com.izako.hunterx.izapi.ability.PunchAbility;
 import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
@@ -20,7 +22,7 @@ public class KoAbility extends PunchAbility implements IHandOverlay {
 	public KoAbility() {
 		this.props = new Ability.Properties(this).setConsumptionType(AuraConsumptionType.PERCENTAGE)
 				.setAuraConsumption(this::consumeAura).setAbilityType(AbilityType.PASSIVE)
-				.setMaxPassive(Integer.MAX_VALUE).setMaxCooldown(20 * 8);
+				.setMaxPassive(Integer.MAX_VALUE).setMaxCooldown(20 * 8).setNenType(NenType.UNKNOWN);
 	}
 
 	@Override
@@ -34,6 +36,10 @@ public class KoAbility extends PunchAbility implements IHandOverlay {
 	}
 
 	@Override
+	public String getDesc() {
+		return "Ko puts all your aura in your first for maximum damage";
+	}
+	@Override
 	public void onStartPassive(LivingEntity p) {
 		this.queuedAuraConsumption = true;
 		this.isInitialAuraConsumption = true;
@@ -44,7 +50,7 @@ public class KoAbility extends PunchAbility implements IHandOverlay {
 		IAbilityData data = AbilityDataCapability.get(p);
 		
 		this.queuedAuraConsumption = true;
-		return 40;
+		return Helper.getTrueValue(40, this, p);
 	}
 
 
@@ -61,5 +67,10 @@ public class KoAbility extends PunchAbility implements IHandOverlay {
 
 		}
 		return 0;
+	}
+
+	@Override
+	public boolean isFullArm() {
+		return true;
 	}
 }

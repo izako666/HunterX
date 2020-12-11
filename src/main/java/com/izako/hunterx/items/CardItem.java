@@ -36,7 +36,7 @@ public class CardItem extends Item{
 
 
 	        if(!worldIn.isRemote) {
-	        	CardEntity entitycard = new CardEntity(CardEntity.type, playerIn, worldIn);
+	        	CardEntity entitycard = new CardEntity(CardEntity.TYPE, playerIn, worldIn);
 	        
 	            entitycard.setPosition(playerIn.getPosX() + aim.x, playerIn.getPosY() + playerIn.getEyeHeight(), playerIn.getPosZ() + aim.z);
 	    		entitycard.setMotion(aim.x *2, aim.y *2, aim.z *2);

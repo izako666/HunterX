@@ -1,5 +1,7 @@
 package com.izako.hunterx.init;
 
+import java.util.Arrays;
+
 import com.izako.hunterx.Main;
 import com.izako.hunterx.entities.KirikoEntity;
 import com.izako.hunterx.entities.ThugEntity;
@@ -13,6 +15,7 @@ import com.izako.hunterx.items.NeedleItem;
 import com.izako.hunterx.items.PistolItem;
 import com.izako.hunterx.items.YoyoItem;
 import com.izako.hunterx.items.armor.HunterXArmor;
+import com.izako.hunterx.items.nen.ConjurerTool;
 import com.izako.hunterx.items.tiers.HunterXItemTier;
 import com.izako.hunterx.registerers.ModEventSubscriber;
 
@@ -25,6 +28,7 @@ import net.minecraft.item.SpawnEggItem;
 import net.minecraft.item.SwordItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -42,9 +46,11 @@ public class ModItems {
 	};
 
 	public static final HunterXItemTier KURAPIKAS_STICK_TIER = new HunterXItemTier(3, 2000, 12, 1, 15);
+	public static final HunterXItemTier BASIC_CONJURER_TIER = new HunterXItemTier(3,10000, 8, 1, 15);
 	public static final HunterXItemTier HANZO_SWORD_TIER = new HunterXItemTier(3, 2000, 12, 3, 15);
 	public static final KurapikaSwordItem KURAPIKAS_STICK = new KurapikaSwordItem(KURAPIKAS_STICK_TIER, 1, -2.2f,
 			new Item.Properties().group(HUNTERX_ITEM_GROUP));
+	public static final ConjurerTool BASIC_CONJURER_TOOL = new ConjurerTool(BASIC_CONJURER_TIER, 10, -2f, new Item.Properties().maxStackSize(1), Arrays.asList(ToolType.PICKAXE,ToolType.AXE,ToolType.SHOVEL));
 	public static final FishingRodItem GONS_FISHING_ROD = new FishingRodItem(new Item.Properties().group(HUNTERX_ITEM_GROUP));
 	public static final YoyoItem YOYO = new YoyoItem(
 			new Item.Properties().group(HUNTERX_ITEM_GROUP).maxStackSize(1).maxDamage(200));
@@ -57,9 +63,9 @@ public class ModItems {
 	public static final HunterLicenseItem HUNTER_LICENSE = new HunterLicenseItem(new Item.Properties().maxStackSize(1));
 	public static final SwordItem HANZO_SWORD = new SwordItem(HANZO_SWORD_TIER, 3, -2f, new Item.Properties());
 
-	public static final SpawnEggItem THUG_EGG = new SpawnEggItem(ThugEntity.type, 4996656, 9794134, new Item.Properties().group(ItemGroup.MISC));
-	public static final SpawnEggItem KIRIKO_EGG = new SpawnEggItem(KirikoEntity.type, 13552826, 16711680, new Item.Properties().group(ItemGroup.MISC));
-	public static final SpawnEggItem WING_EGG = new SpawnEggItem(WingEntity.type, 16711680, 13552826, new Item.Properties().group(ItemGroup.MISC));
+	public static final SpawnEggItem THUG_EGG = new SpawnEggItem(ThugEntity.TYPE, 4996656, 9794134, new Item.Properties().group(ItemGroup.MISC));
+	public static final SpawnEggItem KIRIKO_EGG = new SpawnEggItem(KirikoEntity.TYPE, 13552826, 16711680, new Item.Properties().group(ItemGroup.MISC));
+	public static final SpawnEggItem WING_EGG = new SpawnEggItem(WingEntity.TYPE, 16711680, 13552826, new Item.Properties().group(ItemGroup.MISC));
 
 	// Armor Material
 	public static final HunterXArmorMaterial HUNTERX_ARMOR_MATERIAL = new HunterXArmorMaterial(
@@ -181,7 +187,8 @@ public class ModItems {
 				ModEventSubscriber.setup(NETERO_BOOTS, "netero_boots"),
 				ModEventSubscriber.setup(GING_CHESTPLATE, "ging_chestplate"),
 				ModEventSubscriber.setup(GING_LEGGINGS, "ging_leggings"),
-				ModEventSubscriber.setup(GING_BOOTS, "ging_boots")
+				ModEventSubscriber.setup(GING_BOOTS, "ging_boots"),
+				ModEventSubscriber.setup(BASIC_CONJURER_TOOL, "paxel")
 
 		);
 	}

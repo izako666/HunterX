@@ -8,6 +8,7 @@ import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.Ability.AbilityType;
 import com.izako.hunterx.izapi.ability.ChargeableAbility;
 import com.izako.hunterx.izapi.ability.ChargeablePassiveAbility;
+import com.izako.hunterx.izapi.ability.ITrainable;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
@@ -50,11 +51,22 @@ public class AbilityChargingEndPacket {
 					((ChargeableAbility) a).onEndCharging(p);
 					a.setCooldown(a.props.maxCooldown);
 					a.setChargingTimer(0);
+					if (a instanceof ITrainable) {
+						ITrainable trainable = (ITrainable) a;
+						double scale = (a.getChargingTimer() / a.props.maxCharging) + 0.5;
+						a.setXp(a.getXp() + ((trainable.getXPOnUsage() + (a.rand.nextDouble() - 0.5)) * scale), p);
+					}
+
 					} else {
 						a.setCharging(false);
 						((ChargeablePassiveAbility) a).onStartPassive(p);
 						a.setPassiveTimer(a.props.maxPassive);
 						a.setInPassive(true);
+						if (a instanceof ITrainable) {
+							ITrainable trainable = (ITrainable) a;
+							double scale = (a.getChargingTimer() / a.props.maxCharging) + 0.5;
+							a.setXp(a.getXp() + ((trainable.getXPOnUsage() + (a.rand.nextDouble() - 0.5)) * scale), p);
+						}
 
 					}
 				}
