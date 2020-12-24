@@ -31,8 +31,9 @@ public class QuestCommand {
 			Collection<ServerPlayerEntity> targets) {
 		for (ServerPlayerEntity player : targets) {
 			Quest quest = ModQuests.newInstance(q.getId());
-			
+			if(quest != null) {
 			quest.giveQuest(player);
+			}
 		}
 
 		return 1;

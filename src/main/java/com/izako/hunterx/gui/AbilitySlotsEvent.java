@@ -76,71 +76,40 @@ public class AbilitySlotsEvent {
 
 		AbilitySlotsEvent.renderNenBar(width, height, Minecraft.getInstance(), zlevel, abldata);
 
-		if (!data.isSelectingAbility()) {
-			Minecraft.getInstance().getTextureManager().bindTexture(SLOTS);
-			int slotsPosX = 52;
-			int slotsPosY = (int) (height - 82);
-			GuiUtils.drawTexturedModalRect(slotsPosX, slotsPosY, 0, 0, 32, 32, zlevel);
-
-			if (abldata.getSlotAbilities()[abldata.getActiveAbility()] != null) {
-				int i = abldata.getActiveAbility();
-				AbilitySlotsEvent.drawIcon(abldata.getAbilityInSlot(i).props.tex, slotsPosX + 4, slotsPosY + 4, 24, 24,
-						zlevel);
-				Minecraft.getInstance().getTextureManager().bindTexture(SLOTS);
-				if (abldata.getAbilityInSlot(i).isCharging()) {
-					GuiUtils.drawTexturedModalRect(slotsPosX, slotsPosY, 0, 192, 32, 32, zlevel);
-					int oldValue = abldata.getAbilityInSlot(i).getChargingTimer();
-					int oldMax = abldata.getAbilityInSlot(i).props.maxCharging;
-					GuiUtils.drawTexturedModalRect(slotsPosX, slotsPosY, 0, 224,
-							4 + (int) (((oldValue * 100) / oldMax) * 0.24), 32, zlevel);
-				} else if (abldata.getAbilityInSlot(i).isInPassive()) {
-					GuiUtils.drawTexturedModalRect(slotsPosX, slotsPosY, 0, 32, 32, 32, zlevel);
-				} else if (abldata.getAbilityInSlot(i).getCooldown() > 0) {
-					int oldValue = abldata.getAbilityInSlot(i).getCooldown();
-					if(oldValue < 1)
-						oldValue = 1;
-					int oldMax = abldata.getAbilityInSlot(i).props.maxCooldown;
-					GuiUtils.drawTexturedModalRect(slotsPosX, slotsPosY, 0,
-							AbilitySlotsEvent.getCooldownTexture((int) (((oldValue * 100) / oldMax))), 32, 32, zlevel);
-
-				}
-
-			}
-
-		} else {
+		
 			for(int i = 0; i < abldata.getSlotAbilities().length; i++) {
 				Minecraft.getInstance().getTextureManager().bindTexture(SLOTS);
-				int slotsPosX = 52;
-				int slotsPosY = (int) (height - 82);
-				GuiUtils.drawTexturedModalRect(slotsPosX + (32 * i), slotsPosY, 0, 0, 32, 32, zlevel);
+				int slotsPosX = 0;
+				int slotsPosY = (int) (height - 225);
+				GuiUtils.drawTexturedModalRect(slotsPosX, slotsPosY + (32 * i), 0, 0, 32, 32, zlevel);
 
 				if (abldata.getSlotAbilities()[i] != null) {
-					AbilitySlotsEvent.drawIcon(abldata.getAbilityInSlot(i).props.tex, slotsPosX + 4 + (32 * i), slotsPosY + 4, 24, 24,
+					AbilitySlotsEvent.drawIcon(abldata.getAbilityInSlot(i).props.tex, slotsPosX + 4, slotsPosY  + 4 + (32 * i), 24, 24,
 							zlevel);
 					Minecraft.getInstance().getTextureManager().bindTexture(SLOTS);
 					if (abldata.getAbilityInSlot(i).isCharging()) {
-						GuiUtils.drawTexturedModalRect(slotsPosX+ (32 * i), slotsPosY, 0, 192, 32, 32, zlevel);
+						GuiUtils.drawTexturedModalRect(slotsPosX, slotsPosY+ (32 * i), 0, 192, 32, 32, zlevel);
 						int oldValue = abldata.getAbilityInSlot(i).getChargingTimer();
 						int oldMax = abldata.getAbilityInSlot(i).props.maxCharging;
-						GuiUtils.drawTexturedModalRect(slotsPosX+ (32 * i), slotsPosY, 0, 224,
+						GuiUtils.drawTexturedModalRect(slotsPosX, slotsPosY+ (32 * i), 0, 224,
 								4 + (int) (((oldValue * 100) / oldMax) * 0.24), 32, zlevel);
 					} else if (abldata.getAbilityInSlot(i).isInPassive()) {
-						GuiUtils.drawTexturedModalRect(slotsPosX+ (32 * i), slotsPosY, 0, 32, 32, 32, zlevel);
+						GuiUtils.drawTexturedModalRect(slotsPosX, slotsPosY+ (32 * i), 0, 32, 32, 32, zlevel);
 					} else if (abldata.getAbilityInSlot(i).getCooldown() > 0) {
 						int oldValue = abldata.getAbilityInSlot(i).getCooldown();
 						int oldMax = abldata.getAbilityInSlot(i).props.maxCooldown;
-						GuiUtils.drawTexturedModalRect(slotsPosX+ (32 * i), slotsPosY, 0,
+						GuiUtils.drawTexturedModalRect(slotsPosX, slotsPosY+ (32 * i), 0,
 								AbilitySlotsEvent.getCooldownTexture((int) (((oldValue * 100) / oldMax))), 32, 32, zlevel);
 
 					}
 
 				}
-				if(abldata.getActiveAbility() == i) {
-					GuiUtils.drawTexturedModalRect(slotsPosX+ (32 * i), slotsPosY, 39, 0,
+				if(abldata.getActiveAbility() == i && data.isSelectingAbility()) {
+					GuiUtils.drawTexturedModalRect(slotsPosX, slotsPosY+ (32 * i), 39, 0,
 							32, 32, zlevel);
 				}
 
-			}
+			
 		}
 
 		RenderSystem.scaled(1d, 1d, 1d);
@@ -214,25 +183,25 @@ public class AbilitySlotsEvent {
 
 		AbilitySlotsEvent.renderNenBar(width, height, Minecraft.getInstance(), zlevel, abldata);
 
-		if (!data.isSelectingAbility()) {
-			Minecraft.getInstance().getTextureManager().bindTexture(SLOTS);
-			int slotsPosX = 52;
-			int slotsPosY = (int) (height - 82);
-			GuiUtils.drawTexturedModalRect(slotsPosX, slotsPosY, 0, 0, 32, 32, zlevel);
-
-			if (abldata.getSlotAbilities()[abldata.getActiveAbility()] != null) {
-				int i = abldata.getActiveAbility();
-				AbilitySlotsEvent.drawIcon(abldata.getAbilityInSlot(i).props.tex, slotsPosX + 4, slotsPosY + 4, 24, 24,
-						zlevel);
+		
+			for(int i = 0; i < abldata.getSlotAbilities().length; i++) {
 				Minecraft.getInstance().getTextureManager().bindTexture(SLOTS);
+				int slotsPosX = 52;
+				int slotsPosY = (int) (height - 200);
+				GuiUtils.drawTexturedModalRect(slotsPosX, slotsPosY + (32 * i), 0, 0, 32, 32, zlevel);
 
-			}
+				if (abldata.getSlotAbilities()[i] != null) {
+					AbilitySlotsEvent.drawIcon(abldata.getAbilityInSlot(i).props.tex, slotsPosX, slotsPosY  + 4 + (32 * i), 24, 24,
+							zlevel);
+					Minecraft.getInstance().getTextureManager().bindTexture(SLOTS);
 
+				}
+
+			
 		}
 
 		RenderSystem.scaled(1d, 1d, 1d);
 		RenderSystem.disableBlend();
 		RenderSystem.popMatrix();
 	}
-
 }

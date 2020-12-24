@@ -9,6 +9,7 @@ import com.izako.hunterx.entities.goals.wolfgoals.OwnerHurtTargetGoal;
 import com.izako.hunterx.init.ModQuests;
 import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
+import com.izako.hunterx.izapi.ability.ITrainable;
 import com.izako.hunterx.izapi.ability.NenType;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
 import com.izako.wypi.WyHelper;
@@ -19,7 +20,7 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 
-public class LoyaltyCurseAbility extends PassiveAbility {
+public class LoyaltyCurseAbility extends PassiveAbility implements ITrainable {
 
 	AnimalEntity animal;
 	FollowOwnerGoal followGoal;
@@ -48,7 +49,7 @@ public class LoyaltyCurseAbility extends PassiveAbility {
 	@Override
 	public void onStartPassive(LivingEntity p) {
 		
-		EntityRayTraceResult ray = WyHelper.rayTraceEntities(p, Helper.getTrueValue(15, this, p),p);
+		EntityRayTraceResult ray = WyHelper.rayTraceEntities(p, 15,p);
 		
 		if(!(ray.getEntity() instanceof AnimalEntity)) {
 			if(p.world.isRemote()) {
@@ -72,6 +73,12 @@ public class LoyaltyCurseAbility extends PassiveAbility {
 		super.onStartPassive(p);
 	}
 
+	@Override
+	public void duringPassive(LivingEntity p) {
+		if(this.getPassiveTimer() > Helper.getTrueValue(100 * 20, this, p) && Helper.getTrueValue(100 * 20, this,p) < 100 * 20) {
+			this.endAbility(p);
+		}
+	}
 	@Override
 	public void onEndPassive(LivingEntity p) {
 		

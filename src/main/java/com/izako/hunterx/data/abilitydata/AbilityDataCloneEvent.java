@@ -31,6 +31,7 @@ public class AbilityDataCloneEvent {
 		data.setNenType(oldData.getNenType());
 		data.setAuraColor(oldData.getAuraColor().getRGB());
 		data.setIsNenUser(oldData.isNenUser());
+		data.setActiveAbility(oldData.getActiveAbility());
 		
 		//ModidPacketHandler.INSTANCE.sendTo(new AbilityUpdatePacket(data, false), ((ServerPlayerEntity) p).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
 	}
@@ -51,6 +52,7 @@ public class AbilityDataCloneEvent {
 		if(!p.world.isRemote) {
 			IAbilityData data = AbilityDataCapability.get(p);
 		PacketHandler.INSTANCE.sendTo(new AbilityUpdatePacket(data, false), ((ServerPlayerEntity) p).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+		
 		}
 	}
 	

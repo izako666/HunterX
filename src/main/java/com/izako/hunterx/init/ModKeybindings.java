@@ -14,6 +14,7 @@ import com.izako.hunterx.izapi.ability.Ability.AbilityType;
 import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.AbilityUpdatePacket;
 import com.izako.hunterx.networking.packets.AbilityUsePacket;
+import com.izako.hunterx.networking.packets.SetActiveAbilityPacket;
 import com.izako.hunterx.networking.packets.StatsUpdatePacket;
 
 import net.minecraft.client.Minecraft;
@@ -113,6 +114,7 @@ public class ModKeybindings {
 			newActiveAbility = 4;
 		}
 		data.setActiveAbility(newActiveAbility);
+		PacketHandler.INSTANCE.sendToServer(new SetActiveAbilityPacket(newActiveAbility));
 		evt.setCanceled(true);
 		} 
 	}

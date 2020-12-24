@@ -21,6 +21,14 @@ import com.izako.hunterx.abilities.basics.TenAbility;
 import com.izako.hunterx.abilities.basics.ZetsuAbility;
 import com.izako.hunterx.abilities.hatsus.gon.JajankenGuAbility;
 import com.izako.hunterx.abilities.hatsus.gon.JajankenPaAbility;
+import com.izako.hunterx.abilities.hatsus.gon.JajankenSciAbility;
+import com.izako.hunterx.abilities.hatsus.killua.LightningPalmAbility;
+import com.izako.hunterx.abilities.hatsus.killua.LightningSpeedAbility;
+import com.izako.hunterx.abilities.hatsus.killua.ThunderboltAbility;
+import com.izako.hunterx.abilities.hatsus.killua.WhirlwindAbility;
+import com.izako.hunterx.abilities.hatsus.leorio.EmitterPunchAbility;
+import com.izako.hunterx.abilities.hatsus.leorio.LockOnAbility;
+import com.izako.hunterx.abilities.hatsus.leorio.PantsStealAbility;
 import com.izako.hunterx.izapi.ability.Ability;
 
 public class ModAbilities {
@@ -43,6 +51,14 @@ public class ModAbilities {
 	public static final Ability SHARPEN_AURA_ABILITY = new SharpenAuraAbility();
 	public static final Ability JAJANKEN_GU_ABILITY = new JajankenGuAbility();
 	public static final Ability JAJANKEN_PA_ABILITY = new JajankenPaAbility();
+	public static final Ability JAJANKEN_SCI_ABILITY = new JajankenSciAbility();
+	public static final Ability LIGHTNING_PALM_ABILITY = new LightningPalmAbility();
+	public static final Ability LIGHTNING_SPEED_ABILITY = new LightningSpeedAbility();
+	public static final Ability LIGHTNING_BOLT_ABILITY = new ThunderboltAbility();
+	public static final Ability WHIRLWIND_ABILITY = new WhirlwindAbility();
+	public static final Ability LOCKON_ABILITY = new LockOnAbility();
+	public static final Ability EMITTER_PUNCH_ABILITY = new EmitterPunchAbility();
+	public static final Ability PANTS_STEALER_ABILITY = new PantsStealAbility();
 	public static List<Ability> ABILITY_INSTANCES = new ArrayList<>();
  public	static void register(){
 	 ABILITY_INSTANCES.add(TEN_ABILITY);
@@ -63,6 +79,14 @@ public class ModAbilities {
      ABILITY_INSTANCES.add(SHARPEN_AURA_ABILITY);
      ABILITY_INSTANCES.add(JAJANKEN_GU_ABILITY);
      ABILITY_INSTANCES.add(JAJANKEN_PA_ABILITY);
+     ABILITY_INSTANCES.add(JAJANKEN_SCI_ABILITY);
+     ABILITY_INSTANCES.add(LIGHTNING_PALM_ABILITY);
+     ABILITY_INSTANCES.add(LIGHTNING_SPEED_ABILITY);
+     ABILITY_INSTANCES.add(LIGHTNING_BOLT_ABILITY);
+     ABILITY_INSTANCES.add(WHIRLWIND_ABILITY);
+     ABILITY_INSTANCES.add(LOCKON_ABILITY);
+     ABILITY_INSTANCES.add(EMITTER_PUNCH_ABILITY);
+     ABILITY_INSTANCES.add(PANTS_STEALER_ABILITY);
      
 	}
 	public static Ability getNewInstanceFromId(String id) {

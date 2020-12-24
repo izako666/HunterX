@@ -12,6 +12,7 @@ import com.izako.hunterx.init.ModAbilities;
 import com.izako.hunterx.init.ModItems;
 import com.izako.hunterx.init.ModQuests;
 import com.izako.hunterx.izapi.ability.Ability;
+import com.izako.hunterx.izapi.ability.TruePassiveAbility;
 import com.izako.hunterx.izapi.quest.Quest;
 import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.AbilityUpdatePacket;
@@ -347,6 +348,7 @@ public class HunterScreen extends Screen {
 		PlayerEntity p = this.getMinecraft().player;
 		IAbilityData abldata = AbilityDataCapability.get(p);
 		List<Ability> list = abldata.getAbilities();
+		list.removeIf((abl) -> {if(abl instanceof TruePassiveAbility) {return true;}return false;});
 		AbilitiesListSlider abilitiesSlider = new AbilitiesListSlider(width / 2 - 122, 20, 10, 200, 0, list.size() * 10, ListSlider.Entry.fromAbilities(list));
 		
 		abilitiesSlider.setOnInitClickEntry((e,l) ->{

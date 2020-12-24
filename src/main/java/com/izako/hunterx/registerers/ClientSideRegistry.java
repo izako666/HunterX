@@ -10,7 +10,9 @@ import com.izako.hunterx.entities.HanzoEntity;
 import com.izako.hunterx.entities.KirikoEntity;
 import com.izako.hunterx.entities.ThugEntity;
 import com.izako.hunterx.entities.WingEntity;
+import com.izako.hunterx.entities.models.ArmModel;
 import com.izako.hunterx.entities.models.KirikoModel;
+import com.izako.hunterx.entities.projectiles.ArmEntity;
 import com.izako.hunterx.entities.projectiles.AuraBlastProjectileEntity;
 import com.izako.hunterx.items.entities.BulletEntity;
 import com.izako.hunterx.items.entities.CardEntity;
@@ -127,6 +129,7 @@ public class ClientSideRegistry {
 
 		RenderingRegistry.registerEntityRenderingHandler(EnEntity.TYPE, ClientSideRegistry.factory(EnRenderer.class));
 		RenderingRegistry.registerEntityRenderingHandler(AuraBlastProjectileEntity.TYPE, new ProjectileRenderer.Factory<AuraBlastProjectileEntity>().setTex(new ResourceLocation(Main.MODID, "textures/models/aura_blast.png")).setCustomScale(true).setPersonalAuraColor(true).setColor(new Color(0,0,0,0.2f)));
+		RenderingRegistry.registerEntityRenderingHandler(ArmEntity.TYPE, new ProjectileRenderer.Factory<ArmEntity>().setModel(new ArmModel()).setTex(new ResourceLocation(Main.MODID, "textures/entity/arm.png")).setIsNen(false).setPersonalAuraColor(false).setColor(new Color(1f,1f,1f,1f)));
 		for(PlayerRenderer render : Minecraft.getInstance().getRenderManager().getSkinMap().values()) {
 			render.addLayer(new GenericOverlayLayer(render));
 			render.addLayer(new HandOverlayLayer(render));

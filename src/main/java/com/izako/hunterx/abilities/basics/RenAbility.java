@@ -78,7 +78,7 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender , ITra
 				double yRange = p.world.getRandom().nextDouble();
 				double zRange = p.world.getRandom().nextDouble() -0.5;
 				GenericParticleData data = new GenericParticleData();
-				data.setTexture(new ResourceLocation(Main.MODID, "textures/particles/genericaura2.png"));
+				data.setTexture(new ResourceLocation(Main.MODID, "textures/particles/genericaura3.png"));
 				data.setMotion(0, 0.05, 0);
 				data.setLife(20);
 				data.setSize(0.15f);

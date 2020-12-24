@@ -35,6 +35,7 @@ public class HunterDataCapability {
 					instance.getQuests().forEach(q -> {
 						props.put("questid" + q.getId(), q.writeData());
 					});
+					
 				return props;
 			}
 

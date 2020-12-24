@@ -47,10 +47,13 @@ public class ModItems {
 
 	public static final HunterXItemTier KURAPIKAS_STICK_TIER = new HunterXItemTier(3, 2000, 12, 1, 15);
 	public static final HunterXItemTier BASIC_CONJURER_TIER = new HunterXItemTier(3,10000, 8, 1, 15);
+	public static final HunterXItemTier JAJANKEN_SCISSORS_TIER = new HunterXItemTier(3, 10000,1,0,15);
 	public static final HunterXItemTier HANZO_SWORD_TIER = new HunterXItemTier(3, 2000, 12, 3, 15);
 	public static final KurapikaSwordItem KURAPIKAS_STICK = new KurapikaSwordItem(KURAPIKAS_STICK_TIER, 1, -2.2f,
 			new Item.Properties().group(HUNTERX_ITEM_GROUP));
-	public static final ConjurerTool BASIC_CONJURER_TOOL = new ConjurerTool(BASIC_CONJURER_TIER, 10, -2f, new Item.Properties().maxStackSize(1), Arrays.asList(ToolType.PICKAXE,ToolType.AXE,ToolType.SHOVEL));
+	public static final ConjurerTool BASIC_CONJURER_TOOL = new ConjurerTool(BASIC_CONJURER_TIER, 2, -2f, new Item.Properties().maxStackSize(1), Arrays.asList(ToolType.PICKAXE,ToolType.AXE,ToolType.SHOVEL));
+	public static final ConjurerTool JAJANKEN_SCISSORS = new ConjurerTool(JAJANKEN_SCISSORS_TIER, 5, 1f, new Item.Properties().maxStackSize(1), Arrays.asList());
+
 	public static final FishingRodItem GONS_FISHING_ROD = new FishingRodItem(new Item.Properties().group(HUNTERX_ITEM_GROUP));
 	public static final YoyoItem YOYO = new YoyoItem(
 			new Item.Properties().group(HUNTERX_ITEM_GROUP).maxStackSize(1).maxDamage(200));
@@ -188,7 +191,8 @@ public class ModItems {
 				ModEventSubscriber.setup(GING_CHESTPLATE, "ging_chestplate"),
 				ModEventSubscriber.setup(GING_LEGGINGS, "ging_leggings"),
 				ModEventSubscriber.setup(GING_BOOTS, "ging_boots"),
-				ModEventSubscriber.setup(BASIC_CONJURER_TOOL, "paxel")
+				ModEventSubscriber.setup(BASIC_CONJURER_TOOL, "paxel"),
+				ModEventSubscriber.setup(JAJANKEN_SCISSORS, "jajanken_scissors")
 
 		);
 	}

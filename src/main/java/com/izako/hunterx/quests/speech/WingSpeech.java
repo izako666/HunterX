@@ -142,28 +142,41 @@ public class WingSpeech extends NPCSpeech {
 			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
 	public static SequencedString MSG61 = new SequencedString("You have learnt En.",
 			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true).setColor(Color.red.getRGB());
-	public static SequencedString MSG62 = new SequencedString("Now we will move on to hatsu.",
+	public static SequencedString MSG62 = new SequencedString("Before we move on to hatsus, you must find out your nen type.",
 			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
-	public static SequencedString MSG63 = new SequencedString("Hatsu, unlike all the other abilities is very different depending on the user.",
+	public static SequencedString MSG63 = new SequencedString("You can find it out through nen divination. Simply get a cup with a leave on it.",
 			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
-	public static SequencedString MSG64 = new SequencedString("hatsu depends on your nen type, it's best you learn your nen type before you start learning hatsu.",
-			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
-	public static SequencedString MSG65 = new SequencedString("First you will learn some general basic hatsus.",
-			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
-	public static SequencedString MSG66 = new SequencedString("Anyone can learn these no matter the nen type.",
-			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
-	public static SequencedString MSG67 = new SequencedString("What would you like to learn?",QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
-
-	public static SequencedString MSG68 = new SequencedString("Congratulations on mastering this hatsu ability.",
-			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
-	public static SequencedString MSG69 = new SequencedString("Congratulations you mastered all basic hatsu abilities.",
+	public static SequencedString MSG64 = new SequencedString("Then, cast your aura by using Ren or Ten and right click the glass. You will know then what is your hatsu.",
 			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
 
+	public static SequencedString MSG65 = new SequencedString("Now we will move on to hatsu.",
+			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
+	public static SequencedString MSG66 = new SequencedString("Hatsu, unlike all the other abilities is very different depending on the user.",
+			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
+	public static SequencedString MSG67 = new SequencedString("hatsu depends on your nen type, it's best you learn your nen type before you start learning hatsu.",
+			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
+	public static SequencedString MSG68 = new SequencedString("First you will learn some general basic hatsus.",
+			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
+	public static SequencedString MSG69 = new SequencedString("Anyone can learn these no matter the nen type.",
+			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
+	public static SequencedString MSG70 = new SequencedString("What would you like to learn?",QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
 
+	public static SequencedString MSG71 = new SequencedString("Congratulations on mastering this hatsu ability.",
+			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
+	public static SequencedString MSG72 = new SequencedString("Congratulations you mastered all basic hatsu abilities.",
+			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
+	public static SequencedString MSG73 = new SequencedString("The only thing left for me to teach you, is a personal hatsu.",
+			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
+	public static SequencedString MSG74 = new SequencedString("Unfortunately nowadays, your species is to weak to create their own hatsus, so they must be taught.",
+			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
+	public static SequencedString MSG75 = new SequencedString("I know three hatsus I could teach you, you may pick which you want. Some may prove more potent than others.",
+			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
+    public static SequencedString MSG76 = new SequencedString("choose wisely.",
+			QuestScreen.defaultChatboxStringLength, 20 * 8).setTicksFromLength(true);
 	
 	@Override
 	public Quest[] getQuests(PlayerEntity p) {
-		return new Quest[] { ModQuests.HUNTEREXAM01, ModQuests.RENQUEST, ModQuests.ZETSUQUEST, ModQuests.GYOQUEST, ModQuests.SHUQUEST ,ModQuests.INQUEST,ModQuests.KENQUEST,ModQuests.RYUQUEST, ModQuests.ENQUEST,ModQuests.BASIC_HATSU_QUEST, ModQuests.BASIC_CONJURER,ModQuests.BASIC_EMITTER,ModQuests.BASIC_ENHANCER,ModQuests.BASIC_MANIPULATOR,ModQuests.BASIC_TRANSMUTER};
+		return new Quest[] { ModQuests.HUNTEREXAM01, ModQuests.RENQUEST, ModQuests.ZETSUQUEST, ModQuests.GYOQUEST, ModQuests.SHUQUEST ,ModQuests.INQUEST,ModQuests.KENQUEST,ModQuests.RYUQUEST, ModQuests.ENQUEST,ModQuests.DISCOVER_NENTYPE_QUEST,ModQuests.BASIC_HATSU_QUEST, ModQuests.BASIC_CONJURER,ModQuests.BASIC_EMITTER,ModQuests.BASIC_ENHANCER,ModQuests.BASIC_MANIPULATOR,ModQuests.BASIC_TRANSMUTER,ModQuests.CHARACTER_HATSUS_QUEST};
 	}
 
 	@Override
@@ -201,7 +214,12 @@ public class WingSpeech extends NPCSpeech {
 			return new SequencedString[][] {new SequencedString[] {MSG56,MSG57,MSG58,MSG59},null, new SequencedString[] {MSG60,MSG61}};
 
 		case 9:
-			return new SequencedString[][] {new SequencedString[] {MSG62,MSG63,MSG64,MSG65,MSG66},new SequencedString[] {MSG67}, null};
+			return new SequencedString[][] {new SequencedString[] {MSG62,MSG63,MSG64},null,null};
+			
+		case 10:
+			return new SequencedString[][] {new SequencedString[] {MSG65,MSG66,MSG67,MSG68,MSG69},new SequencedString[] {MSG70}, null};
+		case 16:
+			return new SequencedString[][] {new SequencedString[] {MSG73,MSG74,MSG75},new SequencedString[] {MSG76},null};
 		}
 		;
 		return null;
@@ -225,7 +243,7 @@ public class WingSpeech extends NPCSpeech {
 						Quest hq = data.getQuest(quests[i]);
 						if(hq != null && hq.canFinish()) {
 							hq.finishQuest(p);
-							SequencedString sq =Helper.getNewSqStringInstance(MSG68);
+							SequencedString sq =Helper.getNewSqStringInstance(MSG71);
 							sq.event = () -> {if(Minecraft.getInstance().currentScreen instanceof QuestScreen) {
 								Minecraft.getInstance().currentScreen = null;
 							}};
@@ -245,7 +263,7 @@ public class WingSpeech extends NPCSpeech {
 						if(i == 4) {
 							if(allFin) {
 								data.getQuest(ModQuests.BASIC_HATSU_QUEST).finishQuest(p);
-								return new SequencedString[] {MSG69};
+								return new SequencedString[] {MSG72};
 							}
 						}
 					} 
@@ -257,9 +275,9 @@ public class WingSpeech extends NPCSpeech {
 						Quest hatsuQuest = data.getQuest(ModQuests.BASIC_HATSU_QUEST);
 						if(hq == null) {
 							if(hatsuQuest == null) {
-							return new SequencedString[] {MSG62,MSG63,MSG64,MSG65,MSG66};
+							return new SequencedString[] {MSG65,MSG66,MSG67,MSG68,MSG69};
 							} else if(!hatsuQuest.isFinished()) {
-								return new SequencedString[] {MSG67};
+								return new SequencedString[] {MSG70};
 							}
 							}
 					}

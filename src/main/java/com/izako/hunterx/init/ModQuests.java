@@ -6,6 +6,7 @@ import java.util.List;
 import com.izako.hunterx.izapi.quest.Quest;
 import com.izako.hunterx.quests.basic_hatsus.BasicHatsuQuests;
 import com.izako.hunterx.quests.basic_hatsus.BasicHatsusQuest;
+import com.izako.hunterx.quests.basic_hatsus.DiscoverNenTypeQuest;
 import com.izako.hunterx.quests.basics.EnQuest;
 import com.izako.hunterx.quests.basics.GyoQuest;
 import com.izako.hunterx.quests.basics.InQuest;
@@ -14,6 +15,8 @@ import com.izako.hunterx.quests.basics.RenQuest;
 import com.izako.hunterx.quests.basics.RyuQuest;
 import com.izako.hunterx.quests.basics.ShuQuest;
 import com.izako.hunterx.quests.basics.ZetsuQuest;
+import com.izako.hunterx.quests.hatsus.CharacterHatsuQuests;
+import com.izako.hunterx.quests.hatsus.CharacterHatsusQuest;
 import com.izako.hunterx.quests.hunterexam.HunterExam01;
 import com.izako.hunterx.quests.hunterexam.HunterExam02;
 import com.izako.hunterx.quests.hunterexam.HunterExam03;
@@ -39,8 +42,12 @@ public class ModQuests {
     public static final Quest BASIC_MANIPULATOR = new BasicHatsuQuests.Manipulator();
     public static final Quest BASIC_TRANSMUTER = new BasicHatsuQuests.Transmuter();
     public static final Quest BASIC_CONJURER = new BasicHatsuQuests.Conjurer();
-
-	public static List<Quest> QUESTS = new ArrayList<>();
+    public static final Quest DISCOVER_NENTYPE_QUEST = new DiscoverNenTypeQuest();	
+	public static final Quest GON_HATSU_QUEST = new CharacterHatsuQuests.Gon();
+    public static final Quest KILLUA_HATSU_QUEST = new CharacterHatsuQuests.Killua();
+    public static final Quest LEORIO_HATSU_QUEST = new CharacterHatsuQuests.Leorio();
+    public static final Quest CHARACTER_HATSUS_QUEST = new CharacterHatsusQuest();
+    public static List<Quest> QUESTS = new ArrayList<>();
 
 	public static void questRegister() {
 		QUESTS.add(HUNTEREXAM01);
@@ -61,6 +68,11 @@ public class ModQuests {
 		QUESTS.add(BASIC_MANIPULATOR);
 		QUESTS.add(BASIC_CONJURER);
 		QUESTS.add(BASIC_TRANSMUTER);
+		QUESTS.add(DISCOVER_NENTYPE_QUEST);
+		QUESTS.add(GON_HATSU_QUEST);
+		QUESTS.add(KILLUA_HATSU_QUEST);
+		QUESTS.add(LEORIO_HATSU_QUEST);
+		QUESTS.add(CHARACTER_HATSUS_QUEST);
 		}
 
 	public static Quest newInstance(String id) {

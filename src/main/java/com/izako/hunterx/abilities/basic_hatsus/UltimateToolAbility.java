@@ -24,10 +24,9 @@ public class UltimateToolAbility extends EquipAbility implements ITrainable {
 	@Override
 	public ItemStack createItem(LivingEntity p) {
 		ItemStack stack = new ItemStack(ModItems.BASIC_CONJURER_TOOL);
-		double val = Helper.fromRangeToRange(0, this.getMaxXP(), 0, 6, this.getXp());
 		double speedVal = Helper.fromRangeToRange(0, this.getMaxXP(), 0, 4, this.getXp());
 
-		AttributeModifier mod = new AttributeModifier("attackmod", Helper.getTrueValue((float)val, this, p), Operation.ADDITION);
+		AttributeModifier mod = new AttributeModifier("attackmod", Helper.getTrueValue((float)14, this, p), Operation.ADDITION);
 		AttributeModifier speedMod = new AttributeModifier("speedmod", Helper.getTrueValue((float)speedVal, this, p), Operation.ADDITION);
 		stack.addAttributeModifier(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), mod, null);
 		stack.addAttributeModifier(SharedMonsterAttributes.ATTACK_SPEED.getName(), speedMod, null);

@@ -10,6 +10,7 @@ import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.init.ModAbilities;
+import com.izako.hunterx.init.ModQuests;
 import com.izako.hunterx.izapi.EnumStats;
 import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.NenType;
@@ -115,22 +116,36 @@ public class DivinationCupBlock extends Block {
 			data.setNenType(finalType);
 			
 			if(finalType == NenType.ENHANCER) {
+				if(player.world.isRemote()) {
 				player.sendMessage(new StringTextComponent("You see the water overflowing.... You are an enhancer.").applyTextStyle(TextFormatting.RED));
 			}
+			}
 			else if(finalType == NenType.CONJURER) {
+				if(player.world.isRemote()) {
+
 				player.sendMessage(new StringTextComponent("You notice something forming amidst the water.... You are a conjurer.").applyTextStyle(TextFormatting.RED));
-			}
+			}}
 			else if(finalType == NenType.EMITTER) {
+				if(player.world.isRemote()) {
+
 				player.sendMessage(new StringTextComponent("You see the color of the water change.... You are an emitter.").applyTextStyle(TextFormatting.RED));
-			}
+			}}
 			else if(finalType == NenType.MANIPULATOR) {
+				if(player.world.isRemote()) {
+
 				player.sendMessage(new StringTextComponent("The leaf starts moving.... You are a manipulator.").applyTextStyle(TextFormatting.RED));
-			}
+			}}
 			else if(finalType == NenType.TRANSMUTER) {
+				if(player.world.isRemote()) {
+
 				player.sendMessage(new StringTextComponent("Nothing seems to have happened, you taste the water and its sweet.... You are a transmuter.").applyTextStyle(TextFormatting.RED));
-			}
+			}}
 			
 
+			IHunterData hData = HunterDataCapability.get(player);
+			if(hData.hasQuest(ModQuests.DISCOVER_NENTYPE_QUEST) && !hData.getQuest(ModQuests.DISCOVER_NENTYPE_QUEST).isFinished()) {
+				hData.getQuest(ModQuests.DISCOVER_NENTYPE_QUEST).setProgress(101);
+			}
 			
 		}
 		return super.onBlockActivated(state, worldIn, pos, player, handIn, result);

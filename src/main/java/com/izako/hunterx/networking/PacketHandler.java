@@ -12,6 +12,7 @@ import com.izako.hunterx.networking.packets.OpenQuestGuiPacket;
 import com.izako.hunterx.networking.packets.PunchAbilityPacket;
 import com.izako.hunterx.networking.packets.QuestProgressPacket;
 import com.izako.hunterx.networking.packets.QuestUpdatePacket;
+import com.izako.hunterx.networking.packets.SetActiveAbilityPacket;
 import com.izako.hunterx.networking.packets.SetQuestPacket;
 import com.izako.hunterx.networking.packets.StatsUpdatePacket;
 import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
@@ -49,6 +50,7 @@ public class PacketHandler {
 	    INSTANCE.registerMessage(packet++, EnUpdatePacket.class, EnUpdatePacket::encode, EnUpdatePacket::decode, EnUpdatePacket::handle);
 	    INSTANCE.registerMessage(packet++, QuestUpdatePacket.class, QuestUpdatePacket::encode, QuestUpdatePacket::decode, QuestUpdatePacket::handle);
 	    INSTANCE.registerMessage(packet++, ChoiceQuestActivateEntryPacket.class, ChoiceQuestActivateEntryPacket::encode, ChoiceQuestActivateEntryPacket::decode, ChoiceQuestActivateEntryPacket::handle);
+	    INSTANCE.registerMessage(packet++, SetActiveAbilityPacket.class, SetActiveAbilityPacket::encode, SetActiveAbilityPacket::decode, SetActiveAbilityPacket::handle);
 	}
 	
 	public static <MSG>  void sendToTracking(LivingEntity tracked, MSG message) {

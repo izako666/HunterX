@@ -216,7 +216,7 @@ public class Helper {
 			}
 			for(int i = 0; i < data.getSlotAbilities().length; i++) {
 				Ability a = data.getSlotAbilities()[i];
-				if(a.isActive()) {
+				if(a != null && a.isActive()) {
 					return true;
 				}
 			}
