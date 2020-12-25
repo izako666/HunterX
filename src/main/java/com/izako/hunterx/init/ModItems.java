@@ -60,6 +60,9 @@ public class ModItems {
 	public static final CardItem CARD = new CardItem(new Item.Properties().group(HUNTERX_ITEM_GROUP).maxStackSize(16));
 	public static final NeedleItem NEEDLE = new NeedleItem(
 			new Item.Properties().group(HUNTERX_ITEM_GROUP).maxStackSize(16));
+	public static final NeedleItem SHURIKEN = new NeedleItem(
+			new Item.Properties().maxStackSize(16));
+
 	public static final PistolItem PISTOL = new PistolItem(new Item.Properties().group(HUNTERX_ITEM_GROUP).maxStackSize(1));
 	public static final BadgeItem BADGE = new BadgeItem(new Item.Properties().maxStackSize(1));
 
@@ -156,6 +159,7 @@ public class ModItems {
 				ModEventSubscriber.setup(BADGE, "badge"),
 				ModEventSubscriber.setup(HUNTER_LICENSE, "hunter_license"),
 				ModEventSubscriber.setup(NEEDLE, "needle"),
+				ModEventSubscriber.setup(SHURIKEN, "shuriken"),
 				ModEventSubscriber.setup(HANZO_SWORD, "hanzo_sword"),
 				ModEventSubscriber.setup(GONS_FISHING_ROD, "gons_fishing_rod"),
 				ModEventSubscriber.setup(THUG_EGG, "thug_egg"),

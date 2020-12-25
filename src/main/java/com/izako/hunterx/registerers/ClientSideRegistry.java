@@ -17,6 +17,7 @@ import com.izako.hunterx.entities.projectiles.AuraBlastProjectileEntity;
 import com.izako.hunterx.items.entities.BulletEntity;
 import com.izako.hunterx.items.entities.CardEntity;
 import com.izako.hunterx.items.entities.NeedleEntity;
+import com.izako.hunterx.items.entities.ShurikenEntity;
 import com.izako.hunterx.items.entities.YoyoEntity;
 import com.izako.hunterx.items.entities.models.BulletModel;
 import com.izako.hunterx.items.renderers.BulletRenderer;
@@ -130,6 +131,14 @@ public class ClientSideRegistry {
 		RenderingRegistry.registerEntityRenderingHandler(EnEntity.TYPE, ClientSideRegistry.factory(EnRenderer.class));
 		RenderingRegistry.registerEntityRenderingHandler(AuraBlastProjectileEntity.TYPE, new ProjectileRenderer.Factory<AuraBlastProjectileEntity>().setTex(new ResourceLocation(Main.MODID, "textures/models/aura_blast.png")).setCustomScale(true).setPersonalAuraColor(true).setColor(new Color(0,0,0,0.2f)));
 		RenderingRegistry.registerEntityRenderingHandler(ArmEntity.TYPE, new ProjectileRenderer.Factory<ArmEntity>().setModel(new ArmModel()).setTex(new ResourceLocation(Main.MODID, "textures/entity/arm.png")).setIsNen(false).setPersonalAuraColor(false).setColor(new Color(1f,1f,1f,1f)));
+		
+		RenderingRegistry.registerEntityRenderingHandler(ShurikenEntity.TYPE, new IRenderFactory<ShurikenEntity>() {
+
+			@Override
+			public SpriteRenderer<ShurikenEntity> createRenderFor(EntityRendererManager manager) {
+				return new SpriteRenderer<ShurikenEntity>(manager, Minecraft.getInstance().getItemRenderer());
+			}});
+
 		for(PlayerRenderer render : Minecraft.getInstance().getRenderManager().getSkinMap().values()) {
 			render.addLayer(new GenericOverlayLayer(render));
 			render.addLayer(new HandOverlayLayer(render));

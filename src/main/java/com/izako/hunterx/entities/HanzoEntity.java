@@ -5,6 +5,9 @@ import javax.annotation.Nullable;
 import com.izako.hunterx.Main;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
+import com.izako.hunterx.entities.goals.hanzo.DartThrowGoal;
+import com.izako.hunterx.entities.goals.hanzo.DashGoal;
+import com.izako.hunterx.entities.goals.hanzo.ShurikenThrowGoal;
 import com.izako.hunterx.init.ModItems;
 import com.izako.hunterx.init.ModQuests;
 
@@ -60,6 +63,12 @@ public class HanzoEntity extends ZombieEntity{
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
 		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1, true));
+
+		this.goalSelector.addGoal(1, new ShurikenThrowGoal(this));
+		this.goalSelector.addGoal(1, new DashGoal(this));
+		this.goalSelector.addGoal(2, new DartThrowGoal(this));
+
+
 	}
 	
 	@Override

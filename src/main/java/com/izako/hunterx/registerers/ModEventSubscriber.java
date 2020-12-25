@@ -14,6 +14,7 @@ import com.izako.hunterx.init.ModStructures;
 import com.izako.hunterx.items.entities.BulletEntity;
 import com.izako.hunterx.items.entities.CardEntity;
 import com.izako.hunterx.items.entities.NeedleEntity;
+import com.izako.hunterx.items.entities.ShurikenEntity;
 import com.izako.hunterx.items.entities.YoyoEntity;
 
 import net.minecraft.entity.EntityType;
@@ -31,7 +32,6 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 @EventBusSubscriber(modid = Main.MODID, bus = EventBusSubscriber.Bus.MOD)
 public final class ModEventSubscriber {
 
-
 	public static <T extends IForgeRegistryEntry<T>> T setup(final T entry, final String name) {
 		return setup(entry, new ResourceLocation(Main.MODID, name));
 	}
@@ -40,28 +40,35 @@ public final class ModEventSubscriber {
 		entry.setRegistryName(registryName);
 		return entry;
 	}
-	  @SubscribeEvent
-      public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event)
-      {
-		  event.getRegistry().registerAll(YoyoEntity.TYPE, CardEntity.TYPE,BulletEntity.TYPE, NeedleEntity.TYPE, ThugEntity.TYPE, KirikoEntity.TYPE, WingEntity.TYPE, ExaminerEntity.TYPE, HanzoEntity.TYPE, EnEntity.TYPE, ProjectileEntity.TYPE,AuraBlastProjectileEntity.TYPE,ArmEntity.TYPE);
-		  registerEntityWorldSpawn(ThugEntity.TYPE, 2, 1, Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH, Biomes.JUNGLE);
-		  registerEntityWorldSpawn(KirikoEntity.TYPE, 1, 1,Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH, Biomes.JUNGLE);
-		  registerEntityWorldSpawn(WingEntity.TYPE, 6, 1,Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH, Biomes.JUNGLE);
 
-      }
-	  
-	  public static void registerEntityWorldSpawn(EntityType<?> type, int weight, int maxGroup, Biome... biomes) {
-		  for(Biome biome : biomes) {
-			  if(biome != null) {
-				  biome.getSpawns(type.getClassification()).add(new SpawnListEntry(type, weight, 1, maxGroup));
-				  
-			  }
-		  }
-	  }
-	   @SubscribeEvent
-	    public static void onFeatureRegistry(final RegistryEvent.Register<Feature<?>> event) {
-	        IForgeRegistry<Feature<?>> registry = event.getRegistry();
+	@SubscribeEvent
+	public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event) {
+		event.getRegistry().registerAll(YoyoEntity.TYPE, CardEntity.TYPE, BulletEntity.TYPE, NeedleEntity.TYPE,
+				ThugEntity.TYPE, KirikoEntity.TYPE, WingEntity.TYPE, ExaminerEntity.TYPE, HanzoEntity.TYPE,
+				EnEntity.TYPE, ProjectileEntity.TYPE, AuraBlastProjectileEntity.TYPE, ArmEntity.TYPE,
+				ShurikenEntity.TYPE);
+		registerEntityWorldSpawn(ThugEntity.TYPE, 2, 1, Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH,
+				Biomes.JUNGLE);
+		registerEntityWorldSpawn(KirikoEntity.TYPE, 1, 1, Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH,
+				Biomes.JUNGLE);
+		registerEntityWorldSpawn(WingEntity.TYPE, 6, 1, Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH,
+				Biomes.JUNGLE);
 
-	        ModStructures.registerStructure(registry);
-	    }
+	}
+
+	public static void registerEntityWorldSpawn(EntityType<?> type, int weight, int maxGroup, Biome... biomes) {
+		for (Biome biome : biomes) {
+			if (biome != null) {
+				biome.getSpawns(type.getClassification()).add(new SpawnListEntry(type, weight, 1, maxGroup));
+
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onFeatureRegistry(final RegistryEvent.Register<Feature<?>> event) {
+		IForgeRegistry<Feature<?>> registry = event.getRegistry();
+
+		ModStructures.registerStructure(registry);
+	}
 }
