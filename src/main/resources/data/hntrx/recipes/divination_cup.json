@@ -1,0 +1,35 @@
+{
+     "type": "minecraft:crafting_shaped",
+     
+     "pattern":
+     [
+     "SLS",
+     "SWS",
+     "SSS"
+     ],
+     
+     "key":
+     {
+       "W":
+       {
+        "item": "minecraft:water_bucket"
+       },
+       
+        "S":
+       {
+        "item": "minecraft:glass"
+       },
+       
+        "L":
+       {
+        "tag": "minecraft:leaves"
+       }
+       
+     },
+     
+     "result":
+     {
+       "item": "hntrx:divination_cup_block"
+     }
+     
+}
