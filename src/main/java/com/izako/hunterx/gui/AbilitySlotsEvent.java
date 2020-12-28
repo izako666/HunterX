@@ -90,6 +90,9 @@ public class AbilitySlotsEvent {
 					if (abldata.getAbilityInSlot(i).isCharging()) {
 						GuiUtils.drawTexturedModalRect(slotsPosX, slotsPosY+ (32 * i), 0, 192, 32, 32, zlevel);
 						int oldValue = abldata.getAbilityInSlot(i).getChargingTimer();
+						if(oldValue == 0) {
+							oldValue = 1;
+						}
 						int oldMax = abldata.getAbilityInSlot(i).props.maxCharging;
 						GuiUtils.drawTexturedModalRect(slotsPosX, slotsPosY+ (32 * i), 0, 224,
 								4 + (int) (((oldValue * 100) / oldMax) * 0.24), 32, zlevel);
@@ -97,6 +100,9 @@ public class AbilitySlotsEvent {
 						GuiUtils.drawTexturedModalRect(slotsPosX, slotsPosY+ (32 * i), 0, 32, 32, 32, zlevel);
 					} else if (abldata.getAbilityInSlot(i).getCooldown() > 0) {
 						int oldValue = abldata.getAbilityInSlot(i).getCooldown();
+						if(oldValue == 0) {
+							oldValue = 1;
+						}
 						int oldMax = abldata.getAbilityInSlot(i).props.maxCooldown;
 						GuiUtils.drawTexturedModalRect(slotsPosX, slotsPosY+ (32 * i), 0,
 								AbilitySlotsEvent.getCooldownTexture((int) (((oldValue * 100) / oldMax))), 32, 32, zlevel);
@@ -191,7 +197,7 @@ public class AbilitySlotsEvent {
 				GuiUtils.drawTexturedModalRect(slotsPosX, slotsPosY + (32 * i), 0, 0, 32, 32, zlevel);
 
 				if (abldata.getSlotAbilities()[i] != null) {
-					AbilitySlotsEvent.drawIcon(abldata.getAbilityInSlot(i).props.tex, slotsPosX, slotsPosY  + 4 + (32 * i), 24, 24,
+					AbilitySlotsEvent.drawIcon(abldata.getAbilityInSlot(i).props.tex, slotsPosX + 4, slotsPosY  + 4 + (32 * i), 24, 24,
 							zlevel);
 					Minecraft.getInstance().getTextureManager().bindTexture(SLOTS);
 

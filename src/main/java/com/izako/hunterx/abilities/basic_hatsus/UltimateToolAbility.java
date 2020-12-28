@@ -9,6 +9,8 @@ import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.EquipAbility;
 import com.izako.hunterx.izapi.ability.ITrainable;
 import com.izako.hunterx.izapi.ability.NenType;
+import com.izako.hunterx.izapi.ability.Ability.AuraConsumptionType;
+import com.izako.hunterx.izapi.ability.Ability.IAuraConsumption;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -19,7 +21,12 @@ import net.minecraft.item.ItemStack;
 public class UltimateToolAbility extends EquipAbility implements ITrainable {
 
 	public UltimateToolAbility() {
-		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxPassive(Integer.MAX_VALUE).setNenType(NenType.CONJURER);
+		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxPassive(Integer.MAX_VALUE).setNenType(NenType.CONJURER).setConsumptionType(AuraConsumptionType.VALUE).setAuraConsumption(new IAuraConsumption() {
+
+			@Override
+			public int getAmount() {
+				return 2;
+			}});
 	}
 	@Override
 	public ItemStack createItem(LivingEntity p) {
@@ -30,8 +37,10 @@ public class UltimateToolAbility extends EquipAbility implements ITrainable {
 		AttributeModifier speedMod = new AttributeModifier("speedmod", Helper.getTrueValue((float)speedVal, this, p), Operation.ADDITION);
 		stack.addAttributeModifier(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), mod, null);
 		stack.addAttributeModifier(SharedMonsterAttributes.ATTACK_SPEED.getName(), speedMod, null);
+		Helper.consumeAura(40, p, this);
 
 		return stack;
+		
 	}
 
 	@Override

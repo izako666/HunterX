@@ -49,7 +49,7 @@ public class LoyaltyCurseAbility extends PassiveAbility implements ITrainable {
 	@Override
 	public void onStartPassive(LivingEntity p) {
 		
-		EntityRayTraceResult ray = WyHelper.rayTraceEntities(p, 15,p);
+		EntityRayTraceResult ray = WyHelper.rayTraceEntities(p, 100,p);
 		
 		if(!(ray.getEntity() instanceof AnimalEntity)) {
 			if(p.world.isRemote()) {
@@ -58,6 +58,8 @@ public class LoyaltyCurseAbility extends PassiveAbility implements ITrainable {
 			this.endAbility(p);
 			return;
 		}
+		
+		System.out.println(ray.getEntity());
 		if(!p.world.isRemote()) {
 			this.animal = (AnimalEntity) ray.getEntity();
             this.followGoal = new FollowOwnerGoal(this.animal, 1.0D, 10.0F, 2.0F, false,p);
@@ -70,12 +72,14 @@ public class LoyaltyCurseAbility extends PassiveAbility implements ITrainable {
 		    this.animal.goalSelector.addGoal(4, this.meleeGoal);
 
 		}
+		
+		Helper.consumeAura(40, p, this);
 		super.onStartPassive(p);
 	}
 
 	@Override
 	public void duringPassive(LivingEntity p) {
-		if(this.getPassiveTimer() > Helper.getTrueValue(100 * 20, this, p) && Helper.getTrueValue(100 * 20, this,p) < 100 * 20) {
+		if(this.getPassiveTimer() > (Integer.MAX_VALUE - Helper.getTrueValue(100 * 20, this, p)) && Helper.getTrueValue(100 * 20, this,p) < 100 * 20) {
 			this.endAbility(p);
 		}
 	}

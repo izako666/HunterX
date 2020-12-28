@@ -100,10 +100,10 @@ public class ModKeybindings {
 			if(evt.getScrollDelta() == 0.0) {
 				return;
 			} else if(scrollDirection > 0.0) {
-				scrollDirection = 1;
+				scrollDirection = -1;
 				
 			} else {
-				scrollDirection = -1;
+				scrollDirection = 1;
 			}
 
 		int newActiveAbility = (int) (data.getActiveAbility() + scrollDirection);

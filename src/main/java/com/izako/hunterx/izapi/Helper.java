@@ -368,4 +368,15 @@ public class Helper {
 			   }
 			   return trueVal + 180;
 		   }
+		   
+		   
+		   public static void consumeAura(float aura,LivingEntity p, Ability abl) {
+			   
+			   IAbilityData data = AbilityDataCapability.get(p);
+			   if(data.getCurrentNen() > aura) {
+				   data.setCurrentNen((int) (data.getCurrentNen() - aura));
+			   } else {
+				   abl.endAbility(p);
+			   }
+		   }
 }

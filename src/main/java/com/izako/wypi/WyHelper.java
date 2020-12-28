@@ -249,7 +249,7 @@ public class WyHelper {
 
 	public static EntityRayTraceResult rayTraceEntities(Entity source, double distance, @Nullable LivingEntity owner) {
 		Vec3d lookVec = source.getLook(1.0F);
-		Vec3d startVec = source.getEyePosition(1.0F).add(lookVec.x * 0.2, lookVec.y * 0.2, lookVec.z * 0.2);
+		Vec3d startVec = source.getEyePosition(1.0F).add(lookVec.x * 0.2, lookVec.y* 0.2, lookVec.z* 0.2);
 		Vec3d endVec = startVec.add(lookVec.x * distance, lookVec.y * distance, lookVec.z * distance);
 		AxisAlignedBB boundingBox = source.getBoundingBox().grow(distance);
 
@@ -264,20 +264,16 @@ public class WyHelper {
 				double distFromSource = MathHelper.sqrt(startVec.squareDistanceTo(targetVec));
 
 				if (distFromSource < distance) {
-					Iterator<Entity> iterator = WyHelper.getEntitiesNear(new BlockPos(targetVec), source.world, 1.25)
-							.stream().iterator();
+					List<Entity> iterator = WyHelper.getEntitiesNear(new BlockPos(targetVec), source.world, 1.25);
 					Optional<Entity> target = WyHelper.getEntitiesNear(new BlockPos(targetVec), source.world, 1.25)
-							.stream().findFirst();
-					if(owner != null) {
-						while(iterator.hasNext()) {
-							Entity next = iterator.next();
-							if(next.getEntityId() != owner.getEntityId()) {
-								target = Optional.of(next);
-								break;
-							}
+							.stream().filter((e) -> {return e != source;}).findFirst();
+					
+					for(Entity possibleEntity : iterator) {
+						if(possibleEntity != source) {
+							target = Optional.of(possibleEntity);
+							break;
 						}
 					}
-
 					if (target.isPresent()) {
 						return new EntityRayTraceResult(target.get(), endVec);
 					}

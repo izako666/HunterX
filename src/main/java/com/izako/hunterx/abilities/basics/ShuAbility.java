@@ -2,6 +2,8 @@ package com.izako.hunterx.abilities.basics;
 
 import java.util.UUID;
 
+import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
+import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.IOnPlayerRender;
@@ -26,7 +28,12 @@ public class ShuAbility extends PassiveAbility implements IOnPlayerRender, ITrai
 	public static final UUID SHU_UUID = UUID.fromString("b2bb389e-a2a9-4c42-85d2-0010c09901fc");
 
 	public ShuAbility() {
-		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxPassive(Integer.MAX_VALUE).setNenType(NenType.UNKNOWN);
+		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxPassive(Integer.MAX_VALUE).setNenType(NenType.UNKNOWN).setConsumptionType(AuraConsumptionType.VALUE).setAuraConsumption(new IAuraConsumption() {
+
+			@Override
+			public int getAmount() {
+				return 2;
+			}});
 	}
 	@Override
 	public String getId() {
@@ -57,6 +64,14 @@ public class ShuAbility extends PassiveAbility implements IOnPlayerRender, ITrai
 		p.getHeldItemMainhand().addEnchantment(Enchantments.SHARPNESS, (int) (Helper.getTrueValue(3, this, p)));
 		p.getHeldItemMainhand().getOrCreateTag().putBoolean("activeshu", true);
 		super.onStartPassive(p);
+		
+		IAbilityData data = AbilityDataCapability.get(p);
+		
+		if(data.getCurrentNen() > 20) {
+			data.setCurrentNen(data.getCurrentNen() - 20);
+		} else {
+			this.endAbility(p);
+		}
 	}
 	@Override
 	public void onEndPassive(LivingEntity p) {

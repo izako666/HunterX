@@ -29,7 +29,9 @@ public class ListSlider extends VerticalSlider {
 	public ListSlider(int x, int y, int width, int height, double min, double max, List<Entry> entries) {
 		super(x, y, width, height, min, max);
 		this.entries = entries;
+		if(this.entries.size() > 0) {
 		this.inSliderLength = this.height / this.entries.size();
+		} 
 		for(int i = 0; i < this.entries.size(); i++) {
 			Entry entry = this.entries.get(i);
 			entry.posX = this.x + 15;

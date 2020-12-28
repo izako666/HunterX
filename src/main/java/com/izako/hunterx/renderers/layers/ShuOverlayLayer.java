@@ -16,6 +16,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
@@ -45,7 +46,7 @@ public class ShuOverlayLayer extends  LayerRenderer<AbstractClientPlayerEntity, 
 				continue;
 
 
-			if (abl.props.type == AbilityType.PASSIVE && abl.isInPassive() && abl instanceof ShuAbility) {
+			if (abl.props.type == AbilityType.PASSIVE && abl.isInPassive() && abl instanceof ShuAbility && entitylivingbaseIn.getHeldItemMainhand().getOrCreateTag().getBoolean("activeshu")) {
 
 				matrixStackIn.push();
 				matrixStackIn.translate(0.04, -0.05, 0.08);

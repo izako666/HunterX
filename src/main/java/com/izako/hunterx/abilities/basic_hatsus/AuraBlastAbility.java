@@ -48,6 +48,8 @@ public class AuraBlastAbility extends ChargeableAbility implements ITrainable {
 		}
 		super.onEndCharging(p);
 	
+		Helper.consumeAura(30, p, this);
+		
 	}
 	@Override
 	public void setXp(double xp, LivingEntity p) {

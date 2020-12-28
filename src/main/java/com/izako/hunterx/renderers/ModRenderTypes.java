@@ -33,11 +33,14 @@ public abstract class ModRenderTypes extends RenderType {
 	public static RenderType getTranslucentItem(ResourceLocation loc) {
 		final RenderType.State TRANSLUCENT_ITEM_STATE = RenderType.State.getBuilder()
 				.transparency(TransparencyState.TRANSLUCENT_TRANSPARENCY)
-				.texture(new RenderState.TextureState(loc, false, false)).texturing(RenderState.OUTLINE_TEXTURING)
+				.texture(new RenderState.TextureState(loc, true, false)).texturing(RenderState.OUTLINE_TEXTURING)
 				.cull(CULL_DISABLED).alpha(AlphaState.DEFAULT_ALPHA).lightmap(LIGHTMAP_ENABLED).writeMask(COLOR_WRITE)
 				.build(true);
+		
+	      RenderType.State rendertype$state = RenderType.State.getBuilder().texture(new RenderState.TextureState(loc, false, false)).transparency(LIGHTNING_TRANSPARENCY).diffuseLighting(DIFFUSE_LIGHTING_ENABLED).cull(CULL_DISABLED).lightmap(LIGHTMAP_ENABLED).writeMask(COLOR_WRITE).texturing(OUTLINE_TEXTURING).build(true);
+
 		final RenderType TRANSLUCENT_ITEM_NOTEX = RenderType.makeType("entity_translucent_notexture",
-				DefaultVertexFormats.ENTITY, 7, 256, true, true, TRANSLUCENT_ENTITY_STATE);
+				DefaultVertexFormats.ENTITY, 7, 256, true, true, rendertype$state);
 		return TRANSLUCENT_ITEM_NOTEX;
 	}
 

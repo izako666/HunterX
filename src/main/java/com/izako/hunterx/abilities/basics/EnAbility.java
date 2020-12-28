@@ -17,7 +17,12 @@ public class EnAbility extends ChargeablePassiveAbility implements ITrainable {
 	
 	public List<LivingEntity> clientEntities = new ArrayList<>();
 	public EnAbility() {
-		this.props = new Ability.Properties(this).setAbilityType(AbilityType.CHARGING_PASSIVE).setMaxPassive(Integer.MAX_VALUE).setMaxCharging(100).setNenType(NenType.UNKNOWN);
+		this.props = new Ability.Properties(this).setAbilityType(AbilityType.CHARGING_PASSIVE).setMaxPassive(Integer.MAX_VALUE).setMaxCharging(100).setNenType(NenType.UNKNOWN).setConsumptionType(AuraConsumptionType.VALUE).setAuraConsumption(new IAuraConsumption() {
+
+			@Override
+			public int getAmount() {
+				return 10;
+			}});
 	}
 	@Override
 	public String getId() {

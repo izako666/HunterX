@@ -138,8 +138,8 @@ public class HunterScreen extends Screen {
 			}
 		});
 		if (this.currentAbility != null) {
-			for (int i = 0; i < 8; i++) {
-				this.drawString(this.font, String.valueOf(i + 1), 20, (int) (initialHeight + 6 + (32 * i + 1)),
+			for (int i = 0; i < 5; i++) {
+				this.drawString(this.font, String.valueOf(i + 1), 45, (int) (initialHeight + 80 + (32 * i + 1)),
 						16777215);
 			}
 			

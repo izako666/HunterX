@@ -38,6 +38,7 @@ public class RyuDefenseAbility extends PassiveAbility {
 	public String getDesc() {
 		return "Ryu: Defense, a variant of Ryu, focuses most of your aura into defense and the rest into attack.";
 	}
+
 	public void onStartPassive(LivingEntity p) {
 		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "ryudefensemod",
 				Helper.getTrueValue(40, this, p), Operation.ADDITION);
