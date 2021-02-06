@@ -1,6 +1,7 @@
 package com.izako.hunterx.items;
 
 import com.izako.hunterx.items.entities.YoyoEntity;
+import com.izako.hunterx.izapi.IThugDrop;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -16,7 +17,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class YoyoItem extends Item {
+public class YoyoItem extends Item implements IThugDrop {
 
 	public YoyoItem(Properties properties) {
 		super(properties);

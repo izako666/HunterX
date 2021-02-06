@@ -10,6 +10,7 @@ import com.izako.hunterx.Main;
 import com.izako.hunterx.entities.goals.GunAI;
 import com.izako.hunterx.init.ModItems;
 import com.izako.hunterx.items.entities.BulletEntity;
+import com.izako.hunterx.izapi.IThugDrop;
 
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -30,7 +31,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -188,10 +188,12 @@ public class ThugEntity extends ZombieEntity implements IRangedAttackMob{
 	}
 
 	private boolean canBeDropped(Item item) {
-		return item != ModItems.BADGE && item != ModItems.CARD && item != ModItems.HANZO_SWORD && item != ModItems.HUNTER_LICENSE && item != ModItems.KIRIKO_EGG && item != ModItems.PISTOL && item != ModItems.THUG_EGG && item != ModItems.WING_EGG;
+		return item instanceof IThugDrop;
 	}
 	@Override
 	public void onDeath(DamageSource cause) {
+		
+		this.setItemStackToSlot(EquipmentSlotType.MAINHAND, ItemStack.EMPTY);
 		List<Item> ITEMS = new ArrayList<Item>();
 		ForgeRegistries.ITEMS.getValues().forEach((i) -> {
 			if (i.getRegistryName().getNamespace().contains("hntrx")) {
@@ -202,6 +204,7 @@ public class ThugEntity extends ZombieEntity implements IRangedAttackMob{
 		});
 		int chance = randomWithRange(0, 10);
 
+		ITEMS.removeIf(i -> !canBeDropped(i));
 		if (chance <= 3) {
 			int items = ITEMS.size() - 1;
 			ItemStack dropItem = new ItemStack(ITEMS.get(randomWithRange(1, items)));

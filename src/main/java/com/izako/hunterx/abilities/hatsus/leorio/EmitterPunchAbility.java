@@ -4,6 +4,7 @@ import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.entities.projectiles.ArmEntity;
 import com.izako.hunterx.init.ModAbilities;
+import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.NenType;
 
@@ -19,12 +20,13 @@ public class EmitterPunchAbility extends Ability {
 		IAbilityData data = AbilityDataCapability.get(p);
 		if(p.world.isRemote())
 			return;
+		
 		if(data.hasActiveAbility(ModAbilities.LOCKON_ABILITY) && ((LockOnAbility)data.getActiveAbility(ModAbilities.LOCKON_ABILITY, p)).lockOn != null) {
+			if(Helper.consumeAura(20, p, this)) {
 			LivingEntity Lockon = ((LockOnAbility)data.getActiveAbility(ModAbilities.LOCKON_ABILITY, p)).lockOn;
 		
 			ArmEntity arm = new ArmEntity(ArmEntity.TYPE,p.world);
 			
-			float slope = (float) ((p.getPosZ() - Lockon.getPosZ()) / (p.getPosX() - Lockon.getPosX()));
 		
 			float finalX = (float) (Lockon.getPosX() - 3);
 			float finalY = (float) Lockon.getPosYEye();
@@ -39,6 +41,8 @@ public class EmitterPunchAbility extends Ability {
 	        
 	        arm.setMotion(motionX, motionY, motionZ);			
 			p.world.addEntity(arm);
+			}
+
 		}
 		super.use(p);
 	}

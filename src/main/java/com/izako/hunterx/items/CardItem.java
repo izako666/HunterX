@@ -1,9 +1,7 @@
 package com.izako.hunterx.items;
 
-import com.izako.hunterx.data.hunterdata.HunterDataCapability;
-import com.izako.hunterx.data.hunterdata.IHunterData;
-import com.izako.hunterx.init.ModQuests;
 import com.izako.hunterx.items.entities.CardEntity;
+import com.izako.hunterx.izapi.IThugDrop;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -15,7 +13,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class CardItem extends Item{
+public class CardItem extends Item implements IThugDrop{
 
 	public CardItem(Properties properties) {
 		super(properties);

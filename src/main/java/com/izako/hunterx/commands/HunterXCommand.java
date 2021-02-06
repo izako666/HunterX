@@ -12,6 +12,7 @@ public class HunterXCommand {
 				.then(DebugCommand.register())
 				.then(AbilityCommand.register())
 				.then(QuestCommand.register())
+				.then(LocateBlimpCommand.register())
 
 		);
 	}

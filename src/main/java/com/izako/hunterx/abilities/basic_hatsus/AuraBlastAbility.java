@@ -11,11 +11,12 @@ import com.izako.hunterx.izapi.ability.ITrainable;
 import com.izako.hunterx.izapi.ability.NenType;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.text.StringTextComponent;
 
 public class AuraBlastAbility extends ChargeableAbility implements ITrainable {
 
 	public AuraBlastAbility() {
-		this.props = new Ability.Properties(this).setAbilityType(AbilityType.CHARGING).setMaxCharging(100).setNenType(NenType.EMITTER);
+		this.props = new Ability.Properties(this).setAbilityType(AbilityType.CHARGING).setMaxCharging(100).setNenType(NenType.EMITTER).setMaxCooldown(4 * 20);
 	}
 	@Override
 	public String getId() {
@@ -48,7 +49,7 @@ public class AuraBlastAbility extends ChargeableAbility implements ITrainable {
 		}
 		super.onEndCharging(p);
 	
-		Helper.consumeAura(30, p, this);
+		Helper.consumeAura(25, p, this);
 		
 	}
 	@Override

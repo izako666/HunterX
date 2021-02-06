@@ -21,17 +21,12 @@ import net.minecraft.item.ItemStack;
 public class UltimateToolAbility extends EquipAbility implements ITrainable {
 
 	public UltimateToolAbility() {
-		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxPassive(Integer.MAX_VALUE).setNenType(NenType.CONJURER).setConsumptionType(AuraConsumptionType.VALUE).setAuraConsumption(new IAuraConsumption() {
-
-			@Override
-			public int getAmount() {
-				return 2;
-			}});
+		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxPassive(Integer.MAX_VALUE).setNenType(NenType.CONJURER).setMaxCooldown(6 * 20);
 	}
 	@Override
 	public ItemStack createItem(LivingEntity p) {
 		ItemStack stack = new ItemStack(ModItems.BASIC_CONJURER_TOOL);
-		double speedVal = Helper.fromRangeToRange(0, this.getMaxXP(), 0, 4, this.getXp());
+		double speedVal = Helper.fromRangeToRange(0, this.getMaxXP(), 0, 8, this.getXp());
 
 		AttributeModifier mod = new AttributeModifier("attackmod", Helper.getTrueValue((float)14, this, p), Operation.ADDITION);
 		AttributeModifier speedMod = new AttributeModifier("speedmod", Helper.getTrueValue((float)speedVal, this, p), Operation.ADDITION);
@@ -43,6 +38,14 @@ public class UltimateToolAbility extends EquipAbility implements ITrainable {
 		
 	}
 
+	@Override
+	public void duringPassive(LivingEntity p) {
+		super.duringPassive(p);
+		
+		if(p.ticksExisted % 20 == 0) {
+			Helper.consumeAura(1, p, this);
+		}
+	}
 	@Override
 	public String getId() {
 		return "ultimate_tool";

@@ -59,16 +59,11 @@ public class BlimpStructure extends Structure<NoFeatureConfig> {
 			nbt.putInt("TPY", blockpos.getY());
 			nbt.putInt("TPZ", blockpos.getZ());
 
-			IWorld world = ObfuscationReflectionHelper.getPrivateValue(ChunkGenerator.class, generator, "field_222540_a");
-			if(world instanceof ServerWorld) {
-				ModWorldData data = ModWorldData.get((ServerWorld) world);
-			   if(!data.isBlimpSpawned()) {
-				data.setBlimpPos(blockpos.getX(), blockpos.getY(), blockpos.getZ());
 			
 			BlimpPiece.addPieces(templateManagerIn, this.components, nbt, this.rand);
 			this.recalculateStructureSize();
-			   }
-			}
+			   
+			
 		}
 	}
 
@@ -79,7 +74,17 @@ public class BlimpStructure extends Structure<NoFeatureConfig> {
 		boolean flag1 = randIn.nextInt(500) > 498;
 		boolean flag2 = biomeIn == Biomes.PLAINS || biomeIn == Biomes.DESERT || biomeIn == Biomes.TAIGA_HILLS || biomeIn == Biomes.MOUNTAINS;
 		 if(flag1 && flag2) {
-		   return true;
+			 
+				IWorld world = ObfuscationReflectionHelper.getPrivateValue(ChunkGenerator.class, generatorIn, "field_222540_a");
+				if(world instanceof ServerWorld) {
+					ModWorldData data = ModWorldData.get((ServerWorld) world);
+				   if(!data.isBlimpSpawned()) {
+						BlockPos blockpos = new BlockPos(chunkX * 16, 90, chunkZ * 16);
+						data.setBlimpPos(blockpos.getX(), blockpos.getY(), blockpos.getZ());
+
+						return true;
+				   }
+				}
 	   }
 		return false; 
 	}

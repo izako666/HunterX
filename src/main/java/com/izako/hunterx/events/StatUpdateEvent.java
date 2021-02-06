@@ -78,7 +78,7 @@ public class StatUpdateEvent {
 
 			IHunterData data = HunterDataCapability.get(p);
 			data.setHealthStat(data.getHealthStat() + 0.1);
-			PacketHandler.INSTANCE.sendToServer(new StatsUpdatePacket(data, true));
+			PacketHandler.INSTANCE.sendToServer(new StatsUpdatePacket(data, false));
 			PacketHandler.INSTANCE.sendToServer(new ModifierUpdatePacket(data.getHealthStat(), 1));
 			e.setResult(Result.DEFAULT);
 		}

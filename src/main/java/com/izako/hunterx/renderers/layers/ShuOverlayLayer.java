@@ -46,7 +46,7 @@ public class ShuOverlayLayer extends  LayerRenderer<AbstractClientPlayerEntity, 
 				continue;
 
 
-			if (abl.props.type == AbilityType.PASSIVE && abl.isInPassive() && abl instanceof ShuAbility && entitylivingbaseIn.getHeldItemMainhand().getOrCreateTag().getBoolean("activeshu")) {
+			if (abl.props.type == AbilityType.PASSIVE && abl.isInPassive() && abl instanceof ShuAbility && entitylivingbaseIn.getHeldItemMainhand().hasTag() && entitylivingbaseIn.getHeldItemMainhand().getTag().getBoolean("activeshu")) {
 
 				matrixStackIn.push();
 				matrixStackIn.translate(0.04, -0.05, 0.08);

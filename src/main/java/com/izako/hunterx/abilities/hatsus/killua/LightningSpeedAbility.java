@@ -3,6 +3,7 @@ package com.izako.hunterx.abilities.hatsus.killua;
 import com.izako.hunterx.Main;
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
+import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.NenType;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
@@ -18,7 +19,7 @@ import net.minecraft.world.server.ServerWorld;
 public class LightningSpeedAbility extends PassiveAbility {
 
 	public LightningSpeedAbility() {
-		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxPassive(60 * 20).setMaxCooldown(15 * 20).setNenType(NenType.TRANSMUTER);
+		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setNenType(NenType.TRANSMUTER).setMaxPassive(Integer.MAX_VALUE).setMaxCooldown(4 * 20);
 	}
 	@Override
 	public String getId() {
@@ -55,6 +56,9 @@ public class LightningSpeedAbility extends PassiveAbility {
 			} 
 		} 
 
+		 if(p.ticksExisted % 20 == 0) {
+			 Helper.consumeAura(2, p, this);
+		 }
 		super.duringPassive(p);
 	}
 

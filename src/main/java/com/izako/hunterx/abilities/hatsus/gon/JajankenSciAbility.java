@@ -30,18 +30,27 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = Main.MODID)
 public class JajankenSciAbility extends ChargeableEquipAbility implements ITrainable,IHandOverlay {
 	public JajankenSciAbility() {
-		this.props = new Ability.Properties(this).setAbilityType(AbilityType.CHARGING_PASSIVE).setMaxPassive(Integer.MAX_VALUE).setNenType(NenType.TRANSMUTER);
+		this.props = new Ability.Properties(this).setAbilityType(AbilityType.CHARGING_PASSIVE).setMaxPassive(Integer.MAX_VALUE).setNenType(NenType.TRANSMUTER).setMaxCooldown(6 * 20);
 	}
 
 	@Override
 	public ItemStack createItem(LivingEntity p) {
 		ItemStack stack = new ItemStack(ModItems.JAJANKEN_SCISSORS);
 
-		double val = Helper.fromRangeToRange(0, this.props.maxCharging, 11, 20, this.getChargingTimer());
+		double val = Helper.fromRangeToRange(0, this.props.maxCharging, 1, 8, this.getChargingTimer());
 		AttributeModifier mod = new AttributeModifier("attackmod", Helper.getTrueValue((float)val, this, p), Operation.ADDITION);
 		stack.addAttributeModifier(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), mod, null);
 
+		Helper.consumeAura(20, p, this);
+
 		return stack;
+	}
+
+	@Override
+	public void duringPassive(LivingEntity p) {
+		if(p.ticksExisted % 20 == 0) {
+			Helper.consumeAura(1, p, this);
+		}
 	}
 
 	@Override

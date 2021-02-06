@@ -21,9 +21,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
+import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
 
+import com.izako.hunterx.izapi.Helper;
 import com.mojang.blaze3d.platform.GlStateManager;
 
 import net.minecraft.block.Block;
@@ -282,7 +284,7 @@ public class WyHelper {
 		}
 
 		return new EntityRayTraceResult(null, endVec);
-	}
+		}
 
 	public static void sendMsgToPlayer(PlayerEntity player, String text) {
 		player.sendMessage(new StringTextComponent(text));

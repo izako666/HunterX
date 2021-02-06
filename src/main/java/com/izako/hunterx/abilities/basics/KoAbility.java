@@ -50,7 +50,7 @@ public class KoAbility extends PunchAbility implements IHandOverlay {
 		IAbilityData data = AbilityDataCapability.get(p);
 		
 		this.queuedAuraConsumption = true;
-		return Helper.getTrueValue(40, this, p);
+		return Helper.getTrueValue(30, this, p);
 	}
 
 
@@ -62,7 +62,7 @@ public class KoAbility extends PunchAbility implements IHandOverlay {
 				isInitialAuraConsumption = false;
 				return 10;
 			} else {
-				return 5;
+				return 10;
 			}
 
 		}

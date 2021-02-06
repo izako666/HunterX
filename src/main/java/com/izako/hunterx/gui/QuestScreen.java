@@ -180,6 +180,23 @@ public class QuestScreen extends Screen {
 	public void onFinalStringEnd() {
 		IHunterData data = HunterDataCapability.get(p);
 		if (data.hasQuest(this.currentQuest) && this.currentQuest instanceof IMultipleChoiceQuest) {
+			IMultipleChoiceQuest q = (IMultipleChoiceQuest) data.getQuest(this.currentQuest);
+			boolean allFin = true;
+			for(Quest quest : q.getChoices(p)) {
+				Quest trueQuest = data.getQuest(quest);
+				if(trueQuest == null) {
+					allFin = false;
+				}
+				if(trueQuest != null && !trueQuest.isFinished()) {
+					allFin = false;
+				}
+			}
+			if(allFin) {
+				data.getQuest(this.currentQuest).finishQuest(p);
+				PacketHandler.INSTANCE.sendToServer(new SetQuestPacket(this.currentQuest.getId(), false));
+				Minecraft.getInstance().currentScreen = null;
+				return;
+			}
 			this.guiState = 2;
 			this.addChoicesButtons((IMultipleChoiceQuest) data.getQuest(this.currentQuest));
 		} else if (!data.hasQuest(this.currentQuest)) {

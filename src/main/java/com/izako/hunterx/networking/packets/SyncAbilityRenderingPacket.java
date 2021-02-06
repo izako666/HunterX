@@ -1,5 +1,6 @@
 package com.izako.hunterx.networking.packets;
 
+import java.awt.Color;
 import java.util.function.Supplier;
 
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
@@ -27,11 +28,13 @@ public class SyncAbilityRenderingPacket {
 	String id;
 	int entity;
 	boolean turnOn;
-	public SyncAbilityRenderingPacket(String id, int entity, boolean turnOn) {
+	Color c = Color.white;
+	public SyncAbilityRenderingPacket(String id, int entity, boolean turnOn, Color auraColor) {
 
 		this.id = id;
 		this.entity = entity;
 		this.turnOn = turnOn;
+		this.c = auraColor;
 	}
 	
 	public void encode(PacketBuffer buf) {
@@ -40,6 +43,7 @@ public class SyncAbilityRenderingPacket {
 		buf.writeString(id);
 		buf.writeInt(entity);
 		buf.writeBoolean(turnOn);
+		buf.writeVarIntArray(new int[] {c.getRed(),c.getGreen(),c.getBlue(),c.getAlpha()});
 	}
 	
 	public static SyncAbilityRenderingPacket decode(PacketBuffer buf) {
@@ -48,6 +52,8 @@ public class SyncAbilityRenderingPacket {
 		msg.id = buf.readString(length);
 		msg.entity = buf.readInt();
 		msg.turnOn = buf.readBoolean();
+		int[] colorArray = buf.readVarIntArray();
+		msg.c = new Color(colorArray[0],colorArray[1],colorArray[2],colorArray[3]);
 		return msg;
 	}
 	public static void handle(SyncAbilityRenderingPacket msg,  final Supplier<NetworkEvent.Context> ctx) {
@@ -66,6 +72,7 @@ public class SyncAbilityRenderingPacket {
 			LivingEntity abilityUser = (LivingEntity) p.world.getEntityByID(msg.entity);
 			IAbilityData data = AbilityDataCapability.get(abilityUser);
 			IAbilityData clientData = AbilityDataCapability.get(p);
+			data.setAuraColor(msg.c.getRed(), msg.c.getGreen(), msg.c.getBlue());
 			if(clientData.isNenUser()) {
 				Ability abl;
 			 if(abilityUser instanceof PlayerEntity) {

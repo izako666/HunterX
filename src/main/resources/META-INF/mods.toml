@@ -3,9 +3,9 @@ loaderVersion="[28,)" #mandatory (28 is current forge version)
 logoFile="hunterx_logo.png" #optional
 [[mods]] #mandatory
 modId="hntrx" #mandatory
-version="0.3" #mandatory
+version="0.3.2" #mandatory
 displayName="HunterX" #mandatory
-credits="Developers: Izako,Snooker   Texturers: FGPisces,Hypnoman,Izako  Modelers: Delend,Izako   Special thanks to the author of the wypi library Wynd, creator of https://pixelatedw.xyz/mine-mine-no-mi" #optional
+credits="Developers: Izako,Snooker   Texturers: FGPisces,Hypnoman,Izako  Modelers: Izako   Bug Testers: Giraffe, themarchal, IAlligant, Kyu Special thanks to the author of the wypi library Wynd, creator of https://pixelatedw.xyz/mine-mine-no-mi" #optional
 authors="Izako, Snooker, Hypnoman" #optional
 description='''
 HunterX is a minecraft mod made to put the world of hunter x hunter into minecraft.

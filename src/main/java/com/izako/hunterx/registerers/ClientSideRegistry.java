@@ -2,6 +2,7 @@ package com.izako.hunterx.registerers;
 
 import java.awt.Color;
 import java.lang.reflect.InvocationTargetException;
+import java.util.function.Function;
 
 import com.izako.hunterx.Main;
 import com.izako.hunterx.entities.EnEntity;
@@ -37,6 +38,7 @@ import com.izako.hunterx.renderers.layers.ShuOverlayLayer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
@@ -49,12 +51,17 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @EventBusSubscriber(value = Dist.CLIENT ,modid = Main.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class ClientSideRegistry {
+
+	public static final Function<ResourceLocation, RenderType> entityModelFunc = s -> {
+		return RenderType.getEntityCutoutNoCull(s);
+	};
 
 	
 	public static void RegisterEntityRenderers() {

@@ -45,8 +45,8 @@ public abstract class EquipAbility extends PassiveAbility {
 
 		
 		
-		if(p.getItemStackFromSlot(EquipmentSlotType.MAINHAND).getOrCreateTag().contains("nenowner")) {
-			if(p.getItemStackFromSlot(EquipmentSlotType.MAINHAND).getOrCreateTag().getUniqueId("nenowner").equals(p.getUniqueID())) {
+		if(p.getItemStackFromSlot(EquipmentSlotType.MAINHAND).hasTag() && p.getItemStackFromSlot(EquipmentSlotType.MAINHAND).getTag().contains("nenowner")) {
+			if(p.getItemStackFromSlot(EquipmentSlotType.MAINHAND).getTag().getUniqueId("nenowner").equals(p.getUniqueID())) {
 			p.setItemStackToSlot(EquipmentSlotType.MAINHAND, ItemStack.EMPTY);
 			}
 		}
@@ -56,8 +56,8 @@ public abstract class EquipAbility extends PassiveAbility {
 			for(int i = 0; i < player.inventory.getSizeInventory(); i++) {
 				ItemStack otherStack = player.inventory.getStackInSlot(i);
 				
-				if(otherStack.getOrCreateTag().hasUniqueId("nenowner")) {
-					if(otherStack.getOrCreateTag().getUniqueId("nenowner").equals(p.getUniqueID()) ) {
+				if(otherStack.hasTag() && otherStack.getTag().hasUniqueId("nenowner")) {
+					if(otherStack.getTag().getUniqueId("nenowner").equals(p.getUniqueID()) ) {
 					player.inventory.removeStackFromSlot(i);
 					}
 				}

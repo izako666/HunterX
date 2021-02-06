@@ -1,17 +1,21 @@
 package com.izako.hunterx.networking;
 
 import com.izako.hunterx.networking.packets.AbilityChargingEndPacket;
+import com.izako.hunterx.networking.packets.AbilityCooldownPacket;
 import com.izako.hunterx.networking.packets.AbilityUpdatePacket;
 import com.izako.hunterx.networking.packets.AbilityUsePacket;
+import com.izako.hunterx.networking.packets.ActivateAbilityPacket;
 import com.izako.hunterx.networking.packets.CharacterInitPacket;
 import com.izako.hunterx.networking.packets.ChoiceQuestActivateEntryPacket;
 import com.izako.hunterx.networking.packets.EnUpdatePacket;
 import com.izako.hunterx.networking.packets.HanzoSwordPacket;
+import com.izako.hunterx.networking.packets.LockOnPacket;
 import com.izako.hunterx.networking.packets.ModifierUpdatePacket;
 import com.izako.hunterx.networking.packets.OpenQuestGuiPacket;
 import com.izako.hunterx.networking.packets.PunchAbilityPacket;
 import com.izako.hunterx.networking.packets.QuestProgressPacket;
 import com.izako.hunterx.networking.packets.QuestUpdatePacket;
+import com.izako.hunterx.networking.packets.RefreshNenPacket;
 import com.izako.hunterx.networking.packets.SetActiveAbilityPacket;
 import com.izako.hunterx.networking.packets.SetQuestPacket;
 import com.izako.hunterx.networking.packets.StatsUpdatePacket;
@@ -51,6 +55,11 @@ public class PacketHandler {
 	    INSTANCE.registerMessage(packet++, QuestUpdatePacket.class, QuestUpdatePacket::encode, QuestUpdatePacket::decode, QuestUpdatePacket::handle);
 	    INSTANCE.registerMessage(packet++, ChoiceQuestActivateEntryPacket.class, ChoiceQuestActivateEntryPacket::encode, ChoiceQuestActivateEntryPacket::decode, ChoiceQuestActivateEntryPacket::handle);
 	    INSTANCE.registerMessage(packet++, SetActiveAbilityPacket.class, SetActiveAbilityPacket::encode, SetActiveAbilityPacket::decode, SetActiveAbilityPacket::handle);
+	    INSTANCE.registerMessage(packet++, AbilityCooldownPacket.class, AbilityCooldownPacket::encode, AbilityCooldownPacket::decode, AbilityCooldownPacket::handle);
+	    INSTANCE.registerMessage(packet++, RefreshNenPacket.class, RefreshNenPacket::encode, RefreshNenPacket::decode, RefreshNenPacket::handle);
+        INSTANCE.registerMessage(packet++, ActivateAbilityPacket.class, ActivateAbilityPacket::encode, ActivateAbilityPacket::decode, ActivateAbilityPacket::handle);
+	    INSTANCE.registerMessage(packet++, LockOnPacket.class, LockOnPacket::encode, LockOnPacket::decode, LockOnPacket::handle);
+	
 	}
 	
 	public static <MSG>  void sendToTracking(LivingEntity tracked, MSG message) {

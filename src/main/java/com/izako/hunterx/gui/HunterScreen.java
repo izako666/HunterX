@@ -129,8 +129,7 @@ public class HunterScreen extends Screen {
 					RenderSystem.disableBlend();
 
 				}
-			} else 
-			if (b instanceof AbilityButton) {
+			} else if (b instanceof AbilityButton) {
 				AbilityButton ab = (AbilityButton) b;
 				this.drawIcon(ab.ablTexture, ab.x, ab.y, 32, 32, 0);
 			} else {
@@ -142,13 +141,15 @@ public class HunterScreen extends Screen {
 				this.drawString(this.font, String.valueOf(i + 1), 45, (int) (initialHeight + 80 + (32 * i + 1)),
 						16777215);
 			}
-			
-			this.drawString(this.font, this.currentAbility.getName(),  scaledWidth /2 - 50, initialHeight + 30, 16777215);
-		
-			List<String> list = WyHelper.splitString(this.font, this.currentAbility.getDesc(), width/2 - 100, initialHeight + 40, 160);
-			
-			for(int i = 0; i< list.size(); i++) {
-			this.drawString(this.font, list.get(i),  scaledWidth /2 - 50, initialHeight + 50 + (15 * i), 16777215);
+
+			this.drawString(this.font, this.currentAbility.getName(), scaledWidth / 2 - 50, initialHeight + 30,
+					16777215);
+
+			List<String> list = WyHelper.splitString(this.font, this.currentAbility.getDesc(), width / 2 - 100,
+					initialHeight + 40, 160);
+
+			for (int i = 0; i < list.size(); i++) {
+				this.drawString(this.font, list.get(i), scaledWidth / 2 - 50, initialHeight + 50 + (15 * i), 16777215);
 			}
 		}
 	}
@@ -196,7 +197,7 @@ public class HunterScreen extends Screen {
 					this.drawIcon(QUEST_BACKWARD, hb.x, hb.y, 16, 16, 0);
 
 				} else {
-				    
+
 					this.drawIcon(GENERAL_BUTTON, hb.x, hb.y, 96, 32, 0);
 					this.drawString(font, hb.name, hb.x + 5, hb.y + 5, 16777215);
 				}
@@ -205,15 +206,14 @@ public class HunterScreen extends Screen {
 			} else {
 				b.renderButton(0, 0, 0);
 			}
-			
-			
+
 		});
 
 		if (this.currentQuest != null) {
 			String desc = this.currentQuest.getDescription();
-			List<String> descs = WyHelper.splitString(font, desc, (int) ((scaledWidth*0.5)-10), 0, 148);
-			for(int i = 0; i < descs.size(); i++) {
-				this.drawString(font, descs.get(i), (int) ((scaledWidth*0.5)-30), 70  + 20 * i, 16777215);
+			List<String> descs = WyHelper.splitString(font, desc, (int) ((scaledWidth * 0.5) - 10), 0, 148);
+			for (int i = 0; i < descs.size(); i++) {
+				this.drawString(font, descs.get(i), (int) ((scaledWidth * 0.5) - 30), 70 + 20 * i, 16777215);
 			}
 			PlayerEntity p = this.getMinecraft().player;
 			IHunterData data = HunterDataCapability.get(p);
@@ -254,7 +254,6 @@ public class HunterScreen extends Screen {
 		int width = this.getMinecraft().getMainWindow().getScaledWidth();
 		int height = this.getMinecraft().getMainWindow().getScaledHeight();
 
-		
 		this.buttons.clear();
 		this.children.clear();
 		if (this.guiState == 0) {
@@ -314,50 +313,56 @@ public class HunterScreen extends Screen {
 			PlayerEntity p = this.getMinecraft().player;
 			IHunterData data = HunterDataCapability.get(p);
 			this.quests = data.getQuests();
-			ListSlider questsSlider = new ListSlider(width / 2 - 122, 20, 10, 200, 0, quests.size() * 10, ListSlider.Entry.fromQuests(quests));
-		
-			questsSlider.setOnInitClickEntry((e,l) -> {
+			ListSlider questsSlider = new ListSlider(width / 2 - 122, 20, 10, 200, 0, quests.size() * 10,
+					ListSlider.Entry.fromQuests(quests));
+
+			questsSlider.setOnInitClickEntry((e, l) -> {
 				this.currentQuest = data.getQuest(ModQuests.getInstance(e.id));
 			});
 			this.addButton(questsSlider);
-		
-		}else if(guiState==3&&!this.isLicenseBG)
 
-	{
-		this.addButton(new HunterButton((int) (width * 0.5 - 48), (int) (100), 96, 32, "bgchanger", false,
-				new Button.IPressable() {
+		} else if (guiState == 3 && !this.isLicenseBG)
 
-					@Override
-					public void onPress(Button p_onPress_1_) {
-						PlayerEntity p = Minecraft.getInstance().player;
+		{
+			this.addButton(new HunterButton((int) (width * 0.5 - 48), (int) (100), 96, 32, "bgchanger", false,
+					new Button.IPressable() {
 
-						if (p.inventory.hasItemStack(new ItemStack(ModItems.HUNTER_LICENSE))) {
-							((HunterScreen) Minecraft.getInstance().currentScreen).isLicenseBG = true;
-							((HunterScreen) Minecraft.getInstance().currentScreen).init();
+						@Override
+						public void onPress(Button p_onPress_1_) {
+							PlayerEntity p = Minecraft.getInstance().player;
 
-						} else {
-							((HunterScreen) Minecraft
-									.getInstance().currentScreen).cardString = "you dont have a license.";
+							if (p.inventory.hasItemStack(new ItemStack(ModItems.HUNTER_LICENSE))) {
+								((HunterScreen) Minecraft.getInstance().currentScreen).isLicenseBG = true;
+								((HunterScreen) Minecraft.getInstance().currentScreen).init();
 
+							} else {
+								((HunterScreen) Minecraft
+										.getInstance().currentScreen).cardString = "you dont have a license.";
+
+							}
 						}
-					}
-				}));
-	}else if(guiState==4)
-	{
+					}));
+		} else if (guiState == 4) {
 
-		PlayerEntity p = this.getMinecraft().player;
-		IAbilityData abldata = AbilityDataCapability.get(p);
-		List<Ability> list = abldata.getAbilities();
-		list.removeIf((abl) -> {if(abl instanceof TruePassiveAbility) {return true;}return false;});
-		AbilitiesListSlider abilitiesSlider = new AbilitiesListSlider(width / 2 - 122, 20, 10, 200, 0, list.size() * 10, ListSlider.Entry.fromAbilities(list));
-		
-		abilitiesSlider.setOnInitClickEntry((e,l) ->{
-			this.currentAbility = abldata.getAbility(ModAbilities.getAbilityOfId(e.id));
-			System.out.println(this.currentAbility);
-		});
-		this.addButton(abilitiesSlider);
+			PlayerEntity p = this.getMinecraft().player;
+			IAbilityData abldata = AbilityDataCapability.get(p);
+			List<Ability> list = abldata.getAbilities();
+			list.removeIf((abl) -> {
+				if (abl instanceof TruePassiveAbility) {
+					return true;
+				}
+				return false;
+			});
+			AbilitiesListSlider abilitiesSlider = new AbilitiesListSlider(width / 2 - 122, 20, 10, 200, 0,
+					list.size() * 10, ListSlider.Entry.fromAbilities(list));
 
-	}
+			abilitiesSlider.setOnInitClickEntry((e, l) -> {
+				this.currentAbility = abldata.getAbility(ModAbilities.getAbilityOfId(e.id));
+				System.out.println(this.currentAbility);
+			});
+			this.addButton(abilitiesSlider);
+
+		}
 
 	}
 
@@ -371,39 +376,42 @@ public class HunterScreen extends Screen {
 	}
 
 	@Override
-	   public boolean keyPressed(int kcode, int p_keyPressed_2_, int p_keyPressed_3_) {
-	    if(this.guiState == 4) {
-	     IAbilityData data = AbilityDataCapability.get(this.getMinecraft().player);
-		 for(int i = 1; i < 9; i++) {
-			 if(kcode == 48 + i) {
-				  if(this.currentAbility != null) {
-				 if(data.getAbilityInSlot(i - 1) == null) {
-					 boolean flag = true;
-					 for(Ability ab : data.getSlotAbilities()) {
-						 if(ab != null) {
-						 if(ab.getId() == this.currentAbility.getId()) {
-							 flag = false;
-						 }
-						 }
-					 }
-					 if(flag == true) {
-				 data.putAbilityInSlot(this.currentAbility, i - 1);
-				 PacketHandler.INSTANCE.sendToServer(new AbilityUpdatePacket(data, false));
-					 }
-				 this.currentAbility = null;
-				 } else {
-					 this.currentAbility =null;
-				 }
-			 } else {
-				 if(data.getAbilityInSlot(i - 1) != null) {
-					 data.putAbilityInSlot(null, i - 1);
-					 PacketHandler.INSTANCE.sendToServer(new AbilityUpdatePacket(data, false));
-				 }
-			 }
-			 
-		 }
-	     }
-	    }return super.keyPressed(kcode,p_keyPressed_2_,p_keyPressed_3_);
-}
+	public boolean keyPressed(int kcode, int p_keyPressed_2_, int p_keyPressed_3_) {
+		if (this.guiState == 4) {
+			IAbilityData data = AbilityDataCapability.get(this.getMinecraft().player);
+			for (int i = 1; i < 6; i++) {
+				if (kcode == 48 + i) {
+					if (this.currentAbility != null) {
+						if (data.getAbilityInSlot(i - 1) == null) {
+							boolean flag = true;
+							for (Ability ab : data.getSlotAbilities()) {
+								if (ab != null) {
+									if (ab.getId() == this.currentAbility.getId()) {
+										flag = false;
+									}
+								}
+							}
+							if (flag == true) {
+								data.putAbilityInSlot(this.currentAbility, i - 1);
+								PacketHandler.INSTANCE.sendToServer(new AbilityUpdatePacket(data, false));
+							}
+							this.currentAbility = null;
+						} else {
+							this.currentAbility = null;
+						}
+					} else {
+						if (data.getAbilityInSlot(i - 1) != null) {
+
+							data.giveAbility(data.getAbilityInSlot(i - 1));
+							data.putAbilityInSlot(null, i - 1);
+							PacketHandler.INSTANCE.sendToServer(new AbilityUpdatePacket(data, false));
+						}
+					}
+
+				}
+			}
+		}
+		return super.keyPressed(kcode, p_keyPressed_2_, p_keyPressed_3_);
+	}
 
 }

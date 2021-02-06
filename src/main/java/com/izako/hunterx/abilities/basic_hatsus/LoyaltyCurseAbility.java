@@ -1,17 +1,25 @@
 package com.izako.hunterx.abilities.basic_hatsus;
 
+import java.util.Arrays;
+import java.util.List;
+
+import com.izako.hunterx.abilities.hatsus.leorio.LockOnAbility;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.entities.goals.wolfgoals.FollowOwnerGoal;
 import com.izako.hunterx.entities.goals.wolfgoals.MeleeAttackGoal;
 import com.izako.hunterx.entities.goals.wolfgoals.OwnerHurtByTargetGoal;
 import com.izako.hunterx.entities.goals.wolfgoals.OwnerHurtTargetGoal;
+import com.izako.hunterx.init.ModAbilities;
 import com.izako.hunterx.init.ModQuests;
 import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
+import com.izako.hunterx.izapi.ability.IBlacklistPassive;
 import com.izako.hunterx.izapi.ability.ITrainable;
 import com.izako.hunterx.izapi.ability.NenType;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
+import com.izako.hunterx.networking.PacketHandler;
+import com.izako.hunterx.networking.packets.LockOnPacket;
 import com.izako.wypi.WyHelper;
 
 import net.minecraft.entity.LivingEntity;
@@ -19,17 +27,19 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class LoyaltyCurseAbility extends PassiveAbility implements ITrainable {
+public class LoyaltyCurseAbility extends PassiveAbility implements ITrainable, IBlacklistPassive {
 
-	AnimalEntity animal;
-	FollowOwnerGoal followGoal;
-	OwnerHurtTargetGoal ownerHurtGoal;
-	OwnerHurtByTargetGoal ownerHurtByGoal;
-	MeleeAttackGoal meleeGoal;
+	public AnimalEntity animal;
+	public FollowOwnerGoal followGoal;
+	public OwnerHurtTargetGoal ownerHurtGoal;
+	public OwnerHurtByTargetGoal ownerHurtByGoal;
+	public MeleeAttackGoal meleeGoal;
 	
 	public LoyaltyCurseAbility() {
-		this.props = new Ability.Properties(this).setMaxPassive(Integer.MAX_VALUE).setAbilityType(AbilityType.PASSIVE).setNenType(NenType.MANIPULATOR);
+		this.props = new Ability.Properties(this).setMaxPassive(Integer.MAX_VALUE).setAbilityType(AbilityType.PASSIVE).setNenType(NenType.MANIPULATOR).setMaxCooldown(1 * 20);
 	}
 	@Override
 	public String getId() {
@@ -49,6 +59,7 @@ public class LoyaltyCurseAbility extends PassiveAbility implements ITrainable {
 	@Override
 	public void onStartPassive(LivingEntity p) {
 		
+		
 		EntityRayTraceResult ray = WyHelper.rayTraceEntities(p, 100,p);
 		
 		if(!(ray.getEntity() instanceof AnimalEntity)) {
@@ -59,7 +70,6 @@ public class LoyaltyCurseAbility extends PassiveAbility implements ITrainable {
 			return;
 		}
 		
-		System.out.println(ray.getEntity());
 		if(!p.world.isRemote()) {
 			this.animal = (AnimalEntity) ray.getEntity();
             this.followGoal = new FollowOwnerGoal(this.animal, 1.0D, 10.0F, 2.0F, false,p);
@@ -75,13 +85,16 @@ public class LoyaltyCurseAbility extends PassiveAbility implements ITrainable {
 		
 		Helper.consumeAura(40, p, this);
 		super.onStartPassive(p);
-	}
+		}
 
 	@Override
 	public void duringPassive(LivingEntity p) {
-		if(this.getPassiveTimer() > (Integer.MAX_VALUE - Helper.getTrueValue(100 * 20, this, p)) && Helper.getTrueValue(100 * 20, this,p) < 100 * 20) {
-			this.endAbility(p);
+
+		if(p.ticksExisted % 60 == 0) {
+			Helper.consumeAura(1, p, this);
+
 		}
+
 	}
 	@Override
 	public void onEndPassive(LivingEntity p) {
@@ -104,5 +117,10 @@ public class LoyaltyCurseAbility extends PassiveAbility implements ITrainable {
 			data.getQuest(ModQuests.BASIC_MANIPULATOR).setProgress((xp + 50) * 2);
 		}
 	}
+	@Override
+	public List<Ability> getBlackList() {
+		return Arrays.asList(ModAbilities.ZETSU_ABILITY);
+	}
 
+	
 }

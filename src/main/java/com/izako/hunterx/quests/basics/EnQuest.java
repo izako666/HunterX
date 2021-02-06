@@ -3,8 +3,10 @@ package com.izako.hunterx.quests.basics;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.izako.hunterx.abilities.basics.EnAbility;
 import com.izako.hunterx.izapi.quest.Quest;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
@@ -48,6 +50,13 @@ public class EnQuest extends Quest {
 			}
 		});
 		return super.readData(nbt);
+	}
+
+	@Override
+	public void finishQuest(PlayerEntity p) {
+
+		new EnAbility().give(p);
+		super.finishQuest(p);
 	}
 
 }

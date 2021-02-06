@@ -100,7 +100,7 @@ public abstract class Ability {
 					if(this instanceof IOnPlayerRender) {
 						if(!data.hasActiveAbility(ModAbilities.IN_ABILITY)) {
 						if(!p.world.isRemote()) {
-							PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getEntityId(), true));
+							PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getEntityId(), true,data.getAuraColor()));
 						}
 					}
 					}
@@ -126,7 +126,7 @@ public abstract class Ability {
 					if(!data.hasActiveAbility(ModAbilities.IN_ABILITY)) {
 							
 						if(!p.world.isRemote()) {
-							PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getEntityId(), false));
+							PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getEntityId(), false,data.getAuraColor()));
 						}
 					}
 					}
@@ -158,7 +158,7 @@ public abstract class Ability {
 					if(!data.hasActiveAbility(ModAbilities.IN_ABILITY)) {
 							
 						if(!p.world.isRemote()) {
-							PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getEntityId(), false));
+							PacketHandler.sendToTracking(p, new SyncAbilityRenderingPacket(this.getId(), p.getEntityId(), false,data.getAuraColor()));
 						}
 					}
 					}
@@ -187,6 +187,8 @@ public abstract class Ability {
 	}
 
 	public void endAbility(LivingEntity p) {
+		
+
 		switch(this.props.type) {
 		
 		case PASSIVE:
@@ -475,9 +477,9 @@ public abstract class Ability {
 
 	public void setXp(double xp, LivingEntity p) {
 		ITrainable trainable = (ITrainable) this;
-		if(this.rand.nextInt(1000) > 998 && this.xp < xp) {
+		if(this.rand.nextInt(100) > 97 && this.xp < xp) {
 			IAbilityData data = AbilityDataCapability.get(p);
-			if(data.getNenCapacity() < 300) {
+			if(data.getNenCapacity() < 500) {
 			data.setNenCapacity(data.getNenCapacity() + 1);
 			}
 		}

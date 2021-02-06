@@ -48,7 +48,15 @@ public class WingEntity extends CreatureEntity implements IQuestGiver{
 		new TenAbility().give(this);
 		new InAbility().give(this);
 		data.setNenCapacity(1000);
+		
+		System.out.println("wing spawned in" + this.getPosition().toString());
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+	}
+
+	@Override
+	public boolean canSpawn(IWorld worldIn, SpawnReason spawnReasonIn) {
+		return rand.nextBoolean();
+		
 	}
 
 	@SuppressWarnings("unchecked")
@@ -81,20 +89,11 @@ public class WingEntity extends CreatureEntity implements IQuestGiver{
 		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(10);
 	}
 
-   @Override
-	public boolean canSpawn(IWorld worldIn, SpawnReason spawnReasonIn) {
-
-	  List<VillagerEntity> list = worldIn.getEntitiesWithinAABB(VillagerEntity.class, new AxisAlignedBB(this.getPosX() - 30, this.getPosY() - 30, this.getPosZ() - 30, this.getPosX() + 30, this.getPosY() + 30, this.getPosZ() + 30));
   
-	  if(!list.isEmpty()) {
-		  return true;
-	  }
-	  return false;
-   }
 
 	@Override
 	public boolean canDespawn(double d) {
-		return true;
+		return false;
 	}
 
 	@OnlyIn(Dist.CLIENT)

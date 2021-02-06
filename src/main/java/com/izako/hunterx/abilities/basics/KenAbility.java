@@ -43,7 +43,7 @@ public class KenAbility extends PassiveAbility implements IOnPlayerRender,ITrain
 		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "kenmodifier",
 				Helper.getTrueValue(30, this, p), Operation.ADDITION);
 		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "kenmodifierattack",
-				Helper.getTrueValue(30, this, p), Operation.ADDITION);
+				Helper.getTrueValue(15, this, p), Operation.ADDITION);
 		if (p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(defenseModifierID) == null) {
 			p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(defenseMod);
 		}
@@ -57,7 +57,7 @@ public class KenAbility extends PassiveAbility implements IOnPlayerRender,ITrain
 		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "kenmodifier",
 				Helper.getTrueValue(30, this, p), Operation.ADDITION);
 		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "kenmodifierattack",
-				Helper.getTrueValue(30, this, p), Operation.ADDITION);
+				Helper.getTrueValue(15, this, p), Operation.ADDITION);
 		if (p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(defenseModifierID) == null) {
 			p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(defenseMod);
 		}

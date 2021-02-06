@@ -28,18 +28,12 @@ public class QuestGiverEvent {
 			if(!e.getPlayer().world.isRemote) {
 			IHunterData data = HunterDataCapability.get(e.getPlayer());
 			IQuestGiver giver = (IQuestGiver) e.getTarget();
-			Quest q = null;
-			try {
-			 q = giver.getSpeech().getQuests(e.getPlayer())[Helper.getCurrentQuest(giver.getSpeech().getQuests(e.getPlayer()), e.getPlayer())];
-			} catch(Exception exception) {
-				//The error is an index out of bounds exception, its fine if it errors.
-			}
-			if(q != null) {
-				q.onInteractEvent(giver, e);
+		
+			
 			
 			PacketHandler.INSTANCE.sendTo(new StatsUpdatePacket(data,false), ((ServerPlayerEntity) e.getPlayer()).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
 			PacketHandler.INSTANCE.sendTo(new OpenQuestGuiPacket(e.getTarget()), ((ServerPlayerEntity) e.getPlayer()).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
-			}
+			
 			}
 		}
 	}

@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.izako.hunterx.Main;
 import com.izako.hunterx.init.ModItems;
+import com.izako.hunterx.izapi.IThugDrop;
 
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.renderer.entity.model.BipedModel;
@@ -17,7 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class HunterXArmor extends ArmorItem{
+public class HunterXArmor extends ArmorItem implements IThugDrop {
 
 	
 
@@ -66,7 +67,10 @@ public class HunterXArmor extends ArmorItem{
 
 		if(itemStack != ItemStack.EMPTY && itemStack.getItem() instanceof HunterXArmor) {
 
-			this.skinType = ((AbstractClientPlayerEntity) entityLiving).getSkinType();			
+			this.skinType = "sli";
+			if(entityLiving instanceof AbstractClientPlayerEntity) {
+			this.skinType = ((AbstractClientPlayerEntity) entityLiving).getSkinType();		
+			}
 
 			PlayerModel model = new PlayerModel(0.3f, this.skinType == "slim");			
 

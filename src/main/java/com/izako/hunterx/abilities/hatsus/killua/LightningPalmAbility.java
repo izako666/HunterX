@@ -19,9 +19,8 @@ import net.minecraft.world.server.ServerWorld;
 public class LightningPalmAbility extends PunchAbility {
 
 	public LightningPalmAbility() {
-		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxPassive(Integer.MAX_VALUE).setAuraConsumption(this::queueAuraConsumption).setConsumptionType(AuraConsumptionType.VALUE).setNenType(NenType.TRANSMUTER);
+		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxPassive(Integer.MAX_VALUE).setNenType(NenType.TRANSMUTER).setMaxCooldown(2 * 20);
 	}
-	boolean ablEnd = false;
 	@Override
 	public String getId() {
 		return "lightning_palm";
@@ -40,9 +39,9 @@ public class LightningPalmAbility extends PunchAbility {
 	@Override
 	public float onPunch(LivingEntity p, LivingEntity target) {
 
-		target.addPotionEffect(new EffectInstance(ModEffects.PARALYSIS_EFFECT, 30, 1));
-		ablEnd = true;
-		this.endAbility(p);
+		target.addPotionEffect(new EffectInstance(ModEffects.PARALYSIS_EFFECT, 40, 1));
+		Helper.endAbilitySafe(p, this);
+		Helper.consumeAura(20, p, this);
 		return Helper.getTrueValue(15, this, p);
 	}
 
@@ -67,11 +66,5 @@ public class LightningPalmAbility extends PunchAbility {
 
 	}
 
-	private int queueAuraConsumption() {
-		if(ablEnd) {
-			ablEnd = false;
-			return 15;
-		}
-		return 0;
-	}
+
 }

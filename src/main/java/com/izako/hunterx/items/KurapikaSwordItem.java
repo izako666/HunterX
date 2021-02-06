@@ -7,14 +7,11 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import com.izako.hunterx.Main;
-import com.izako.hunterx.init.ModItems;
+import com.izako.hunterx.izapi.IThugDrop;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -33,7 +30,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class KurapikaSwordItem extends SwordItem {
+public class KurapikaSwordItem extends SwordItem implements IThugDrop {
 
 	private final UUID attackUUID = UUID.fromString("b34f7773-0533-48ae-8d7b-807bba9983e2");
 	

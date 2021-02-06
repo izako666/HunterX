@@ -3,6 +3,8 @@ package com.izako.hunterx.abilities.hatsus.killua;
 import java.util.List;
 
 import com.izako.hunterx.Main;
+import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
+import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.init.ModEffects;
 import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
@@ -16,6 +18,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.server.ServerWorld;
 
 public class ThunderboltAbility extends Ability {
@@ -41,6 +44,8 @@ public class ThunderboltAbility extends Ability {
 
 	@Override
 	public void use(LivingEntity p) {
+		
+		IAbilityData adata = AbilityDataCapability.get(p);
 		if(!thunderBoltTime) {
 			if(!p.world.isRemote()) {
 			p.setMotion(p.getMotion().add(0, 1.5, 0));
@@ -48,7 +53,9 @@ public class ThunderboltAbility extends Ability {
 			p.addPotionEffect(new EffectInstance(Effects.JUMP_BOOST, 36, 20,true,true));
 			}
 			thunderBoltTime = true;
+			this.setCooldown(0);
 		} else {
+			if(Helper.consumeAura(45, p, this)) {
 			if(!p.world.isRemote()) {
 			List<LivingEntity> entities = p.world.getEntitiesWithinAABB(LivingEntity.class, p.getBoundingBox().expand(1, -10, 1));
 			entities.remove(p);
@@ -68,12 +75,15 @@ public class ThunderboltAbility extends Ability {
 			}
 			LightningBoltEntity bolt = new LightningBoltEntity(p.world, p.getPosX(), p.getPosY() - 10, p.getPosZ(), false);
 			for(LivingEntity entity : entities) {
-				entity.attackEntityFrom(DamageSource.causeThrownDamage(p, bolt), Helper.getTrueValue(20, this, p));
+				entity.attackEntityFrom(DamageSource.causeThrownDamage(p, bolt), Helper.getTrueValue(25, this, p));
 				entity.addPotionEffect(new EffectInstance(ModEffects.PARALYSIS_EFFECT, 100, 1));
-				
-				System.out.println(entity.getHealth());
+
+			}
+			
+
 			}
 			}
+
 			thunderBoltTime = false;
 		}
 		super.use(p);

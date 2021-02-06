@@ -28,12 +28,7 @@ public class StatBoostAbility extends PassiveAbility implements ITrainable, IBla
 
 	public StatBoostAbility() {
 		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxPassive(Integer.MAX_VALUE)
-				.setNenType(NenType.ENHANCER).setConsumptionType(AuraConsumptionType.VALUE).setAuraConsumption(new IAuraConsumption() {
-
-					@Override
-					public int getAmount() {
-						return 15;
-					}});
+				.setNenType(NenType.ENHANCER).setMaxCooldown(6 * 20);
 	}
 
 	@Override
@@ -68,6 +63,8 @@ public class StatBoostAbility extends PassiveAbility implements ITrainable, IBla
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		Helper.consumeAura(25, p, this);
 		super.onStartPassive(p);
 	}
 

@@ -48,11 +48,11 @@ public final class ModEventSubscriber {
 				EnEntity.TYPE, ProjectileEntity.TYPE, AuraBlastProjectileEntity.TYPE, ArmEntity.TYPE,
 				ShurikenEntity.TYPE);
 		registerEntityWorldSpawn(ThugEntity.TYPE, 2, 1, Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH,
-				Biomes.JUNGLE);
+				Biomes.JUNGLE,Biomes.TAIGA);
 		registerEntityWorldSpawn(KirikoEntity.TYPE, 1, 1, Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH,
-				Biomes.JUNGLE);
-		registerEntityWorldSpawn(WingEntity.TYPE, 6, 1, Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH,
-				Biomes.JUNGLE);
+				Biomes.JUNGLE,Biomes.TAIGA);
+		registerEntityWorldSpawn(WingEntity.TYPE, 2, 1, Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH,
+				Biomes.JUNGLE,Biomes.TAIGA);
 
 	}
 

@@ -49,8 +49,8 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender , ITra
 		return "Ren explodes your aura output for attack and defense.";
 	}
 	public void onStartPassive(LivingEntity p) {
-		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", Helper.getTrueValue(15, this, p), Operation.ADDITION);
-		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack", Helper.getTrueValue(30, this, p), Operation.ADDITION);
+		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", Helper.getTrueValue(10, this, p), Operation.ADDITION);
+		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack", Helper.getTrueValue(15, this, p), Operation.ADDITION);
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(defenseModifierID) == null) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(defenseMod);
 		}
@@ -61,8 +61,8 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender , ITra
 
 	@Override
 	public void duringPassive(LivingEntity p) {
-		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", Helper.getTrueValue(15, this, p), Operation.ADDITION);
-		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack",Helper.getTrueValue(30, this, p), Operation.ADDITION);
+		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "renmodifier", Helper.getTrueValue(10, this, p), Operation.ADDITION);
+		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "renmodifierattack",Helper.getTrueValue(15, this, p), Operation.ADDITION);
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(defenseModifierID) == null) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(defenseMod);
 		}
@@ -72,7 +72,7 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender , ITra
 		
 		 if(!p.world.isRemote()) {
 			int chance = p.world.getRandom().nextInt(100);
-			if(chance > 97) {
+			if(chance > 95) {
 				IAbilityData abilityData = AbilityDataCapability.get(p);
 				double xRange = p.world.getRandom().nextDouble()  -0.5;
 				double yRange = p.world.getRandom().nextDouble();

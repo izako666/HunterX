@@ -32,7 +32,7 @@ public class ModKeybindings {
 
 	public static final KeyBinding HUNTER_KEYBINDING = new KeyBinding("key.huntergui",GLFW.GLFW_KEY_R, "key.categories.hntrx");
 	public static final KeyBinding ACTIVATE_ABILITY_SCROLLER = new KeyBinding("key.activatescroller",GLFW.GLFW_KEY_G, "key.categories.hntrx");
-	public static final KeyBinding USE_ABILITY = new KeyBinding("key.useability",GLFW.GLFW_KEY_F, "key.categories.hntrx");
+	public static final KeyBinding USE_ABILITY = new KeyBinding("key.useability",GLFW.GLFW_KEY_GRAVE_ACCENT, "key.categories.hntrx");
 
 	public static void init()
 	{
@@ -61,12 +61,10 @@ public class ModKeybindings {
 			if(abl != null) {
 				if(abl.props.type == AbilityType.CHARGING || abl.props.type  == AbilityType.CHARGING_PASSIVE) {
 					if(event.getAction() == 1) {
-						abl.onUse(Minecraft.getInstance().player);
-						PacketHandler.INSTANCE.sendToServer(new AbilityUsePacket(abilitydata.getActiveAbility()));
+						PacketHandler.INSTANCE.sendToServer(new AbilityUsePacket(abilitydata.getActiveAbility(),true));
 					}
 				} else if(event.getAction() == 0) {
-				abl.onUse(Minecraft.getInstance().player);
-				PacketHandler.INSTANCE.sendToServer(new AbilityUsePacket(abilitydata.getActiveAbility()));
+				PacketHandler.INSTANCE.sendToServer(new AbilityUsePacket(abilitydata.getActiveAbility(),true));
 				}
 				}
 		}

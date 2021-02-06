@@ -8,11 +8,13 @@ import com.izako.hunterx.entities.ThugEntity;
 import com.izako.hunterx.entities.WingEntity;
 import com.izako.hunterx.items.BadgeItem;
 import com.izako.hunterx.items.CardItem;
+import com.izako.hunterx.items.GonsFishingRodItem;
 import com.izako.hunterx.items.HunterLicenseItem;
 import com.izako.hunterx.items.HunterXArmorMaterial;
 import com.izako.hunterx.items.KurapikaSwordItem;
 import com.izako.hunterx.items.NeedleItem;
 import com.izako.hunterx.items.PistolItem;
+import com.izako.hunterx.items.ShurikenItem;
 import com.izako.hunterx.items.YoyoItem;
 import com.izako.hunterx.items.armor.HunterXArmor;
 import com.izako.hunterx.items.nen.ConjurerTool;
@@ -54,13 +56,13 @@ public class ModItems {
 	public static final ConjurerTool BASIC_CONJURER_TOOL = new ConjurerTool(BASIC_CONJURER_TIER, 2, -2f, new Item.Properties().maxStackSize(1), Arrays.asList(ToolType.PICKAXE,ToolType.AXE,ToolType.SHOVEL));
 	public static final ConjurerTool JAJANKEN_SCISSORS = new ConjurerTool(JAJANKEN_SCISSORS_TIER, 5, 1f, new Item.Properties().maxStackSize(1), Arrays.asList());
 
-	public static final FishingRodItem GONS_FISHING_ROD = new FishingRodItem(new Item.Properties().group(HUNTERX_ITEM_GROUP));
+	public static final FishingRodItem GONS_FISHING_ROD = new GonsFishingRodItem(new Item.Properties().group(HUNTERX_ITEM_GROUP));
 	public static final YoyoItem YOYO = new YoyoItem(
 			new Item.Properties().group(HUNTERX_ITEM_GROUP).maxStackSize(1).maxDamage(200));
 	public static final CardItem CARD = new CardItem(new Item.Properties().group(HUNTERX_ITEM_GROUP).maxStackSize(16));
 	public static final NeedleItem NEEDLE = new NeedleItem(
 			new Item.Properties().group(HUNTERX_ITEM_GROUP).maxStackSize(16));
-	public static final NeedleItem SHURIKEN = new NeedleItem(
+	public static final ShurikenItem SHURIKEN = new ShurikenItem(
 			new Item.Properties().maxStackSize(16));
 
 	public static final PistolItem PISTOL = new PistolItem(new Item.Properties().group(HUNTERX_ITEM_GROUP).maxStackSize(1));

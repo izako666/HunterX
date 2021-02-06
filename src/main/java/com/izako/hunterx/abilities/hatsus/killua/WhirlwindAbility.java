@@ -4,6 +4,7 @@ import com.izako.hunterx.Main;
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.init.ModAbilities;
+import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.NenType;
 import com.izako.hunterx.izapi.ability.Ability.AbilityType;
@@ -24,12 +25,12 @@ public class WhirlwindAbility extends LightningSpeedAbility {
 	@Override
 	public void onStartPassive(LivingEntity p) {
 		IAbilityData data = AbilityDataCapability.get(p);
-		float amount =(float) (data.getNenCapacity() * 0.8);
+		float amount =(float) (data.getNenCapacity() * 0.6);
 		
 		if(data.getCurrentNen() >= amount) {
 			data.setCurrentNen((int) (data.getCurrentNen() - amount));
 		} else {
-			this.endAbility(p);
+			Helper.endAbilitySafe(p, this);
 		}
 		super.onStartPassive(p);
 	}

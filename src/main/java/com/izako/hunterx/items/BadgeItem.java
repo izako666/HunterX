@@ -6,7 +6,6 @@ public class BadgeItem extends Item{
 
 	public BadgeItem(Properties properties) {
 		super(properties);
-		// TODO Auto-generated constructor stub
 	}
 
 }

@@ -24,15 +24,23 @@ public class TenAbility extends PassiveAbility implements IOnPlayerRender , ITra
 	public TenAbility() {
 
 		super();
-		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setConsumptionType(AuraConsumptionType.NONE).setMaxCooldown(10).setMaxPassive(Integer.MAX_VALUE).setAuraConsumption(this::auraConsumptionEvent).setMaxCooldown(20 * 4).setNenType(NenType.UNKNOWN);
+		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setConsumptionType(AuraConsumptionType.VALUE).setMaxPassive(Integer.MAX_VALUE).setAuraConsumption(this::auraConsumptionEvent).setMaxCooldown(20 * 4).setNenType(NenType.UNKNOWN);
 	}
 	
+
+
+	@Override
+	public double getAuraConsumptionScale() {
+		return 0.01f;
+	}
+
+
 
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Main.MODID, "textures/items/card.png");
 	public static final UUID modifierUUID = UUID.fromString("22560518-3370-4b84-a7a9-22a240cf3232");
 	@Override
 	public void onStartPassive(LivingEntity p) {
-		AttributeModifier mod = new AttributeModifier(modifierUUID, "tenmodifier", Helper.getTrueValue(30, this, p), Operation.ADDITION);
+		AttributeModifier mod = new AttributeModifier(modifierUUID, "tenmodifier", Helper.getTrueValue(10, this, p), Operation.ADDITION);
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(modifierUUID) == null) {
 		p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(mod);
 		}
@@ -41,7 +49,7 @@ public class TenAbility extends PassiveAbility implements IOnPlayerRender , ITra
 	@Override
 	public void duringPassive(LivingEntity p) {
 		if(p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(modifierUUID) == null) {
-			AttributeModifier mod = new AttributeModifier(modifierUUID, "tenmodifier", Helper.getTrueValue(30, this, p), Operation.ADDITION);
+			AttributeModifier mod = new AttributeModifier(modifierUUID, "tenmodifier", Helper.getTrueValue(10, this, p), Operation.ADDITION);
 			p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(mod);
 
 		}

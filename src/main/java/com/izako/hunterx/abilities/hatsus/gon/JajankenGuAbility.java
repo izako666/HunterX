@@ -31,7 +31,7 @@ import net.minecraftforge.fml.network.NetworkDirection;
 public class JajankenGuAbility extends ChargeablePassiveAbility implements IHandOverlay,ITrainable{
 
 	public JajankenGuAbility() {
-		this.props = new Ability.Properties(this).setNenType(NenType.ENHANCER).setAbilityType(AbilityType.CHARGING_PASSIVE).setMaxCharging(20 * 20).setMaxPassive(40 * 20);
+		this.props = new Ability.Properties(this).setNenType(NenType.ENHANCER).setAbilityType(AbilityType.CHARGING_PASSIVE).setMaxCharging(20 * 20).setMaxPassive(40 * 20).setMaxCooldown(10 * 20);
 	}
 	@Override
 	public String getId() {
@@ -92,14 +92,13 @@ public class JajankenGuAbility extends ChargeablePassiveAbility implements IHand
 
 				if (ability instanceof JajankenGuAbility && ability.isInPassive() && heldItem.isEmpty())
 				{
-					float initialValue = (float) Helper.fromRangeToRange(0, ability.props.maxCharging, 1, 80, ability.getChargingTimer());
+					float initialValue = (float) Helper.fromRangeToRange(0, ability.props.maxCharging, 1, 150, ability.getChargingTimer());
 					float damage = Helper.getTrueValue(initialValue, ability, player);
 					if(damage < 0)
 						event.setCanceled(true);
 					
 					event.setAmount(event.getAmount() + damage);
-					ability.endAbility(player);
-					PacketHandler.INSTANCE.sendTo(new AbilityUsePacket(ability.getSlot()), ((ServerPlayerEntity)player).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+					Helper.endAbilitySafe(player, ability);
 					if(ability instanceof ITrainable) {
 						ITrainable trainable = (ITrainable) ability;
 						ability.setXp(ability.getXp() + (trainable.getXPOnUsage() + (ability.rand.nextDouble() - 0.5))/ 6, player);
@@ -107,6 +106,13 @@ public class JajankenGuAbility extends ChargeablePassiveAbility implements IHand
 				}
 			}
 		}
+	}
+	@Override
+	public void onStartPassive(LivingEntity p) {
+		float scale = (float) Helper.fromRangeToRange(0, this.props.maxCharging, 0, 1.0, this.getChargingTimer());
+
+		float auraCon = 60 * scale;
+		Helper.consumeAura(auraCon, p, this);
 	}
 	@Override
 	public boolean isFullArm() {

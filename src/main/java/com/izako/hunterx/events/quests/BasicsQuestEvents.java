@@ -19,6 +19,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ShovelItem;
@@ -56,7 +57,7 @@ public class BasicsQuestEvents {
 	@SubscribeEvent
 	public static void killEntity(LivingDeathEvent e) {
 
-		if (e.getEntityLiving() instanceof MobEntity && e.getSource().getTrueSource() instanceof PlayerEntity) {
+		if (e.getEntityLiving() instanceof IMob && e.getSource().getTrueSource() instanceof PlayerEntity) {
 
 			PlayerEntity p = (PlayerEntity) e.getSource().getTrueSource();
 			MobEntity m = (MobEntity) e.getEntityLiving();
@@ -121,30 +122,32 @@ public class BasicsQuestEvents {
 		if(data.hasQuest(ModQuests.RYUQUEST) && !data.getQuest(ModQuests.RYUQUEST).isFinished() && !data.getQuest(ModQuests.RYUQUEST).canFinish()) {
 			RyuQuest q = (RyuQuest) data.getQuest(ModQuests.RYUQUEST);
 			if(q.count == -1 && e.getAbility().equals(ModAbilities.KO_ABILITY)) {
-				
+				if(e.getEntity().world.isRemote()) {
 				e.getEntity().sendMessage(new StringTextComponent("Ryu Quest has started ticking!").applyTextStyle(TextFormatting.RED));
+				}
 				q.count = 0;
 				q.iteration = 1;
 				return;
-			} else if(q.count < 1240 && q.count > 1180 && e.getAbility().equals(ModAbilities.REN_ABILITY)) {
+			} else if(q.count < 1240 && q.count > 1160 && e.getAbility().equals(ModAbilities.REN_ABILITY)) {
 				q.iteration = 2;
-			}else if(q.count < 2440 && q.count > 2380 && e.getAbility().equals(ModAbilities.ZETSU_ABILITY)) {
+			}else if(q.count < 2440 && q.count > 2360 && e.getAbility().equals(ModAbilities.ZETSU_ABILITY)) {
 				q.iteration = 3;
-			}else if(q.count < 3640 && q.count > 3580 && e.getAbility().equals(ModAbilities.KO_ABILITY)) {
+			}else if(q.count < 3640 && q.count > 3560 && e.getAbility().equals(ModAbilities.KO_ABILITY)) {
 				q.iteration = 4;
-			}else if(q.count < 4840 && q.count > 4780 && e.getAbility().equals(ModAbilities.REN_ABILITY)) {
+			}else if(q.count < 4840 && q.count > 4760 && e.getAbility().equals(ModAbilities.REN_ABILITY)) {
 				q.iteration = 5;
-			}else if(q.count < 6040 && q.count > 5980 && e.getAbility().equals(ModAbilities.ZETSU_ABILITY)) {
+			}else if(q.count < 6040 && q.count > 5960 && e.getAbility().equals(ModAbilities.ZETSU_ABILITY)) {
 				q.iteration = 6;
 				data.getQuest(ModQuests.RYUQUEST).setProgress(100);
+				if(e.getEntity().world.isRemote()) {
 				e.getEntity().sendMessage(new StringTextComponent("Ryu Ticker: Congrats! You Did it!").applyTextStyle(TextFormatting.RED));
-
+				}
 			} else {
-				if(q.count == -1) {
+					if(e.getEntity().world.isRemote()) {
 				e.getEntity().sendMessage(new StringTextComponent("Ryu Ticker: You have failed the quest, resetting progress.").applyTextStyle(TextFormatting.RED));
 				e.getEntity().sendMessage(new StringTextComponent(String.valueOf(q.count)).applyTextStyle(TextFormatting.RED));
-
-				}
+					}
+				
 				q.count = -1;
 				q.iteration = 0;
 			}
@@ -164,7 +167,9 @@ public class BasicsQuestEvents {
 			}
 			
 			if(q.count % 20 == 0) {
-				e.getEntityLiving().sendMessage(new StringTextComponent(String.valueOf(q.count)));
+				if(e.getEntity().world.isRemote()) {
+				e.getEntityLiving().sendMessage(new StringTextComponent(String.valueOf(q.count / 20)));
+				}
 			}
 		}
 	}
@@ -209,7 +214,9 @@ public class BasicsQuestEvents {
 				IAbilityData tData = AbilityDataCapability.get(e.getEntity());
 			
 				IHunterData hData = HunterDataCapability.get(p);
-				if(!(e.getEntity() instanceof MonsterEntity))
+				boolean case1 = !(e.getEntity() instanceof MonsterEntity);
+				boolean case2 = !(e.getEntity() instanceof IMob);
+				if(case1 && case2)
 					return;
 				if(!hData.hasQuest(ModQuests.ENQUEST))
 					return;
@@ -217,9 +224,14 @@ public class BasicsQuestEvents {
 					
 					EnQuest quest = (EnQuest) hData.getQuest(ModQuests.ENQUEST);
 
-					if(!quest.MONSTERS_DISCOVERED.contains(e.getEntity().getType().getRegistryName()) && quest.MONSTERS_DISCOVERED.size() < 20) {
+					if(!quest.MONSTERS_DISCOVERED.contains(e.getEntity().getType().getRegistryName())) {
 						quest.MONSTERS_DISCOVERED.add(e.getEntity().getType().getRegistryName());
+						if((quest.MONSTERS_DISCOVERED.size() * 5) > 100) {
+							quest.setProgress(100);
+						} else {
 						quest.setProgress(quest.MONSTERS_DISCOVERED.size() * 5);
+						}
+						
 						PacketHandler.INSTANCE.sendToServer(new QuestUpdatePacket(quest));
 
 					}

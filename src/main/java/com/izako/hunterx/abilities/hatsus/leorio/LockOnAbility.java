@@ -1,15 +1,20 @@
 package com.izako.hunterx.abilities.hatsus.leorio;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
+import com.izako.hunterx.izapi.ability.IBlacklistPassive;
 import com.izako.hunterx.izapi.ability.NenType;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
 import com.izako.wypi.WyHelper;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.util.math.EntityRayTraceResult;
 
-public class LockOnAbility extends PassiveAbility {
+public class LockOnAbility extends PassiveAbility implements IBlacklistPassive {
 
 	public LivingEntity lockOn = null;
 	public LockOnAbility() {
@@ -29,6 +34,7 @@ public class LockOnAbility extends PassiveAbility {
 	public String getDesc() {
 		return "A lock on ability for leorios moves.";
 	}
+
 
 	@Override
 	public void onStartPassive(LivingEntity p) {
@@ -62,5 +68,10 @@ public class LockOnAbility extends PassiveAbility {
 			}
 		}
 	}
+	@Override
+	public List<Ability> getBlackList() {
+		return Arrays.asList();
+	}
 
+	
 }

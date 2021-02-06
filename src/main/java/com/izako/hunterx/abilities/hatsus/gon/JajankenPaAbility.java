@@ -22,7 +22,7 @@ import net.minecraft.world.server.ServerWorld;
 public class JajankenPaAbility extends ChargeableAbility implements ITrainable,IHandOverlay{
 
 	public JajankenPaAbility() {
-		this.props = new Ability.Properties(this).setAbilityType(AbilityType.CHARGING).setMaxCharging(100).setNenType(NenType.EMITTER);
+		this.props = new Ability.Properties(this).setAbilityType(AbilityType.CHARGING).setMaxCharging(100).setNenType(NenType.EMITTER).setMaxCooldown(5 * 20);
 
 	}
 	@Override
@@ -42,7 +42,7 @@ public class JajankenPaAbility extends ChargeableAbility implements ITrainable,I
 
 	@Override
 	public void onEndCharging(LivingEntity p) {
-		double damage = Helper.fromRangeToRange(0, this.props.maxCharging, 10, 50, this.getChargingTimer());
+		double damage = Helper.fromRangeToRange(0, this.props.maxCharging, 5, 20, this.getChargingTimer());
 		double scale = Helper.fromRangeToRange(0, this.props.maxCharging, 0.5d, 3d, this.getChargingTimer());
 		damage = Helper.getTrueValue((float)damage, this, p);
 		AuraBlastProjectileEntity entity = new AuraBlastProjectileEntity(p.world);
@@ -56,6 +56,8 @@ public class JajankenPaAbility extends ChargeableAbility implements ITrainable,I
 			p.world.addEntity(entity);
 		}
 		super.onEndCharging(p);
+		Helper.consumeAura(40, p, this);
+
 	
 	}
 	@Override

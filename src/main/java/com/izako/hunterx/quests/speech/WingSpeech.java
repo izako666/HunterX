@@ -176,7 +176,7 @@ public class WingSpeech extends NPCSpeech {
 	
 	@Override
 	public Quest[] getQuests(PlayerEntity p) {
-		return new Quest[] { ModQuests.HUNTEREXAM01, ModQuests.RENQUEST, ModQuests.ZETSUQUEST, ModQuests.GYOQUEST, ModQuests.SHUQUEST ,ModQuests.INQUEST,ModQuests.KENQUEST,ModQuests.RYUQUEST, ModQuests.ENQUEST,ModQuests.DISCOVER_NENTYPE_QUEST,ModQuests.BASIC_HATSU_QUEST, ModQuests.BASIC_CONJURER,ModQuests.BASIC_EMITTER,ModQuests.BASIC_ENHANCER,ModQuests.BASIC_MANIPULATOR,ModQuests.BASIC_TRANSMUTER,ModQuests.CHARACTER_HATSUS_QUEST};
+		return new Quest[] { ModQuests.HUNTEREXAM01, ModQuests.RENQUEST, ModQuests.ZETSUQUEST, ModQuests.GYOQUEST, ModQuests.SHUQUEST ,ModQuests.INQUEST,ModQuests.KENQUEST,ModQuests.RYUQUEST, ModQuests.ENQUEST,ModQuests.DISCOVER_NENTYPE_QUEST,ModQuests.BASIC_HATSU_QUEST,ModQuests.CHARACTER_HATSUS_QUEST};
 	}
 
 	@Override
@@ -218,7 +218,7 @@ public class WingSpeech extends NPCSpeech {
 			
 		case 10:
 			return new SequencedString[][] {new SequencedString[] {MSG65,MSG66,MSG67,MSG68,MSG69},new SequencedString[] {MSG70}, null};
-		case 16:
+		case 11:
 			return new SequencedString[][] {new SequencedString[] {MSG73,MSG74,MSG75},new SequencedString[] {MSG76},null};
 		}
 		;
@@ -250,9 +250,9 @@ public class WingSpeech extends NPCSpeech {
 							return new SequencedString[] {sq};
 						}
 					}
+					boolean allFin = true;
 					for(int i = 0; i< 5; i++) {
 						Quest hq = data.getQuest(quests[i]);
-						boolean allFin = true;
 						if(hq != null && !hq.isFinished()) {
 							return null;
 						}
@@ -262,8 +262,12 @@ public class WingSpeech extends NPCSpeech {
 						
 						if(i == 4) {
 							if(allFin) {
-								data.getQuest(ModQuests.BASIC_HATSU_QUEST).finishQuest(p);
-								return new SequencedString[] {MSG72};
+								data.getQuest(ModQuests.BASIC_HATSU_QUEST).setProgress(100);
+								SequencedString str = Helper.getNewSqStringInstance(MSG72);
+								str.event = () -> {if(Minecraft.getInstance().currentScreen instanceof QuestScreen) {
+									Minecraft.getInstance().currentScreen = null;
+								}};
+								return new SequencedString[] {str};
 							}
 						}
 					} 

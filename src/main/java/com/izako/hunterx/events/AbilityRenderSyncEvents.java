@@ -16,17 +16,19 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.NetworkDirection;
 
 @Mod.EventBusSubscriber(modid = Main.MODID)
 public class AbilityRenderSyncEvents {
 
+	@SubscribeEvent
 	public static void onStartTrack(PlayerEvent.StartTracking evt) {
 	
 		if(!(evt.getTarget() instanceof LivingEntity))
 			return;
-		
+
 		PlayerEntity tracker = evt.getPlayer();
 		LivingEntity tracked = (LivingEntity) evt.getTarget();
 		if(!tracker.world.isRemote()) {
@@ -39,7 +41,7 @@ public class AbilityRenderSyncEvents {
 			 if(abl instanceof IOnPlayerRender) {
 				 if(data.hasActiveAbility(ModAbilities.IN_ABILITY))
 					 return;
-				 PacketHandler.INSTANCE.sendTo(new SyncAbilityRenderingPacket(abl.getId(), tracked.getEntityId(), abl.isActive()), ((ServerPlayerEntity)tracker).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+				 PacketHandler.INSTANCE.sendTo(new SyncAbilityRenderingPacket(abl.getId(), tracked.getEntityId(), abl.isActive(),data.getAuraColor()), ((ServerPlayerEntity)tracker).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
 			 }
 		 }
 		}

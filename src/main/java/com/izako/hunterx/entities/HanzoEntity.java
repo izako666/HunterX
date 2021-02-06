@@ -180,6 +180,8 @@ public class HanzoEntity extends ZombieEntity{
 			this.entityDropItem(new ItemStack(ModItems.BADGE));
 		}
 		}
+		
+		super.onDeath(cause);
 	}
 
 

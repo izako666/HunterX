@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
+import com.izako.hunterx.izapi.ability.IOnPlayerRender;
+import com.izako.hunterx.izapi.ability.ITrainable;
 import com.izako.hunterx.izapi.ability.NenType;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
 
@@ -12,7 +14,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
 
-public class RyuOffenseAbility extends PassiveAbility {
+public class RyuOffenseAbility extends PassiveAbility implements ITrainable, IOnPlayerRender {
 
 	public static final UUID attackModifierID = UUID.fromString("4df81c69-0f33-4edf-9282-e1497c28fb1e");
 	public static final UUID defenseModifierID = UUID.fromString("045c0a8e-04f4-495e-a396-a2c3a5bfcb6f");
@@ -40,9 +42,9 @@ public class RyuOffenseAbility extends PassiveAbility {
 	}
 	public void onStartPassive(LivingEntity p) {
 		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "ryuoffensemod",
-				Helper.getTrueValue(20, this, p), Operation.ADDITION);
+				Helper.getTrueValue(15, this, p), Operation.ADDITION);
 		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "ryuoffensemodattack",
-				Helper.getTrueValue(40, this, p), Operation.ADDITION);
+				Helper.getTrueValue(30, this, p), Operation.ADDITION);
 		if (p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(defenseModifierID) == null) {
 			p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(defenseMod);
 		}
@@ -54,9 +56,9 @@ public class RyuOffenseAbility extends PassiveAbility {
 	@Override
 	public void duringPassive(LivingEntity p) {
 		AttributeModifier defenseMod = new AttributeModifier(defenseModifierID, "ryuoffensemod",
-				Helper.getTrueValue(20, this, p), Operation.ADDITION);
+				Helper.getTrueValue(15, this, p), Operation.ADDITION);
 		AttributeModifier attackMod = new AttributeModifier(attackModifierID, "ryuoffensemodattack",
-				Helper.getTrueValue(40, this, p), Operation.ADDITION);
+				Helper.getTrueValue(30, this, p), Operation.ADDITION);
 		if (p.getAttribute(SharedMonsterAttributes.ARMOR).getModifier(defenseModifierID) == null) {
 			p.getAttribute(SharedMonsterAttributes.ARMOR).applyModifier(defenseMod);
 		}

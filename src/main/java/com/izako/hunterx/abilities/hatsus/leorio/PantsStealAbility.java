@@ -4,6 +4,7 @@ import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.entities.projectiles.ArmEntity;
 import com.izako.hunterx.init.ModAbilities;
+import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.NenType;
 import com.izako.hunterx.izapi.ability.Ability.AbilityType;
@@ -13,7 +14,7 @@ import net.minecraft.entity.LivingEntity;
 public class PantsStealAbility extends Ability {
 
 	public PantsStealAbility() {
-		this.props = new Ability.Properties(this).setAbilityType(AbilityType.ONUSE).setNenType(NenType.EMITTER).setMaxCooldown(10 * 20);
+		this.props = new Ability.Properties(this).setAbilityType(AbilityType.ONUSE).setNenType(NenType.EMITTER).setMaxCooldown(30 * 20);
 	}
 	@Override
 	public void use(LivingEntity p) {
@@ -23,6 +24,7 @@ public class PantsStealAbility extends Ability {
 		if(data.hasActiveAbility(ModAbilities.LOCKON_ABILITY) && ((LockOnAbility)data.getActiveAbility(ModAbilities.LOCKON_ABILITY, p)).lockOn != null) {
 			LivingEntity Lockon = ((LockOnAbility)data.getActiveAbility(ModAbilities.LOCKON_ABILITY, p)).lockOn;
 		
+			if(Helper.consumeAura(20, p, this)) {
 			ArmEntity arm = new ArmEntity(ArmEntity.TYPE,p.world);
 			
 			arm.pants = true;
@@ -41,6 +43,8 @@ public class PantsStealAbility extends Ability {
 	        
 	        arm.setMotion(motionX, motionY, motionZ);			
 			p.world.addEntity(arm);
+
+			}
 		}
 		super.use(p);
 	}

@@ -46,7 +46,7 @@ public class HunterXArmorMaterial  implements IArmorMaterial{
 	@Override
 	public Ingredient getRepairMaterial() {
 		// TODO Auto-generated method stub
-		return null;
+		return Ingredient.EMPTY;
 	}
 
 	@Override

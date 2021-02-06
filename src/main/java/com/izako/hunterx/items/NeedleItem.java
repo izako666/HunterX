@@ -1,11 +1,11 @@
 package com.izako.hunterx.items;
 
 import com.izako.hunterx.items.entities.NeedleEntity;
+import com.izako.hunterx.izapi.IThugDrop;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Item.Properties;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
@@ -13,7 +13,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class NeedleItem extends Item{
+public class NeedleItem extends Item implements IThugDrop {
 
 
 

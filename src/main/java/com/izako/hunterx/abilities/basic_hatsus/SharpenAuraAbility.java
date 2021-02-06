@@ -25,12 +25,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
 public class SharpenAuraAbility extends PassiveAbility implements ITrainable, IBlacklistPassive, IOnPlayerRender {
 
 	public SharpenAuraAbility() {
-		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxPassive(Integer.MAX_VALUE).setNenType(NenType.TRANSMUTER).setConsumptionType(AuraConsumptionType.VALUE).setAuraConsumption(new IAuraConsumption() {
-
-			@Override
-			public int getAmount() {
-				return 20;
-			}});
+		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxPassive(Integer.MAX_VALUE).setNenType(NenType.TRANSMUTER).setMaxCooldown(4 * 20);
 	}
 	public static final UUID attackModID = UUID.fromString("716bf50a-ee28-4814-83e2-5db7539d25b9");
 	@Override
@@ -59,6 +54,10 @@ public class SharpenAuraAbility extends PassiveAbility implements ITrainable, IB
 	@Override
 	public void duringPassive(LivingEntity p) {
 
+		if(p.ticksExisted % 20 == 0) {
+			Helper.consumeAura(1, p, this);
+
+		}
 		
 	}
 

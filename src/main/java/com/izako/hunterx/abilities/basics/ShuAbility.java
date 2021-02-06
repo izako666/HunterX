@@ -1,11 +1,13 @@
 package com.izako.hunterx.abilities.basics;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
-import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
-import com.izako.hunterx.data.abilitydata.IAbilityData;
+import com.izako.hunterx.init.ModAbilities;
 import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
+import com.izako.hunterx.izapi.ability.IBlacklistPassive;
 import com.izako.hunterx.izapi.ability.IOnPlayerRender;
 import com.izako.hunterx.izapi.ability.ITrainable;
 import com.izako.hunterx.izapi.ability.NenType;
@@ -23,17 +25,20 @@ import net.minecraft.item.ToolItem;
 import net.minecraft.nbt.ListNBT;
 import net.minecraftforge.common.ToolType;
 
-public class ShuAbility extends PassiveAbility implements IOnPlayerRender, ITrainable {
+public class ShuAbility extends PassiveAbility implements IOnPlayerRender, ITrainable, IBlacklistPassive {
 
 	public static final UUID SHU_UUID = UUID.fromString("b2bb389e-a2a9-4c42-85d2-0010c09901fc");
 
 	public ShuAbility() {
-		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxPassive(Integer.MAX_VALUE).setNenType(NenType.UNKNOWN).setConsumptionType(AuraConsumptionType.VALUE).setAuraConsumption(new IAuraConsumption() {
-
-			@Override
-			public int getAmount() {
-				return 2;
-			}});
+		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxPassive(Integer.MAX_VALUE).setMaxCooldown(20 * 20).setNenType(NenType.UNKNOWN);
+	}
+	@Override
+	public void duringPassive(LivingEntity p) {
+		
+		if(this.getPassiveTimer() % 20 == 0) {
+			Helper.consumeAura(2, p, this);
+		}
+		super.duringPassive(p);
 	}
 	@Override
 	public String getId() {
@@ -65,26 +70,31 @@ public class ShuAbility extends PassiveAbility implements IOnPlayerRender, ITrai
 		p.getHeldItemMainhand().getOrCreateTag().putBoolean("activeshu", true);
 		super.onStartPassive(p);
 		
-		IAbilityData data = AbilityDataCapability.get(p);
-		
-		if(data.getCurrentNen() > 20) {
-			data.setCurrentNen(data.getCurrentNen() - 20);
-		} else {
-			this.endAbility(p);
-		}
+		Helper.consumeAura(20, p, this);
 	}
 	@Override
 	public void onEndPassive(LivingEntity p) {
-		if(p.getHeldItemMainhand().getOrCreateTag().getBoolean("activeshu")) {
+		if(!p.getHeldItemMainhand().hasTag())
+			return;
+		if(p.getHeldItemMainhand().getTag().getBoolean("activeshu")) {
 		ShuAbility.removeEnchantment(Enchantments.UNBREAKING, p.getHeldItemMainhand());
 		ShuAbility.removeEnchantment(Enchantments.SHARPNESS, p.getHeldItemMainhand());
-		p.getHeldItemMainhand().getOrCreateTag().putBoolean("activeshu", false);
+		}
+		p.getHeldItemMainhand().getTag().remove("activeshu");
+		
+		if(p.getHeldItemMainhand().getTag().contains("Enchantments", 9) &&  p.getHeldItemMainhand().getTag().getList("Enchantments", 10).isEmpty()) {
+			p.getHeldItemMainhand().getTag().remove("Enchantments");
+		}
+		if(p.getHeldItemMainhand().getTag().isEmpty()) {
+			p.getHeldItemMainhand().setTag(null);
 		}
 		super.onEndPassive(p);
 	}
 	
 	   public static void removeEnchantment(Enchantment ench, ItemStack stack) {
-		      stack.getOrCreateTag();
+		     if(!stack.hasTag())
+		    	 return;
+		     
 		      if (!stack.getTag().contains("Enchantments", 9)) {
 		         stack.getTag().put("Enchantments", new ListNBT());
 		      }
@@ -117,6 +127,10 @@ public class ShuAbility extends PassiveAbility implements IOnPlayerRender, ITrai
 		      }
 			return false;
 		   }
+	@Override
+	public List<Ability> getBlackList() {
+		return Arrays.asList(ModAbilities.KO_ABILITY,ModAbilities.GYO_ABILITY,ModAbilities.ZETSU_ABILITY);
+	}
 
 
 }

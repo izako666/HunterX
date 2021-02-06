@@ -15,7 +15,7 @@ public class AbilityDataBase implements IAbilityData {
 
 	private List<Ability> ABILITIES = new ArrayList<>();
 	private Ability[] SLOT_ABILITIES = new Ability[5];
-	private int nenCapacity = 100;
+	private int nenCapacity = 220;
 	private int currentNen = 0;
 	private int activeAbility;
 	private Color aura = Color.WHITE;
