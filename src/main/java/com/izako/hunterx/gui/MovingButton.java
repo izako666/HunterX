@@ -29,7 +29,7 @@ public class MovingButton extends Button {
 		} else {
 			this.y = (int) this.trueY;
 		}
-		Helper.drawIMG(loc, this.x, this.y, this.u, this.v, this.width, this.height, 1, this.width, this.height);
+		Helper.drawIMG(loc, this.x, this.y, this.u, this.v, this.width, this.height, 0, this.width, this.height);
 	}
 
 
