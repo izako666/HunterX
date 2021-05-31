@@ -52,6 +52,8 @@ public class HunterDataResetEvent {
 				attributeD.applyModifier(modifierD);
 
 			data.setQuests(oldData.getQuests());
+			
+			data.setJenny(oldData.getJenny());
 
 		
 	}

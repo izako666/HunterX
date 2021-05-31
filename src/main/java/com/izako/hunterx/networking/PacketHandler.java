@@ -5,6 +5,7 @@ import com.izako.hunterx.networking.packets.AbilityCooldownPacket;
 import com.izako.hunterx.networking.packets.AbilityUpdatePacket;
 import com.izako.hunterx.networking.packets.AbilityUsePacket;
 import com.izako.hunterx.networking.packets.ActivateAbilityPacket;
+import com.izako.hunterx.networking.packets.ActivateComputerPacket;
 import com.izako.hunterx.networking.packets.CharacterInitPacket;
 import com.izako.hunterx.networking.packets.ChoiceQuestActivateEntryPacket;
 import com.izako.hunterx.networking.packets.EnUpdatePacket;
@@ -59,7 +60,8 @@ public class PacketHandler {
 	    INSTANCE.registerMessage(packet++, RefreshNenPacket.class, RefreshNenPacket::encode, RefreshNenPacket::decode, RefreshNenPacket::handle);
         INSTANCE.registerMessage(packet++, ActivateAbilityPacket.class, ActivateAbilityPacket::encode, ActivateAbilityPacket::decode, ActivateAbilityPacket::handle);
 	    INSTANCE.registerMessage(packet++, LockOnPacket.class, LockOnPacket::encode, LockOnPacket::decode, LockOnPacket::handle);
-	
+	    INSTANCE.registerMessage(packet++, ActivateComputerPacket.class, ActivateComputerPacket::encode, ActivateComputerPacket::decode, ActivateComputerPacket::handle);
+
 	}
 	
 	public static <MSG>  void sendToTracking(LivingEntity tracked, MSG message) {

@@ -58,8 +58,12 @@ public class AbilitySlotsEvent {
 		} else {
 			zlevel = 0;
 		}
+		
+		
 		double height = Minecraft.getInstance().getMainWindow().getScaledHeight();
 		double width = Minecraft.getInstance().getMainWindow().getScaledWidth();
+		
+		
 		int initialHeight;
 		if (Minecraft.getInstance().getMainWindow().getGuiScaleFactor() == 4) {
 			initialHeight = 0;
@@ -74,6 +78,7 @@ public class AbilitySlotsEvent {
 		RenderSystem.pushMatrix();
 		RenderSystem.enableBlend();
 
+	 
 		AbilitySlotsEvent.renderNenBar(width, height, Minecraft.getInstance(), zlevel, abldata);
 
 		

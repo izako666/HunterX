@@ -90,6 +90,9 @@ public class HunterScreen extends Screen {
 			GuiUtils.drawTexturedModalRect((int) ((scaledWidth / 2) - 128), 0, 0, 0, 256, 256, 0);
 
 		}
+		
+		IHunterData data =  HunterDataCapability.get(p);
+		this.drawString(font,"J" + String.valueOf(data.getJenny()), 0, 0, 16777215);
 		switch (guiState) {
 
 		case (0):

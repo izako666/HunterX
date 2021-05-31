@@ -13,6 +13,7 @@ public class HunterXCommand {
 				.then(AbilityCommand.register())
 				.then(QuestCommand.register())
 				.then(LocateBlimpCommand.register())
+				.then(JennyCommand.register())
 
 		);
 	}

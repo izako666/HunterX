@@ -40,6 +40,10 @@ public interface IHunterData {
 	EnumStats getSecondMaxed();
 	
 	
+	int getJenny();
+	void setJenny(int jenny);
+	
+	
 	
 
 }

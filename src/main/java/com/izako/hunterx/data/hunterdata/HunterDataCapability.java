@@ -36,6 +36,8 @@ public class HunterDataCapability {
 						props.put("questid" + q.getId(), q.writeData());
 					});
 					
+				props.putInt("jenny",instance.getJenny());
+					
 				return props;
 			}
 
@@ -58,6 +60,8 @@ public class HunterDataCapability {
 						instance.giveQuest(q);
 					}
 				});
+				
+			instance.setJenny(props.getInt("jenny"));
 			}
 
 		}, HunterDataBase::new);

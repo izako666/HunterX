@@ -1,0 +1,9 @@
+{
+"variants": {
+"facing=up": { "model": "hntrx:block/computer" },
+"facing=south": { "model": "hntrx:block/computer" },
+"facing=east": { "model": "hntrx:block/computer", "y": 270 },
+"facing=west": { "model": "hntrx:block/computer", "y": 90 },
+"facing=north": { "model": "hntrx:block/computer", "y": 180 }
+}
+}

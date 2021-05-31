@@ -54,6 +54,8 @@ public final class Main {
 		ClientSideRegistry.RegisterEntityRenderers();
 		ModKeybindings.init();
 		RenderTypeLookup.setRenderLayer(ModBlocks.CUP, RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(ModBlocks.COMPUTER, RenderType.getTranslucent());
+
 	}
 
 	private  void commonSetup(FMLCommonSetupEvent event) {

@@ -15,7 +15,8 @@ public class HunterDataBase implements IHunterData {
 	double defenseStat = 0;
 	boolean isHunter = false;
 	boolean isCharMade = false;
-	boolean selectingAbility = false;
+	boolean selectingAbility = false;                                            
+	int jenny = 0;
 	EnumStats firstMaxed = null;
 	EnumStats secondMaxed = null;
 	List<Quest> quests = new ArrayList<>();
@@ -222,6 +223,23 @@ public class HunterDataBase implements IHunterData {
 			return this.getSpeedStat();
 		default:
 			return this.getHealthStat();
+		}
+	}
+
+	@Override
+	public int getJenny() {
+		return jenny;
+	}
+
+	@Override
+	public void setJenny(int jenny) {
+
+		if(jenny < 0) {
+			this.jenny = 0;
+			
+		} else {
+			this.jenny = jenny;
+
 		}
 	}
 }
