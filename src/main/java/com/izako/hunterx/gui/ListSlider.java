@@ -102,6 +102,7 @@ public class ListSlider extends VerticalSlider {
 		}
 
 	}
+	 
 	
 	@Override
 	public void renderButton(int mX, int mY, float idfk) {
@@ -148,7 +149,7 @@ public class ListSlider extends VerticalSlider {
 			   RenderSystem.scaled(0.4d, 0.4d, 1d);
 				this.drawString(Minecraft.getInstance().fontRenderer, entry.name, 0, 0, Color.red.getRGB());
 				   RenderSystem.scaled(1d, 1d, 1d);
-
+ 
 				   RenderSystem.popMatrix();
 
 			}

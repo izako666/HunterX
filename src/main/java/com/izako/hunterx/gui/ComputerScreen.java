@@ -1,12 +1,14 @@
 package com.izako.hunterx.gui;
 
 import com.izako.hunterx.Main;
+import com.izako.hunterx.gui.ItemListSlider.PCEntry;
 import com.izako.hunterx.izapi.Helper;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 
@@ -20,6 +22,7 @@ public class ComputerScreen extends Screen {
 	public SequencedString openingStatement = new SequencedString("You lookin ta know somethin'?.... I've also got some peculiar goods if it fancies ya...", 100, 100);
 	public boolean isTalking = false;
 	public boolean isShopping = false;
+	public ItemListSlider ITEMS;
 	public ComputerScreen() {
 		super(new StringTextComponent(""));
 
@@ -49,6 +52,21 @@ public class ComputerScreen extends Screen {
 			openingStatement.render((int)(originx+165),(int)(originy+65));
 
 		}
+		
+		if(isShopping) {
+			
+			RenderSystem.pushMatrix();
+			Helper.drawIMG(FOREGROUND, (int)(originx) + ((320 / 2) - 160 / 2), (int)(originy + 60), 0, 0, 161, 121, 1, 161, 121);
+		
+			RenderSystem.translated(0, 0, 1);
+			this.ITEMS.render(mouseX, mouseY, partialTicks);
+			RenderSystem.translated(0, 0, 0);
+
+
+			RenderSystem.popMatrix();
+			
+
+		}
 
 	}
 
@@ -65,7 +83,21 @@ public class ComputerScreen extends Screen {
 			}
 		});
 		
+		this.ITEMS = new ItemListSlider(minecraft, 200, 120, (int)(originx) + ((320 / 2) - 160 / 2), (int)(originy + 60));
+		
+		this.ITEMS.ENTRIES.add(new PCEntry(Items.ACACIA_BOAT, 10));
+		this.ITEMS.ENTRIES.add(new PCEntry(Items.CRAFTING_TABLE, 20));
+		this.ITEMS.ENTRIES.add(new PCEntry(Items.CACTUS, 8));
+		this.ITEMS.ENTRIES.add(new PCEntry(Items.CAKE, 12));
+		this.ITEMS.ENTRIES.add(new PCEntry(Items.WITHER_SKELETON_SKULL, 15));
+		this.ITEMS.ENTRIES.add(new PCEntry(Items.SKELETON_HORSE_SPAWN_EGG, 15));
+		this.ITEMS.ENTRIES.add(new PCEntry(Items.ACACIA_DOOR, 15));
+		this.ITEMS.ENTRIES.add(new PCEntry(Items.ACACIA_LOG, 15));
+
+
+		
 	 this.addButton(bartender);
+	 this.children.add(ITEMS);
 	 
 	 openingStatement.event = new SequencedString.IRenderEndEvent() {
 		
@@ -74,6 +106,7 @@ public class ComputerScreen extends Screen {
 
 			((ComputerScreen)Minecraft.getInstance().currentScreen).isShopping = true;
 			((ComputerScreen)Minecraft.getInstance().currentScreen).isTalking = false;
+			((ComputerScreen)Minecraft.getInstance().currentScreen).buttons.get(0).active = false;
 		}
 	};
 	}
