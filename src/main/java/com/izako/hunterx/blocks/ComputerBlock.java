@@ -1,5 +1,6 @@
 package com.izako.hunterx.blocks;
 
+import com.izako.hunterx.data.worlddata.ModWorldData;
 import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.ActivateComputerPacket;
 
@@ -23,6 +24,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkDirection;
 
 public class ComputerBlock extends Block {
@@ -101,6 +103,7 @@ public class ComputerBlock extends Block {
 			Hand handIn, BlockRayTraceResult result) {
 		
 		if(!worldIn.isRemote()) {
+			ModWorldData data = ModWorldData.get((ServerWorld) worldIn);
 			
 			PacketHandler.INSTANCE.sendTo(new ActivateComputerPacket(), ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		}

@@ -4,16 +4,13 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nullable;
-
-import com.izako.hunterx.gui.ListSlider.Entry;
+import com.izako.hunterx.gui.ComputerScreen.PCEntry;
 import com.izako.wypi.WyHelper;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraftforge.client.gui.ScrollPanel;
@@ -25,8 +22,8 @@ public class ItemListSlider extends ScrollPanel
 	public List<PCEntry> ENTRIES = new ArrayList<>();
 	public Screen parent;
 	public PCEntry selectedEntry;
-	public ItemListSlider.onActivateEntry onActivate;
-	public ItemListSlider.onInitialClickEntry onInitClick;
+	public ItemListSlider.onActivateEntry onActivate = (x,y) -> {};
+	public ItemListSlider.onInitialClickEntry onInitClick = (x,y) -> {};
 
 	public ItemListSlider(Minecraft mc, int width, int height, int x, int y)
 	{
@@ -60,14 +57,14 @@ public class ItemListSlider extends ScrollPanel
 		{
 			int y = relativeY;
 			int x = (this.parent.width / 2 - 109) + 40;
-			ItemStack stack = entry.info.isEmpty() ? new ItemStack(entry.item) : new ItemStack(Items.ENCHANTED_BOOK);
+			ItemStack stack = entry.info.isEmpty() ? entry.item : new ItemStack(Items.ENCHANTED_BOOK);
 
-			renderItem(stack, x , y - 1);
+			renderItem(stack, this.left , y - 1);
 			if (this.selectedEntry != null && this.selectedEntry == entry)
-				WyHelper.drawColourOnScreen(Color.WHITE.getRGB(), 100, x - 40, y - 4, this.width, 24, 0);
+				WyHelper.drawColourOnScreen(Color.WHITE.getRGB(), 100, this.left, y - 4, this.width+18, 24, 1);
 			
-			this.drawSizedString(entry.getName(), x + 50, y + 4, 0.8f, -1);
-			this.drawSizedString(entry.getPrice() + "", x + 122, y + 4, 0.8f, -1);
+			this.drawSizedString(entry.getName(), this.left + 100, y + 4, 0.8f, -1);
+			this.drawSizedString(entry.getPrice() + "", this.left + 180, y + 4, 0.8f, -1);
 			relativeY += ENTRY_HEIGHT * 1.25;
 		}
 	}
@@ -116,47 +113,6 @@ public class ItemListSlider extends ScrollPanel
 		this.ENTRIES.remove(index);
 	}
 	
-	static class PCEntry {
-		
-		//Entry for any possible item that can be sold on a PC
-		Item item;
-		float price;
-		String name;
-		List<SequencedString> info = new ArrayList<>();
-		public PCEntry(Item item, float price, @Nullable List<String> information, String name) {
-			
-			this.item = item;
-			this.price = price;
-			if(information != null) {
-
-				for(String str : information) {
-					this.info.add(new SequencedString(str, 100, 100));
-				}
-				}
-			this.name = name;
-		}
-		public PCEntry(Item item, float price) {
-			this(item,price,null, item.getDisplayName(new ItemStack(item)).getFormattedText());
-		}
-
-		
-		public Item getItem() {
-			return item;
-		}
-
-		public float getPrice() {
-			return price;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public List<SequencedString> getInfo() {
-			return info;
-		}
-
-	}
 	
 	public void renderItem(ItemStack stack, int posX, int posY)
 	{	
@@ -166,7 +122,7 @@ public class ItemListSlider extends ScrollPanel
 	public void drawSizedString(String txt, int x, int y, float scale, int color)
 	{
 		RenderSystem.pushMatrix();
-		RenderSystem.translated(x, y, 0);
+		RenderSystem.translated(x, y, 1);
 		RenderSystem.scalef(scale, scale, scale);
 			
 		if (color == -1)

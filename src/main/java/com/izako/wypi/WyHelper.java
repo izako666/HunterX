@@ -389,14 +389,14 @@ public class WyHelper {
 		GlStateManager.disableBlend();
 	}
 
-	public static void drawIcon(ResourceLocation rs, int x, int y, int u, int v) {
+	public static void drawIcon(ResourceLocation rs, int x, int y, int u, int v,int zLevel) {
 		Minecraft.getInstance().getTextureManager().bindTexture(rs);
 		BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();
 		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-		bufferbuilder.pos(x, y + v, 1).tex(0.0f, 1.0f).endVertex();
-		bufferbuilder.pos(x + u, y + v, 1).tex(1.0f, 1.0f).endVertex();
-		bufferbuilder.pos(x + u, y, 1).tex(1.0f, 0.0f).endVertex();
-		bufferbuilder.pos(x, y, 1).tex(0.0f, 0.0f).endVertex();
+		bufferbuilder.pos(x, y + v, zLevel).tex(0.0f, 1.0f).endVertex();
+		bufferbuilder.pos(x + u, y + v, zLevel).tex(1.0f, 1.0f).endVertex();
+		bufferbuilder.pos(x + u, y, zLevel).tex(1.0f, 0.0f).endVertex();
+		bufferbuilder.pos(x, y, zLevel).tex(0.0f, 0.0f).endVertex();
 		Tessellator.getInstance().draw();
 	}
 

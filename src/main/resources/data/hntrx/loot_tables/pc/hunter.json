@@ -1,0 +1,38 @@
+    {
+    	"type": "minecraft:chest",
+    	"pools": [
+    		{
+    			"name": "hntrx:hunter",
+    			"rolls": {
+    				"min": 20.0,
+    				"max": 25.0,
+    				"type": "minecraft:uniform"
+    			},
+    			"entries": [
+    				{
+    					"type": "minecraft:item",
+    					"name": "minecraft:stick",
+    					"weight": 100,
+    					"functions": [
+    						{
+    							"function": "minecraft:set_count",
+    							"count": {
+    								"min": 5.0,
+    								"max": 15.0,
+    								"type": "minecraft:uniform"
+    							}
+    						},
+    						{
+    							"function": "mineminenomi:set_price",
+    							"price_range": {
+    								"min": 700000.0,
+    								"max": 1000000.0,
+    								"type": "minecraft:uniform"
+    							}
+    						}
+    					]
+    				}
+    					]
+    				}
+    			]
+    }

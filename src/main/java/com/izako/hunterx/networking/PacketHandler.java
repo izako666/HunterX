@@ -6,6 +6,7 @@ import com.izako.hunterx.networking.packets.AbilityUpdatePacket;
 import com.izako.hunterx.networking.packets.AbilityUsePacket;
 import com.izako.hunterx.networking.packets.ActivateAbilityPacket;
 import com.izako.hunterx.networking.packets.ActivateComputerPacket;
+import com.izako.hunterx.networking.packets.CGiveItemStackPacket;
 import com.izako.hunterx.networking.packets.CharacterInitPacket;
 import com.izako.hunterx.networking.packets.ChoiceQuestActivateEntryPacket;
 import com.izako.hunterx.networking.packets.EnUpdatePacket;
@@ -21,6 +22,7 @@ import com.izako.hunterx.networking.packets.SetActiveAbilityPacket;
 import com.izako.hunterx.networking.packets.SetQuestPacket;
 import com.izako.hunterx.networking.packets.StatsUpdatePacket;
 import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
+import com.izako.hunterx.networking.packets.UpdatePCStockPacket;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
@@ -61,6 +63,10 @@ public class PacketHandler {
         INSTANCE.registerMessage(packet++, ActivateAbilityPacket.class, ActivateAbilityPacket::encode, ActivateAbilityPacket::decode, ActivateAbilityPacket::handle);
 	    INSTANCE.registerMessage(packet++, LockOnPacket.class, LockOnPacket::encode, LockOnPacket::decode, LockOnPacket::handle);
 	    INSTANCE.registerMessage(packet++, ActivateComputerPacket.class, ActivateComputerPacket::encode, ActivateComputerPacket::decode, ActivateComputerPacket::handle);
+	    INSTANCE.registerMessage(packet++, CGiveItemStackPacket.class, CGiveItemStackPacket::encode, CGiveItemStackPacket::decode, CGiveItemStackPacket::handle);
+	    INSTANCE.registerMessage(packet++, UpdatePCStockPacket.class, UpdatePCStockPacket::encode, UpdatePCStockPacket::decode, UpdatePCStockPacket::handle);
+
+
 
 	}
 	

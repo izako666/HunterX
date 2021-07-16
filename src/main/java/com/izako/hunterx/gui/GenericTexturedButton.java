@@ -2,9 +2,12 @@ package com.izako.hunterx.gui;
 
 import com.izako.wypi.WyHelper;
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 
 public class GenericTexturedButton extends Button{
 
@@ -19,13 +22,9 @@ public class GenericTexturedButton extends Button{
 	
 	@Override
 	public void render(int x, int y, float partialTicks) {
-		/*GlStateManager.enableBlend();
-		GlStateManager.enableAlphaTest();
-		WyHelper.drawIcon(texture, this.x, this.y, this.width, this.height);
-		GlStateManager.disableAlphaTest();
-		GlStateManager.disableBlend();
-		GlStateManager.translatef(0, 0, 1); */
-		super.render(x, y, partialTicks);
-		//GlStateManager.translatef(0, 0, 0);
+	
+		RenderSystem.pushMatrix();
+		WyHelper.drawIcon(texture, this.x, this.y, this.width, this.height,2);
+		RenderSystem.popMatrix();
 	}
 }

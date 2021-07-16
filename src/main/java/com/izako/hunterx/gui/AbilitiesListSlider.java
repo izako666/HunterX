@@ -49,9 +49,9 @@ public class AbilitiesListSlider extends VerticalSlider {
 			Ability abl = getAbility(entry);
 			if(entry.posY >= this.y && entry.posY <= this.y + this.height) {
 				if(entry == this.selectedEntry) {
-					WyHelper.drawIcon(abl.props.tex, entry.posX + 4, entry.posY, 32, 32);
+					WyHelper.drawIcon(abl.props.tex, entry.posX + 4, entry.posY, 32, 32,1);
 				} else {
-					WyHelper.drawIcon(abl.props.tex, entry.posX, entry.posY, 32, 32);
+					WyHelper.drawIcon(abl.props.tex, entry.posX, entry.posY, 32, 32,1);
 				}
 			} else if(entry.posY < this.y && entry.posY > this.y - 32) {
 				int remainingPixels = this.y - entry.posY;

@@ -21,11 +21,11 @@ public class QuestChoiceButton  extends Button{
 		
 		if(this.getMessage().equalsIgnoreCase("questaccept") && this.isMouseOver(mouseX, mouseY)) {
 
-			WyHelper.drawIcon(QUEST_ACCEPT, this.x, this.y, this.width + 2, this.height + 2);
+			WyHelper.drawIcon(QUEST_ACCEPT, this.x, this.y, this.width + 2, this.height + 2,1);
 		} else if(this.getMessage().equalsIgnoreCase("questdecline") && this.isMouseOver(mouseX, mouseY)) {
-			WyHelper.drawIcon(QUEST_DECLINE, this.x, this.y, this.width + 2, this.height  + 2);
+			WyHelper.drawIcon(QUEST_DECLINE, this.x, this.y, this.width + 2, this.height  + 2,1);
 		} else {
-			WyHelper.drawIcon(QUEST_DEFAULT, this.x, this.y, this.width, this.height);
+			WyHelper.drawIcon(QUEST_DEFAULT, this.x, this.y, this.width, this.height,1);
 		}
 	}
 }

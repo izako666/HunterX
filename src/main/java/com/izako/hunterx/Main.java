@@ -8,6 +8,8 @@ import com.izako.hunterx.commands.HunterXCommand;
 import com.izako.hunterx.commands.QuestArgument;
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
+import com.izako.hunterx.data.json.SetInfoFunction;
+import com.izako.hunterx.data.json.SetPriceFunction;
 import com.izako.hunterx.events.EventsHandler;
 import com.izako.hunterx.init.ModAbilities;
 import com.izako.hunterx.init.ModBlocks;
@@ -25,6 +27,7 @@ import net.minecraft.command.arguments.ArgumentTypes;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.IFeatureConfig;
+import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -68,6 +71,9 @@ public final class Main {
 		AbilityArgument.register();
 		QuestArgument.register();
 		ArgumentTypes.register("hxhquest", QuestArgument.class, new ArgumentSerializer<>(QuestArgument::quest));
+
+		LootFunctionManager.registerFunction(new SetPriceFunction.Serializer());
+		LootFunctionManager.registerFunction(new SetInfoFunction.Serializer());
 
         ForgeRegistries.BIOMES.getValues().stream().forEach((biome -> {
             if (biome.getCategory() == Biome.Category.FOREST || biome.getCategory() == Biome.Category.PLAINS || biome.getCategory() == Biome.Category.DESERT) {
