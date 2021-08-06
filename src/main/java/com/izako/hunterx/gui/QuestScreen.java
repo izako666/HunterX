@@ -116,6 +116,8 @@ public class QuestScreen extends Screen {
 				}
 			}
 			});
+		
+		font.drawString("DO NOT CLICK FINISH UNLESS YOU DO NOT WANT TO GET ANY QUEST.", width/2+90, 190, Color.GRAY.getRGB());
 
 	}
 

@@ -24,7 +24,9 @@ public class GenericTexturedButton extends Button{
 	public void render(int x, int y, float partialTicks) {
 	
 		RenderSystem.pushMatrix();
-		WyHelper.drawIcon(texture, this.x, this.y, this.width, this.height,2);
+		RenderSystem.enableBlend();
+		WyHelper.drawIcon(texture, this.x, this.y, this.width, this.height,0);
+		RenderSystem.disableBlend();
 		RenderSystem.popMatrix();
 	}
 }

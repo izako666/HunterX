@@ -2,9 +2,16 @@ package com.izako.hunterx.networking.packets;
 
 import java.util.function.Supplier;
 
+import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
+import com.izako.hunterx.data.abilitydata.IAbilityData;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -39,11 +46,31 @@ public class CGiveItemStackPacket {
 			{
 				PlayerEntity player = ctx.get().getSender();
 				
-				player.inventory.addItemStackToInventory(message.stack);
+				int empty =  player.inventory.mainInventory.lastIndexOf(ItemStack.EMPTY);
+				if(!player.inventory.addItemStackToInventory(message.stack) || empty == -1) {
+
+					player.dropItem(message.stack, true, true);
+					System.out.println("dropped item on server " + message.stack.toString());
+				}
 				
 			});	
+		}
+		if(ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
+			ctx.get().enqueueWork(()-> {ClientHandler.handle(message);});
 		}
 		ctx.get().setPacketHandled(true);
 	}
 
+	public static class ClientHandler{
+		@OnlyIn(Dist.CLIENT)
+		public static void handle(CGiveItemStackPacket msg) {
+			ClientPlayerEntity p = Minecraft.getInstance().player;
+
+			int empty =  p.inventory.mainInventory.lastIndexOf(ItemStack.EMPTY);
+
+			p.inventory.addItemStackToInventory(msg.stack);
+			
+
+		}
+	}
 }

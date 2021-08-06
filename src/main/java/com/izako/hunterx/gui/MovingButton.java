@@ -24,12 +24,15 @@ public class MovingButton extends Button {
 
 	@Override
 	public void render(int p_render_1_, int p_render_2_, float p_render_3_) {
+		if(this.visible) {
 		if(this.isMouseOver(p_render_1_, p_render_2_)) {
 			this.y = (int) (this.trueY -5);
 		} else {
 			this.y = (int) this.trueY;
 		}
 		Helper.drawIMG(loc, this.x, this.y, this.u, this.v, this.width, this.height, 0, this.width, this.height);
+	
+		}
 	}
 
 

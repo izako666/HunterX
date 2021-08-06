@@ -52,6 +52,7 @@ public class PCEvents {
 
 		LootContext context = builder.build(LootParameterSets.EMPTY);
 		List<ItemStack> stacks = lootTable.generate(context);
+		
 		List<PCEntry> stock = new ArrayList<>();
 		
 		for(ItemStack stack: stacks) {
@@ -61,11 +62,19 @@ public class PCEvents {
 				for(int i = 1; i < string.length; i++) {
 					info.add(string[i]);
 				}
-				PCEntry entry = new PCEntry(stack,stack.getOrCreateTag().getFloat("price"),info,string[0],stack.getOrCreateTag().getInt("count"));
-			} else {
-			PCEntry entry = new PCEntry(stack, stack.getOrCreateTag().getFloat("price"), null, stack.getDisplayName().getFormattedText(), stack.getOrCreateTag().getInt("count"));
-			
+				PCEntry entry = new PCEntry(stack,stack.getOrCreateTag().getFloat("price"),info,string[0],stack.getCount());
 			stock.add(entry);
+			} else {
+			PCEntry entry = new PCEntry(stack, stack.getOrCreateTag().getFloat("price"), null, stack.getDisplayName().getFormattedText(), stack.getCount());
+			
+			boolean canAdd = true;
+			for(PCEntry test : stock) {
+				if(test.getItem().getItem() == stack.getItem().getItem()) {
+					canAdd = false;
+				}
+			}
+			if(canAdd)
+				stock.add(entry);
 			}}
 		return stock;
 	}

@@ -1,6 +1,7 @@
 package com.izako.hunterx.blocks;
 
 import com.izako.hunterx.data.worlddata.ModWorldData;
+import com.izako.hunterx.init.ModItems;
 import com.izako.hunterx.networking.PacketHandler;
 import com.izako.hunterx.networking.packets.ActivateComputerPacket;
 
@@ -10,6 +11,7 @@ import net.minecraft.block.HorizontalBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.ActionResultType;
@@ -104,8 +106,8 @@ public class ComputerBlock extends Block {
 		
 		if(!worldIn.isRemote()) {
 			ModWorldData data = ModWorldData.get((ServerWorld) worldIn);
-			
-			PacketHandler.INSTANCE.sendTo(new ActivateComputerPacket(), ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+			boolean isHunter = player.inventory.hasItemStack(new ItemStack(ModItems.HUNTER_LICENSE));
+			PacketHandler.INSTANCE.sendTo(new ActivateComputerPacket(data.getNormalStock(),data.getHunterStock(), isHunter), ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		}
 		return super.onBlockActivated(state, worldIn, pos, player, handIn, result);
 	}

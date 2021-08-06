@@ -6,22 +6,20 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import org.jline.reader.impl.history.DefaultHistory;
+
 import com.izako.hunterx.Main;
-import com.izako.hunterx.data.hunterdata.HunterDataCapability;
-import com.izako.hunterx.data.hunterdata.IHunterData;
+import com.izako.hunterx.gui.AnimatedButton.SpriteTemplate;
 import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.networking.PacketHandler;
-import com.izako.hunterx.networking.packets.CGiveItemStackPacket;
-import com.izako.hunterx.networking.packets.StatsUpdatePacket;
+import com.izako.hunterx.networking.packets.ActivateComputerPacket;
 import com.izako.wypi.WyHelper;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
@@ -29,6 +27,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ComputerScreen extends Screen {
 
+	/* GOAL: make a buy button and a list of itemsWanted */
+	
 	public float originx = this.width / 2 - (330 - 2);
 	public float originy = this.height / 2 - (240 / 2);
 	public static final ResourceLocation BACKGROUND = new ResourceLocation(Main.MODID, "textures/gui/computer_background.png");
@@ -44,11 +44,18 @@ public class ComputerScreen extends Screen {
 	
 	public boolean startedShopping = false;
 	public ItemListSlider ITEMS;
+	public List<PCEntry> itemsWanted = new ArrayList<>();
 	
-	public int amountWanted = 0;
-	public ComputerScreen() {
+	//constructor variables
+	List<PCEntry> hStock;
+	List<PCEntry> nStock;
+	boolean isHunter;
+	public ComputerScreen(List<PCEntry> hStock, List<PCEntry> nStock, boolean isHunter) {
 		super(new StringTextComponent(""));
 
+		this.hStock = hStock;
+		this.nStock = nStock;
+		this.isHunter = isHunter;
 	}
 
 	@Override
@@ -82,24 +89,25 @@ public class ComputerScreen extends Screen {
 			int shopScreenX = (int)((originx) + ((320 / 2) - (160*1.5) / 2)-1);
 			int shopScreenY = (int)(originy + (60 / 1.5));
 
-		    Helper.drawIMG(FOREGROUND, (int)((originx) + ((320 / 2) - (160*1.5) / 2)-1), (int)(originy + (60 / 1.5)), 0, 0, (int)(161 * 1.5), (int)(121 * 1.5), 1, 161, 121);
 		
-			RenderSystem.translated(0, 0, 1);
-			this.ITEMS.render(mouseX, mouseY, partialTicks);
-			RenderSystem.translated(0, 0, 0);
 
-			
+		    Helper.drawIMG(FOREGROUND, (int)((originx) + ((320 / 2) - (160*1.5) / 2)-1), (int)(originy + (60 / 1.5)), 0, 0, (int)(161 * 1.5), (int)(121 * 1.5), 0, 161, 121);
+
+			this.ITEMS.render(mouseX, mouseY, partialTicks);
 
 			WyHelper.drawStringWithBorder(font,"Name", shopScreenX+100 - font.getStringWidth("Name") / 2,  shopScreenY+5, Color.WHITE.getRGB());
 			WyHelper.drawStringWithBorder(font,"Price", shopScreenX+180 - font.getStringWidth("Name") / 2,  shopScreenY+5, Color.WHITE.getRGB());
 
 			if(this.ITEMS.selectedEntry != null)  {
-				WyHelper.drawStringWithBorder(font,String.valueOf(amountWanted), shopScreenX+35 - font.getStringWidth(String.valueOf(amountWanted)) / 2,  shopScreenY+5, Color.BLUE.getRGB());
+				int count = this.itemsWanted.get(this.ITEMS.ENTRIES.indexOf(this.ITEMS.selectedEntry)).getCount();
+				WyHelper.drawStringWithBorder(font,String.valueOf(count), shopScreenX+35 - font.getStringWidth(String.valueOf(count)) / 2,  shopScreenY+5, Color.BLUE.getRGB());
 
 			}
 		
 
 			RenderSystem.popMatrix();
+			this.buttons.forEach(b -> {b.render(mouseX, mouseY, partialTicks);});
+
 		}
 
 	}
@@ -123,6 +131,12 @@ public class ComputerScreen extends Screen {
 		this.ITEMS = new ItemListSlider(minecraft, (int)((160*1.5)-2), 160, (int)((originx) + ((320 / 2) - (160*1.5) / 2)), (int)(originy + 60));
 		
 
+		if(this.isHunter) {
+			this.ITEMS.ENTRIES = this.hStock;
+		} else {
+			this.ITEMS.ENTRIES = this.nStock;
+		}
+		
 
 		
 		this.ITEMS.onInitClick = new ItemListSlider.onInitialClickEntry() {
@@ -134,31 +148,47 @@ public class ComputerScreen extends Screen {
 			}
 		};
 		
-		this.ITEMS.onActivate = (PCEntry entry, ItemListSlider slider) -> {
-			
-			IHunterData data = HunterDataCapability.get(this.minecraft.player);
-			
-			if(data.getJenny() >= (entry.getPrice() * this.amountWanted) && entry.getCount() >= this.amountWanted ) {
-			data.setJenny((int) (data.getJenny() - (entry.getPrice() * this.amountWanted)));
-			entry.setCount(entry.getCount() - this.amountWanted);
-			ItemStack stack = entry.item.copy();
-			stack.setCount(this.amountWanted);
-			PacketHandler.INSTANCE.sendToServer(new CGiveItemStackPacket(stack));
-			PacketHandler.INSTANCE.sendToServer(new StatsUpdatePacket(data,false));
-			this.minecraft.player.inventory.addItemStackToInventory(stack);
-			}
-		};
 	 this.addButton(bartender);
-	 this.children.add(ITEMS);
+	 this.itemsWanted = new ArrayList<>();
+	 this.ITEMS.ENTRIES.forEach(e -> {
+		 List<String> infoString = null;
+		 if(e.getInfo() != null) {
+		  infoString = new ArrayList<>();
+		 for(SequencedString infoSq : e.getInfo()) {
+			 infoString.add(infoSq.string);
+		 }
+		 }
+		 this.itemsWanted.add(new PCEntry(e.getItem(), e.getPrice(), infoString,e.getName(),e.getCount()));
+	 });
+	 this.itemsWanted.forEach(i -> {
+		 i.setCount(0);
+	 });
 
 	 openingStatement.event = new SequencedString.IRenderEndEvent() {
 		
 		@Override
 		public void onEnd() {
+			((ComputerScreen)Minecraft.getInstance().currentScreen).children.add(ITEMS);
+			 ResourceLocation MULTIPLE_CHOICE = new ResourceLocation(Main.MODID, "textures/gui/quest_choice_gui.png");
 
 			((ComputerScreen)Minecraft.getInstance().currentScreen).isShopping = true;
+			SpriteTemplate temp1 = new SpriteTemplate(MULTIPLE_CHOICE, 0, 125, 2);
+			SpriteTemplate temp2 = new SpriteTemplate(MULTIPLE_CHOICE, 0, 138, 2);
+			((ComputerScreen)Minecraft.getInstance().currentScreen).addButton(new AnimatedButton(width/2+90, 196, 26, 13, "", new Button.IPressable() {
+				
+				@Override
+				public void onPress(Button but) {
+					System.out.println("button works.");
+				
+					PacketHandler.INSTANCE.sendToServer(new ActivateComputerPacket(((ComputerScreen)Minecraft.getInstance().currentScreen).itemsWanted));
+ 				    Minecraft.getInstance().displayGuiScreen(null);
+				}
+				
+			}, temp1, temp2));
 			((ComputerScreen)Minecraft.getInstance().currentScreen).isTalking = false;
 			((ComputerScreen)Minecraft.getInstance().currentScreen).buttons.get(0).active = false;
+			((ComputerScreen)Minecraft.getInstance().currentScreen).buttons.get(0).visible = false;
+
 			
 			 
 			 		}
@@ -173,14 +203,21 @@ public class ComputerScreen extends Screen {
 
 		if(this.startedShopping) {
 		
+			
 			GenericTexturedButton backwardsButton = new GenericTexturedButton(BACKWARD_BUTTON, shopScreenX+15, shopScreenY + 5, 10, 10, "", new Button.IPressable() {
 		
 		@Override
 		public void onPress(Button arg0) {
 
-			boolean clause = amountWanted > 0;
+			PCEntry selected = ((ComputerScreen)Minecraft.getInstance().currentScreen).ITEMS.selectedEntry;
+			int selectedIndex = ((ComputerScreen)Minecraft.getInstance().currentScreen).ITEMS.ENTRIES.indexOf(selected);
+			
+			if(selected == null)
+				return;
+			
+			boolean clause = ((ComputerScreen)Minecraft.getInstance().currentScreen).itemsWanted.get(selectedIndex).count > 0;
 			if(clause)
-				((ComputerScreen)Minecraft.getInstance().currentScreen).amountWanted--;
+				((ComputerScreen)Minecraft.getInstance().currentScreen).itemsWanted.get(selectedIndex).setCount(((ComputerScreen)Minecraft.getInstance().currentScreen).itemsWanted.get(selectedIndex).count - 1);
 		}
 	});
 	 
@@ -189,13 +226,21 @@ public class ComputerScreen extends Screen {
 		@Override
 		public void onPress(Button arg0) {
 
-			boolean clause = ((ComputerScreen)Minecraft.getInstance().currentScreen).amountWanted <((ComputerScreen)Minecraft.getInstance().currentScreen).ITEMS.selectedEntry.getItem().getMaxStackSize();
-			if(clause)
-				((ComputerScreen)Minecraft.getInstance().currentScreen).amountWanted++;
+			PCEntry selected = ((ComputerScreen)Minecraft.getInstance().currentScreen).ITEMS.selectedEntry;
+			int selectedIndex = ((ComputerScreen)Minecraft.getInstance().currentScreen).ITEMS.ENTRIES.indexOf(selected);
+			
+			if(selected == null)
+				return;
+			
+			boolean clause = ((ComputerScreen)Minecraft.getInstance().currentScreen).itemsWanted.get(selectedIndex).count < selected.item.getMaxStackSize();
+			boolean clauseCount = ((ComputerScreen)Minecraft.getInstance().currentScreen).itemsWanted.get(selectedIndex).count <  selected.getCount();
+			if(clause && clauseCount)
+				((ComputerScreen)Minecraft.getInstance().currentScreen).itemsWanted.get(selectedIndex).setCount(((ComputerScreen)Minecraft.getInstance().currentScreen).itemsWanted.get(selectedIndex).count +1);
+		}
 
 				
 		}
-	});
+	);
 
 	 this.addButton(backwardsButton);
 	 this.addButton(forwardsButton);
@@ -226,6 +271,7 @@ public class ComputerScreen extends Screen {
 				}
 				}
 			this.name = name;
+			this.count = count;
 		}
 		public PCEntry(ItemStack item, float price,int count) {
 			this(item,price,null, item.getDisplayName().getFormattedText(),count);

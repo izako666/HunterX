@@ -9,6 +9,8 @@ import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.data.worlddata.ModWorldData;
 import com.izako.hunterx.gui.ComputerScreen;
 import com.izako.hunterx.gui.ComputerScreen.PCEntry;
+import com.izako.hunterx.init.ModItems;
+import com.izako.hunterx.networking.PacketHandler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -26,21 +28,22 @@ public class ActivateComputerPacket {
 
 	List<PCEntry> hStock;
 	List<PCEntry> nStock;
+	boolean isHunter = false;
 	
 	//to serverside variables
 	
 	List<PCEntry> itemsBought;
-	boolean isHunter;
 	
-	public ActivateComputerPacket(List<PCEntry> normalStock, List<PCEntry> hunterStock) {
+	
+	public ActivateComputerPacket(List<PCEntry> normalStock, List<PCEntry> hunterStock, boolean isHunter) {
 		this.hStock = hunterStock;
 		this.nStock = normalStock;
+		this.isHunter = isHunter;
 	}
 	
-	public ActivateComputerPacket(List<PCEntry> itemsBought, boolean isHunter) {
+	public ActivateComputerPacket(List<PCEntry> itemsBought) {
 
 		this.itemsBought = itemsBought;
-		this.isHunter = isHunter;
 		
 	}
 
@@ -62,7 +65,6 @@ public class ActivateComputerPacket {
 			for(int i = 0; i < this.itemsBought.size(); i++) {
 				buf.writeCompoundTag(this.itemsBought.get(i).write());
 			}
-			buf.writeBoolean(isHunter);
 		} else {
 		buf.writeInt(nStock.size());
 		buf.writeInt(hStock.size());
@@ -75,6 +77,7 @@ public class ActivateComputerPacket {
 			buf.writeCompoundTag(hStock.get(i).write());
 		}
 
+		buf.writeBoolean(isHunter);
 		}
 	}
 
@@ -90,7 +93,6 @@ public class ActivateComputerPacket {
 				itemsBought.add(PCEntry.read(buf.readCompoundTag()));
 			}
 			msg.itemsBought = itemsBought;
-			msg.isHunter = buf.readBoolean();
 		} else {
 		int nSize = buf.readInt();
 		int hSize = buf.readInt();
@@ -99,12 +101,15 @@ public class ActivateComputerPacket {
 		for(int i = 0; i < nSize; i++) {
 			nStock.add(PCEntry.read(buf.readCompoundTag()));
 		}
-		
+
 		for(int i = 0; i < hSize; i++) {
 			hStock.add(PCEntry.read(buf.readCompoundTag()));
 		}
+		
+
 		msg.nStock = nStock;
 		msg.hStock = hStock;
+		msg.isHunter = buf.readBoolean();
 		}
 		return msg;
 	}
@@ -118,7 +123,8 @@ public class ActivateComputerPacket {
 		}
 		if(ctx.get().getDirection() == NetworkDirection.PLAY_TO_SERVER) {
 			ctx.get().enqueueWork(()-> {
-				if(msg.isHunter) {
+				boolean isHunter = ctx.get().getSender().inventory.hasItemStack(new ItemStack(ModItems.HUNTER_LICENSE));
+				if(isHunter) {
 					ModWorldData data = ModWorldData.get(ctx.get().getSender().getServerWorld());
 					
 					List<PCEntry> hStock = data.getHunterStock();
@@ -159,6 +165,8 @@ public class ActivateComputerPacket {
 								if(!done)
 									ctx.get().getSender().dropItem(stack, true, true);
 								
+								PacketHandler.INSTANCE.sendTo(new CGiveItemStackPacket(stack),ctx.get().getSender().connection.netManager,NetworkDirection.PLAY_TO_CLIENT);
+
 							}
 							data.setStock(hStock, true);
 
@@ -170,7 +178,7 @@ public class ActivateComputerPacket {
 				}
 				
 				
-				if(!msg.isHunter) {
+				if(!isHunter) {
 					ModWorldData data = ModWorldData.get(ctx.get().getSender().getServerWorld());
 					
 					List<PCEntry> nStock = data.getNormalStock();
@@ -179,14 +187,14 @@ public class ActivateComputerPacket {
 
 						
 						for(PCEntry test : nStock) {
-							boolean equals = test.getItem() == entry.getItem();
+							boolean equals = test.getItem().getItem() == entry.getItem().getItem();
 							if(equals) {
 									test.setCount(test.getCount() - entry.getCount());
 							}
 						}
 					}
 					boolean failedMissing= false;
-					for(PCEntry entry : nStock) {
+					for(PCEntry entry : data.getNormalStock()) {
 						if(entry.getCount() == 0) {
 							nStock.remove(entry);
 						} else if (entry.getCount() < 0) {
@@ -207,10 +215,15 @@ public class ActivateComputerPacket {
 							for(PCEntry entry : msg.itemsBought) {
 								ItemStack stack = entry.getItem().copy();
 								stack.setCount(entry.getCount());
-								boolean done = ctx.get().getSender().addItemStackToInventory(stack);
-								if(!done)
-									ctx.get().getSender().dropItem(stack, true, true);
-								
+								System.out.println(stack);
+								if(stack.getCount() > 0) {
+									boolean done = ctx.get().getSender().addItemStackToInventory(stack);
+									if(!done)
+										ctx.get().getSender().dropItem(stack, false, false);
+
+								PacketHandler.INSTANCE.sendTo(new CGiveItemStackPacket(stack),ctx.get().getSender().connection.netManager,NetworkDirection.PLAY_TO_CLIENT);
+
+								}
 							}
 							data.setStock(nStock, false);
 
@@ -229,7 +242,7 @@ public class ActivateComputerPacket {
 	public static class ClientHandler{
 		@OnlyIn(Dist.CLIENT)
 		public static void handle(ActivateComputerPacket msg) {
-			Minecraft.getInstance().displayGuiScreen(new ComputerScreen());
+			Minecraft.getInstance().displayGuiScreen(new ComputerScreen(msg.hStock,msg.nStock,msg.isHunter));
 			
 		}
 	}

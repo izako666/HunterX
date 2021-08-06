@@ -15,8 +15,8 @@ import net.minecraft.world.storage.WorldSavedData;
 
 public class ModWorldData extends WorldSavedData {
 
-	public static final ResourceLocation normalStockLoc = new ResourceLocation(Main.MODID, "loot_tables/pc/normal");
-	public static final ResourceLocation hunterStockLoc = new ResourceLocation(Main.MODID, "loot_tables/pc/hunter");
+	public static final ResourceLocation normalStockLoc = new ResourceLocation(Main.MODID, "pc/normal");
+	public static final ResourceLocation hunterStockLoc = new ResourceLocation(Main.MODID, "pc/hunter");
 
 	public List<ComputerScreen.PCEntry> getNormalStock() {
 		return NormalStock;
