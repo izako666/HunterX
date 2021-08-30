@@ -161,13 +161,10 @@ public class ActivateComputerPacket {
 							for(PCEntry entry : msg.itemsBought) {
 								ItemStack stack = entry.getItem().copy();
 								stack.setCount(entry.getCount());
-								boolean done = ctx.get().getSender().addItemStackToInventory(stack);
-								if(!done)
-									ctx.get().getSender().dropItem(stack, true, true);
-								
-								PacketHandler.INSTANCE.sendTo(new CGiveItemStackPacket(stack),ctx.get().getSender().connection.netManager,NetworkDirection.PLAY_TO_CLIENT);
+								if(stack.getCount() > 0) {
+									ctx.get().getSender().inventory.placeItemBackInInventory(ctx.get().getSender().world, stack);
 
-							}
+							}}
 							data.setStock(hStock, true);
 
 						} else {
@@ -217,12 +214,14 @@ public class ActivateComputerPacket {
 								stack.setCount(entry.getCount());
 								System.out.println(stack);
 								if(stack.getCount() > 0) {
-									boolean done = ctx.get().getSender().addItemStackToInventory(stack);
+									/*boolean done = ctx.get().getSender().addItemStackToInventory(stack);
 									if(!done)
 										ctx.get().getSender().dropItem(stack, false, false);
 
 								PacketHandler.INSTANCE.sendTo(new CGiveItemStackPacket(stack),ctx.get().getSender().connection.netManager,NetworkDirection.PLAY_TO_CLIENT);
 
+*/
+									ctx.get().getSender().inventory.placeItemBackInInventory(ctx.get().getSender().world, stack);
 								}
 							}
 							data.setStock(nStock, false);

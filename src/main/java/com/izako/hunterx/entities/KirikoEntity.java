@@ -103,7 +103,7 @@ public class KirikoEntity extends ZombieEntity{
 
 	@Override
 	public void onDeath(DamageSource cause) {
-	
+
 		if(cause.getTrueSource() instanceof PlayerEntity) {
 			PlayerEntity p = (PlayerEntity) cause.getTrueSource();
 			IHunterData data = HunterDataCapability.get(p);

@@ -6,9 +6,9 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import org.jline.reader.impl.history.DefaultHistory;
-
 import com.izako.hunterx.Main;
+import com.izako.hunterx.data.hunterdata.HunterDataCapability;
+import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.gui.AnimatedButton.SpriteTemplate;
 import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.networking.PacketHandler;
@@ -38,13 +38,17 @@ public class ComputerScreen extends Screen {
 	public static final ResourceLocation FORWARD_BUTTON = new ResourceLocation(Main.MODID, "textures/gui/forwardbutton.png");
 
 
+	
 	public SequencedString openingStatement = new SequencedString("You lookin ta know somethin'?.... I've also got some peculiar goods if it fancies ya...", 100, 100);
+
 	public boolean isTalking = false;
 	public boolean isShopping = false;
 	
 	public boolean startedShopping = false;
 	public ItemListSlider ITEMS;
 	public List<PCEntry> itemsWanted = new ArrayList<>();
+	public MovingButton bartender;
+	public AnimatedButton buy;
 	
 	//constructor variables
 	List<PCEntry> hStock;
@@ -87,16 +91,16 @@ public class ComputerScreen extends Screen {
 			
 			RenderSystem.pushMatrix();
 			int shopScreenX = (int)((originx) + ((320 / 2) - (160*1.5) / 2)-1);
-			int shopScreenY = (int)(originy + (60 / 1.5));
+			int shopScreenY = (int)(originy + (15 / 1.5));
 
 		
 
-		    Helper.drawIMG(FOREGROUND, (int)((originx) + ((320 / 2) - (160*1.5) / 2)-1), (int)(originy + (60 / 1.5)), 0, 0, (int)(161 * 1.5), (int)(121 * 1.5), 0, 161, 121);
+		    Helper.drawIMG(FOREGROUND, (int)((originx) + ((320 / 2) - (160*1.5) / 2)-1), (int)(originy + (15 / 1.5)), 0, 0, (int)(161 * 1.5), (int)(121 * 1.5), 0, 161, 121);
 
 			this.ITEMS.render(mouseX, mouseY, partialTicks);
 
 			WyHelper.drawStringWithBorder(font,"Name", shopScreenX+100 - font.getStringWidth("Name") / 2,  shopScreenY+5, Color.WHITE.getRGB());
-			WyHelper.drawStringWithBorder(font,"Price", shopScreenX+180 - font.getStringWidth("Name") / 2,  shopScreenY+5, Color.WHITE.getRGB());
+			WyHelper.drawStringWithBorder(font,"Price", shopScreenX+180 - font.getStringWidth("Price") / 2,  shopScreenY+5, Color.WHITE.getRGB());
 
 			if(this.ITEMS.selectedEntry != null)  {
 				int count = this.itemsWanted.get(this.ITEMS.ENTRIES.indexOf(this.ITEMS.selectedEntry)).getCount();
@@ -105,8 +109,11 @@ public class ComputerScreen extends Screen {
 			}
 		
 
+			IHunterData hData = HunterDataCapability.get(Minecraft.getInstance().player);
 			RenderSystem.popMatrix();
 			this.buttons.forEach(b -> {b.render(mouseX, mouseY, partialTicks);});
+			WyHelper.drawStringWithBorder(font,"Purchase Total: " + String.valueOf(this.calculatePurchase(itemsWanted)), shopScreenX+100 - font.getStringWidth("Purchase Total: " + String.valueOf(this.calculatePurchase(itemsWanted))) / 2,  shopScreenY+190, Color.WHITE.getRGB());
+			WyHelper.drawStringWithBorder(font,"Your current balance: " + String.valueOf(hData.getJenny()), shopScreenX+100 - font.getStringWidth("Your current balance: " + String.valueOf(hData.getJenny())) / 2,  shopScreenY+210, Color.WHITE.getRGB());
 
 		}
 
@@ -120,15 +127,18 @@ public class ComputerScreen extends Screen {
 		int shopScreenX = (int)((originx) + ((320 / 2) - (160*1.5) / 2)-1);
 		int shopScreenY = (int)(originy + (60 / 1.5));
 
-		MovingButton bartender = new MovingButton((int)(originx + 125),(int)(originy + 120), 70, 118,0,123, FOREGROUND, new Button.IPressable() {
+		if((bartender != null && bartender.active) || bartender == null) {
+		 bartender = new MovingButton((int)(originx + 125),(int)(originy + 120), 70, 118,0,123, FOREGROUND, new Button.IPressable() {
 			
 			@Override	
 			public void onPress(Button p_onPress_1_) {
 				((ComputerScreen)Minecraft.getInstance().currentScreen).isTalking = true;
 			}
 		});
-		
-		this.ITEMS = new ItemListSlider(minecraft, (int)((160*1.5)-2), 160, (int)((originx) + ((320 / 2) - (160*1.5) / 2)), (int)(originy + 60));
+		 this.addButton(bartender);
+		}
+		boolean hasBeenInit = !(this.ITEMS == null);
+		this.ITEMS = new ItemListSlider(minecraft, (int)((160*1.5)-2), 160, (int)((originx) + ((321 / 2) - (160*1.5) / 2)), (int)(originy + 29));
 		
 
 		if(this.isHunter) {
@@ -148,7 +158,6 @@ public class ComputerScreen extends Screen {
 			}
 		};
 		
-	 this.addButton(bartender);
 	 this.itemsWanted = new ArrayList<>();
 	 this.ITEMS.ENTRIES.forEach(e -> {
 		 List<String> infoString = null;
@@ -164,34 +173,59 @@ public class ComputerScreen extends Screen {
 		 i.setCount(0);
 	 });
 
+	 if(hasBeenInit) {
+		 this.children.add(ITEMS);
+	 }
+	 ResourceLocation MULTIPLE_CHOICE = new ResourceLocation(Main.MODID, "textures/gui/quest_choice_gui.png");
+
+	SpriteTemplate temp1 = new SpriteTemplate(MULTIPLE_CHOICE, 0, 125, 2);
+	SpriteTemplate temp2 = new SpriteTemplate(MULTIPLE_CHOICE, 0, 138, 2);
+	if(this.buy != null) {
+		this.buy = new AnimatedButton(width/2+90, (int)(originy + (300 / 1.5)), 26, 13, "", new Button.IPressable() {
+			
+			@Override
+			public void onPress(Button but) {
+				System.out.println("button works.");
+			
+				PacketHandler.INSTANCE.sendToServer(new ActivateComputerPacket(((ComputerScreen)Minecraft.getInstance().currentScreen).itemsWanted));
+				    Minecraft.getInstance().displayGuiScreen(null);
+			}
+			
+		}, temp1, temp2);
+		this.addButton(buy);
+
+	}
+
 	 openingStatement.event = new SequencedString.IRenderEndEvent() {
 		
 		@Override
 		public void onEnd() {
+			
 			((ComputerScreen)Minecraft.getInstance().currentScreen).children.add(ITEMS);
-			 ResourceLocation MULTIPLE_CHOICE = new ResourceLocation(Main.MODID, "textures/gui/quest_choice_gui.png");
-
 			((ComputerScreen)Minecraft.getInstance().currentScreen).isShopping = true;
-			SpriteTemplate temp1 = new SpriteTemplate(MULTIPLE_CHOICE, 0, 125, 2);
-			SpriteTemplate temp2 = new SpriteTemplate(MULTIPLE_CHOICE, 0, 138, 2);
-			((ComputerScreen)Minecraft.getInstance().currentScreen).addButton(new AnimatedButton(width/2+90, 196, 26, 13, "", new Button.IPressable() {
-				
-				@Override
-				public void onPress(Button but) {
-					System.out.println("button works.");
-				
-					PacketHandler.INSTANCE.sendToServer(new ActivateComputerPacket(((ComputerScreen)Minecraft.getInstance().currentScreen).itemsWanted));
- 				    Minecraft.getInstance().displayGuiScreen(null);
-				}
-				
-			}, temp1, temp2));
 			((ComputerScreen)Minecraft.getInstance().currentScreen).isTalking = false;
 			((ComputerScreen)Minecraft.getInstance().currentScreen).buttons.get(0).active = false;
 			((ComputerScreen)Minecraft.getInstance().currentScreen).buttons.get(0).visible = false;
 
-			
-			 
-			 		}
+			 ResourceLocation MULTIPLE_CHOICE = new ResourceLocation(Main.MODID, "textures/gui/quest_choice_gui.png");
+
+				SpriteTemplate temp1 = new SpriteTemplate(MULTIPLE_CHOICE, 0, 125, 2);
+				SpriteTemplate temp2 = new SpriteTemplate(MULTIPLE_CHOICE, 0, 138, 2);
+				((ComputerScreen)Minecraft.getInstance().currentScreen).buy = new AnimatedButton(width/2+90, (int)(originy + (300 / 1.5)), 26, 13, "", new Button.IPressable() {
+						
+						@Override
+						public void onPress(Button but) {
+							System.out.println("button works.");
+						
+							PacketHandler.INSTANCE.sendToServer(new ActivateComputerPacket(((ComputerScreen)Minecraft.getInstance().currentScreen).itemsWanted));
+							    Minecraft.getInstance().displayGuiScreen(null);
+						}
+						
+					}, temp1, temp2);
+				((ComputerScreen)Minecraft.getInstance().currentScreen).addButton(buy);
+
+		}
+			 		
 	};
 	}
 	
@@ -199,7 +233,7 @@ public class ComputerScreen extends Screen {
 	public void tick() {
 		
 		int shopScreenX = (int)((originx) + ((320 / 2) - (160*1.5) / 2)-1);
-		int shopScreenY = (int)(originy + (60 / 1.5));
+		int shopScreenY = (int)(originy + (15 / 1.5));
 
 		if(this.startedShopping) {
 		
@@ -249,6 +283,29 @@ public class ComputerScreen extends Screen {
 		}
 		super.tick();
 
+	}
+
+	
+	public int calculatePurchase(List<PCEntry> itemsWanted) {
+		int total = 0;
+		for(PCEntry entry : itemsWanted) {
+			total += (entry.getPrice() * entry.getCount());
+		}
+		return total;
+	}
+	
+	@Override
+	public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
+
+		if(this.openingStatement.ticksExisted >= this.openingStatement.maxTicks) {
+			this.openingStatement.ticksExisted = this.openingStatement.maxTicks + this.openingStatement.delayTicks;
+		}
+
+		if(this.openingStatement.ticksExisted > 1 && this.openingStatement.ticksExisted < this.openingStatement.maxTicks) {
+			this.openingStatement.ticksExisted = this.openingStatement.maxTicks;
+		}
+		
+		return super.mouseClicked(p_mouseClicked_1_, p_mouseClicked_3_, p_mouseClicked_5_);
 	}
 
 	
