@@ -7,9 +7,9 @@ import com.izako.wypi.APIConfig;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
+import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.IParticleData.IDeserializer;
 import net.minecraft.particles.ParticleType;
 import net.minecraft.util.ResourceLocation;
 
@@ -35,14 +35,12 @@ public class GenericParticleData implements IParticleData {
 			double motionY = stringReader.readDouble();
 			double motionZ = stringReader.readDouble();
 
-			ResourceLocation texture = new ResourceLocation(APIConfig.PROJECT_ID, "textures/particles/" + stringReader.readString() + ".png");
 			
-			GenericParticleData data = new GenericParticleData();
+			GenericParticleData data = new GenericParticleData(particleType);
 			data.setColor(red, green, blue, alpha);
 			data.setMotion(motionX, motionY, motionZ);
 			data.setSize(size);
 			data.setLife(life);
-			data.setTexture(texture);
 			if(hasRotation) data.setHasRotation();
 			data.setHasMotionDecay(hasMotionDecat);
 			
@@ -65,14 +63,12 @@ public class GenericParticleData implements IParticleData {
 			double motionY = packetBuffer.readDouble();
 			double motionZ = packetBuffer.readDouble();
 			
-			ResourceLocation texture = new ResourceLocation(APIConfig.PROJECT_ID, "textures/particles/" + packetBuffer.readString() + ".png");
 			
-			GenericParticleData data = new GenericParticleData();
+			GenericParticleData data = new GenericParticleData(particleType);
 			data.setColor(red, green, blue, alpha);
 			data.setMotion(motionX, motionY, motionZ);
 			data.setSize(size);
 			data.setLife(life);
-			data.setTexture(texture);
 			if(hasRotation) data.setHasRotation();
 			data.setHasMotionDecay(hasMotionDecat);
 						
@@ -88,13 +84,15 @@ public class GenericParticleData implements IParticleData {
 	private boolean hasRotation = false;
 	private boolean hasMotionDecay = true;
 	private ResourceLocation texture = new ResourceLocation(Main.MODID, "");
-	
-	public GenericParticleData() {}
+	private ParticleType type;
+	public GenericParticleData(ParticleType type) {
+		this.type = type;
+	}
 
 	@Override
 	public ParticleType<?> getType()
 	{
-		return ModParticleTypes.GENERIC_PARTICLE;
+		return this.type;
 	}
 
 	@Override
@@ -113,7 +111,6 @@ public class GenericParticleData implements IParticleData {
 		buffer.writeDouble(this.motionY);
 		buffer.writeDouble(this.motionZ);
 		
-		buffer.writeString(this.texture.getPath().replaceAll(".*/", "").replace(".png", ""));
 	}
 
 	public void setMotion(double motionX, double motionY, double motionZ)
@@ -144,11 +141,6 @@ public class GenericParticleData implements IParticleData {
 	public void setLife(int life)
 	{
 		this.life = life;
-	}
-	
-	public void setTexture(ResourceLocation texture)
-	{
-		this.texture = texture;
 	}
 	
 	public void setHasRotation()
@@ -210,11 +202,6 @@ public class GenericParticleData implements IParticleData {
 	public double getMotionZ()
 	{
 		return this.motionZ;
-	}
-	
-	public ResourceLocation getTexture()
-	{
-		return this.texture;
 	}
 	
 	public boolean hasRotation()

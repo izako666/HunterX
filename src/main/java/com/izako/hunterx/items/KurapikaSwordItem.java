@@ -10,6 +10,7 @@ import com.google.common.collect.Multimap;
 import com.izako.hunterx.izapi.IThugDrop;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;

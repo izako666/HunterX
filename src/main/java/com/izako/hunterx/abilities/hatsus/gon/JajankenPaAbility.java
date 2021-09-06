@@ -4,6 +4,7 @@ import com.izako.hunterx.Main;
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.entities.projectiles.AuraBlastProjectileEntity;
+import com.izako.hunterx.init.ModParticleTypes;
 import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.ChargeableAbility;
@@ -76,8 +77,7 @@ public class JajankenPaAbility extends ChargeableAbility implements ITrainable,I
 			double yRange = (p.world.getRandom().nextDouble())/ 2;
 			double zRange = (p.world.getRandom().nextDouble() -0.5) / 2;
 
-			GenericParticleData data = new GenericParticleData();
-			data.setTexture(new ResourceLocation(Main.MODID, "textures/particles/genericaura2.png"));
+			GenericParticleData data = new GenericParticleData(ModParticleTypes.GENERIC_AURA2);
 			data.setMotion(-xRange / 20, -yRange/8, -zRange/20);
 			data.setLife(20);
 			data.setSize(0.15f);

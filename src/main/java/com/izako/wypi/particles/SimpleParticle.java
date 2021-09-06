@@ -1,13 +1,11 @@
 package com.izako.wypi.particles;
 
 import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.TexturedParticle;
-import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
@@ -20,6 +18,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class SimpleParticle extends TexturedParticle {
 	protected ResourceLocation texture;
+	private IParticleRenderType type;
 	private static final ImmutableList<VertexFormatElement> ELEMENTS = ImmutableList.of(
 			DefaultVertexFormats.POSITION_3F, DefaultVertexFormats.TEX_2F, DefaultVertexFormats.COLOR_4UB,
 			DefaultVertexFormats.NORMAL_3B, DefaultVertexFormats.PADDING_1B);
@@ -27,10 +26,9 @@ public class SimpleParticle extends TexturedParticle {
 	private boolean hasRotation = false;
 	private boolean hasMotionDecay = true;
 
-	public SimpleParticle(World world, ResourceLocation texture, double posX, double posY, double posZ, double motionX,
+	public SimpleParticle(IParticleRenderType type,World world, double posX, double posY, double posZ, double motionX,
 			double motionY, double motionZ) {
 		super(world, posX, posY, posZ, 0.0D, 0.0D, 0.0D);
-		this.texture = texture;
 		this.maxAge = 30 + this.rand.nextInt(10);
 		this.age = 0;
 		this.particleScale = 0.2F;
@@ -41,6 +39,7 @@ public class SimpleParticle extends TexturedParticle {
 		this.motionX = motionX;
 		this.motionY = motionY;
 		this.motionZ = motionZ;
+		this.type = type;
 	}
 
 	@Override
@@ -111,7 +110,7 @@ public class SimpleParticle extends TexturedParticle {
 
 	@Override
 	public IParticleRenderType getRenderType() {
-		return new CustomParticleRenderType(this);
+		return this.type;
 	}
 
 	@Override
@@ -135,13 +134,16 @@ public class SimpleParticle extends TexturedParticle {
 	}
 
 	public static class Factory implements IParticleFactory<GenericParticleData> {
-		public Factory() {
+		private IParticleRenderType type;
+
+		public Factory(ResourceLocation location) {
+			this.type = new CustomParticleRenderType(location);
 		}
 
 		@Override
 		public Particle makeParticle(GenericParticleData data, World world, double posX, double posY, double posZ,
 				double velX, double velY, double velZ) {
-			SimpleParticle particle = new SimpleParticle(world, data.getTexture(), posX, posY, posZ, data.getMotionX(),
+			SimpleParticle particle = new SimpleParticle(type,world, posX, posY, posZ, data.getMotionX(),
 					data.getMotionY(), data.getMotionZ());
 			particle.setColor(data.getRed(), data.getGreen(), data.getBlue());
 			particle.setParticleAlpha(data.getAlpha());

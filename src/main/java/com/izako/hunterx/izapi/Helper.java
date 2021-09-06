@@ -5,8 +5,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
+import java.util.function.Predicate;
+
+import javax.annotation.Nullable;
 
 import org.lwjgl.opengl.GL11;
 
@@ -58,6 +62,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkDirection;
@@ -476,4 +481,63 @@ public class Helper {
 	      return new EntityRayTraceResult(null, mc.player.getPositionVec());
 
 	   }
+	
+	   @Nullable
+	   public static EntityRayTraceResult rayTraceEntities(Entity shooter, Vec3d startVec, Vec3d endVec, AxisAlignedBB boundingBox, Predicate<Entity> filter, double distance) {
+	      World world = shooter.world;
+	      double d0 = distance;
+	      Entity entity = null;
+	      Vec3d vec3d = null;
+
+	      for(Entity entity1 : world.getEntitiesInAABBexcluding(shooter, boundingBox, filter)) {
+	         AxisAlignedBB axisalignedbb = entity1.getBoundingBox().grow((double)entity1.getCollisionBorderSize());
+	         Optional<Vec3d> optional = axisalignedbb.rayTrace(startVec, endVec);
+	         if (axisalignedbb.contains(startVec)) {
+	            if (d0 >= 0.0D) {
+	               entity = entity1;
+	               vec3d = optional.orElse(startVec);
+	               d0 = 0.0D;
+	            }
+	         } else if (optional.isPresent()) {
+	            Vec3d vec3d1 = optional.get();
+	            double d1 = startVec.squareDistanceTo(vec3d1);
+	            if (d1 < d0 || d0 == 0.0D) {
+	               if (entity1.getLowestRidingEntity() == shooter.getLowestRidingEntity() && !entity1.canRiderInteract()) {
+	                  if (d0 == 0.0D) {
+	                     entity = entity1;
+	                     vec3d = vec3d1;
+	                  }
+	               } else {
+	                  entity = entity1;
+	                  vec3d = vec3d1;
+	                  d0 = d1;
+	               }
+	            }
+	         }
+	      }
+
+	      return entity == null ? null : new EntityRayTraceResult(entity, vec3d);
+	   }
+
+	   public static Optional<Entity> getTargetEntity(@Nullable Entity entityIn, int distance) {
+		      if (entityIn == null) {
+		         return Optional.empty();
+		      } else {
+		         Vec3d vec3d = entityIn.getEyePosition(1.0F);
+		         Vec3d vec3d1 = entityIn.getLook(1.0F).scale((double)distance);
+		         Vec3d vec3d2 = vec3d.add(vec3d1);
+		         AxisAlignedBB axisalignedbb = entityIn.getBoundingBox().expand(vec3d1).grow(1.0D);
+		         int i = distance * distance;
+		         Predicate<Entity> predicate = (p_217727_0_) -> {
+		            return !p_217727_0_.isSpectator() && p_217727_0_.canBeCollidedWith();
+		         };
+		         EntityRayTraceResult entityraytraceresult = ProjectileHelper.rayTraceEntities(entityIn, vec3d, vec3d2, axisalignedbb, predicate, (double)i);
+		         if (entityraytraceresult == null) {
+		            return Optional.empty();
+		         } else {
+		            return vec3d.squareDistanceTo(entityraytraceresult.getHitVec()) > (double)i ? Optional.empty() : Optional.of(entityraytraceresult.getEntity());
+		         }
+		      }
+		   }
+
 }

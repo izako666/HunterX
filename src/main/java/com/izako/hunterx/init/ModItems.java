@@ -65,7 +65,7 @@ public class ModItems {
 	public static final ShurikenItem SHURIKEN = new ShurikenItem(
 			new Item.Properties().maxStackSize(16));
 
-	public static final PistolItem PISTOL = new PistolItem(new Item.Properties().group(HUNTERX_ITEM_GROUP).maxStackSize(1));
+	public static final PistolItem PISTOL = new PistolItem(new Item.Properties().maxStackSize(1));
 	public static final BadgeItem BADGE = new BadgeItem(new Item.Properties().maxStackSize(1));
 
 	public static final HunterLicenseItem HUNTER_LICENSE = new HunterLicenseItem(new Item.Properties().maxStackSize(1));

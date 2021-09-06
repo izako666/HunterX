@@ -7,12 +7,12 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.vertex.VertexFormatElement;
+import net.minecraft.util.ResourceLocation;
 
 public class CustomParticleRenderType implements IParticleRenderType{
 
-	SimpleParticle particle;
-	public CustomParticleRenderType(SimpleParticle particle) {
+	ResourceLocation particle;
+	public CustomParticleRenderType(ResourceLocation particle) {
 		this.particle = particle;
 	}
 	@Override
@@ -20,7 +20,7 @@ public class CustomParticleRenderType implements IParticleRenderType{
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.depthMask(true);
-        p_217600_2_.bindTexture(particle.texture);
+        p_217600_2_.bindTexture(particle);
         buffer.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
         
 

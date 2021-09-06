@@ -9,29 +9,62 @@
     				"type": "minecraft:uniform"
     			},
     			"entries": [
-    				{
-    					"type": "minecraft:item",
-    					"name": "minecraft:stick",
-    					"weight": 100,
-    					"functions": [
-    						{
-    							"function": "minecraft:set_count",
-    							"count": {
-    								"min": 5.0,
-    								"max": 15.0,
-    								"type": "minecraft:uniform"
-    							}
-    						},
-    						{
-    							"function": "mineminenomi:set_price",
-    							"price_range": {
-    								"min": 700000.0,
-    								"max": 1000000.0,
-    								"type": "minecraft:uniform"
-    							}
-    						}
-    					]
-    				}
+    				{"type": "minecraft:item","name": "shulker_box","weight": 5,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 5,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 30000,"max": 45000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:card","weight": 50,"functions": [{"function": "minecraft:set_count","count": {"min": 64,"max": 128,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 1000,"max": 1200,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:divination_cup_block","weight": 20,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 1,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 2000,"max": 2100,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:ging_boots","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 5,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 7000,"max": 9000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:ging_chestplate","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 1,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 10000,"max": 12000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:ging_leggings","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 2,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 9000,"max": 10000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:gon_boots","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 5,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 7000,"max": 9000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:gon_chestplate","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 1,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 10000,"max": 12000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:gon_leggings","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 2,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 9000,"max": 10000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:gons_fishing_rod","weight": 30,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 1,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 2000,"max": 6000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:hanzo_boots","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 5,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 7000,"max": 9000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:hanzo_chestplate","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 1,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 10000,"max": 15000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:hanzo_leggings","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 2,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 9000,"max": 10000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:hisoka_boots","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 5,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 7000,"max": 9000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:hisoka_chestplate","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 1,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 10000,"max": 12000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:hisoka_leggings","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 2,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 9000,"max": 10000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:illumi_boots","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 5,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 7000,"max": 9000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:illumi_chestplate","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 1,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 10000,"max": 12000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:illumi_leggings","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 2,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 9000,"max": 10000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:killua_boots","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 5,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 7000,"max": 9000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:killua_chestplate","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 1,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 10000,"max": 12000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:killua_leggings","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 2,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 9000,"max": 10000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:kite_boots","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 5,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 7000,"max": 9000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:kite_chestplate","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 1,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 10000,"max": 12000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:kite_leggings","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 2,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 9000,"max": 10000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:kurapika_boots","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 5,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 7000,"max": 9000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:kurapika_chestplate","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 1,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 10000,"max": 12000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:kurapika_leggings","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 2,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 9000,"max": 10000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:kurapikas_stick","weight": 10,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 1,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 20000,"max": 30000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:leorio_boots","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 5,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 7000,"max": 9000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:leorio_chestplate","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 1,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 10000,"max": 12000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:leorio_leggings","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 2,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 9000,"max": 10000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:needle","weight": 50,"functions": [{"function": "minecraft:set_count","count": {"min": 64,"max": 128,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 1000,"max": 1200,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:netero_boots","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 5,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 7000,"max": 9000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:netero_chestplate","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 1,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 10000,"max": 12000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:netero_leggings","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 2,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 9000,"max": 10000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "hntrx:yoyo","weight": 10,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 2,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 40000,"max": 50000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "jukebox","weight": 30,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 5,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 2000,"max": 3000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "enchanting_table","weight": 20,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 2,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 4000,"max": 6000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "ender_chest","weight": 15,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 10,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 5000,"max": 10000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "wither_skeleton_skull","weight": 5,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 2,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 25000,"max": 35000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "dragon_head","weight": 10,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 1,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 15000,"max": 25000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "honey_block","weight": 35,"functions": [{"function": "minecraft:set_count","count": {"min": 32,"max": 64,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 2000,"max": 2200,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "saddle","weight": 20,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 2,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 10000,"max": 12000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "elytra","weight": 5,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 1,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 30000,"max": 40000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "turtle_egg","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 5,"max": 10,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 2000,"max": 4000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "diamond","weight": 15,"functions": [{"function": "minecraft:set_count","count": {"min": 32,"max": 64,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 3000,"max": 3500,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "slime_ball","weight": 30,"functions": [{"function": "minecraft:set_count","count": {"min": 64,"max": 128,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 1000,"max": 2000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "ender_pearl","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 12,"max": 24,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 2000,"max": 2500,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "blaze_rod","weight": 25,"functions": [{"function": "minecraft:set_count","count": {"min": 12,"max": 24,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 2000,"max": 2500,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "emerald","weight": 35,"functions": [{"function": "minecraft:set_count","count": {"min": 20,"max": 40,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 2500,"max": 3000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "chorus_fruit","weight": 15,"functions": [{"function": "minecraft:set_count","count": {"min": 3,"max": 9,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 5000,"max": 8000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "honey_bottle","weight": 30,"functions": [{"function": "minecraft:set_count","count": {"min": 64,"max": 128,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 1000,"max": 2000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "name_tag","weight": 20,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 5,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 5000,"max": 8000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "totem_of_undying","weight": 10,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 5,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 25000,"max": 35000,"type": "minecraft:uniform"}}]},
+{"type": "minecraft:item","name": "trident","weight": 10,"functions": [{"function": "minecraft:set_count","count": {"min": 1,"max": 2,"type": "minecraft:uniform"}},{"function": "hntrx:set_price","price_range": {"min": 15000,"max": 20000,"type": "minecraft:uniform"}}]}
     					]
     				}
     			]

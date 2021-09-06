@@ -49,7 +49,7 @@ public class HunterExam04 extends Quest{
 		IHunterData data = HunterDataCapability.get(p);
 		data.giveQuest(this);
 		if(!p.world.isRemote) {
-		HanzoEntity boss = new HanzoEntity(HanzoEntity.TYPE, p.world);
+		HanzoEntity boss = new HanzoEntity(HanzoEntity.TYPE, p.world,p);
 	    boss.setPosition(p.getPosX() + 2, p.getPosY(), p.getPosZ());
 	    p.world.addEntity(boss);
 		}

@@ -8,6 +8,7 @@ import com.izako.hunterx.init.ModQuests;
 
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
@@ -112,6 +113,10 @@ public class KirikoEntity extends ZombieEntity{
 			}
 		}
 		
+		if(cause.getTrueSource() instanceof PlayerEntity) {
+			IHunterData data = HunterDataCapability.get((LivingEntity) cause.getTrueSource());
+			data.setJenny(data.getJenny() + ThugEntity.randomWithRange(1500, 1850));
+		}
 		super.onDeath(cause);
 	}
 

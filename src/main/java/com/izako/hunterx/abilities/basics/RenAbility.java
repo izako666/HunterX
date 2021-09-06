@@ -5,6 +5,7 @@ import java.util.UUID;
 import com.izako.hunterx.Main;
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
+import com.izako.hunterx.init.ModParticleTypes;
 import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.IOnPlayerRender;
@@ -77,8 +78,7 @@ public class RenAbility extends PassiveAbility implements IOnPlayerRender , ITra
 				double xRange = p.world.getRandom().nextDouble()  -0.5;
 				double yRange = p.world.getRandom().nextDouble();
 				double zRange = p.world.getRandom().nextDouble() -0.5;
-				GenericParticleData data = new GenericParticleData();
-				data.setTexture(new ResourceLocation(Main.MODID, "textures/particles/genericaura3.png"));
+				GenericParticleData data = new GenericParticleData(ModParticleTypes.GENERIC_AURA3);
 				data.setMotion(0, 0.05, 0);
 				data.setLife(20);
 				data.setSize(0.15f);

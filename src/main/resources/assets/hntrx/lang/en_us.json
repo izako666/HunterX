@@ -64,6 +64,9 @@
     "itemGroup.hunterxitemgroup": "HunterX",
     "block.hntrx.divination_cup_block": "Divination Cup",
     "key.categories.hntrx": "HunterX",
-    "key.huntergui": "Gui Open"
+    "key.huntergui": "Gui Open",
+    "key.activatescroller": "Activate Ability Scroller",
+    "key.useability": "Use Ability",
+    "block.hntrx.computer": "Computer"
 
 }

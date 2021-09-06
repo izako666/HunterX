@@ -2,8 +2,8 @@ package com.izako.hunterx.abilities.basic_hatsus;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
-import com.izako.hunterx.abilities.hatsus.leorio.LockOnAbility;
 import com.izako.hunterx.data.hunterdata.HunterDataCapability;
 import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.entities.goals.wolfgoals.FollowOwnerGoal;
@@ -18,17 +18,12 @@ import com.izako.hunterx.izapi.ability.IBlacklistPassive;
 import com.izako.hunterx.izapi.ability.ITrainable;
 import com.izako.hunterx.izapi.ability.NenType;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
-import com.izako.hunterx.networking.PacketHandler;
-import com.izako.hunterx.networking.packets.LockOnPacket;
-import com.izako.wypi.WyHelper;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class LoyaltyCurseAbility extends PassiveAbility implements ITrainable, IBlacklistPassive {
 
@@ -58,11 +53,10 @@ public class LoyaltyCurseAbility extends PassiveAbility implements ITrainable, I
 
 	@Override
 	public void onStartPassive(LivingEntity p) {
+
+		Optional<Entity> entity = Helper.getTargetEntity(p, 50);
 		
-		
-		EntityRayTraceResult ray = WyHelper.rayTraceEntities(p, 100,p);
-		
-		if(!(ray.getEntity() instanceof AnimalEntity)) {
+		if(!entity.isPresent() || !(entity.get() instanceof AnimalEntity)) {
 			if(p.world.isRemote()) {
 			p.sendMessage(new StringTextComponent("Not an animal!").applyTextStyle(TextFormatting.RED));
 			}
@@ -71,7 +65,7 @@ public class LoyaltyCurseAbility extends PassiveAbility implements ITrainable, I
 		}
 		
 		if(!p.world.isRemote()) {
-			this.animal = (AnimalEntity) ray.getEntity();
+			this.animal = (AnimalEntity) entity.get();
             this.followGoal = new FollowOwnerGoal(this.animal, 1.0D, 10.0F, 2.0F, false,p);
             this.ownerHurtGoal = new OwnerHurtTargetGoal(this.animal, p);
             this.ownerHurtByGoal = new OwnerHurtByTargetGoal(this.animal, p);
