@@ -12,6 +12,7 @@ import com.izako.wypi.WyHelper;
 import com.izako.wypi.particles.GenericParticleData;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.server.ServerWorld;
@@ -20,6 +21,7 @@ public class LightningPalmAbility extends PunchAbility {
 
 	public LightningPalmAbility() {
 		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxPassive(Integer.MAX_VALUE).setNenType(NenType.TRANSMUTER).setMaxCooldown(2 * 20);
+		this.onPunch = this::onPunch;
 	}
 	@Override
 	public String getId() {
@@ -36,14 +38,7 @@ public class LightningPalmAbility extends PunchAbility {
 		return "Shocks the opponent through electricity built up in the users palm.";
 	}
 
-	@Override
-	public float onPunch(LivingEntity p, LivingEntity target) {
 
-		target.addPotionEffect(new EffectInstance(ModEffects.PARALYSIS_EFFECT, 40, 1));
-		Helper.endAbilitySafe(p, this);
-		Helper.consumeAura(20, p, this);
-		return Helper.getTrueValue(15, this, p);
-	}
 
 	@Override
 	public void duringPassive(LivingEntity p) {
@@ -67,4 +62,11 @@ public class LightningPalmAbility extends PunchAbility {
 	}
 
 
+	@Override
+	public float onPunch(PlayerEntity p, LivingEntity target) {
+		target.addPotionEffect(new EffectInstance(ModEffects.PARALYSIS_EFFECT, 40, 1));
+		Helper.endAbilitySafe(p, this);
+		Helper.consumeAura(20, p, this);
+		return Helper.getTrueValue(15, this, p);
+	}
 }

@@ -16,7 +16,7 @@ public class CharacterHatsusQuest extends Quest implements IMultipleChoiceQuest 
 
 	@Override
 	public List<Quest> getChoices(PlayerEntity p) {
-		return new ArrayList<Quest>(Arrays.asList(ModQuests.GON_HATSU_QUEST,ModQuests.KILLUA_HATSU_QUEST,ModQuests.LEORIO_HATSU_QUEST));
+		return new ArrayList<Quest>(Arrays.asList(ModQuests.GON_HATSU_QUEST,ModQuests.KILLUA_HATSU_QUEST,ModQuests.LEORIO_HATSU_QUEST, ModQuests.GENTHRU_HATSU_QUEST));
 	}
 
 	@Override

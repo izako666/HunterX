@@ -343,13 +343,13 @@ public class Helper {
 			trainablePowerScale = abl.getCurrentPowerScale();
 		}
 		IAbilityData data = AbilityDataCapability.get(p);
-		float percentage = Helper.getPercentageBetweenTypes(data.getNenType(), abl.props.nenType) / 100.0f;
+		double percentage = Helper.getPercentageBetweenTypes(data.getNenType(), abl.props.nenType);
 
 		float trueValue = (float) (value * abl.getStrength() * trainablePowerScale * percentage);
 		return trueValue;
 	}
 
-	public static int getPercentageBetweenTypes(NenType type1, NenType type2) {
+	public static double getPercentageBetweenTypes(NenType type1, NenType type2) {
 		List<NenType> reference = new ArrayList<>();
 		if (type1 == NenType.ENHANCER) {
 			reference = ENHANCER;
@@ -368,17 +368,17 @@ public class Helper {
 		int index = reference.indexOf(type2);
 
 		if (type2 == NenType.UNKNOWN) {
-			return 100;
+			return 1;
 		}
 		if (type1 == type2) {
-			return 100;
+			return 1;
 		}
 		if (index < 2) {
-			return 80;
+			return 0.8;
 		} else if (index < 4) {
-			return 60;
+			return 0.6;
 		} else {
-			return 40;
+			return 0.4;
 		}
 
 	}

@@ -46,6 +46,7 @@ public class ModQuests {
 	public static final Quest GON_HATSU_QUEST = new CharacterHatsuQuests.Gon();
     public static final Quest KILLUA_HATSU_QUEST = new CharacterHatsuQuests.Killua();
     public static final Quest LEORIO_HATSU_QUEST = new CharacterHatsuQuests.Leorio();
+    public static final Quest GENTHRU_HATSU_QUEST = new CharacterHatsuQuests.Genthru();
     public static final Quest CHARACTER_HATSUS_QUEST = new CharacterHatsusQuest();
     public static List<Quest> QUESTS = new ArrayList<>();
 

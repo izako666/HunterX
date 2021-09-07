@@ -1,5 +1,7 @@
 package com.izako.hunterx.quests.hatsus;
 
+import com.izako.hunterx.abilities.hatsus.genthru.CountdownAbility;
+import com.izako.hunterx.abilities.hatsus.genthru.LittleFlowerAbility;
 import com.izako.hunterx.abilities.hatsus.gon.JajankenGuAbility;
 import com.izako.hunterx.abilities.hatsus.gon.JajankenPaAbility;
 import com.izako.hunterx.abilities.hatsus.gon.JajankenSciAbility;
@@ -123,6 +125,35 @@ public class CharacterHatsuQuests {
 		public String getDescription() {
 			return "Learn Leorio's Hatsu (By taking the abilities, you've already learnt them).";
 		}}
+
+	public static class Genthru extends Quest
+	{
+		@Override
+		public String getId() {return "genthru_quest";}
+
+		@Override
+		public void giveQuest(PlayerEntity p)
+		{
+			LittleFlowerAbility littleFlower = new LittleFlowerAbility();
+			CountdownAbility countdown = new CountdownAbility();
+			littleFlower.give(p);
+			// when done with countdown countdown.give(p);
+			this.setProgress(101);
+			IHunterData data = HunterDataCapability.get(p);
+			data.getQuest(ModQuests.CHARACTER_HATSUS_QUEST).setProgress(101);
+
+			super.giveQuest(p);
+		}
+
+		@Override
+		public String getName() {return "Learn Genthru's Hatsu";}
+
+		@Override
+		public String getDescription()
+		{
+			return "Learn Genthru's Hatsu (By taking the abilities, you've already learnt them).";
+		}
+	}
 
 
 }
