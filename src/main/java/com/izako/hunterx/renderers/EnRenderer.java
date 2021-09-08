@@ -1,6 +1,8 @@
 package com.izako.hunterx.renderers;
 
 import com.izako.hunterx.Main;
+import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
+import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.entities.EnEntity;
 import com.izako.hunterx.entities.models.EnSphereModel;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -30,12 +32,13 @@ public class EnRenderer<T extends EnEntity> extends EntityRenderer<T>{
 	public void render(T entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
 			IRenderTypeBuffer bufferIn, int packedLightIn) {
 		//matrixStackIn.translate(entityIn.getPosX(), entityIn.getPosY(), entityIn.getPosZ());
+		IAbilityData data = AbilityDataCapability.get(entityIn.owner);
 		matrixStackIn.push();
 		matrixStackIn.scale((float)entityIn.renderScale * 2.0f, (float)entityIn.renderScale * 2.0f  , (float)entityIn.renderScale * 2.0f);
 
 		matrixStackIn.translate(0, -1, 0);
 		IVertexBuilder builder = bufferIn.getBuffer(RenderType.getEntityTranslucent(this.getEntityTexture(entityIn)));
-		this.model.render(matrixStackIn, builder, packedLightIn, packedLightIn, 1.0f, 1.0f, 1.0f, 0.2f);
+		this.model.render(matrixStackIn, builder, packedLightIn, packedLightIn, data.getAuraColor().getRed()/ 255f, data.getAuraColor().getGreen()/255f, data.getAuraColor().getBlue()/255f, 0.2f);
 		matrixStackIn.pop();
 		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 	}

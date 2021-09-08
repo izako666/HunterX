@@ -68,6 +68,8 @@ public abstract class Ability {
 
 		IAbilityData data = AbilityDataCapability.get(p);
 		List<Ability> tempAbilities = data.getAbilitiesOfType(AbilityType.PASSIVE);
+	    tempAbilities.addAll(data.getAbilitiesOfType(AbilityType.CHARGING_PASSIVE));
+
 	    tempAbilities.removeIf(this::ifInPassivePredicate);
 	    for(int i = 0; i < tempAbilities.size(); i++) {
 	    	if(tempAbilities.get(i) instanceof IBlacklistPassive) {
@@ -169,6 +171,21 @@ public abstract class Ability {
 					if (!this.isCharging()) {
 						((ChargeablePassiveAbility) this).onStartCharging(p);
 						MinecraftForge.EVENT_BUS.post(new AbilityActivateEvent(this, p));
+						
+						if(blacklisted != null) {
+							blacklisted.forEach(a -> {
+								if(data.getSlotAbility(a) != null) {
+									data.getSlotAbility(a).stopAbility(p);
+								}
+							});
+						} else {
+						tempAbilities.forEach((a) -> {
+							if(!a.equals(this)) {
+							a.stopAbility(p);
+							}
+						});
+						}
+
 					}
 					this.setCharging(true);
 					

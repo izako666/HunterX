@@ -123,6 +123,8 @@ public class AbilityDataUpdateEvent {
 	{
 		@SubscribeEvent
 		public static void livingUpdate(LivingUpdateEvent e) {
+			if(!e.getEntityLiving().world.isRemote())
+				return;
 			LivingEntity p = e.getEntityLiving();
 			IAbilityData data = AbilityDataCapability.get(p);
 			List<Ability> list = data.getAbilities();

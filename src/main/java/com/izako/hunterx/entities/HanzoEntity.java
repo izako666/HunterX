@@ -40,9 +40,16 @@ import net.minecraft.world.World;
 
 public class HanzoEntity extends ZombieEntity{
 
+	PlayerEntity source;
 	public HanzoEntity(EntityType<? extends ZombieEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
+	
+	public HanzoEntity(EntityType<? extends ZombieEntity> type, World worldIn,PlayerEntity p) {
+		super(type, worldIn);
+		this.source = p;		
+	}
+
 
 
 	@SuppressWarnings("unchecked")
@@ -179,6 +186,10 @@ public class HanzoEntity extends ZombieEntity{
 			
 			this.entityDropItem(new ItemStack(ModItems.BADGE));
 		}
+		}
+		if(!cause.getTrueSource().isEntityEqual(source)) {
+			IHunterData sourceData = HunterDataCapability.get(source);
+			sourceData.getQuest(ModQuests.HUNTEREXAM04).removeQuest(source);
 		}
 		
 		super.onDeath(cause);

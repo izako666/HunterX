@@ -6,6 +6,7 @@ import com.izako.hunterx.Main;
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.init.ModEffects;
+import com.izako.hunterx.init.ModParticleTypes;
 import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.NenType;
@@ -64,8 +65,7 @@ public class ThunderboltAbility extends Ability {
 				float posy = (float) (p.getPosY() - (i / 2));
 				float posz = (float) (p.getPosZ() + Math.sin(Math.toRadians(i * 18)));
 				
-				GenericParticleData data = new GenericParticleData();
-				data.setTexture(new ResourceLocation(Main.MODID, "textures/particles/lightning.png"));
+				GenericParticleData data = new GenericParticleData(ModParticleTypes.LIGHTNING);
 				data.setMotion(0, 0, 0);
 				data.setLife(20);
 				data.setSize(0.15f);

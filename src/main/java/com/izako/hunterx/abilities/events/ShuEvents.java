@@ -5,6 +5,7 @@ import com.izako.hunterx.abilities.basics.ShuAbility;
 import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
 import com.izako.hunterx.data.abilitydata.IAbilityData;
 import com.izako.hunterx.init.ModAbilities;
+import com.izako.hunterx.izapi.Helper;
 
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
@@ -49,14 +50,20 @@ public class ShuEvents {
 				if(stack.hasTag()) {
 					if(stack.getTag().getBoolean("activeshu")) {
 						IAbilityData data = AbilityDataCapability.get(p);
+						int shuSharpLvl = stack.getTag().getInt("shuSharpLvl");
+						int shuUnbreakLvl = stack.getTag().getInt("shuUnbreakLvl");
 						if(data.getSlotAbility(ModAbilities.SHU_ABILITY) == null) {
-							ShuAbility.removeEnchantment(Enchantments.UNBREAKING, stack);
-							ShuAbility.removeEnchantment(Enchantments.SHARPNESS, stack);
+							ShuAbility.removeEnchantment(Enchantments.UNBREAKING,shuUnbreakLvl, stack);
+							
+							ShuAbility.removeEnchantment(Enchantments.SHARPNESS,shuSharpLvl, stack);
 							stack.getTag().remove("activeshu");
 						} else if(!data.getSlotAbility(ModAbilities.SHU_ABILITY).isInPassive()) {
-							ShuAbility.removeEnchantment(Enchantments.UNBREAKING, stack);
-							ShuAbility.removeEnchantment(Enchantments.SHARPNESS, stack);
+							ShuAbility.removeEnchantment(Enchantments.UNBREAKING,shuUnbreakLvl, stack);
+							ShuAbility.removeEnchantment(Enchantments.SHARPNESS,shuSharpLvl, stack);
 							stack.getTag().remove("activeshu");
+							stack.getTag().remove("shuSharpLvl");
+							stack.getTag().remove("ShuUnbreakLvl");
+
 						}
 					}
 				}

@@ -1,9 +1,15 @@
 package com.izako.hunterx.blocks;
 
+import com.izako.hunterx.data.abilitydata.AbilityDataCapability;
+import com.izako.hunterx.data.abilitydata.IAbilityData;
+import com.izako.hunterx.data.hunterdata.HunterDataCapability;
+import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.data.worlddata.ModWorldData;
 import com.izako.hunterx.init.ModItems;
 import com.izako.hunterx.networking.PacketHandler;
+import com.izako.hunterx.networking.packets.AbilityUpdatePacket;
 import com.izako.hunterx.networking.packets.ActivateComputerPacket;
+import com.izako.hunterx.networking.packets.StatsUpdatePacket;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -107,6 +113,11 @@ public class ComputerBlock extends Block {
 		if(!worldIn.isRemote()) {
 			ModWorldData data = ModWorldData.get((ServerWorld) worldIn);
 			boolean isHunter = player.inventory.hasItemStack(new ItemStack(ModItems.HUNTER_LICENSE));
+			IHunterData hData = HunterDataCapability.get(player);
+			IAbilityData aData = AbilityDataCapability.get(player);
+		    PacketHandler.INSTANCE.sendTo(new AbilityUpdatePacket(aData, false), ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+			PacketHandler.INSTANCE.sendTo(new StatsUpdatePacket(hData, false), ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+
 			PacketHandler.INSTANCE.sendTo(new ActivateComputerPacket(data.getNormalStock(),data.getHunterStock(), isHunter), ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		}
 		return super.onBlockActivated(state, worldIn, pos, player, handIn, result);

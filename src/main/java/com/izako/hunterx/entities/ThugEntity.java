@@ -7,6 +7,8 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.izako.hunterx.Main;
+import com.izako.hunterx.data.hunterdata.HunterDataCapability;
+import com.izako.hunterx.data.hunterdata.IHunterData;
 import com.izako.hunterx.entities.goals.GunAI;
 import com.izako.hunterx.init.ModItems;
 import com.izako.hunterx.items.entities.BulletEntity;
@@ -183,7 +185,7 @@ public class ThugEntity extends ZombieEntity implements IRangedAttackMob{
 		super.swingArm(hand);
 	}
 
-	private static int randomWithRange(int min, int max) {
+	public static int randomWithRange(int min, int max) {
 		return new Random().nextInt(max + 1 - min) + min;
 	}
 
@@ -212,6 +214,11 @@ public class ThugEntity extends ZombieEntity implements IRangedAttackMob{
 			if (this.canBeDropped(dropItem.getItem())) {
 				this.entityDropItem(dropItem, 1);
 			}
+		}
+		
+		if(cause.getTrueSource() instanceof PlayerEntity) {
+			IHunterData data = HunterDataCapability.get((LivingEntity) cause.getTrueSource());
+			data.setJenny(data.getJenny() + randomWithRange(500, 850));
 		}
 		super.onDeath(cause);
 	}
