@@ -21,7 +21,6 @@ public class LightningPalmAbility extends PunchAbility {
 
 	public LightningPalmAbility() {
 		this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxPassive(Integer.MAX_VALUE).setNenType(NenType.TRANSMUTER).setMaxCooldown(2 * 20);
-		this.onPunch = this::onPunch;
 	}
 	@Override
 	public String getId() {

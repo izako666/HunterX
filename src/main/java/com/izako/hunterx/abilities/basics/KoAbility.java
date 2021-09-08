@@ -13,6 +13,7 @@ import com.izako.hunterx.networking.packets.SyncAbilityRenderingPacket;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 
 public class KoAbility extends PunchAbility implements IHandOverlay {
 
@@ -23,7 +24,7 @@ public class KoAbility extends PunchAbility implements IHandOverlay {
 		this.props = new Ability.Properties(this).setConsumptionType(AuraConsumptionType.PERCENTAGE)
 				.setAuraConsumption(this::consumeAura).setAbilityType(AbilityType.PASSIVE)
 				.setMaxPassive(Integer.MAX_VALUE).setMaxCooldown(20 * 8).setNenType(NenType.UNKNOWN);
-		this.onPunch = this::onPunch;
+
 	}
 
 	@Override
@@ -69,8 +70,10 @@ public class KoAbility extends PunchAbility implements IHandOverlay {
 		return true;
 	}
 
+
 	@Override
-	public float onPunch(PlayerEntity p, LivingEntity target) {
+	public float onPunch(PlayerEntity p, LivingEntity target)
+	{
 		IAbilityData data = AbilityDataCapability.get(p);
 
 		this.queuedAuraConsumption = true;

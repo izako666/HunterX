@@ -42,7 +42,7 @@ public class GenericAbilityLogicEvents {
 
 				if (ability instanceof PunchAbility && ability.isInPassive() && heldItem.isEmpty())
 				{
-					float damage = ((PunchAbility) props.getAbility(ability)).hitEntity(player, target);
+					float damage = ((PunchAbility) ability).onPunch(player, target);
 					PacketHandler.INSTANCE.sendTo(new PunchAbilityPacket(ability.getId(),target), ((ServerPlayerEntity)player).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
 					if(damage < 0)
 						event.setCanceled(true);

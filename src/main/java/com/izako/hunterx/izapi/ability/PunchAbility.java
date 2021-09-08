@@ -7,21 +7,11 @@ import java.io.Serializable;
 
 public abstract class PunchAbility extends PassiveAbility{
 
-	public abstract float onPunch(PlayerEntity player, LivingEntity target);
-
-	public interface IOnHitEntity extends Serializable
+	public float onPunch(LivingEntity p, LivingEntity target)
 	{
-		float onHitEntity(PlayerEntity player, LivingEntity target);
-	}
-	public IOnHitEntity onPunch = ((player, target) -> {return 0;});
-	
-	public float hitEntity(PlayerEntity player, LivingEntity target)
-	{
-		float result = this.onPunch.onHitEntity(player, target);
-		
-		this.endAbility(player);
-		return result;
+		return 0;
 	}
 
 
+	public abstract float onPunch(PlayerEntity p, LivingEntity target);
 }
