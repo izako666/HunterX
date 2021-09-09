@@ -72,7 +72,7 @@ public class KoAbility extends PunchAbility implements IHandOverlay {
 
 
 	@Override
-	public float onPunch(PlayerEntity p, LivingEntity target)
+	public float onPunch(LivingEntity p, LivingEntity target)
 	{
 		IAbilityData data = AbilityDataCapability.get(p);
 

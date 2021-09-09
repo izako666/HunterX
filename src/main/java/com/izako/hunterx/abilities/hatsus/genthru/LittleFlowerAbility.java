@@ -45,7 +45,7 @@ public class LittleFlowerAbility extends PunchAbility
 
 
    @Override
-    public float onPunch(PlayerEntity p, LivingEntity target) {
+    public float onPunch(LivingEntity p, LivingEntity target) {
         ExplosionAbility explosion = AbilityHelper.newExplosion(p, p.getPosX(), p.getPosY(), p.getPosZ(), 3);
         explosion.setStaticDamage(20);
         explosion.setExplosionSound(true);

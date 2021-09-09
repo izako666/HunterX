@@ -62,7 +62,7 @@ public class LightningPalmAbility extends PunchAbility {
 
 
 	@Override
-	public float onPunch(PlayerEntity p, LivingEntity target) {
+	public float onPunch(LivingEntity p, LivingEntity target) {
 		target.addPotionEffect(new EffectInstance(ModEffects.PARALYSIS_EFFECT, 40, 1));
 		Helper.endAbilitySafe(p, this);
 		Helper.consumeAura(20, p, this);

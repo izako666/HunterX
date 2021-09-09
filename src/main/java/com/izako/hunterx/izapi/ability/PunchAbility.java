@@ -13,5 +13,4 @@ public abstract class PunchAbility extends PassiveAbility{
 	}
 
 
-	public abstract float onPunch(PlayerEntity p, LivingEntity target);
 }
