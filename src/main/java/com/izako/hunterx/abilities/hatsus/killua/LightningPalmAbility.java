@@ -13,6 +13,7 @@ import com.izako.wypi.WyHelper;
 import com.izako.wypi.particles.GenericParticleData;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.server.ServerWorld;
@@ -37,14 +38,7 @@ public class LightningPalmAbility extends PunchAbility {
 		return "Shocks the opponent through electricity built up in the users palm.";
 	}
 
-	@Override
-	public float onPunch(LivingEntity p, LivingEntity target) {
 
-		target.addPotionEffect(new EffectInstance(ModEffects.PARALYSIS_EFFECT, 40, 1));
-		Helper.endAbilitySafe(p, this);
-		Helper.consumeAura(20, p, this);
-		return Helper.getTrueValue(15, this, p);
-	}
 
 	@Override
 	public void duringPassive(LivingEntity p) {
@@ -67,4 +61,11 @@ public class LightningPalmAbility extends PunchAbility {
 	}
 
 
+	@Override
+	public float onPunch(LivingEntity p, LivingEntity target) {
+		target.addPotionEffect(new EffectInstance(ModEffects.PARALYSIS_EFFECT, 40, 1));
+		Helper.endAbilitySafe(p, this);
+		Helper.consumeAura(20, p, this);
+		return Helper.getTrueValue(15, this, p);
+	}
 }
