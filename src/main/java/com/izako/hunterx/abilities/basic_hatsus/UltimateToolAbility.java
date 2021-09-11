@@ -9,17 +9,12 @@ import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.EquipAbility;
 import com.izako.hunterx.izapi.ability.ITrainable;
 import com.izako.hunterx.izapi.ability.NenType;
-import com.izako.hunterx.izapi.ability.Ability.AuraConsumptionType;
-import com.izako.hunterx.izapi.ability.Ability.IAuraConsumption;
 
-import com.sun.org.apache.xalan.internal.xsltc.runtime.Attributes;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 
 public class UltimateToolAbility extends EquipAbility implements ITrainable {
 

@@ -28,12 +28,12 @@ public class GenericAbilityLogicEvents {
 	@SubscribeEvent
 	public static void onLivingDamage(LivingDamageEvent event)
 	{
-		if (event.getSource().getTrueSource() instanceof PlayerEntity && event.getSource().getTrueSource() == event.getSource().getImmediateSource())
+		if (event.getSource().getTrueSource() instanceof LivingEntity && event.getSource().getTrueSource() == event.getSource().getImmediateSource())
 		{
-			PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
-			IAbilityData props = AbilityDataCapability.get(player);
+			LivingEntity user =  (LivingEntity) event.getSource().getTrueSource();
+			IAbilityData props = AbilityDataCapability.get(user);
 			LivingEntity target = event.getEntityLiving();
-			ItemStack heldItem = player.getHeldItemMainhand();
+			ItemStack heldItem = user.getHeldItemMainhand();
 
 			for (Ability ability : props.getSlotAbilities())
 			{
@@ -42,15 +42,17 @@ public class GenericAbilityLogicEvents {
 
 				if (ability instanceof PunchAbility && ability.isInPassive() && heldItem.isEmpty())
 				{
-					float damage = ((PunchAbility) ability).onPunch(player, target);
-					PacketHandler.INSTANCE.sendTo(new PunchAbilityPacket(ability.getId(),target), ((ServerPlayerEntity)player).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+					float damage = ((PunchAbility) ability).onPunch(user, target);
+					if(user instanceof PlayerEntity) {
+					PacketHandler.INSTANCE.sendTo(new PunchAbilityPacket(ability.getId(),target), ((ServerPlayerEntity)user).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+					}
 					if(damage < 0)
 						event.setCanceled(true);
 					
 					event.setAmount(event.getAmount() + damage);
 					if(ability instanceof ITrainable) {
 						ITrainable trainable = (ITrainable) ability;
-						ability.setXp(ability.getXp() + (trainable.getXPOnUsage() + (ability.rand.nextDouble() - 0.5))/ 6, player);
+						ability.setXp(ability.getXp() + (trainable.getXPOnUsage() + (ability.rand.nextDouble() - 0.5))/ 6, user);
 					}
 				}
 			}

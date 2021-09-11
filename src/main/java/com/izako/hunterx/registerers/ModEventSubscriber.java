@@ -10,6 +10,7 @@ import com.izako.hunterx.entities.ThugEntity;
 import com.izako.hunterx.entities.WingEntity;
 import com.izako.hunterx.entities.projectiles.ArmEntity;
 import com.izako.hunterx.entities.projectiles.AuraBlastProjectileEntity;
+import com.izako.hunterx.entities.projectiles.PaperProjectileEntity;
 import com.izako.hunterx.init.ModStructures;
 import com.izako.hunterx.items.entities.BulletEntity;
 import com.izako.hunterx.items.entities.CardEntity;
@@ -46,7 +47,7 @@ public final class ModEventSubscriber {
 		event.getRegistry().registerAll(YoyoEntity.TYPE, CardEntity.TYPE, BulletEntity.TYPE, NeedleEntity.TYPE,
 				ThugEntity.TYPE, KirikoEntity.TYPE, WingEntity.TYPE, ExaminerEntity.TYPE, HanzoEntity.TYPE,
 				EnEntity.TYPE, ProjectileEntity.TYPE, AuraBlastProjectileEntity.TYPE, ArmEntity.TYPE,
-				ShurikenEntity.TYPE);
+				ShurikenEntity.TYPE,PaperProjectileEntity.TYPE);
 		registerEntityWorldSpawn(ThugEntity.TYPE, 2, 1, Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH,
 				Biomes.JUNGLE,Biomes.TAIGA);
 		registerEntityWorldSpawn(KirikoEntity.TYPE, 1, 1, Biomes.PLAINS, Biomes.FOREST, Biomes.DESERT, Biomes.BEACH,
