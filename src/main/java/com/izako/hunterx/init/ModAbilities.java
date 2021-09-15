@@ -23,6 +23,8 @@ import com.izako.hunterx.abilities.hatsus.genthru.LittleFlowerAbility;
 import com.izako.hunterx.abilities.hatsus.gon.JajankenGuAbility;
 import com.izako.hunterx.abilities.hatsus.gon.JajankenPaAbility;
 import com.izako.hunterx.abilities.hatsus.gon.JajankenSciAbility;
+import com.izako.hunterx.abilities.hatsus.kalluto.MeanderingDanceAbility;
+import com.izako.hunterx.abilities.hatsus.kalluto.PaperMarkAbility;
 import com.izako.hunterx.abilities.hatsus.killua.LightningPalmAbility;
 import com.izako.hunterx.abilities.hatsus.killua.LightningSpeedAbility;
 import com.izako.hunterx.abilities.hatsus.killua.ThunderboltAbility;
@@ -61,6 +63,8 @@ public class ModAbilities {
 	public static final Ability LOCKON_ABILITY = new LockOnAbility();
 	public static final Ability EMITTER_PUNCH_ABILITY = new EmitterPunchAbility();
 	public static final Ability PANTS_STEALER_ABILITY = new PantsStealAbility();
+	public static final Ability MEANDERING_DANCE_ABILITY = new MeanderingDanceAbility();
+	public static final Ability PAPER_MARK_ABILITY = new PaperMarkAbility();
 	public static List<Ability> ABILITY_INSTANCES = new ArrayList<>();
  public	static void register(){
 	 ABILITY_INSTANCES.add(TEN_ABILITY);
@@ -90,6 +94,8 @@ public class ModAbilities {
      ABILITY_INSTANCES.add(EMITTER_PUNCH_ABILITY);
      ABILITY_INSTANCES.add(PANTS_STEALER_ABILITY);
      ABILITY_INSTANCES.add(LITTLE_FLOWER_ABILITY);
+     ABILITY_INSTANCES.add(PAPER_MARK_ABILITY);
+     ABILITY_INSTANCES.add(MEANDERING_DANCE_ABILITY);
      
 	}
 	public static Ability getNewInstanceFromId(String id) {

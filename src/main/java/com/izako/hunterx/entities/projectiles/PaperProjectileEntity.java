@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -43,9 +44,9 @@ public class PaperProjectileEntity extends ProjectileEntity {
 		for (LivingEntity entity : entities) {
 			if (this.owner instanceof PlayerEntity) {
 
-				((PlayerEntity) this.owner).attackTargetEntityWithCurrentItem(entity);
+				((PlayerEntity) this.owner).attackEntityFrom(DamageSource.causePlayerDamage((PlayerEntity) owner), 2);
 			} else {
-				this.owner.attackEntityAsMob(entity);
+				this.owner.attackEntityFrom(DamageSource.causeMobDamage(owner), 2);
 			}
 		}
 

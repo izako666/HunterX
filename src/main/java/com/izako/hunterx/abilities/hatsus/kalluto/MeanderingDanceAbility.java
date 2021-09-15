@@ -7,6 +7,9 @@ import net.minecraft.entity.LivingEntity;
 
 public class MeanderingDanceAbility extends Ability {
 
+	public MeanderingDanceAbility() {
+		this.props = new Ability.Properties(this).setAbilityType(AbilityType.ONUSE);
+	}
 	@Override
 	public String getId() {
 		return "meandering_dance";
@@ -25,9 +28,11 @@ public class MeanderingDanceAbility extends Ability {
 	@Override
 	public void onUse(LivingEntity p) {
 
-		if(!p.world.isRemote()) {
 		PaperProjectileEntity proj = new PaperProjectileEntity(p.world);
-		//proj.shoot(getXp(), getCurrentCooldownScale(), getCurrentAuraConScale(), getCooldown(), getChargingTimer());
+		proj.setPosition(p.getPosX(), p.getPosYEye(), p.getPosZ());
+		proj.setOwner(p);
+		proj.shoot(p, p.rotationPitch, p.rotationYaw, 1f, 1.5f, 0f);
+		if(!p.world.isRemote()) {
 		p.world.addEntity(proj);
 		}
 		super.onUse(p);
