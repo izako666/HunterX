@@ -30,9 +30,10 @@ public class PaperProjectileEntity extends ProjectileEntity {
 		this.onImpactEntity = this::onImpactEntity;
 	}
 
-	public PaperProjectileEntity(World worldIn) {
+	public PaperProjectileEntity(World worldIn,LivingEntity owner) {
 		this(TYPE, worldIn);
 
+		this.owner = owner;
 	}
 
 	public PaperProjectileEntity(FMLPlayMessages.SpawnEntity pkt, World worldIn) {
@@ -41,12 +42,13 @@ public class PaperProjectileEntity extends ProjectileEntity {
 
 	private void onImpactEntity(List<LivingEntity> entities, ProjectileEntity proj) {
 
+
 		for (LivingEntity entity : entities) {
 			if (this.owner instanceof PlayerEntity) {
 
-				((PlayerEntity) this.owner).attackEntityFrom(DamageSource.causePlayerDamage((PlayerEntity) owner), 2);
+				entity.attackEntityFrom(DamageSource.causePlayerDamage((PlayerEntity) owner), 2);
 			} else {
-				this.owner.attackEntityFrom(DamageSource.causeMobDamage(owner), 2);
+				entity.attackEntityFrom(DamageSource.causeMobDamage(owner), 2);
 			}
 		}
 

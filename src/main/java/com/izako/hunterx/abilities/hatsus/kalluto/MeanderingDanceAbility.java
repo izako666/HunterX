@@ -28,7 +28,7 @@ public class MeanderingDanceAbility extends Ability {
 	@Override
 	public void onUse(LivingEntity p) {
 
-		PaperProjectileEntity proj = new PaperProjectileEntity(p.world);
+		PaperProjectileEntity proj = new PaperProjectileEntity(p.world, p);
 		proj.setPosition(p.getPosX(), p.getPosYEye(), p.getPosZ());
 		proj.setOwner(p);
 		proj.shoot(p, p.rotationPitch, p.rotationYaw, 1f, 1.5f, 0f);

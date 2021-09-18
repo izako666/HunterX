@@ -53,6 +53,7 @@ public class YoyoEntity extends ProjectileItemEntity implements IEntityAdditiona
 
 		super(type, livingEntityIn, worldIn);
 		owner = (PlayerEntity) livingEntityIn;
+		
 		ownerID = livingEntityIn.getUniqueID();
 		
 	}
@@ -100,7 +101,7 @@ public class YoyoEntity extends ProjectileItemEntity implements IEntityAdditiona
 							(this.owner.getPosY() + this.owner.getEyeHeight() - this.getPosY()) * 0.1,
 							(this.owner.getPosZ() - this.getPosZ()) * 0.05);
 
-					((EntityRayTraceResult) result).getEntity().attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 20);
+					((EntityRayTraceResult) result).getEntity().attackEntityFrom(DamageSource.causeThrownDamage(this, this.owner), 20);
 					this.comeBack = true;
 					owner.getCooldownTracker().setCooldown(ModItems.YOYO, count);
 
