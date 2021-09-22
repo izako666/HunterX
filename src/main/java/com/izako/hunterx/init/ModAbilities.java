@@ -19,6 +19,7 @@ import com.izako.hunterx.abilities.basics.RyuOffenseAbility;
 import com.izako.hunterx.abilities.basics.ShuAbility;
 import com.izako.hunterx.abilities.basics.TenAbility;
 import com.izako.hunterx.abilities.basics.ZetsuAbility;
+import com.izako.hunterx.abilities.hatsus.genthru.CountdownAbility;
 import com.izako.hunterx.abilities.hatsus.genthru.LittleFlowerAbility;
 import com.izako.hunterx.abilities.hatsus.gon.JajankenGuAbility;
 import com.izako.hunterx.abilities.hatsus.gon.JajankenPaAbility;
@@ -61,6 +62,7 @@ public class ModAbilities {
 	public static final Ability LOCKON_ABILITY = new LockOnAbility();
 	public static final Ability EMITTER_PUNCH_ABILITY = new EmitterPunchAbility();
 	public static final Ability PANTS_STEALER_ABILITY = new PantsStealAbility();
+	public static final Ability COUNTDOWN_ABILITY = new CountdownAbility();
 	public static List<Ability> ABILITY_INSTANCES = new ArrayList<>();
  public	static void register(){
 	 ABILITY_INSTANCES.add(TEN_ABILITY);
@@ -90,6 +92,7 @@ public class ModAbilities {
      ABILITY_INSTANCES.add(EMITTER_PUNCH_ABILITY);
      ABILITY_INSTANCES.add(PANTS_STEALER_ABILITY);
      ABILITY_INSTANCES.add(LITTLE_FLOWER_ABILITY);
+     ABILITY_INSTANCES.add(COUNTDOWN_ABILITY);
      
 	}
 	public static Ability getNewInstanceFromId(String id) {
