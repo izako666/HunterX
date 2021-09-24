@@ -1,9 +1,11 @@
 package com.izako.hunterx.abilities.hatsus.kalluto;
 
 import com.izako.hunterx.entities.projectiles.PaperProjectileEntity;
+import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.Vec3d;
 
 public class MeanderingDanceAbility extends Ability {
 
@@ -29,13 +31,27 @@ public class MeanderingDanceAbility extends Ability {
 	public void onUse(LivingEntity p) {
 
 		PaperProjectileEntity proj = new PaperProjectileEntity(p.world, p);
-		proj.setPosition(p.getPosX(), p.getPosYEye(), p.getPosZ());
+		proj.setPosition(p.getPosX(), p.getPosY(), p.getPosZ());
 		proj.setOwner(p);
-		proj.shoot(p, p.rotationPitch, p.rotationYaw, 1f, 1.5f, 0f);
 		if(!p.world.isRemote()) {
 		p.world.addEntity(proj);
 		}
 		super.onUse(p);
+	}
+
+	public static Vec3d getPositionInCircle(Vec3d origin, double rotation, float increment) {
+		float radianRotation = (float) Helper.fromRangeToRange(0, 360, 0, Math.PI, rotation);
+		float finalIncrement = radianRotation + increment;
+		if(finalIncrement > Math.PI) {
+			finalIncrement -= Math.PI;
+		}
+		double posX = origin.getX() + (1.2f * Math.cos(finalIncrement*2));
+		double posY = origin.getY();
+		double posZ = origin.getZ() + (1.2f * Math.sin(finalIncrement*2));
+
+		Vec3d vec3d = new Vec3d(posX,posY,posZ);
+		
+		return vec3d;
 	}
 
 }

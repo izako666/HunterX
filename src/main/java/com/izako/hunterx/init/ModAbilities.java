@@ -59,11 +59,11 @@ public class ModAbilities {
 	public static final Ability LIGHTNING_PALM_ABILITY = new LightningPalmAbility();
 	public static final Ability LIGHTNING_SPEED_ABILITY = new LightningSpeedAbility();
 	public static final Ability LIGHTNING_BOLT_ABILITY = new ThunderboltAbility();
-	public static final Ability LITTLE_FLOWER_ABILITY = new LittleFlowerAbility();
 	public static final Ability WHIRLWIND_ABILITY = new WhirlwindAbility();
 	public static final Ability LOCKON_ABILITY = new LockOnAbility();
 	public static final Ability EMITTER_PUNCH_ABILITY = new EmitterPunchAbility();
 	public static final Ability PANTS_STEALER_ABILITY = new PantsStealAbility();
+	public static final Ability LITTLE_FLOWER_ABILITY = new LittleFlowerAbility();
   public static final Ability COUNTDOWN_ABILITY = new CountdownAbility();
 	public static final Ability MEANDERING_DANCE_ABILITY = new MeanderingDanceAbility();
 	public static final Ability PAPER_MARK_ABILITY = new PaperMarkAbility();

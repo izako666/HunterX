@@ -3,7 +3,11 @@ package com.izako.hunterx.entities.projectiles;
 import java.util.List;
 
 import com.izako.hunterx.Main;
+import com.izako.hunterx.abilities.hatsus.kalluto.MeanderingDanceAbility;
 import com.izako.hunterx.entities.ProjectileEntity;
+import com.izako.hunterx.init.ModParticleTypes;
+import com.izako.wypi.WyHelper;
+import com.izako.wypi.particles.GenericParticleData;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
@@ -14,10 +18,14 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.FMLPlayMessages;
 
 public class PaperProjectileEntity extends ProjectileEntity {
 
+	boolean canBeCollided = false;
+
+	
 	@SuppressWarnings("unchecked")
 	public static EntityType<PaperProjectileEntity> TYPE = (EntityType<PaperProjectileEntity>) EntityType.Builder
 			.<PaperProjectileEntity>create(PaperProjectileEntity::new, EntityClassification.MISC).setTrackingRange(128)
@@ -25,6 +33,7 @@ public class PaperProjectileEntity extends ProjectileEntity {
 			.setCustomClientFactory(PaperProjectileEntity::new).build("paper_projectile")
 			.setRegistryName(Main.MODID, "paper_projectile");
 
+	
 	public PaperProjectileEntity(EntityType<?> entityTypeIn, World worldIn) {
 		super(entityTypeIn, worldIn);
 		this.onImpactEntity = this::onImpactEntity;
@@ -56,7 +65,24 @@ public class PaperProjectileEntity extends ProjectileEntity {
 
 	@Override
 	public void tick() {
+
 		super.tick();
+
+		if(!this.world.isRemote()) {
+		int rotation = this.ticksExisted * 2;
+		while(rotation >= 360) {
+			rotation -= 360;
+		}
+		Vec3d vec = MeanderingDanceAbility.getPositionInCircle(this.owner.getPositionVec(), rotation, 0);
+		this.setPosition(vec.x, this.getPosY() + (double)(this.ticksExisted) / 100000d, vec.z);
+		
+		GenericParticleData particle = new GenericParticleData(ModParticleTypes.PAPER);
+		particle.setLife(15);
+		particle.setSize(0.12f);
+		WyHelper.spawnParticles(particle, (ServerWorld)this.world, this.getPosX(), this.getPosY(), this.getPosZ());
+
+		
+		}
 	}
 
 	public void shoot(Entity shooter, float pitch, float yaw, float p_184547_4_, float velocity, float inaccuracy) {
@@ -86,4 +112,9 @@ public class PaperProjectileEntity extends ProjectileEntity {
 		this.prevRotationPitch = this.rotationPitch;
 	}
 
+	@Override
+	public boolean canBeCollidedWith() {
+		return canBeCollided;
+	}
+	
 }

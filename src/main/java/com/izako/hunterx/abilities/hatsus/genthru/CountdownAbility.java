@@ -17,10 +17,10 @@ public class CountdownAbility extends PunchAbility
         this.props = new Ability.Properties(this).setAbilityType(AbilityType.PASSIVE).setMaxPassive(Integer.MAX_VALUE).setNenType(NenType.CONJURER).setMaxCooldown(2 * 20);
     }
     @Override
-    public String getId() {return "countdown";}
+    public String getId() {return "count_down";}
 
     @Override
-    public String getName() {return "Countdown";}
+    public String getName() {return "Count Down";}
 
     @Override
     public String getDesc() {return "Sets the nen of the user on a target until it activates to turn into a bomb";}
