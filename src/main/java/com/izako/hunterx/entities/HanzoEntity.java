@@ -187,7 +187,7 @@ public class HanzoEntity extends ZombieEntity{
 			this.entityDropItem(new ItemStack(ModItems.BADGE));
 		}
 		}
-		if(!cause.getTrueSource().isEntityEqual(source)) {
+		if(!cause.getTrueSource().isEntityEqual(source) && !source.world.isRemote()) {
 			IHunterData sourceData = HunterDataCapability.get(source);
 			sourceData.getQuest(ModQuests.HUNTEREXAM04).removeQuest(source);
 		}

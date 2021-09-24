@@ -15,6 +15,7 @@ import com.izako.hunterx.entities.models.ArmModel;
 import com.izako.hunterx.entities.models.KirikoModel;
 import com.izako.hunterx.entities.projectiles.ArmEntity;
 import com.izako.hunterx.entities.projectiles.AuraBlastProjectileEntity;
+import com.izako.hunterx.entities.projectiles.PaperProjectileEntity;
 import com.izako.hunterx.items.entities.BulletEntity;
 import com.izako.hunterx.items.entities.CardEntity;
 import com.izako.hunterx.items.entities.NeedleEntity;
@@ -27,6 +28,7 @@ import com.izako.hunterx.renderers.EnRenderer;
 import com.izako.hunterx.renderers.ExaminerRenderer;
 import com.izako.hunterx.renderers.HanzoRenderer;
 import com.izako.hunterx.renderers.KirikoRenderer;
+import com.izako.hunterx.renderers.PaperProjectileRenderer;
 import com.izako.hunterx.renderers.ProjectileRenderer;
 import com.izako.hunterx.renderers.ThugRenderer;
 import com.izako.hunterx.renderers.WingRenderer;
@@ -51,7 +53,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -136,6 +137,7 @@ public class ClientSideRegistry {
 		});
 
 		RenderingRegistry.registerEntityRenderingHandler(EnEntity.TYPE, ClientSideRegistry.factory(EnRenderer.class));
+		RenderingRegistry.registerEntityRenderingHandler(PaperProjectileEntity.TYPE, ClientSideRegistry.factory(PaperProjectileRenderer.class));
 		RenderingRegistry.registerEntityRenderingHandler(AuraBlastProjectileEntity.TYPE, new ProjectileRenderer.Factory<AuraBlastProjectileEntity>().setTex(new ResourceLocation(Main.MODID, "textures/models/aura_blast.png")).setCustomScale(true).setPersonalAuraColor(true).setColor(new Color(0,0,0,0.2f)));
 		RenderingRegistry.registerEntityRenderingHandler(ArmEntity.TYPE, new ProjectileRenderer.Factory<ArmEntity>().setModel(new ArmModel()).setTex(new ResourceLocation(Main.MODID, "textures/entity/arm.png")).setIsNen(false).setPersonalAuraColor(false).setColor(new Color(1f,1f,1f,1f)));
 		

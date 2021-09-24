@@ -1,5 +1,6 @@
 package com.izako.hunterx.abilities.hatsus.kalluto;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.izako.hunterx.Main;
@@ -8,23 +9,23 @@ import com.izako.hunterx.izapi.Helper;
 import com.izako.hunterx.izapi.ability.Ability;
 import com.izako.hunterx.izapi.ability.NenType;
 import com.izako.hunterx.izapi.ability.PassiveAbility;
-import com.izako.hunterx.izapi.ability.Ability.AbilityType;
 import com.izako.wypi.WyHelper;
 import com.izako.wypi.particles.GenericParticleData;
 
-import net.minecraft.client.MinecraftGame;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.server.ServerWorld;
 
 public class PaperMarkAbility extends PassiveAbility {
 
 	private static final ResourceLocation PAPER = new ResourceLocation(Main.MODID, "textures/particles/paper.png");
 	BlockPos origin;
+	LivingEntity marked;
 	int timeToStart = 0;
 	float rotator = 0f;
 	public PaperMarkAbility() {
@@ -70,7 +71,8 @@ public class PaperMarkAbility extends PassiveAbility {
 			}
 			}
 		} else {
-			this.endAbility(p);
+
+			Helper.endAbilitySafe(p, this);
 		}
 		this.rotator = 0f;
 		super.onStartPassive(p);
@@ -115,7 +117,7 @@ public class PaperMarkAbility extends PassiveAbility {
 		Vec3d vecOrigin = new Vec3d(this.origin).add(0.5,0,0.5);
 		Vec3d vecOrigin2 = new Vec3d(this.origin).add(0.5, 2.7, 0.5);
 		
-			if(!p.world.isRemote()) {
+			if(!p.world.isRemote() && this.marked == null) {
 					for(int i = 0; i< 5; i++) {
 						float randomOffset = (float)(this.rand.nextInt(10) / 100.0f) - 0.05f;
 						float randomYOffset = (float)(this.rand.nextInt(20) / 100.0f);
@@ -157,10 +159,46 @@ public class PaperMarkAbility extends PassiveAbility {
 				}
 
 			
+			if(marked == null) {
+				List<LivingEntity> mightMark = p.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(origin, origin.add(0, 1, 0)));
+			    
+				List<LivingEntity> willMark = p.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(origin.add(1,0,0),origin.add(1, 1, 0)));
+				
+				willMark.addAll(p.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(origin.add(0, 0, 1), origin.add(0,1,1))));
+				willMark.addAll(p.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(origin.add(0, 0, -1), origin.add(0,1,-1))));
+				willMark.addAll(p.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(origin.add(-1, 0, 0), origin.add(-1,1,0))));
+				
+				if(!willMark.isEmpty()) {
+					this.marked = willMark.get(0);
+					if(!p.world.isRemote()) {
+					this.marked.attackEntityFrom(DamageSource.causeMobDamage(p), 1);
+					} 
+					} else if(!mightMark.isEmpty() && this.getPassiveTimer() % 20 == 0) {
+						for(LivingEntity entity : mightMark) {
+							int chance = this.rand.nextInt(9) + 1;
+							if(chance <= 2) {
+								this.marked = entity;
+								this.marked.attackEntityFrom(DamageSource.causeMobDamage(p),1);
+							}
+						}
+				}
+
+
+				if(this.getPassiveTimer() <= this.props.maxPassive - 100 - timeToStart && this.marked == null) {
+
+					Helper.endAbilitySafe(p, this);
+					}
+			}
 		
-		super.duringPassive(p);
+			super.duringPassive(p);
 	}
 
+	@Override
+	public void onEndPassive(LivingEntity p) {
+		this.marked = null;
+		this.origin = null;
+		super.onEndPassive(p);
+	}
 	/**
 	 * @param origin the origin point to rotate around
 	 * @param rotation the original rotation point to distinguish each usage of this method goes from 0 to 360
