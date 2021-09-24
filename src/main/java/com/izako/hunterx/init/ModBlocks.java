@@ -22,10 +22,11 @@ public class ModBlocks {
 	
 	public static final Item CUP_ITEM = new BlockItem(CUP, new Item.Properties().group(ModItems.HUNTERX_ITEM_GROUP).maxStackSize(1));
 	public static final Item COMPUTER_ITEM = new BlockItem(COMPUTER, new Item.Properties().group(ModItems.HUNTERX_ITEM_GROUP).maxStackSize(1));
-	
+
 	@SubscribeEvent
 	public static void onRegisterBlocks(RegistryEvent.Register<Block> event) {
 		event.getRegistry().registerAll(ModEventSubscriber.setup(CUP, "divination_cup_block"), ModEventSubscriber.setup(COMPUTER, "computer"));
+
 	}
 	
 	@SubscribeEvent
