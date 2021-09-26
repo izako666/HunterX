@@ -12,6 +12,7 @@ import com.izako.hunterx.izapi.ability.PassiveAbility;
 import com.izako.wypi.WyHelper;
 import com.izako.wypi.particles.GenericParticleData;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.DamageSource;
@@ -25,7 +26,7 @@ public class PaperMarkAbility extends PassiveAbility {
 
 	private static final ResourceLocation PAPER = new ResourceLocation(Main.MODID, "textures/particles/paper.png");
 	BlockPos origin;
-	LivingEntity marked;
+	public LivingEntity marked;
 	int timeToStart = 0;
 	float rotator = 0f;
 	public PaperMarkAbility() {
@@ -51,8 +52,8 @@ public class PaperMarkAbility extends PassiveAbility {
 		Optional<Entity> entity = Helper.getTargetEntity(p, 50);
 
 		if(entity.isPresent()) {
-			this.origin = entity.get().getPosition();
-			
+			Vec3d vecOrigin = entity.get().getPositionVec();
+			this.origin = PaperMarkAbility.getPosFromVec(vecOrigin);
 			if(!p.world.isRemote()) {
 			for(int i = 0; i< 25; i++) {
 				GenericParticleData particle = new GenericParticleData(ModParticleTypes.PAPER);
@@ -113,9 +114,19 @@ public class PaperMarkAbility extends PassiveAbility {
 		if(rotator4 > 360) {
 			rotator4 -= 360;
 		}
+		float xOffset = 0.5f;
+		float zOffset = 0.5f;
+		if(this.origin.getX() < 0) {
+			xOffset = -0.5f;
+		}
+		if(this.origin.getZ() < 0) {
+			zOffset = -0.5f;
+		}
 		
-		Vec3d vecOrigin = new Vec3d(this.origin).add(0.5,0,0.5);
-		Vec3d vecOrigin2 = new Vec3d(this.origin).add(0.5, 2.7, 0.5);
+
+		
+		Vec3d vecOrigin = new Vec3d(this.origin).add(xOffset,0,zOffset);
+		Vec3d vecOrigin2 = new Vec3d(this.origin).add(xOffset, 2.7, zOffset);
 		
 			if(!p.world.isRemote() && this.marked == null) {
 					for(int i = 0; i< 5; i++) {
@@ -160,7 +171,7 @@ public class PaperMarkAbility extends PassiveAbility {
 
 			
 			if(marked == null) {
-				List<LivingEntity> mightMark = p.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(origin, origin.add(0, 1, 0)));
+				List<LivingEntity> mightMark = p.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(origin, origin.add(0, 2, 0)));
 			    
 				List<LivingEntity> willMark = p.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(origin.add(1,0,0),origin.add(1, 1, 0)));
 				
@@ -173,7 +184,8 @@ public class PaperMarkAbility extends PassiveAbility {
 					if(!p.world.isRemote()) {
 					this.marked.attackEntityFrom(DamageSource.causeMobDamage(p), 1);
 					} 
-					} else if(!mightMark.isEmpty() && this.getPassiveTimer() % 20 == 0) {
+					} 
+				else if(!mightMark.isEmpty() && this.getPassiveTimer() % 20 == 0) {
 						for(LivingEntity entity : mightMark) {
 							int chance = this.rand.nextInt(9) + 1;
 							if(chance <= 2) {
@@ -188,6 +200,10 @@ public class PaperMarkAbility extends PassiveAbility {
 
 					Helper.endAbilitySafe(p, this);
 					}
+				if(this.marked != null && !this.marked.isAlive()) {
+					Helper.endAbilitySafe(p, this);
+				}
+
 			}
 		
 			super.duringPassive(p);
@@ -217,5 +233,34 @@ public class PaperMarkAbility extends PassiveAbility {
 		Vec3d vec3d = new Vec3d(posX,posY,posZ);
 		
 		return vec3d;
+	}
+	
+	private static BlockPos getPosFromVec(Vec3d vec) {
+		double x = vec.getX();
+		double y = vec.getY();
+		double z = vec.getZ();
+		
+		if(x < 0) {
+			Minecraft.getInstance().mouseHelper.ungrabMouse();
+			x = Math.ceil(x);
+			Minecraft.getInstance().mouseHelper.grabMouse();
+
+		} else {
+			x = Math.floor(x);
+		}
+		
+		if(y < 0) {
+			y = Math.ceil(y);
+		} else {
+			y = Math.floor(y);
+		}
+
+		if(z < 0) {
+			z = Math.ceil(z);
+		} else {
+			z = Math.floor(z);
+		}
+
+		return new BlockPos(x,y,z);
 	}
 }

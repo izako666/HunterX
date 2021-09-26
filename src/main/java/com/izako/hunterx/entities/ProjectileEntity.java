@@ -81,6 +81,9 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 
 	@Override
 	protected void onInsideBlock(BlockState state) {
+		if(!canBeCollidedWith())
+			return;
+		
 		if (!(state.getBlock().getBlock() instanceof AirBlock)) {
 			this.onImpactBlock.onImpact(state, this);
 			this.remove();
@@ -100,6 +103,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		}
 		this.setPosition(this.getPosX() + this.getMotion().x, this.getPosY() + this.getMotion().y,
 				this.getPosZ() + this.getMotion().z);
+		if(this.canBeCollidedWith()) {
 		List<LivingEntity> entities = this.world.getEntitiesWithinAABB(LivingEntity.class,
 				this.getBoundingBox().grow(0.5));
 		if (owner != null) {
@@ -108,6 +112,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		if (entities.size() > 0) {
 			this.onImpactEntity.onImpact(entities, this);
 			this.remove();
+		}
 		}
 		super.tick();
 
@@ -135,7 +140,12 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 
 	@Override
 	public AxisAlignedBB getBoundingBox() {
-		AxisAlignedBB bb = super.getBoundingBox().grow(scale / 8);
+		AxisAlignedBB bb;
+		if(!this.canBeCollidedWith()) {
+			bb = new AxisAlignedBB(0, 0, 0, 0, 0, 0);
+		} else {
+		 bb = super.getBoundingBox().grow(scale / 8);
+		}
 		return bb;
 	}
 
