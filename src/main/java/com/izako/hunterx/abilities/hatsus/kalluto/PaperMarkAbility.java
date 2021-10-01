@@ -171,21 +171,10 @@ public class PaperMarkAbility extends PassiveAbility {
 
 			
 			if(marked == null) {
-				List<LivingEntity> mightMark = p.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(origin, origin.add(0, 2, 0)));
+				List<LivingEntity> mightMark = p.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(origin.add(-2, 0, -2), origin.add(2, 1, 2)));
 			    
-				List<LivingEntity> willMark = p.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(origin.add(1,0,0),origin.add(1, 1, 0)));
 				
-				willMark.addAll(p.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(origin.add(0, 0, 1), origin.add(0,1,1))));
-				willMark.addAll(p.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(origin.add(0, 0, -1), origin.add(0,1,-1))));
-				willMark.addAll(p.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(origin.add(-1, 0, 0), origin.add(-1,1,0))));
-				
-				if(!willMark.isEmpty()) {
-					this.marked = willMark.get(0);
-					if(!p.world.isRemote()) {
-					this.marked.attackEntityFrom(DamageSource.causeMobDamage(p), 1);
-					} 
-					} 
-				else if(!mightMark.isEmpty() && this.getPassiveTimer() % 20 == 0) {
+				 if(!mightMark.isEmpty() && this.getPassiveTimer() % 20 == 0) {
 						for(LivingEntity entity : mightMark) {
 							int chance = this.rand.nextInt(9) + 1;
 							if(chance <= 2) {
@@ -213,6 +202,11 @@ public class PaperMarkAbility extends PassiveAbility {
 	public void onEndPassive(LivingEntity p) {
 		this.marked = null;
 		this.origin = null;
+		if(p.world.isRemote()) {
+			System.out.println("client end");
+		} else {
+			System.out.println("server end");
+		}
 		super.onEndPassive(p);
 	}
 	/**
